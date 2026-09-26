@@ -88,10 +88,10 @@ and discuss what the answer and the method suggest.
 \subsection{The question}
 
 Let $T$ be a tree on $n\ge2$ vertices, $D$ its diagonal degree matrix, $A$ its adjacency matrix and
-$L(T)=D-A$ its Laplacian. Determinants of Laplacians are classical: by the matrix-tree theorem they count
-spanning trees. Permanents are a different matter. The permanent
+$L(T)=D-A$ its Laplacian. Determinants and spectra of Laplacians are classical (see
+Merris's survey~\cite{Merris1994}): by the matrix-tree theorem the principal minors count spanning trees. Permanents are a different matter. The permanent
 $\per M=\sum_{\sigma}\prod_iM_{i,\sigma(i)}$ looks like the determinant without the signs, but it is
-\#P-hard to compute in general, and there is no comparable structure theory.
+\#P-hard to compute in general~\cite{Valiant1979}, and there is no comparable structure theory.
 
 Brualdi and Goldwasser~\cite{BG1984} studied $\per L(T)$ for trees and bipartite graphs. Since the
 permanent of a Laplacian grows with the degrees, they normalized it and introduced the
@@ -104,13 +104,17 @@ star, and they asked the natural companion question: \emph{which tree on $n$ ver
 
 \subsection{A short history}
 
-\paragraph{1984: the question.} Brualdi and Goldwasser's paper~\cite{BG1984} is the starting point for
-Laplacian permanents. Among much else, they showed that over trees on $n$ vertices the permanent
+\paragraph{1984: the question.} Merris, Rebman and Watkins~\cite{MRW1981} had introduced the
+permanental polynomial of the Laplacian a few years earlier; Brualdi and Goldwasser~\cite{BG1984} then
+studied $\per L$ of trees and bipartite graphs systematically, giving bounds in terms of the number of
+vertices, the degree sequence, the diameter and the matching number. Among much else, they showed that over trees on $n$ vertices the permanent
 $\per L(T)$ itself is smallest for the star and largest for the path, so the permanent alone is not
 interesting to optimize: it mostly rewards long paths with many vertices of degree two. Dividing by
 $\prod_v\deg v$ removes that trivial effect, and they introduced the ratio $\pi(T)$ for exactly this
 purpose. They proved the lower bound $\pi\ge2$ and posed extremal problems for the ratio, including
-bounds for trees with a given bipartition and the maximum over all trees on $n$ vertices.
+bounds for trees with a given bipartition and the maximum over all trees on $n$ vertices. Later work
+sharpened the permanental bounds themselves; for instance, Geng, Hu and Li~\cite{GHL2010} determined the
+minimal permanents of Laplacians of trees, also under a maximum-degree constraint.
 
 \paragraph{2024--2025: the minimum side, and a conjecture for the maximum.} The minimum-type questions
 were resolved first. Wu, Dong, Lai and Zeng~\cite{Wu2024} determined the minimum of $\pi$ over trees on $n$ vertices with
@@ -294,7 +298,7 @@ skip them. A reader who wants to audit the formal proof should read them togethe
 \cref{sec:lean}, which spells out exactly what the Lean theorem says, and with the reading guide
 \texttt{formalization/READING\_GUIDE.md} in the repository.
 
-\paragraph{Status.} Every step is formalized in Lean~4 with Mathlib~\cite{Mathlib} and checked by the
+\paragraph{Status.} Every step is formalized in Lean~4~\cite{Lean4} with Mathlib~\cite{Mathlib} and checked by the
 Lean kernel. The headline theorems depend only on \lean{propext}, \lean{Classical.choice} and
 \lean{Quot.sound}, with no \lean{sorry}, no \lean{native\_decide} and no added axioms. The result has not
 yet been refereed. The kernel certifies the deductions. What a reader must still check is that the formal
@@ -414,7 +418,8 @@ for the permanent (\cref{sec:lean}).
 %=====================================================================================================
 
 Matching sums on trees can be computed from the leaves upward. This is the ``cavity method'' of
-statistical physics, and it is the workhorse of the whole proof.
+statistical physics (see, e.g., Mézard and Montanari~\cite{MM2009}); on a tree it is exact, and it is the
+workhorse of the whole proof.
 
 \paragraph{Planted branches.} A \emph{planted branch} $b$ is a rooted tree whose root will be attached to
 one further vertex, its parent. Degrees are always measured in the final tree, so the root of $b$ has
@@ -564,7 +569,7 @@ once on the right (at its parent), except the root's, so everything telescopes (
 \[
   \bell(b)=\sum_ve_v\ \le\ -\varrho(\mathrm{root})\ \le\ 0 .
 \]
-In the language of ergodic optimization such a $\varrho$ is a \emph{subaction}~\cite{Bousch2001}; its
+In the language of ergodic optimization such a $\varrho$ is a \emph{subaction}~\cite{Bousch2001,Jenkinson2019}; its
 existence is the discrete analogue of finding a calibrating potential for an optimal orbit.
 
 \begin{figure}[htbp]\centering
@@ -1230,6 +1235,12 @@ entirely different methods.
   arithmetic. For every $n\le491$ the exact maximum equals the table value, and \emph{every} maximizing
   tree is a spider. (952\,s on one core.)
 \item \emph{Brute force.} Exact enumeration of all non-isomorphic trees agrees for $n\le18$.
+\item \emph{A second kernel.} The repository contains a challenge/solution pair for the Lean FRO's
+  Comparator~\cite{Comparator}: the challenge states \lean{brualdi\_goldwasser\_upper} and
+  \lean{brualdi\_goldwasser\_attained} with \lean{sorry} and imports only the definitions of the answer.
+  Comparator checks that the solution proves exactly those statements, using only the three standard
+  axioms, and replays the exported proof both in Lean's kernel and in nanoda~\cite{nanoda}, an
+  independent implementation of the Lean kernel in Rust.
 \item \emph{Spider optimization.} An exhaustive exact optimization over the spider family for
   $n\le2400$, together with an exact rational certificate for $n\ge2320$, agrees with the table and the
   rule; an exact Pareto dynamic programme over the family with no balance assumption agrees for
@@ -1350,34 +1361,75 @@ on either.
 Mathematics and Lean code: Apache-2.0. This paper: CC-BY-4.0. The vendored Telperion engine: Business
 Source License~1.1, free for research, teaching and peer review.
 
-\begin{thebibliography}{9}
+\begin{thebibliography}{99}
+\bibitem{Bousch2001} T.~Bousch,
+\emph{La condition de Walters},
+Ann.\ Sci.\ \'Ec.\ Norm.\ Sup\'er.\ (4) \textbf{34} (2001), 287--311.
+\href{https://doi.org/10.1016/S0012-9593(00)01062-4}{doi:10.1016/S0012-9593(00)01062-4}.
 \bibitem{BG1984} R.~A.~Brualdi and J.~L.~Goldwasser,
 \emph{Permanent of the Laplacian matrix of trees and bipartite graphs},
 Discrete Math.\ \textbf{48} (1984), 1--21.
-\bibitem{WDL2025} T.~Wu, X.~Dong and H.-J.~Lai,
-\emph{Two problems on Laplacian ratios of trees},
-Discrete Appl.\ Math.\ \textbf{372} (2025), 224--236.
-\bibitem{Pant2026} P.~Pant,
-\emph{Counterexamples to a conjecture on Laplacian ratios of trees},
-arXiv:2605.14176 (2026).
-\bibitem{Wu2024} T.~Wu, X.~Dong, H.-J.~Lai and X.~Zeng,
-\emph{Solution to an open problem on Laplacian ratio},
-arXiv:2402.15669 (2024).
-\bibitem{HL1972} O.~J.~Heilmann and E.~H.~Lieb,
-\emph{Theory of monomer-dimer systems},
-Comm.\ Math.\ Phys.\ \textbf{25} (1972), 190--232.
-\bibitem{Bousch2001} T.~Bousch,
-\emph{La condition de Walters},
-Ann.\ Sci.\ \'Ec.\ Norm.\ Sup\'er.\ \textbf{34} (2001), 287--311.
+\href{https://doi.org/10.1016/0012-365X(84)90127-4}{doi:10.1016/0012-365X(84)90127-4}.
 \bibitem{Csikvari2010} P.~Csikv\'ari,
 \emph{On a poset of trees},
 Combinatorica \textbf{30} (2010), 125--137.
+\href{https://doi.org/10.1007/s00493-010-2516-0}{doi:10.1007/s00493-010-2516-0}.
+\bibitem{Lean4} L.~de~Moura and S.~Ullrich,
+\emph{The Lean~4 theorem prover and programming language},
+in: Automated Deduction -- CADE~28, Lecture Notes in Comput.\ Sci.\ \textbf{12699}, Springer, 2021,
+625--635.
+\bibitem{GHL2010} X.~Geng, X.~Hu and S.~Li,
+\emph{Further results on permanental bounds for the Laplacian matrix of trees},
+Linear Multilinear Algebra \textbf{58} (2010), 571--587.
+\href{https://doi.org/10.1080/03081080902765583}{doi:10.1080/03081080902765583}.
+\bibitem{HL1972} O.~J.~Heilmann and E.~H.~Lieb,
+\emph{Theory of monomer-dimer systems},
+Comm.\ Math.\ Phys.\ \textbf{25} (1972), 190--232.
+\href{https://doi.org/10.1007/BF01877590}{doi:10.1007/BF01877590}.
+\bibitem{Jenkinson2019} O.~Jenkinson,
+\emph{Ergodic optimization in dynamical systems},
+Ergodic Theory Dynam.\ Systems \textbf{39} (2019), 2593--2618.
+\href{https://doi.org/10.1017/etds.2017.142}{doi:10.1017/etds.2017.142}.
+\bibitem{Comparator} Lean FRO, \emph{Comparator}: checking a Lean proof against a separately written
+statement, \url{https://github.com/leanprover/comparator} (version \texttt{v4.32.0}).
 \bibitem{Mathlib} The mathlib Community,
 \emph{The Lean mathematical library},
-CPP 2020, 367--381.
+in: Proceedings of the 9th ACM SIGPLAN International Conference on Certified Programs and Proofs
+(CPP 2020), ACM, 2020, 367--381.
+\href{https://doi.org/10.1145/3372885.3373824}{doi:10.1145/3372885.3373824}.
+\bibitem{Merris1994} R.~Merris,
+\emph{Laplacian matrices of graphs: a survey},
+Linear Algebra Appl.\ \textbf{197--198} (1994), 143--176.
+\href{https://doi.org/10.1016/0024-3795(94)90486-3}{doi:10.1016/0024-3795(94)90486-3}.
+\bibitem{MRW1981} R.~Merris, K.~R.~Rebman and W.~Watkins,
+\emph{Permanental polynomials of graphs},
+Linear Algebra Appl.\ \textbf{38} (1981), 273--288.
+\href{https://doi.org/10.1016/0024-3795(81)90026-4}{doi:10.1016/0024-3795(81)90026-4}.
+\bibitem{MM2009} M.~M\'ezard and A.~Montanari,
+\emph{Information, Physics, and Computation},
+Oxford Graduate Texts, Oxford University Press, 2009.
+\bibitem{nanoda} C.~Bailey, \emph{nanoda\_lib}: a type checker for the Lean~4 kernel
+language, \url{https://github.com/ammkrn/nanoda_lib}.
+\bibitem{Pant2026} P.~Pant,
+\emph{Counterexamples to a conjecture on Laplacian ratios of trees},
+arXiv:2605.14176 (2026).
+\bibitem{Valiant1979} L.~G.~Valiant,
+\emph{The complexity of computing the permanent},
+Theoret.\ Comput.\ Sci.\ \textbf{8} (1979), 189--201.
+\href{https://doi.org/10.1016/0304-3975(79)90044-6}{doi:10.1016/0304-3975(79)90044-6}.
+\bibitem{WDL2025} T.~Wu, X.~Dong and H.-J.~Lai,
+\emph{Two problems on Laplacian ratios of trees},
+Discrete Appl.\ Math.\ \textbf{372} (2025), 224--236.
+\href{https://doi.org/10.1016/j.dam.2025.04.047}{doi:10.1016/j.dam.2025.04.047}.
+\bibitem{Wu2024} T.~Wu, X.~Dong, H.-J.~Lai and X.~Zeng,
+\emph{Solution to an open problem on Laplacian ratio},
+Front.\ Math.\ \textbf{21} (2026), no.~4, 815--837.
+\href{https://doi.org/10.1007/s11464-024-0191-5}{doi:10.1007/s11464-024-0191-5};
+arXiv:2402.15669 (2024).
 \end{thebibliography}
 
 \appendix
+\clearpage
 \section{The maximizers for $4\le n\le491$}\label{app:table}
 
 Notation: $C^{c}$ is $c$ cherries at the centre, $A_j^{m}$ is $m$ arms with $j$ cherries, $L$ a leaf at
