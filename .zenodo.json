@@ -1,0 +1,8 @@
+{
+  "title": "The maximum Laplacian ratio of a tree: a complete answer to a question of Brualdi and Goldwasser, kernel-checked in Lean",
+  "creators": [{"name": "Murphy, Peter W."}],
+  "description": "Lean 4 formalization, certificate generators and paper: for every n >= 4 the tree maximizing per L(T)/prod deg(v) is an explicit spider of cherry arms. Kernel-checked; standard axioms only.",
+  "license": "Apache-2.0",
+  "upload_type": "software",
+  "keywords": ["Laplacian permanent", "Laplacian ratio", "trees", "extremal graph theory", "Lean 4", "formal verification"]
+}

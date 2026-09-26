@@ -1,0 +1,21 @@
+cff-version: 1.2.0
+message: "If you use this work, please cite it as below."
+title: "The maximum Laplacian ratio of a tree: a complete answer to a question of Brualdi and Goldwasser, kernel-checked in Lean"
+authors:
+  - family-names: Murphy
+    given-names: Peter W.
+repository-code: "https://github.com/DrMurphyIsIn/brualdi-goldwasser"
+url: "https://drmurphyisin.github.io/brualdi-goldwasser/"
+license: Apache-2.0
+keywords:
+  - Laplacian permanent
+  - Laplacian ratio
+  - trees
+  - extremal graph theory
+  - Lean 4
+  - formal verification
+  - Brualdi-Goldwasser
+abstract: >-
+  For every n >= 4, the tree on n vertices maximizing per L(T) / prod deg(v) is an explicit spider of
+  cherry arms; the maximum grows exactly like ((621/64)^(1/11))^n. The proof is formalized in Lean 4
+  with Mathlib and checked by the Lean kernel.

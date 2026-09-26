@@ -20,6 +20,7 @@
 import Mathlib
 import R3Cert.BGMaximizerAll
 import R3Cert.TreeBridge
+import R3Cert.BGAnswer
 
 namespace R3Cert
 namespace BGStatement
@@ -71,9 +72,6 @@ theorem ratio_tree {V : Type} [Fintype V] [DecidableEq V] (G : SimpleGraph V) [D
   obtain ⟨t, ht, ⟨φ⟩⟩ := tree_iso G hG
   refine ⟨t, ht, ?_⟩
   rw [lapMatrix_eq_lapl, ratio_iso G _ (φ.trans (addrGraphIso t (ht ▸ h2))), pi_utree]
-
-/-- The children of the maximizer's centre. -/
-def bgChildren (n : ℕ) : List Child := if n ≤ 491 then tab n else W n
 
 theorem bgMax_eq (n : ℕ) : BGMaximizerAll.bgMax n = spiderU (bgChildren n) := by
   unfold BGMaximizerAll.bgMax bgChildren; split_ifs <;> rfl

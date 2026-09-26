@@ -11,3 +11,9 @@ rev = "v4.32.0"
 [[lean_lib]]
 name = "R3Cert"
 globs = ["R3Cert.+"]
+
+# The Comparator challenge (statement only) and solution (proof); see comparator/README.md.
+[[lean_lib]]
+name = "BGComparator"
+srcDir = "comparator"
+roots = ["BGChallenge", "BGSolution"]

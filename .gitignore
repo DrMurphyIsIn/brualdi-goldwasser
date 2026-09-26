@@ -9,3 +9,4 @@ paper/*.toc
 site/paper.pdf
 formalization/axioms.txt
 paper/build.log
+paper/arxiv.tar.gz
