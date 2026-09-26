@@ -6,6 +6,12 @@ source, and a reader should know how to filter it.
 
 ## Where to start
 
+**`Statement.lean`** states the theorem using only Mathlib's graph vocabulary (`SimpleGraph.IsTree`,
+`lapMatrix`, `Matrix.permanent`, `degree`) and lists the handful of definitions it depends on. If you
+only read one file, read that one. It rests on `R3Cert/TreePaths.lean` (every Mathlib tree is a
+`UTree`), `R3Cert/TreeBridge.lean` (that `UTree`'s path graph is the realized graph) and
+`R3Cert/BGStatement.lean` (the Laplacian ratio is an isomorphism invariant; the two theorems).
+
 | file | what it holds |
 |---|---|
 | `R3Cert/BGMaximizerAll.lean` | the main theorem `bg_maximizer_all` and its literal-permanent form `bg_maximizer_all_perm` |

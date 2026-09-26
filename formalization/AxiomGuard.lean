@@ -6,7 +6,12 @@
 import R3Cert.BGMaximizerAll
 import R3Cert.BGGrowthRate
 import R3Cert.BGSCLSharp
+import R3Cert.BGStatement
 
+-- The answer in Mathlib's vocabulary (SimpleGraph.IsTree, lapMatrix, Matrix.permanent): see Statement.lean.
+#print axioms R3Cert.BGStatement.bg_maximum_le
+#print axioms R3Cert.BGStatement.bg_maximum_attained
+#print axioms R3Cert.TreePaths.tree_iso
 -- The answer: for every n >= 4 the explicit spider bgMax n maximizes per(L)/prod deg over all trees.
 #print axioms R3Cert.BGMaximizerAll.bg_maximizer_all
 #print axioms R3Cert.BGMaximizerAll.bg_maximizer_all_perm

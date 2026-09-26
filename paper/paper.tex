@@ -1116,9 +1116,30 @@ reader must trust is not that proof (the kernel checked it) but the definitions 
 
 So \lean{bg\_maximizer\_all\_perm} states: for every $n\ge4$ and every tree $t$ on $n$ vertices,
 $\per L/\prod\deg$ of $t$ is at most that of $\mathrm{bgMax}(n)$, with the permanent and the degrees read
-off the actual graph. The file \lean{AxiomGuard.lean} prints the axioms of the 17 headline theorems. A
+off the actual graph. The file \lean{AxiomGuard.lean} prints the axioms of the 20 headline theorems. A
 \lean{sorry} anywhere in their dependencies would appear there as \lean{sorryAx}, and a
 \lean{native\_decide} as \lean{Lean.ofReduceBool}.
+
+\paragraph{The same theorem in Mathlib's vocabulary.} Because \lean{UTree} and \lean{Aobj} are ours,
+the repository also states the result using only Mathlib's definitions on the graph side, in the file
+\texttt{formalization/Statement.lean}:
+\begin{verbatim}
+theorem brualdi_goldwasser_upper (n : Nat) (h4 : 4 <= n) {V : Type} [Fintype V]
+    [DecidableEq V] (G : SimpleGraph V) [DecidableRel G.Adj] (hG : G.IsTree)
+    (hV : Fintype.card V = n) :
+    (G.lapMatrix R).permanent / (prod v, (G.degree v : R))
+      <= (F (bgChildren n) : R)
+\end{verbatim}
+together with \lean{brualdi\_goldwasser\_attained}: some tree on \lean{Fin n} has ratio exactly
+\lean{F (bgChildren n)}. Here \lean{IsTree}, \lean{lapMatrix} (degree matrix minus adjacency matrix),
+\lean{Matrix.permanent} and \lean{degree} are Mathlib's, and the only definitions of ours a reader must
+check are the closed form \lean{F} of \cref{sec:spiders} and the list of the centre's children
+\lean{bgChildren n} (the table for $n\le491$, the rule for $n\ge492$). The bridge is three short
+modules: \lean{TreePaths} proves that every Mathlib tree is isomorphic to the path graph of a
+\lean{UTree} of the same size (by removing a leaf, using Mathlib's
+\lean{IsTree.exists\_vert\_degree\_one\_of\_nontrivial}, and re-attaching it as a new last child);
+\lean{TreeBridge} proves that this path graph is the realized graph; and \lean{BGStatement} proves that the
+Laplacian ratio is invariant under graph isomorphism and assembles the two theorems.
 
 \paragraph{What is not claimed in Lean.} The Lean theorem gives \emph{a} maximizer. That it is unique up
 to isomorphism (except at $n=21$) is established by exact computation for $n\le491$ (\cref{sec:indep})

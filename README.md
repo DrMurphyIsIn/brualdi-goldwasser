@@ -47,7 +47,13 @@ theorem R3Cert.BGMaximizerAll.bg_maximizer_all (n : ℕ) (h4 : 4 ≤ n) :
 ```
 
 `bgMax n` is the explicit spider above, `UTree` ranges over all trees, and `Aobj` is the Laplacian
-ratio. The companion theorem `bg_maximizer_all_perm` states the same inequality literally for
+ratio.
+
+The same result is also stated purely in Mathlib's vocabulary, in
+[`formalization/Statement.lean`](formalization/Statement.lean): for every tree `G : SimpleGraph V` on
+`n ≥ 4` vertices (Mathlib's `IsTree`), `(G.lapMatrix ℝ).permanent / ∏ v, G.degree v ≤ F (bgChildren n)`,
+and some tree on `Fin n` attains it. There a reviewer needs to trust only Mathlib's graph and permanent
+definitions plus the short closed form `F` and the list `bgChildren n`. The companion theorem `bg_maximizer_all_perm` states the same inequality literally for
 `permanent (lapl G) / ∏ degree` of the realized graphs. Every headline theorem depends only on Lean's
 three standard axioms (`propext`, `Classical.choice`, `Quot.sound`): no `sorry`, no `native_decide`,
 no added axioms.
@@ -57,6 +63,7 @@ cd formalization
 lake exe cache get          # Mathlib build cache
 ./build.sh                  # the full development, in memory-safe batches (see "Resources")
 lake env lean AxiomGuard.lean
+lake env lean Statement.lean   # the theorem in Mathlib's vocabulary
 ```
 
 The proof splits by size:

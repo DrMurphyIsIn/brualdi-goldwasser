@@ -12,6 +12,9 @@ set -euo pipefail
 cd "$(dirname "$0")"
 N="${1:-3}"
 
+# Already built?  Then there is nothing to batch.
+if lake build --no-build >/dev/null 2>&1; then echo "up to date"; lake build; exit 0; fi
+
 batch() {   # batch SIZE MODULE...
   local size="$1"; shift
   while [ $# -gt 0 ]; do
