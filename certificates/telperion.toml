@@ -1,0 +1,37 @@
+# Telperion manifest for the Brualdi-Goldwasser certificate families.
+# Every family regenerates its Lean files from scratch; `python3 <family>/generate.py` diffs the output
+# against the frozen record (telperion.provenance.diff_frozen) AND against formalization/R3Cert.
+# `certificates/verify.sh` runs them all.
+
+[[family]]
+name = "spider_table"
+script = "spider_table/generate.py"
+lean = ["BGSpiderTableData", "BGSpiderTableChunk_*", "BGSpiderTableAll"]
+role = "spider-family optimum for 4 <= n <= 491 (exhaustive exact search + 4,977,356-configuration sweep)"
+seconds = 95
+
+[[family]]
+name = "envcert_g149"
+script = "envcert_g149/generate.py"
+lean = ["BGEnvCert/G149/*"]
+role = "envelope certificate: every non-spider max-degree rooting with root degree <= 23 on 7 <= n <= 149 loses"
+seconds = 25
+
+[[family]]
+name = "mid_cells"
+script = "mid_cells/generate.py"
+lean = ["BGSpiderMidCellsD*", "BGSpiderMidRootK*", "BGSpiderMidSpiders"]
+role = "credited rate cells + root knapsack checks, 150 <= n <= 491"
+seconds = 720
+
+[[family]]
+name = "cand_certs"
+script = "cand_certs/generate.py"
+lean = ["BGSpiderCandCells*", "BGSpiderCand"]
+role = "223 polynomial certificates: the rule spider beats every candidate, n >= 492"
+seconds = 3
+
+[[check]]
+name = "exact_rechecks"
+script = "checks/run_checks.sh"
+role = "exact re-checks of the constants in BGSpiderCells / BGSpiderLowDegree / BGSpiderStruct (no Lean emitted)"

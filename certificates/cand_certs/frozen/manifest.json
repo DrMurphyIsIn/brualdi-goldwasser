@@ -1,0 +1,18 @@
+{
+  "family": "cand_certs",
+  "input_hash": "eba08a3670f0594ecdabdd28ca9a87f7650ce84ed69dc20dedea2822b0d456d4",
+  "tool_version": "0.1.6",
+  "files": [
+    "BGSpiderCand.lean",
+    "BGSpiderCandCells0.lean",
+    "BGSpiderCandCells1.lean",
+    "BGSpiderCandCells2.lean",
+    "BGSpiderCandCells3.lean",
+    "BGSpiderCandCells4.lean",
+    "BGSpiderCandCells5.lean",
+    "BGSpiderCandCells6.lean",
+    "BGSpiderCandCells7.lean",
+    "BGSpiderCandCells8.lean"
+  ],
+  "n_theorems": 414
+}
