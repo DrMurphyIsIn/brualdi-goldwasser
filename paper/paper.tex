@@ -1,14 +1,23 @@
 \documentclass[11pt]{article}
-\usepackage{amsmath,amssymb,amsthm}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
 \usepackage[margin=1in]{geometry}
 \usepackage{graphicx}
 \usepackage{booktabs}
 \usepackage{longtable}
+\usepackage{microtype}
+\usepackage{enumitem}
+\usepackage[font=small,labelfont=bf]{caption}
+\usepackage{subcaption}
+\usepackage{xcolor}
 \usepackage{tikz}
-\usetikzlibrary{calc,positioning}
+\usetikzlibrary{calc,positioning,arrows.meta,shapes.geometric,fit,backgrounds,decorations.pathreplacing}
+\usepackage{pgfplots}
+\usepgfplotslibrary{groupplots}
+\pgfplotsset{compat=1.17}
 \setlength{\emergencystretch}{2.5em}
 \usepackage{hyperref}
 \hypersetup{colorlinks=true, linkcolor=black, citecolor=black, urlcolor=blue}
+\usepackage[capitalise,noabbrev]{cleveref}
 
 \newtheorem{theorem}{Theorem}
 \newtheorem{proposition}[theorem]{Proposition}
@@ -23,6 +32,24 @@
 \newcommand{\bell}{\ell}
 \newcommand{\Fs}{F^{\ast}}
 \newcommand{\lean}[1]{\texttt{#1}}
+
+\definecolor{afive}{HTML}{8A2F45}
+\definecolor{afour}{HTML}{0F6F7F}
+\definecolor{asix}{HTML}{B86E00}
+\definecolor{soft}{HTML}{F1DFE4}
+\definecolor{coolsoft}{HTML}{D9ECEF}
+\definecolor{leanbg}{HTML}{F4F2EC}
+
+% The formal side of each step, set off from the mathematics.
+\newenvironment{inlean}{\par\medskip\noindent\begin{tikzpicture}\node[fill=leanbg,rounded corners=2pt,
+  inner sep=6pt,text width=\dimexpr\linewidth-12pt\relax,font=\small]\bgroup\textbf{In Lean.}\ }%
+  {\egroup;\end{tikzpicture}\par\medskip}
+
+\tikzset{
+  v/.style={circle,fill=black,inner sep=1.3pt},
+  cen/.style={circle,draw=black,fill=white,inner sep=2.2pt},
+  box/.style={draw,rounded corners=2pt,align=center,font=\small,inner sep=4pt},
+}
 
 \title{The maximum Laplacian ratio of a tree:\\
 a complete answer to a question of Brualdi and Goldwasser,\\
@@ -46,24 +73,45 @@ $\tfrac{64}{621}\rho^{n}\le\max_{|T|=n}\pi(T)\le 2\rho^{n-1}$ with $\rho=(621/64
 sharp inequality behind it: every pendant subtree $b$ has matching weight at most $\rho^{|b|}$, with
 equality exactly for the five-cherry arm. The whole argument is formalized in Lean~4 with Mathlib and
 checked by the Lean kernel, depending only on Lean's three standard axioms. Large parts of it are
-certificates: exact data produced by untrusted generators and checked by the kernel. We describe the
-mathematics, the certificates, how the kernel checks them, and how to reproduce every step.
+certificates: exact data produced by untrusted generators and checked by the kernel. We explain the
+mathematics, show where each piece lives in the formal development and why it is organized that way,
+and discuss what the answer and the method suggest.
 \end{abstract}
 
+\tableofcontents
+\bigskip
+
+%=====================================================================================================
 \section{Introduction}
+%=====================================================================================================
+
+\subsection{The question}
 
 Let $T$ be a tree on $n\ge2$ vertices, $D$ its diagonal degree matrix, $A$ its adjacency matrix and
-$L(T)=D-A$ its Laplacian. Brualdi and Goldwasser~\cite{BG1984} studied the permanent of $L(T)$ and the
+$L(T)=D-A$ its Laplacian. Determinants of Laplacians are classical: by the matrix-tree theorem they count
+spanning trees. Permanents are a different matter. The permanent
+$\per M=\sum_{\sigma}\prod_iM_{i,\sigma(i)}$ looks like the determinant without the signs, but it is
+\#P-hard to compute in general, and there is no comparable structure theory.
+
+Brualdi and Goldwasser~\cite{BG1984} studied $\per L(T)$ for trees and bipartite graphs. Since the
+permanent of a Laplacian grows with the degrees, they normalized it and introduced the
 \emph{Laplacian ratio}
 \[
   \pi(T)=\frac{\per L(T)}{\prod_{v\in V(T)}\deg v}.
 \]
-They showed $\pi(T)\ge 2$, with equality exactly for the star, and asked for the \emph{maximum} over
-trees on $n$ vertices. Wu, Dong and Lai~\cite{WDL2025} conjectured that the maximizer is a particular
-subdivided star. Pant~\cite{Pant2026} refuted that conjecture with explicit families of caterpillars
-whose spine vertices each carry many pendant paths of length two, and left the question open.
+They showed that $\pi(T)\ge 2$ for every tree on at least two vertices, with equality exactly for the
+star, and they asked the natural companion question: \emph{which tree on $n$ vertices maximizes $\pi$?}
+
+The question stayed open for four decades. Wu, Dong and Lai~\cite{WDL2025} studied it again in 2025 and
+conjectured that the maximizer is a particular subdivided star. In 2026 Pant~\cite{Pant2026} refuted that
+conjecture with explicit families of caterpillars, paths whose vertices each carry many pendant paths of
+length two, and left the question open, proposing no replacement.
 
 This paper answers it for every $n$.
+
+\subsection{The answer}
+
+The answer is built from two small pieces (\cref{fig:spider}).
 
 \begin{definition}[cherries, arms, spiders]
 A \emph{cherry} is a pendant path of length two. For $j\ge1$ an \emph{arm} $A_j$ is a vertex, adjacent
@@ -71,16 +119,14 @@ to the centre, that carries $j$ cherries and nothing else; it has $2j+1$ vertice
 a leaf adjacent to the centre. A \emph{spider of cherry arms} (in this paper, simply a \emph{spider})
 is a tree with a vertex, the \emph{centre}, all of whose branches are leaves, cherries or arms. We write
 $C^{c}A_{j_1}A_{j_2}\cdots$ for the spider whose centre carries $c$ cherries and arms
-$A_{j_1},A_{j_2},\dots$
+$A_{j_1},A_{j_2},\dots$, and use exponents for repeated arms.
 \end{definition}
 
-\begin{figure}[t]\centering
-\begin{tikzpicture}[scale=0.8,
-  v/.style={circle,fill=black,inner sep=1.3pt},
-  c/.style={circle,draw=black,fill=white,inner sep=2.2pt}]
-  \node[c] (o) at (0,0) {};
+\begin{figure}[htbp]\centering
+\begin{tikzpicture}[scale=0.8]
+  \node[cen] (o) at (0,0) {};
   \foreach \a/\ang in {1/90,2/210,3/330} {
-    \node[v] (a\a) at (\ang:1.6) {};
+    \node[v,afive] (a\a) at (\ang:1.6) {};
     \draw (o)--(a\a);
     \foreach \k in {0,...,4} {
       \pgfmathsetmacro{\t}{\ang-48+24*\k}
@@ -91,11 +137,9 @@ $A_{j_1},A_{j_2},\dots$
   }
 \end{tikzpicture}
 \qquad
-\begin{tikzpicture}[scale=0.8,
-  v/.style={circle,fill=black,inner sep=1.3pt},
-  c/.style={circle,draw=black,fill=white,inner sep=2.2pt}]
-  \node[v] (a) at (0,0) {};
-  \node[c] (p) at (0,-1.3) {};
+\begin{tikzpicture}[scale=0.8]
+  \node[v,afive] (a) at (0,0) {};
+  \node[cen] (p) at (0,-1.3) {};
   \draw[dashed] (a)--(p);
   \foreach \k in {0,...,4} {
     \pgfmathsetmacro{\t}{30+30*\k}
@@ -105,9 +149,11 @@ $A_{j_1},A_{j_2},\dots$
   }
   \node at (0,-2.0) {\small $T=\tfrac{621}{64}=\rho^{11}$};
 \end{tikzpicture}
-\caption{Left: the spider $A_5^{3}$ on $n=34$ vertices (centre drawn open). Right: the five-cherry arm
-$A_5$, an 11-vertex pendant subtree whose matching weight is exactly $\rho^{11}$; it is the unique
-pendant subtree attaining the sharp bound of Theorem~\ref{thm:sharp}.}
+\caption{Left: the spider $A_5^{3}$ on 34 vertices (centre drawn open). For large $n$ the maximizer
+looks like this, a centre carrying many five-cherry arms; small sizes are more varied, and at $n=34$
+itself the maximizer is $C^8A_8$. Right: the five-cherry arm $A_5$, an 11-vertex pendant subtree whose
+matching weight is exactly $\rho^{11}$. It is the unique pendant subtree attaining the sharp bound of
+\cref{thm:sharp}.}
 \label{fig:spider}
 \end{figure}
 
@@ -122,23 +168,32 @@ on $n$ vertices.
     $n\le 2319$, instead $11-s$ arms are $A_4$;
   \item $s\in\{5,\dots,10\}$: $11-s$ arms are $A_4$.
   \end{itemize}
-\item For $4\le n\le 491$, $\mathrm{bgMax}(n)$ is the spider listed in Appendix~\ref{app:table}.
+\item For $4\le n\le 491$, $\mathrm{bgMax}(n)$ is the spider listed in \cref{app:table}.
 \end{enumerate}
 For $n\le3$ there is only one tree on $n$ vertices.
 \end{theorem}
 
-The exceptional counts are forced by vertex counting: $|A_4|=9$, $|A_5|=11$, $|A_6|=13$, and
-$n-1\equiv 2s\pmod{11}$, so replacing $A_5$'s by $s$ copies of $A_6$, or by $11-s$ copies of $A_4$,
-uses up the residue. Figure~\ref{fig:spider} shows the building block.
+The recipe is easier to remember than it looks. An $A_5$ has 11 vertices, an $A_4$ has 9 and an $A_6$
+has 13. After the centre there are $n-1$ vertices to distribute, and $n-1\equiv2s\pmod{11}$. Each $A_6$
+used in place of an $A_5$ adds $2$ modulo 11 and each $A_4$ subtracts $2$, so $s$ copies of $A_6$, or
+$11-s$ copies of $A_4$, exactly absorb the remainder (\cref{tab:rule}). The theorem says which of the two
+ways wins. The two late switches at $n=722$ and $n=2319$ are genuine: they are where two very close
+competitors trade places (\cref{fig:race}).
 
-Theorem~\ref{thm:main} is the Lean theorem
-\begin{verbatim}
-theorem R3Cert.BGMaximizerAll.bg_maximizer_all (n : Nat) (h4 : 4 <= n) :
-    usize (bgMax n) = n /\ forall t : UTree,
-      usize t = n -> Aobj t <= Aobj (bgMax n)
-\end{verbatim}
-together with its companion \lean{bg\_maximizer\_all\_perm}, which states the inequality literally
-for $\per(L)/\prod\deg$ of the realized simple graphs (\S\ref{sec:lean}).
+\begin{table}[h]\centering\small
+\begin{tabular}{@{}l|ccccccccccc@{}}
+\toprule
+$s=6(n-1)\bmod 11$ & 0 & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9 & 10\\
+\midrule
+non-$A_5$ arms & none & $A_6$ & $A_6^2$ & $A_6^3$ & $A_6^4$ & $A_4^6$ & $A_4^5$ & $A_4^4$ & $A_4^3$ & $A_4^2$ & $A_4$\\
+until the switch & & & & $A_4^8$ & $A_4^7$ & & & & & & \\
+ & & & & \scriptsize($n\le722$) & \scriptsize($n\le2319$) & & & & & & \\
+\bottomrule
+\end{tabular}
+\caption{The rule of \cref{thm:main} for $n\ge492$, class by class. All other arms are $A_5$, and the
+centre carries no cherries or leaves.}
+\label{tab:rule}
+\end{table}
 
 \paragraph{Why five cherries.} The number $\rho=(621/64)^{1/11}\approx1.22948$ is the exact exponential
 growth rate of the maximum.
@@ -148,20 +203,32 @@ For every $n\ge1$,
 $\displaystyle \frac{64}{621}\,\rho^{n}\ \le\ \max_{|T|=n}\pi(T)\ \le\ 2\,\rho^{\,n-1}.$
 \end{theorem}
 
-The upper bound comes from a sharp inequality for pendant subtrees (Theorem~\ref{thm:sharp}): every
-pendant subtree $b$ contributes a factor at most $\rho^{|b|}$, with equality only for the five-cherry
-arm. A maximizer therefore uses as many five-cherry arms as the arithmetic of $n$ allows, and the whole
-difficulty is in the lower-order terms. Pant's families grow like $(3/2)^{n/2}\approx1.2247^{n}$, just
-below $\rho$.
+The upper bound comes from a sharp inequality for pendant subtrees (\cref{thm:sharp}): every pendant
+subtree $b$ contributes a factor at most $\rho^{|b|}$, with equality only for the five-cherry arm. So
+each vertex of a tree can contribute at most a factor $\rho$ to $\pi$, and only vertices inside
+five-cherry arms achieve it. A maximizer therefore uses as many five-cherry arms as the arithmetic of $n$
+allows, and all the difficulty is in the lower-order terms. For comparison, Pant's families grow like
+$(3/2)^{n/2}\approx1.2247^{n}$, just below $\rho$.
 
-\paragraph{How the proof goes.} The ratio is a weighted matching count, which a cavity recursion
-evaluates on rooted trees (\S\ref{sec:cavity}). Rooting a tree at a vertex of maximum degree, we show
-that any tree which is not a spider is strictly beaten by some spider of the same size
-(\S\ref{sec:reduction}). The spiders form an explicit family with a closed-form value, and we solve the
-optimization over it exactly (\S\ref{sec:spiders}). Each step is split by size:
+\subsection{How the proof goes}
 
-\begin{center}
-\small
+The proof has three layers.
+
+\begin{enumerate}[label=(\alph*)]
+\item \emph{Algebra.} For a tree, the permanent of the Laplacian is a weighted count of matchings, and
+  a cavity recursion computes it from the leaves up (\cref{sec:matching,sec:cavity}).
+\item \emph{Reduction to spiders.} Rooting a tree at a vertex of maximum degree, we show that any tree
+  which is not a spider is strictly beaten by some spider with the same number of vertices
+  (\cref{sec:reduction}). The engine is the sharp inequality of \cref{sec:ceiling}, refined into per-vertex
+  inequalities that measure how much each non-spider feature costs.
+\item \emph{Optimization over spiders.} Spiders form an explicit family with a closed-form value. We
+  solve the optimization over it exactly (\cref{sec:spiders}).
+\end{enumerate}
+
+Each layer is split by size, because different arguments are efficient in different ranges
+(\cref{fig:map}):
+
+\begin{center}\small
 \begin{tabular}{@{}lp{0.42\textwidth}p{0.33\textwidth}@{}}
 \toprule
 $n$ & reduction to spiders & best spider \\
@@ -174,15 +241,66 @@ $\ge 492$ & rate cells + high-degree theorem & exchange lemmas + 223 polynomial 
 \end{tabular}
 \end{center}
 
-\paragraph{Status.} Every step is formalized in Lean~4 with Mathlib~\cite{Mathlib} and checked by the Lean kernel; the headline
-theorems depend only on \lean{propext}, \lean{Classical.choice} and \lean{Quot.sound}, with no
-\lean{sorry}, no \lean{native\_decide} and no added axioms. The result has not yet been refereed. The
-kernel certifies the deductions; what a reader must still check is that the formal statement says what
-we claim it says, and \S\ref{sec:lean} is written to make that check easy. The development was carried
-out with extensive help from an AI system (see the acknowledgements); for that reason we have tried to
-make every claim checkable by machine and every certificate reproducible from scratch.
+\subsection{How to read this paper}
 
-\section{The ratio as a matching sum, and the cavity recursion}\label{sec:cavity}
+The mathematics is presented in the usual way, with proofs or proof outlines. Alongside it, shaded
+paragraphs marked \textbf{In Lean} say where each step lives in the formal development, what the formal
+statement is, and why it is organized the way it is. A reader interested only in the mathematics can
+skip them. A reader who wants to audit the formal proof should read them together with
+\cref{sec:lean}, which spells out exactly what the Lean theorem says, and with the reading guide
+\texttt{formalization/READING\_GUIDE.md} in the repository.
+
+\paragraph{Status.} Every step is formalized in Lean~4 with Mathlib~\cite{Mathlib} and checked by the
+Lean kernel. The headline theorems depend only on \lean{propext}, \lean{Classical.choice} and
+\lean{Quot.sound}, with no \lean{sorry}, no \lean{native\_decide} and no added axioms. The result has not
+yet been refereed. The kernel certifies the deductions. What a reader must still check is that the formal
+statement says what we claim it says, and \cref{sec:lean} is written to make that check easy. The work
+was carried out with extensive help from an AI system (see the acknowledgements). Partly for that reason
+we have tried to make every claim checkable by machine and every certificate reproducible from scratch.
+
+\begin{figure}[tbp]\centering
+\begin{tikzpicture}[font=\small,
+  stage/.style={box,fill=coolsoft,text width=27mm},
+  lean/.style={font=\scriptsize\ttfamily,text=black!60,align=center},
+  arr/.style={-{Stealth[length=2mm]}}]
+  \node[box,fill=soft,text width=70mm] (all) at (0,0) {every tree $T$ on $n$ vertices};
+  \node[box,text width=70mm] (root) at (0,-1.1) {reroot at a vertex of maximum degree $k$};
+  \node[stage] (hi) at (-5.4,-2.9) {$k\ge24$\\ tangent envelope:\\ non-atoms lose $\ge\frac1{75}$};
+  \node[stage] (e)  at (-1.8,-2.9) {$k\le23$\\ $7\le n\le149$\\ envelope certificate};
+  \node[stage] (m)  at ( 1.8,-2.9) {$k\le23$\\ $150\le n\le491$\\ credited rate cells};
+  \node[stage] (r)  at ( 5.4,-2.9) {$k\le23$\\ $n\ge492$\\ linear deficit};
+  \node[lean,anchor=north] (lhi) at (hi.south) {BGSpiderReduction\\BGSpiderCells\\BGHighDegreeSmall};
+  \node[lean,anchor=north] (le) at (e.south) {BGEnvCert/*\\(57 G149 shards)};
+  \node[lean,anchor=north] (lm) at (m.south) {BGSpiderMid*};
+  \node[lean,anchor=north] (lr) at (r.south) {BGSpiderLowDegree};
+  \node[box,fill=soft,text width=70mm] (sp) at (0,-5.7) {every maximizer is a spider (\cref{thm:reduction})};
+  \node[stage,text width=40mm] (tab) at (-2.6,-7.2) {$n\le491$: kernel sweep of\\ every balanced spider};
+  \node[stage,text width=46mm] (rule) at (2.9,-7.2) {$n\ge492$: structure +\\ 223 polynomial certificates};
+  \node[lean,anchor=north] at (tab.south) {BGSpiderTable*};
+  \node[lean,anchor=north] at (rule.south) {BGSpiderStruct, BGSpiderCand*};
+  \node[stage,text width=20mm] (tiny) at (-6.2,-7.2) {$4\le n\le6$\\ every tree\\ evaluated};
+  \node[lean,anchor=north] at (tiny.south) {BGMaximizerTiny};
+  \node[box,fill=soft,text width=70mm] (ans) at (0,-9.4) {$\mathrm{bgMax}(n)$ maximizes $\pi$ for every $n\ge4$};
+  \node[lean,anchor=north] at (ans.south) {BGMaximizerAll.bg\_maximizer\_all};
+  \draw[arr] (all)--(root);
+  \foreach \x in {hi,e,m,r} {\draw[arr] (root.south) -- (\x.north);}
+  \foreach \x in {lhi,le,lm,lr} {\draw[arr] (\x.south) -- (sp.north);}
+  \draw[arr] (sp)--(tab); \draw[arr] (sp)--(rule);
+  \draw[arr] ($(tab.south)+(0,-0.4)$) -- (ans.north);
+  \draw[arr] ($(rule.south)+(0,-0.4)$) -- (ans.north);
+  \draw[arr] ($(tiny.south)+(0,-0.4)$) |- (ans.west);
+\end{tikzpicture}
+\caption{The proof at a glance, with the Lean modules that carry each step. The top half shows that every
+maximizer is a spider, the bottom half finds the best spider, and \lean{BGMaximizerAll} joins the ranges.}
+\label{fig:map}
+\end{figure}
+
+%=====================================================================================================
+\section{From permanents to matchings}\label{sec:matching}
+%=====================================================================================================
+
+The first step is classical, and it is what makes the problem tractable at all: for a tree, the
+permanent of the Laplacian collapses to a sum over matchings.
 
 \begin{theorem}[\cite{BG1984,Pant2026}]\label{thm:matchsum}
 For a tree $T$,
@@ -191,168 +309,550 @@ For a tree $T$,
   \qquad\text{hence}\qquad
   \pi(T)=\sum_{M}\ \prod_{uv\in M}\frac{1}{\deg u\,\deg v},
 \]
-the sums running over all matchings $M$ of $T$, including the empty one.
+the sums running over all matchings $M$ of $T$, including the empty one, and $V(M)$ denoting the set of
+matched vertices.
 \end{theorem}
 \begin{proof}
 A term $\prod_i L_{i,\sigma(i)}$ of the permanent is nonzero only if every $i$ is fixed by $\sigma$ or
-sent to a neighbour. The non-trivial cycles of $\sigma$ then run along edges of $T$; since $T$ has no
+sent to a neighbour. The non-trivial cycles of $\sigma$ then run along edges of $T$. Since $T$ has no
 cycles, they are transpositions along edges, that is, a matching $M$. A fixed point contributes
-$L_{ii}=\deg i$ and a matched edge contributes $L_{ij}L_{ji}=1$.
+$L_{ii}=\deg i$ and a matched edge contributes $L_{ij}L_{ji}=(-1)(-1)=1$. Dividing by $\prod_v\deg v$
+gives the second formula.
 \end{proof}
 
-In Lean this is \lean{pi\_eq\_msum} (file \lean{Matching.lean}), proved for any finite acyclic simple
-graph; the bridge \lean{pi\_utree} specializes it to the trees of the formalization.
+So $\pi(T)$ is a \emph{weighted matching count}: every matching contributes the product, over its edges,
+of $1/(\deg u\deg v)$. The empty matching contributes $1$; single edges contribute a little each; larger
+matchings contribute products of these small numbers (\cref{fig:matching}). In statistical-physics
+language, $\pi$ is the partition function of a monomer-dimer system in the sense of Heilmann and
+Lieb~\cite{HL1972}, with a dimer on edge $uv$ carrying activity $1/(\deg u\deg v)$.
 
-The weighted matching sum is a monomer-dimer partition function in the sense of
-Heilmann and Lieb~\cite{HL1972}, with edge weights $1/(\deg u\deg v)$.
+\begin{figure}[htbp]\centering
+\begin{tikzpicture}[scale=1.0]
+  \node[cen,label=below:{\scriptsize 3}] (c) at (0,0) {};
+  \node[v,label=below:{\scriptsize 2}] (a1) at (-1.3,0) {};
+  \node[v,label=below:{\scriptsize 1}] (a2) at (-2.6,0) {};
+  \node[v,label=below:{\scriptsize 2}] (b1) at (1.3,0) {};
+  \node[v,label=below:{\scriptsize 1}] (b2) at (2.6,0) {};
+  \node[v,label=right:{\scriptsize 1}] (l) at (0,1.2) {};
+  \draw (a2)--(a1)--(c)--(b1)--(b2); \draw (c)--(l);
+  \draw[line width=2.4pt,afive,opacity=0.75] (a2)--(a1);
+  \draw[line width=2.4pt,afive,opacity=0.75] (c)--(l);
+  \draw[line width=2.4pt,afive,opacity=0.75] (b1)--(b2);
+  \node[align=left,font=\small,anchor=west] at (3.3,0.4)
+   {weight of this matching\\ $=\dfrac{1}{1\cdot2}\cdot\dfrac{1}{3\cdot1}\cdot\dfrac{1}{2\cdot1}=\dfrac1{12}$};
+  \node[align=left,font=\small,anchor=west] at (3.3,-1.0)
+   {$\pi(T)=\sum_M(\text{weight of }M)=\dfrac{7}{2}$};
+\end{tikzpicture}
+\caption{The spider $C^2A_0$ on six vertices (centre open, degrees shown by each vertex) and one of its
+matchings. Each matched edge $uv$ contributes $1/(\deg u\deg v)$. Summing over all 12 matchings,
+including the empty one, gives $\pi(T)=\per L(T)/\prod\deg v=7/2$.}
+\label{fig:matching}
+\end{figure}
+
+Two consequences are worth drawing out. First, $\per L(T)$ is not hard to compute for trees:
+\cref{thm:matchsum} and the recursion of the next section compute it in linear time. Every value in this
+paper is an exact rational that anyone can recompute. Second, the maximization problem now has a clear
+tension. A matched edge is worth more when its endpoints have small degree, but small degrees mean few
+edges, and every edge incident to a vertex raises that vertex's degree and so lowers the weight of all
+its other edges. The maximizer resolves this tension in a surprisingly rigid way.
+
+\begin{inlean}
+This is \lean{pi\_eq\_msum} in \lean{Matching.lean}, proved for any finite acyclic simple graph with
+Mathlib's \lean{Matrix.permanent}. It is the only place where the permanent enters the formal proof.
+Everything afterwards works with the matching sum, called \lean{Aobj}, and the bridge theorem
+\lean{pi\_utree} in \lean{R47Tree.lean} says that for the trees of the formalization \lean{Aobj t}
+equals $\per L/\prod\deg$ of the realized graph. That is how the final theorem can be stated literally
+for the permanent (\cref{sec:lean}).
+\end{inlean}
+
+%=====================================================================================================
+\section{The cavity recursion}\label{sec:cavity}
+%=====================================================================================================
+
+Matching sums on trees can be computed from the leaves upward. This is the ``cavity method'' of
+statistical physics, and it is the workhorse of the whole proof.
 
 \paragraph{Planted branches.} A \emph{planted branch} $b$ is a rooted tree whose root will be attached to
-one further vertex, its parent. All degrees are measured in the final tree, so the root of $b$ has degree
-$d_b=(\text{number of children})+1$. Let $T_b$ be the matching sum of Theorem~\ref{thm:matchsum}
-restricted to $b$, and $T^{\circ}_b$ the same sum over matchings that leave the root of $b$ unmatched. Put
-$y_b=T^{\circ}_b/(d_bT_b)$. Splitting on whether, and to which child, the root is matched gives
+one further vertex, its parent. Degrees are always measured in the final tree, so the root of $b$ has
+degree $d_b=(\text{number of children})+1$. Let $T_b$ be the matching sum of \cref{thm:matchsum}
+restricted to edges of $b$, and $T^{\circ}_b$ the same sum over matchings that leave the root of $b$
+unmatched. The ratio
+\[
+  y_b=\frac{T^{\circ}_b}{d_b\,T_b}
+\]
+is the \emph{message} that $b$ sends to its parent: it measures how available the root of $b$ is to be
+matched upward, per unit of its degree. Splitting the matchings of $b$ according to whether, and to
+which child, the root is matched gives the recursion
 \begin{equation}\label{eq:cavity}
   T_b=\Big(\prod_{c}T_c\Big)\frac{d_b+R_b}{d_b},\qquad
   y_b=\frac{1}{d_b+R_b},\qquad R_b=\sum_c y_c,
 \end{equation}
-the products and sums running over the children $c$ of the root. A leaf has $T=1$, $y=1$. For a tree
-rooted at a vertex with $k$ children,
+where the products and sums run over the children $c$ of the root (\cref{fig:cavity}). Indeed
+$T^{\circ}_b=\prod_cT_c$, and matching the root to child $c$ contributes
+$\frac{1}{d_bd_c}T^{\circ}_c\prod_{c'\neq c}T_{c'}=\frac{y_c}{d_b}\prod_{c'}T_{c'}$. A leaf has $T=1$
+and $y=1$. For a tree rooted at a vertex with $k$ children, the same computation with $d=k$ (the root has
+no parent) gives
 \begin{equation}\label{eq:root}
   \pi(T)=\Big(\prod_{c}T_c\Big)\Big(1+\frac{R}{k}\Big),\qquad R=\sum_c y_c .
 \end{equation}
-Since \eqref{eq:cavity} multiplies one factor per vertex, $\log T_b=\sum_{v\in b}\log(1+R_v/d_v)$.
-
-\paragraph{Atoms.} Iterating \eqref{eq:cavity}: a cherry has $T=\tfrac32$ and $y=\tfrac13$. The arm $A_j$
-has $d=j+1$ and $R=j/3$, so
-\begin{equation}\label{eq:arm}
-  T(A_j)=\Big(\frac32\Big)^{j}\frac{4j+3}{3(j+1)},\qquad y(A_j)=\frac{3}{4j+3}.
+Since \eqref{eq:cavity} multiplies in one factor per vertex, a useful rewriting is
+\begin{equation}\label{eq:logsum}
+  \log T_b=\sum_{v\in b}\log\Big(1+\frac{R_v}{d_v}\Big).
 \end{equation}
-In particular $T(A_5)=(3/2)^5\cdot\tfrac{23}{18}=\tfrac{621}{64}$. The per-vertex rates are
-\[
-\begin{array}{c|ccccccc|c}
- & A_1 & A_2 & A_3 & A_4 & A_5 & A_6 & A_7 & \text{cherry}\\\hline
-\frac{\log T}{\#\text{vertices}} & 0.18654 & 0.20232 & 0.20565 & 0.2064721 & \mathbf{0.2065862} & 0.2064696 & 0.20628 & 0.2027326
-\end{array}
-\]
-and $\log T(A_j)/(2j+1)\to\tfrac12\log\tfrac32$, the cherry value, as $j\to\infty$. The five-cherry arm
-is the unique best, with $A_4$ and $A_6$ just behind.
 
+\begin{figure}[htbp]\centering
+\begin{tikzpicture}[scale=1]
+  \node[v,label=left:{\small $v$}] (v) at (0,0) {};
+  \node[cen] (p) at (0,1.2) {};
+  \node[font=\small,anchor=west] at (0.2,1.2) {parent};
+  \draw[dashed] (v)--(p);
+  \foreach \x/\lab in {-2.4/1,-0.8/2,2.4/k} {
+    \coordinate (c\lab) at (\x,-1.3);
+    \draw (v)--(c\lab);
+    \draw[fill=coolsoft] (c\lab)--++(-0.6,-1.2)--++(1.2,0)--cycle;
+    \node[v] at (c\lab) {};
+    \node[font=\scriptsize] at ($(c\lab)+(0,-1.5)$) {$(T_{c_\lab},\,y_{c_\lab})$};
+  }
+  \node at (0.8,-1.9) {$\cdots$};
+  \draw[-{Stealth},afive,thick] (3.6,-1.8)--(3.6,0.2);
+  \node[align=left,font=\small,anchor=west] at (3.8,-0.8)
+    {$T_v=\prod_c T_c\cdot\dfrac{d_v+R_v}{d_v}$\\[4pt] $y_v=\dfrac{1}{d_v+R_v}$\\[4pt] $R_v=\sum_c y_c,\quad d_v=k+1$};
+\end{tikzpicture}
+\caption{The cavity recursion. Each child subtree summarizes itself by a weight $T$ and a message $y$,
+and the vertex combines them. The whole tree's ratio is the same combination at the root, with $d=k$
+because the root has no parent.}
+\label{fig:cavity}
+\end{figure}
+
+\paragraph{Atoms.} Iterating \eqref{eq:cavity} on the smallest pieces:
+\begin{center}\small
+\begin{tabular}{@{}lccc@{}}
+\toprule
+piece & vertices & weight $T$ & message $y$\\
+\midrule
+leaf $A_0$ & 1 & $1$ & $1$\\
+cherry & 2 & $3/2$ & $1/3$\\
+arm $A_j$ & $2j+1$ & $(3/2)^j\,\frac{4j+3}{3(j+1)}$ & $\frac{3}{4j+3}$\\
+\bottomrule
+\end{tabular}
+\end{center}
+For the arm, the arm vertex has degree $j+1$ and receives $R=j/3$ from its $j$ cherries. In particular
+\[
+  T(A_5)=\Big(\frac32\Big)^5\cdot\frac{23}{18}=\frac{243}{32}\cdot\frac{23}{18}=\frac{621}{64},
+\]
+and the arithmetic identity $27\cdot23=621$ hidden in this line will reappear as the reason the extremal
+structure is exactly tight.
+
+Which piece gives the most weight per vertex? \Cref{fig:rates} plots $\log T(A_j)/(2j+1)$. A cherry
+gives $\tfrac12\log\tfrac32\approx0.2027$ per vertex. Arms do better, and the best is $A_5$, at
+$0.2065862$, with $A_4$ ($0.2064721$) and $A_6$ ($0.2064696$) just behind. As $j$ grows the arm
+approaches the cherry value, because the arm vertex itself becomes a negligible fraction of the arm.
+This small plot already contains the answer's shape: use $A_5$'s wherever possible, and fix the
+remainder with the nearly-as-good $A_4$ and $A_6$. What the plot does \emph{not} show, and what makes
+the problem hard, is that the root factor $1+R/k$ in \eqref{eq:root} also depends on the messages: arms
+with larger $y$ (smaller arms) help the root. The rule in \cref{thm:main} is the outcome of that
+competition.
+
+\begin{figure}[htbp]\centering
+\begin{tikzpicture}
+\begin{axis}[width=0.78\textwidth,height=5.4cm,xlabel={$j$ (cherries on the arm)},
+  ylabel={$\log T(A_j)/(2j+1)$},xmin=0.5,xmax=15.5,ymin=0.185,ymax=0.2095,
+  xtick={1,...,15},yticklabel style={/pgf/number format/fixed,/pgf/number format/precision=3},
+  grid=major,grid style={black!10},tick label style={font=\scriptsize},label style={font=\small}]
+  \addplot[mark=*,mark size=1.6pt,afour,thick] table[x=j,y=rate] {figdata/rates.dat};
+  \addplot[dashed,black!60,domain=0.5:15.5] {0.2027326};
+  \node[font=\scriptsize,anchor=north east] at (axis cs:15.3,0.2025) {cherry: $\tfrac12\log\tfrac32$};
+  \addplot[dotted,afive,thick,domain=0.5:15.5] {0.2065862};
+  \node[font=\scriptsize,afive,anchor=south] at (axis cs:5,0.2068) {$A_5$: $\log\rho$};
+\end{axis}
+\end{tikzpicture}
+\caption{Weight per vertex of the arm $A_j$. The five-cherry arm is the unique maximum, and its value
+$\log\rho$ is the growth rate of the maximum of $\pi$ (\cref{thm:growth}). The arms $A_4$ and $A_6$
+trail it by about $10^{-4}$, and long arms tend to the cherry value.}
+\label{fig:rates}
+\end{figure}
+
+\begin{inlean}
+The formalization has two models of trees and a bridge between them. \lean{UTree} (file
+\lean{R47Tree.lean}) is the ``real'' tree: a rooted tree that can be realized as a Mathlib
+\lean{SimpleGraph}, which is where the permanent lives. \lean{BGSCL.Branch} is a lightweight copy
+designed for recursion, and \lean{BGSCL.cav} computes the pair $(T^{\circ}_b,T_b)$ by
+\eqref{eq:cavity}; \lean{bY} is the message and \lean{piRoot} is \eqref{eq:root}. The translation
+\lean{fromU} from \lean{UTree} to \lean{Branch} and the theorem \lean{Aobj\_eq\_piRoot} (file
+\lean{BGMaximizer.lean}) say that computing with the lightweight model gives the true matching sum. Why
+two models? Proofs about permanents need a graph with a vertex type; proofs by recursion and by kernel
+computation need a plain inductive type with no graph attached. Keeping them separate, and proving once
+that they agree, keeps both kinds of proof simple.
+\end{inlean}
+
+%=====================================================================================================
 \section{The sharp ceiling and the growth rate}\label{sec:ceiling}
+%=====================================================================================================
 
 Write $\Fs=\tfrac1{11}\log\tfrac{621}{64}=\log\rho$ and, for a planted branch $b$ with $|b|$ vertices,
-$\bell(b)=\log T_b-|b|\Fs$.
+\[
+  \bell(b)=\log T_b-|b|\,\Fs .
+\]
+Think of $\bell(b)$ as the \emph{profit} of the branch: its log-weight minus the best possible
+log-weight for its size. The central inequality says profit is never positive.
 
 \begin{theorem}[sharp ceiling]\label{thm:sharp}
 Every planted branch $b$ satisfies $T_b\le\rho^{|b|}$, that is $\bell(b)\le0$, with equality if and only
 if $b$ is the five-cherry arm $A_5$.
 \end{theorem}
 
-In Lean: \lean{R3Cert.BGSCL.bg\_sharp}.
+\subsection{Subactions: paying for a vertex with its children's credit}
 
-\begin{proof}[Outline]
-\emph{Telescoping.} By the remark after \eqref{eq:root}, $\bell(b)=\sum_{v\in b}e_v$ with
-$e_v=\log(1+R_v/d_v)-\Fs$. Suppose $\varrho\ge0$ is a function of a vertex's local state with
+By \eqref{eq:logsum}, the profit is a sum of local terms,
+\[
+  \bell(b)=\sum_{v\in b}e_v,\qquad e_v=\log\Big(1+\frac{R_v}{d_v}\Big)-\Fs .
+\]
+Some vertices have $e_v>0$ (a vertex whose children send it large messages does well locally) and some
+have $e_v<0$ (a leaf has $e=-\Fs$). A term-by-term bound is hopeless. Instead we look for a
+\emph{potential} $\varrho\ge0$ on vertices, depending only on a vertex's local state, such that
 \begin{equation}\label{eq:sub}
   e_v+\varrho(v)\ \le\ \sum_{c\text{ child of }v}\varrho(c)\qquad\text{for every vertex }v.
 \end{equation}
-Summing \eqref{eq:sub} over $b$ telescopes to $\bell(b)\le-\varrho(\mathrm{root})\le0$. In the language
-of ergodic optimization $\varrho$ is a \emph{subaction}.
+Read \eqref{eq:sub} as a budget: each vertex may run a local profit $e_v$, but must pay for it out of
+the credit $\varrho(c)$ banked by its children, and must also bank credit $\varrho(v)$ for its own
+parent. Summing \eqref{eq:sub} over all vertices of $b$, each $\varrho(v)$ appears once on the left and
+once on the right (at its parent), except the root's, so everything telescopes (\cref{fig:telescope}):
+\[
+  \bell(b)=\sum_ve_v\ \le\ -\varrho(\mathrm{root})\ \le\ 0 .
+\]
+In the language of ergodic optimization such a $\varrho$ is a \emph{subaction}~\cite{Bousch2001}; its
+existence is the discrete analogue of finding a calibrating potential for an optimal orbit.
 
-\emph{The witness.} We use an explicit subaction $\varrho_{\mathrm{wit}}$ depending on a vertex's
-number of children and on its message $y$: it equals $\Fs$ at a leaf, is affine in $y$ at vertices with one,
-two or three children, and vanishes at vertices with four or more. Three constraints are tight, and they are exactly the three vertex types of
-$A_5$: leaf, cherry vertex, and the arm vertex with five cherries. (That the extremal structure is a
-finite periodic pattern is what makes a finite piecewise-affine subaction possible; compare
-\cite{Bousch2001}.) Their consistency is the identity
-$(3/2)^5\cdot\tfrac{23}{18}=\tfrac{621}{64}$, that is $27\cdot23=621$. Every other instance of
-\eqref{eq:sub} holds with rational slack. The verification splits into finitely many cells by degree
-(among them 35 cells for vertices with four children, and a tail wrapper for high degree), each an inequality
-between rational envelopes and a rational enclosure of a logarithm (Taylor or $\operatorname{atanh}$
-series with explicit remainder); see \lean{BGSCLSubaction*.lean}.
+\begin{figure}[htbp]\centering
+\begin{tikzpicture}[scale=1.0,
+  lab/.style={font=\scriptsize,fill=white,inner sep=1pt}]
+  \node[v] (r) at (0,0) {};
+  \node[v] (a) at (-2.8,-1.5) {}; \node[v] (b) at (0,-1.5) {}; \node[v] (c) at (2.8,-1.5) {};
+  \node[v] (a1) at (-3.8,-3.0) {}; \node[v] (a2) at (-1.8,-3.0) {};
+  \node[v] (c1) at (2.8,-3.0) {};
+  \draw (r)--(a) (r)--(b) (r)--(c) (a)--(a1) (a)--(a2) (c)--(c1);
+  \node[lab,anchor=south] at (r.north) {$e_r+\varrho(r)\le\varrho(a)+\varrho(b)+\varrho(c)$};
+  \node[lab,anchor=south east] at (a.north west) {$e_a+\varrho(a)\le\varrho(a_1)+\varrho(a_2)$};
+  \node[lab,anchor=south west] at (c.north east) {$e_c+\varrho(c)\le\varrho(c_1)$};
+  \node[lab,anchor=north] at (a1.south) {$e_{a_1}+\varrho(a_1)\le0$};
+  \node[lab,anchor=north] at (a2.south) {$e_{a_2}+\varrho(a_2)\le0$};
+  \node[lab,anchor=north] at (b.south) {$e_{b}+\varrho(b)\le0$};
+  \node[lab,anchor=north] at (c1.south) {$e_{c_1}+\varrho(c_1)\le0$};
+  \node[font=\small,align=center] at (0,-4.2)
+    {add them up: every $\varrho$ except the root's cancels, so $\sum_ve_v\le-\varrho(r)\le0$};
+\end{tikzpicture}
+\caption{Why a subaction proves the ceiling. Each vertex's inequality pays its local profit $e_v$ out
+of its children's credit; summed over the tree, the credits cancel along every edge.}
+\label{fig:telescope}
+\end{figure}
 
-\emph{Equality.} If $\bell(b)=0$ then every cell along $b$ is tight. The root cell is tight only at
-degree six, and at degree six only when all five children are cherries: one non-cherry child makes the
-cell strict, using the strict inequality $2\Fs-\log\tfrac32<\tfrac1{96}$. That inequality is where
-strictness enters; at degree three the non-strict version is exactly tight.
-\end{proof}
+\paragraph{The witness.} Remarkably, a very simple potential works. Writing $y$ for a vertex's message
+and grouping vertices by their number of children,
+\[
+  \varrho_{\mathrm{wit}}=
+  \begin{cases}
+    \Fs & \text{leaf},\\[1pt]
+    2\Fs-\log\tfrac32+\tfrac14\big(y-\tfrac13\big) & \text{one child},\\[1pt]
+    \tfrac1{32}\,y & \text{two children},\\[1pt]
+    \tfrac1{384}\,y & \text{three children},\\[1pt]
+    0 & \text{four or more children}.
+  \end{cases}
+\]
+Three instances of \eqref{eq:sub} are equalities, and they are exactly the three kinds of vertex in
+$A_5$:
+\begin{itemize}
+\item a leaf: $e=-\Fs$ and $\varrho=\Fs$, so $e+\varrho=0$;
+\item the middle vertex of a cherry (one leaf child, message $1/3$):
+  $e+\varrho=(\log\tfrac32-\Fs)+(2\Fs-\log\tfrac32)=\Fs=\varrho(\text{leaf})$;
+\item the arm vertex with five cherries ($d=6$, $R=5/3$, $\varrho=0$):
+  $e=\log\tfrac{23}{18}-\Fs$, and the children's credit is $5(2\Fs-\log\tfrac32)$. These agree exactly
+  when $11\Fs=\log\big(\tfrac{23}{18}(\tfrac32)^5\big)=\log\tfrac{621}{64}$, which is the definition of
+  $\Fs$.
+\end{itemize}
+Every other instance of \eqref{eq:sub} holds with room to spare. Checking that is a finite computation
+once one notices that \eqref{eq:sub} only involves a vertex and its children's local states, and that
+large degrees are easy (the term $\log(1+R/d)$ is bounded, while the credit of the children grows with
+their number). The verification splits into cells by degree and by ranges of the children's messages;
+in each cell the inequality compares a rational envelope against a rational enclosure of a logarithm.
 
-\begin{proof}[Proof of Theorem~\ref{thm:growth}]
+\paragraph{Equality.} If $\bell(b)=0$ then every inequality along $b$ is tight. Tightness at the root
+forces degree six, and at degree six it forces all five children to be cherries: a single non-cherry
+child makes the cell strict. The strictness needs the numerical fact $2\Fs-\log\tfrac32<\tfrac1{96}$,
+which follows from $\log x<x-1$ at $x=(621/64)^2(2/3)^{11}\neq1$. At degree three the non-strict
+version of this bound is exactly tight, so it cannot be weakened.
+
+\begin{inlean}
+The subaction bridge (\lean{ceiling\_of\_witness}) and \lean{$\rho$wit} are in \lean{BGSCLSubaction.lean};
+the cells are in \lean{BGSCLSubactionD4Cells.lean} (35 cells for vertices with four children),
+\lean{BGSCLSubactionTailWrap.lean} (high degree) and the dispatcher \lean{BGSCLSubactionDispatch.lean},
+which sorts a vertex's children and sends it to the right cell. The logarithm enclosures are Taylor or
+$\operatorname{atanh}$ series with explicit remainders, proved as ordinary Mathlib lemmas, so no floating
+point is trusted. \lean{BGSCLSharp.bg\_sharp} packages both halves of \cref{thm:sharp}.
+\end{inlean}
+
+\subsection{The growth rate}
+
+\begin{proof}[Proof of \cref{thm:growth}]
 Root $T$ anywhere. In \eqref{eq:root} each child $c$ is a planted branch, so $\prod_cT_c\le\rho^{n-1}$
-by Theorem~\ref{thm:sharp}; and each $y_c\le1$, so $1+R/k\le2$. For the lower bound, take a centre
+by \cref{thm:sharp}; and each $y_c\le1$, so $1+R/k\le2$. For the lower bound, take a centre
 carrying $K=\lfloor (n-1)/11\rfloor$ arms $A_5$, and fill the remaining at most ten vertices with
-cherries and at most one leaf; each $T\ge1$, so $\pi\ge\rho^{11K}\ge\tfrac{64}{621}\rho^{n}$.
-In Lean: \lean{R3Cert.Step3.bg\_max\_growth}.
+cherries and at most one leaf; each has $T\ge1$, so $\pi\ge\rho^{11K}\ge\tfrac{64}{621}\rho^{n}$.
 \end{proof}
 
-\section{Every maximizer is a spider}\label{sec:reduction}
+\begin{inlean}
+\lean{R3Cert.Step3.bg\_max\_growth} in \lean{BGGrowthRate.lean}. It is stated for \lean{UTree} and
+\lean{Aobj}, so via \lean{pi\_utree} it is a statement about permanents.
+\end{inlean}
 
-Root a tree at a vertex of maximum degree $k$; call its children $b_1,\dots,b_k$. Every vertex then has at
-most $k-1$ children. Rerooting preserves $\pi$ and the vertex count (\lean{RerootRel},
-\lean{exists\_maxRooted}). The \emph{atoms} are the leaf, the cherry and the arms $A_j$; the tree is a
-spider centred at the root exactly when every $b_i$ is an atom. Taking logarithms in \eqref{eq:root},
+\Cref{fig:ratio} shows $\pi(\mathrm{bgMax}(n))/\rho^{n-1}$ for $n\le1500$. After a transient it settles
+into a band near $1.13$, with a period-11 wiggle that reflects the residue rule. The two bounds of
+\cref{thm:growth} are far apart in constant but equal in rate; the whole remaining effort of the paper
+is to determine the constant, and the tree, exactly.
+
+\begin{figure}[htbp]\centering
+\begin{tikzpicture}
+\begin{axis}[width=0.92\textwidth,height=5.4cm,xlabel={$n$},ylabel={$\max\pi/\rho^{n-1}$},
+  xmin=0,xmax=1500,ymin=1.11,ymax=1.36,grid=major,grid style={black!10},
+  yticklabel style={/pgf/number format/fixed,/pgf/number format/precision=2},
+  tick label style={font=\scriptsize},label style={font=\small},
+  legend style={font=\scriptsize,at={(0.98,0.95)},anchor=north east}]
+  \addplot[only marks,mark=*,mark size=0.45pt,afour] table[x=n,y=r] {figdata/ratio_table.dat};
+  \addplot[only marks,mark=*,mark size=0.45pt,afive] table[x=n,y=r] {figdata/ratio_rule.dat};
+  \legend{table ($n\le491$),rule ($n\ge492$)}
+  \draw[dashed,black!50] (axis cs:492,1.11)--(axis cs:492,1.36);
+\end{axis}
+\end{tikzpicture}
+\caption{The normalized maximum $\pi(\mathrm{bgMax}(n))/\rho^{n-1}$. \Cref{thm:growth} confines it to
+$[\tfrac{64}{621}\rho,\,2]$; the true values lie between $1.12$ and $1.35$ and oscillate with period 11
+for large $n$.}
+\label{fig:ratio}
+\end{figure}
+
+%=====================================================================================================
+\section{Every maximizer is a spider}\label{sec:reduction}
+%=====================================================================================================
+
+We now show that a tree that is not a spider cannot be a maximizer. The idea is to measure precisely
+how much each departure from spider shape costs, and to show the cost always exceeds any possible gain.
+
+\subsection{Setting up the comparison}
+
+\paragraph{Rooting at maximum degree.} Rerooting a tree changes neither $\pi$ nor the vertex count, so
+we may root at a vertex of maximum degree $k$. Then every vertex has at most $k-1$ children. This cap is
+what makes finitely many local inequalities sufficient for each $k$. Call the root's children
+$b_1,\dots,b_k$. The \emph{atoms} are the leaf, the cherry and the arms $A_j$; the tree is a spider
+centred at the root exactly when every $b_i$ is an atom (\cref{fig:reduction}).
+
+\paragraph{The profit identity.} Taking logarithms in \eqref{eq:root},
 \begin{equation}\label{eq:lagrange}
   \log\pi-(n-1)\Fs=\sum_{i=1}^{k}\bell(b_i)+\log\Big(1+\frac{S}{k}\Big),\qquad S=\sum_i y_{b_i}.
 \end{equation}
-By Theorem~\ref{thm:sharp} every term of the sum is $\le0$. The task is to show that a non-atom child costs
-more than any possible gain in the last term, measured against the best spider of the same size. We
-compare with explicit spiders: the $A_5/A_4$ spider (with $q\equiv5(n-1)\pmod{11}$ arms $A_4$ and the rest
-$A_5$) satisfies
+By \cref{thm:sharp} every term of the sum is $\le0$, so a tree's total profit is its root bonus
+$\log(1+S/k)$ minus the losses of its branches. A non-atom branch has a strictly negative profit, but it
+might send a larger message and so raise the root bonus. We must show that trade never pays.
+
+\paragraph{The benchmark.} We compare against explicit spiders. The $A_5/A_4$ spider, with
+$q\equiv5(n-1)\pmod{11}$ arms $A_4$ and the rest $A_5$, satisfies
 \begin{equation}\label{eq:floor}
   \log\pi-(n-1)\Fs\ \ge\ \log\tfrac{26}{23}-\tfrac{10}{960},
 \end{equation}
-because $A_4$ has $y=\tfrac3{19}>\tfrac3{23}=y(A_5)$ and each $A_4$ costs little.
+because each $A_4$ costs little profit and sends a larger message than an $A_5$
+($y(A_4)=\tfrac3{19}>\tfrac3{23}=y(A_5)$).
 
-\paragraph{High degree ($k\ge24$).} Use the tangent of $\log(1+S/k)$ at $S/k=3/23$, which prices each
-unit of message at $\mu=\tfrac{23}{26k}\le\tfrac{23}{624}$. For $V_\mu(b)=\bell(b)+\mu y_b$ we show that on
-this range of $\mu$ the arm $A_5$ is the envelope of $V_\mu$ over all branches, and every non-atom lies
-below it by at least $\tfrac1{75}$ (the observed minimum is $0.01452$, at a vertex carrying five
-cherries and an $A_4$). This reduces, through the subaction, to three per-vertex statements, each proved
-with rational tangent certificates and degree-six Taylor enclosures of $\log$. Hence a max-degree rooting
-with a non-atom child has $\log\pi-(n-1)\Fs\le\log\tfrac{26}{23}-\tfrac1{75}$, below
-\eqref{eq:floor}. This settles $k\ge24$ for $n\ge91$ (\lean{spider\_dominates\_highDegree\_uncond}); for
-$25\le n\le90$ we compare with the table spider instead, by a kernel-checked inequality at each $n$
-(\lean{BGHighDegreeSmall.highDegree\_small}).
+\begin{figure}[htbp]\centering
+\begin{tikzpicture}[scale=0.75]
+  \begin{scope}
+    \node[cen] (o) at (0,0) {};
+    \foreach \ang in {90,160,230} {
+      \node[v] (a) at (\ang:1.3) {}; \draw (o)--(a);
+      \foreach \k in {-1,0,1} {\draw (a)--++(\ang+35*\k:0.6) node[v]{} --++(\ang+35*\k:0.5) node[v]{};}
+    }
+    \node[v,asix] (x) at (330:1.3) {}; \draw (o)--(x);
+    \node[v,asix] (x1) at ($(x)+(330:0.8)$) {}; \draw[asix] (x)--(x1);
+    \foreach \k in {-1,0,1} {\draw[asix] (x1)--++(330+40*\k:0.6) node[v,asix]{} --++(330+40*\k:0.5) node[v,asix]{};}
+    \draw[asix] (x)--++(260:0.6) node[v,asix]{};
+    \node[font=\small,align=center] at (0,-2.9) {not a spider: one branch\\ is not an atom};
+  \end{scope}
+  \draw[-{Stealth},thick] (3.0,0)--(4.4,0) node[midway,above,font=\small] {beaten by};
+  \begin{scope}[xshift=7.5cm]
+    \node[cen] (o) at (0,0) {};
+    \foreach \ang in {90,162,234,306} {
+      \node[v] (a) at (\ang:1.3) {}; \draw (o)--(a);
+      \foreach \k in {-1,0,1} {\draw (a)--++(\ang+35*\k:0.6) node[v]{} --++(\ang+35*\k:0.5) node[v]{};}
+    }
+    \draw (o)--(18:1.2) node[v]{} --(18:1.9) node[v]{};
+    \node[font=\small,align=center] at (0,-2.9) {a spider on the\\ same number of vertices};
+  \end{scope}
+\end{tikzpicture}
+\caption{The reduction. Rooted at a vertex of maximum degree, a tree is a spider exactly when every
+branch at the root is an atom (leaf, cherry or arm). A non-atom branch (highlighted) always costs more
+profit than it can return through the root bonus, so some spider of the same size does strictly better.}
+\label{fig:reduction}
+\end{figure}
 
-\paragraph{Low degree, large $n$ ($k\le23$, $n\ge492$).} Here we trade the subaction's slack for a
-\emph{linear deficit}. A \emph{rate cell} with degree cap $D$ and rate $\alpha$ is a per-vertex inequality
-which, telescoped as in \eqref{eq:sub}, yields
+The argument then splits by the root degree $k$ and by $n$.
+
+\subsection{High degree: $k\ge24$}
+
+When the root has many children, the root bonus $\log(1+S/k)$ is nearly linear in $S$ over the relevant
+range. Replace it by its tangent line at the spider value $S/k=3/23$ (\cref{fig:tangent}). The slope
+prices each unit of message at $\mu=\tfrac{23}{26k}\le\tfrac{23}{624}$, and the profit identity becomes
+a sum over branches of
+\[
+  V_\mu(b)=\bell(b)+\mu\,y_b,
+\]
+a branch's profit plus the market value of its message. On this range of prices we show that $A_5$
+maximizes $V_\mu$ over all branches, and that every non-atom lies below it by at least $\tfrac1{75}$.
+(The closest non-atom competitor, at $0.01452$ below, is a vertex carrying five cherries and one $A_4$.)
+So a tree with a non-atom branch has $\log\pi-(n-1)\Fs\le\log\tfrac{26}{23}-\tfrac1{75}$, which is below
+the benchmark \eqref{eq:floor} because $\tfrac1{75}>\tfrac{10}{960}$.
+
+\begin{figure}[htbp]\centering
+\begin{tikzpicture}
+\begin{axis}[width=0.62\textwidth,height=5cm,xlabel={$S/k$},ylabel={root bonus},
+  xmin=0,xmax=0.4,ymin=0,ymax=0.36,grid=major,grid style={black!10},
+  tick label style={font=\scriptsize},label style={font=\small},
+  xtick={0,0.1,0.130434,0.2,0.3,0.4},xticklabels={0,0.1,$\frac3{23}$,0.2,0.3,0.4}]
+  \addplot[thick,afour,domain=0:0.4,samples=60] {ln(1+x)};
+  \addplot[dashed,afive,domain=0:0.4] {ln(26/23)+(23/26)*(x-3/23)};
+  \addplot[only marks,mark=*,mark size=1.8pt,afive] coordinates {(0.130434,0.122602)};
+  \node[font=\scriptsize,afour,anchor=north west] at (axis cs:0.27,0.22) {$\log(1+S/k)$};
+  \node[font=\scriptsize,afive,anchor=south east] at (axis cs:0.33,0.30) {tangent: price per unit of $S$};
+\end{axis}
+\end{tikzpicture}
+\caption{The high-degree argument replaces the concave root bonus by its tangent at the spider value
+$S/k=3/23$, which can only overestimate it. The bonus then becomes linear, and each branch can be judged
+on its own: its profit plus the value of its message at a fixed price.}
+\label{fig:tangent}
+\end{figure}
+
+\begin{inlean}
+The envelope statement reduces, through the subaction of \cref{sec:ceiling}, to three per-vertex
+inequalities (\lean{surchargeCore\_proved}, \lean{atomCell0Core\_proved}, \lean{atomCellMuCore\_proved})
+in \lean{BGSpiderCells.lean}, proved with 22 rational tangent certificates and degree-six Taylor
+enclosures of $\log$; the tightest margin is $7.3\cdot10^{-4}$. The result is
+\lean{spider\_dominates\_highDegree\_uncond} for $n\ge91$. For $25\le n\le90$ the benchmark
+\eqref{eq:floor} is too weak, so \lean{BGHighDegreeSmall.highDegree\_small} compares instead with the
+exact best spider from the table of \cref{sec:spiders}, one kernel-checked inequality per $n$.
+\end{inlean}
+
+\subsection{Low degree and large $n$: linear deficits}
+
+When $k\le23$ the tangent trick is too crude, and we use size instead. A tree with a non-atom branch
+should lose profit in proportion to its size, while the root bonus is bounded. We strengthen the
+subaction inequality \eqref{eq:sub} by a small fixed rate $\alpha$ per vertex. A \emph{rate cell} with
+degree cap $D$ and rate $\alpha$ is a per-vertex inequality which, telescoped exactly as in
+\cref{fig:telescope}, yields a \emph{linear deficit}
 \[
   \bell(b)+\varrho_{\mathrm{wit}}(b)\ \le\ -\alpha|b|\qquad\text{for every non-atom branch }b
   \text{ with at most }D-1\text{ children per vertex.}
 \]
-We use $D=23$ with $\alpha=\tfrac1{3700}$ (root degree $6$ to $23$), and $D=5,4,3,2$ with
-$\alpha=\tfrac1{2100},\tfrac1{660},\tfrac1{420},\tfrac1{135}$ (root degree $5,4,3,2$). There are 32 rate
-cells and 22 root cells; the tightest margin is $2.8\cdot10^{-4}$. Then
-$\log\pi-(n-1)\Fs\le R_k-\alpha(n-1)$ with $R_k\in[0.208,0.319]$, which falls below \eqref{eq:floor} once
-$n-1\ge491$ (\lean{spider\_dominates\_lowDegree\_uncond}).
+Atoms are exempt, because $A_5$ has zero profit and cannot lose anything. Then
+\[
+  \log\pi-(n-1)\Fs\ \le\ R_k-\alpha(n-1),
+\]
+where $R_k$ bounds what the root can gain. With $R_k\le0.319$ and the rates below, this falls under the
+benchmark once $n-1\ge491$. That is where the threshold $492$ comes from.
 
-\paragraph{Low degree, $150\le n\le491$.} The same scheme with two refinements: in a tree of maximum
-degree $\le D$ every message satisfies $y\ge 1/(2D-1)$, which narrows the per-cell ranges; and non-atom
-branches carry a \emph{credit} $\kappa$ depending on their number of children,
-$\bell(b)+\varrho_{\mathrm{wit}}(b)\le-\alpha|b|-\kappa(b)$, which they pass to the root. The root is then
-bounded by an explicit knapsack over atoms, certified separately for each pair $(k,n)$
-(\lean{BGSpiderMidCells*}, \lean{BGSpiderMidRoot*}; \lean{spider\_dominates\_of\_maxDegreeRoot\_150}).
+\begin{center}\small
+\begin{tabular}{@{}lccccc@{}}
+\toprule
+root degree $k$ & $6$--$23$ & $5$ & $4$ & $3$ & $2$\\
+cap $D$ & $23$ & $5$ & $4$ & $3$ & $2$\\
+rate $\alpha$ & $1/3700$ & $1/2100$ & $1/660$ & $1/420$ & $1/135$\\
+\bottomrule
+\end{tabular}
+\end{center}
 
-\paragraph{Low degree, $7\le n\le149$: the envelope certificate.} For small $n$ the linear deficit is too
-weak, and we instead compute a Bellman envelope. Fix a rational rate $f$ close to $\Fs$ (it cancels between
-a tree and a spider of the same size) and a grid of prices $\mu_g$. With
-$V_{\mu}(b)=\log T_b-|b|f+\mu y_b$, the tangent of $x\mapsto\log x+\mu/x$ bounds $V_\mu$ at a vertex by a
-constant plus $\sum_cV_{\nu}(c)$ at a new price $\nu$ (\lean{BGEnvCert.Tangent}), and a max-plus knapsack
-over child sizes bounds the sum. A table $w(m,g)$, indexed by size $m$ and grid point $g$, is a valid
-envelope if it satisfies finitely many such inequalities; the envelope theorem
-(\lean{BGEnvCert.Envelope}) then gives $V_{\mu_g}(b)\le w(|b|,g)$ for every branch of size $m$ with at
-most $C$ children per vertex, and a sharper table for non-atoms. The root inequality with at least one
-non-atom child is checked against certified lower bounds for explicit spiders (\lean{BGEnvCert.Spider}).
+\begin{inlean}
+\lean{BGSpiderLowDegree.lean}: 32 rate cells and 22 root cells, each a tangent certificate with rational
+envelopes (tightest margin $2.8\cdot10^{-4}$), assembled into \lean{spider\_dominates\_lowDegree\_uncond}.
+\lean{BGMax.bg\_spider\_reduction} in \lean{BGMaximizer.lean} combines both degree ranges with the
+rerooting lemma \lean{exists\_maxRooted} for every $n\ge492$.
+\end{inlean}
 
-All tables are stored in fixed point ($34$ fractional bits) and packed into lanes of large natural
-numbers, and the checks are Boolean functions that the kernel evaluates. We cover root degrees
-$2\le k\le23$ with caps $C\in\{1,\dots,8,12,16,22\}$; roots of degree $\ge24$ are handled by the
-high-degree theorems. The certificate is sharded into 57 Lean files (\S\ref{sec:telperion}) and
-assembled by \lean{BGEnvCert.AssembleK} into \lean{G149.envcertK}; the result is
-\lean{maximizer\_is\_spider\_small}.
+\subsection{Low degree, $150\le n\le491$: rate cells with credits}
 
-\paragraph{$4\le n\le6$.} Every tree is enumerated by a fuel-bounded structural recursion and its value
-computed exactly over $\mathbb{Q}$ (\lean{BGMaximizerTiny}).
+Below $492$ the linear deficit is not yet large enough, and we sharpen it in two ways. First, in a tree
+of maximum degree $\le D$ every message satisfies $y\ge 1/(2D-1)$, which narrows the range of messages
+each cell must handle. Second, non-atom branches carry a \emph{credit} $\kappa$ depending on their
+number of children, $\bell(b)+\varrho_{\mathrm{wit}}(b)\le-\alpha|b|-\kappa(b)$, which they pass up to
+the root. The root is then bounded by an explicit knapsack over atoms, certified separately for each
+pair $(k,n)$.
+
+\begin{inlean}
+\lean{BGSpiderMid.lean} proves the generic credited telescoping. The generated files
+\lean{BGSpiderMidCellsD2}--\lean{D23} (cells, one file per cap) and \lean{BGSpiderMidRootK2}--\lean{K23}
+(root knapsacks, one file per root degree) are the certificates. \lean{BGSpiderMidFinal.lean} assembles
+\lean{spider\_dominates\_of\_maxDegreeRoot\_150}, and \lean{BGMax.maximizer\_is\_spider\_150} states the
+result for every $n\ge150$.
+\end{inlean}
+
+\subsection{Low degree, $7\le n\le149$: the envelope certificate}
+
+For small trees a uniform rate is far too weak, so we compute instead. The object computed is a
+\emph{Bellman envelope}: a table $w(m,g)$ that bounds, for every branch of size $m$, its profit plus the
+value of its message at price $\mu_g$, where the prices run over a grid (\cref{fig:envelope}).
+
+Fix a rational rate $f$ close to $\Fs$ (it cancels between a tree and a spider of the same size), put
+$V_{\mu}(b)=\log T_b-|b|f+\mu y_b$, and consider a vertex with its children. The function
+$x\mapsto\log x+\mu/x$ is concave on the relevant range, so its tangent bounds $V_\mu$ at the vertex by
+a constant plus $\sum_cV_{\nu}(c)$ at a new price $\nu$. In words: a vertex's value at price $\mu$ is
+controlled by its children's values at a price that the vertex determines. The children's sizes add up
+to $m-1$, so the best total over children is a max-plus knapsack over sizes. A table that satisfies all
+these knapsack inequalities is a valid envelope by induction on size, and the proof needs only that
+finitely many table inequalities hold.
+
+\begin{figure}[htbp]\centering
+\begin{tikzpicture}[scale=0.9]
+  \foreach \i in {0,...,6} \foreach \j in {0,...,4} {
+    \pgfmathsetmacro{\sh}{15+8*\j}
+    \fill[afour!\sh] (\i*0.5,\j*0.45) rectangle ++(0.5,0.45);
+  }
+  \draw[black!40,xstep=0.5,ystep=0.45] (0,0) grid (3.5,2.25);
+  \draw (0,0) rectangle (3.5,2.25);
+  \node[font=\small,below] at (1.75,0) {size $m$};
+  \node[font=\small,rotate=90,above] at (0,1.12) {price $\mu_g$};
+  \node[font=\small,above] at (1.75,2.3) {envelope table $w(m,g)$};
+  \fill[afive] (3.0,0.9) rectangle ++(0.5,0.45);
+  \draw[-{Stealth},thick] (3.8,1.1)--(5.0,1.1);
+  \begin{scope}[xshift=6.4cm,yshift=1.9cm]
+    \node[v,afive,label=above:{\small entry $(m,g)$}] (p) at (0,0) {};
+    \foreach \x/\s in {-1.3/m_1,0/m_2,1.3/m_3} {
+      \draw (p)--(\x,-1.1);
+      \draw[fill=coolsoft] (\x,-1.1)--++(-0.4,-0.8)--++(0.8,0)--cycle;
+      \node[font=\scriptsize] at (\x,-2.15) {$w(\s,\nu)$};
+    }
+    \node[font=\small,align=left,anchor=west] at (1.9,-0.9)
+      {tangent step + knapsack:\\[2pt] $w(m,g)\ \ge\ \text{const}+\!\!\max\limits_{m_1+m_2+\cdots=m-1}\sum_i w(m_i,\nu)$};
+  \end{scope}
+\end{tikzpicture}
+\caption{The envelope certificate. A table indexed by branch size and price is valid if every entry
+dominates the tangent-step bound computed from smaller entries; induction on size then bounds every
+branch. The table for $n\le149$ is stored in fixed point and checked entry by entry by the Lean kernel.}
+\label{fig:envelope}
+\end{figure}
+
+We cover root degrees $2\le k\le23$, using separate tables for vertex-degree caps
+$C\in\{1,\dots,8,12,16,22\}$; roots of degree $\ge24$ are handled by the high-degree argument. The
+final root inequality, with at least one non-atom child, is compared against certified lower bounds for
+explicit spiders.
+
+\begin{inlean}
+This is the most computation-heavy part of the proof, and its organization is dictated by how the Lean
+kernel evaluates. The theory is in \lean{BGEnvCert/}: \lean{Tangent} (the tangent step), \lean{Envelope}
+(the induction on size), \lean{Sound} (a passing Boolean check implies the real inequalities),
+\lean{Spider} (certified spider values) and \lean{AssembleK} (combining the caps). The data is in
+\lean{BGEnvCert/G149/}: 57 generated files. Tables are fixed point with 34 fractional bits, packed as
+lanes of large natural numbers, and each check is a Boolean function evaluated by \lean{decide +kernel}.
+The file \lean{MainK} assembles them into \lean{envcertK}, and
+\lean{BGMaximizerSmall.maximizer\_is\_spider\_small} gives the result for $7\le n\le149$.
+\Cref{sec:telperion} explains why the data is split the way it is.
+\end{inlean}
+
+\subsection{The smallest trees, and the summary}
+
+For $4\le n\le6$ there are few enough trees to evaluate every one exactly over $\mathbb{Q}$.
 
 \begin{theorem}\label{thm:reduction}
 For every $n\ge7$, every tree on $n$ vertices that maximizes $\pi$ is, after rerooting at a vertex of
@@ -360,20 +860,33 @@ maximum degree, a spider. For $n\ge492$ every tree on $n$ vertices is weakly bea
 vertices.
 \end{theorem}
 
-In Lean: \lean{maximizer\_is\_spider\_small} ($7\le n\le149$), \lean{BGMax.maximizer\_is\_spider\_150}
-($n\ge150$), \lean{BGMax.bg\_spider\_reduction} ($n\ge492$).
+\begin{inlean}
+\lean{BGMaximizerTiny.lean} enumerates trees for $n\le6$ by a fuel-bounded structural recursion (the
+kernel does not efficiently unfold well-founded recursion) and evaluates them with a $\mathbb{Q}$ copy of
+the cavity recursion, \lean{cavQ}, proved equal to the real one by \lean{cavQ\_cast}. The three range
+theorems of \cref{thm:reduction} are \lean{maximizer\_is\_spider\_small}, \lean{maximizer\_is\_spider\_150}
+and \lean{bg\_spider\_reduction}. Existence of a maximizer at each size, which the argument needs, is
+\lean{BGMaximizerMid.exists\_max\_tree}: there are finitely many trees on $n$ vertices.
+\end{inlean}
 
+%=====================================================================================================
 \section{The best spider}\label{sec:spiders}
+%=====================================================================================================
 
-A spider is described up to isomorphism by the multiset of its centre's children. By
-\eqref{eq:root} and \eqref{eq:arm} its value has the closed form
+We now optimize over spiders. By \eqref{eq:root} and the table of atoms, a spider's value has a closed
+form, and the problem becomes a question about integers.
+
+\subsection{The closed form and the balance identity}
+
+A spider is described up to isomorphism by the multiset of its centre's children, and
 \[
   F=\Big(\frac32\Big)^{c+\sum j}\prod_{\text{arms}}\alpha_j\cdot\Big(1+\frac{c/3+\sum b_j}{D}\Big),
   \qquad \alpha_j=\frac{4j+3}{3(j+1)},\quad b_j=\frac{3}{4j+3},
 \]
-where $c$ is the number of cherries, the product and sum run over the arms (leaves being $A_0$, with
-$\alpha_0=b_0=1$), and $D$ is the degree of the centre. In Lean, $F$ is a function on lists of children
-over $\mathbb{Q}$, and \lean{Aobj\_spiderU} identifies it with $\pi$ of the realized tree.
+where $c$ is the number of cherries at the centre, the product and sum run over the arms (leaves being
+$A_0$, with $\alpha_0=b_0=1$), and $D$ is the degree of the centre. The first factor is fixed by $n$ up
+to the number of arms, so the optimization is a balance between the arm factors $\alpha_j$ and the
+bracket.
 
 \begin{lemma}[balance]\label{lem:balance}
 Put $Q_c(x,y)=\alpha_x\alpha_y(c+b_x+b_y)$. For integers $k,t\ge0$,
@@ -385,89 +898,227 @@ $F$, and in every maximizer with $D\ge3$ all arm sizes (leaves included) differ 
 \end{lemma}
 
 \begin{proof}
-The move keeps $n$, $D$ and the power of $\tfrac32$, and multiplies $F$ by
+The move (\cref{fig:balance}) keeps $n$, $D$ and the power of $\tfrac32$, and multiplies $F$ by
 $Q_c(\text{new})/Q_c(\text{old})$ with $c=D+R_0\ge3$, where $R_0$ is the message sum of the other
-children. The identity is a polynomial identity (\lean{balance\_identity}).
+children. The right side of the identity is then positive. The identity itself is a polynomial
+identity in $k,t,c$.
 \end{proof}
 
-Two further exact exchanges are used: two leaves are never better than one cherry
-(\lean{F\_leafpair\_lt}), and a general local-exchange criterion that is affine in $R_0$ and so reduces to
-two quadratics in $D_0$ (\lean{F\_exchange\_lt}).
+\begin{figure}[htbp]\centering
+\begin{tikzpicture}[scale=0.8]
+  \newcommand{\arm}[4]{%
+    \node[v,#4] (A) at (#1,#2) {};
+    \foreach \k in {1,...,#3} {
+      \pgfmathsetmacro{\t}{90+(\k-(#3+1)/2)*24}
+      \draw (A)--++(\t:0.6) node[v]{} --++(\t:0.45) node[v]{};
+    }
+  }
+  \begin{scope}
+    \node[cen] (o) at (0,-1.2) {};
+    \draw (o)--(-1.3,0); \draw (o)--(1.3,0);
+    \arm{-1.3}{0}{6}{afive}
+    \arm{1.3}{0}{2}{afour}
+    \node[font=\small] at (0,-1.9) {$A_{6}$ and $A_{2}$};
+    \draw[-{Stealth},afive,thick] (-0.9,1.35) to[bend left=35] node[above,font=\scriptsize]{move one cherry} (1.0,1.35);
+  \end{scope}
+  \draw[-{Stealth},thick] (3.0,-0.3)--(4.3,-0.3) node[midway,above,font=\small] {$F$ increases};
+  \begin{scope}[xshift=7.3cm]
+    \node[cen] (o) at (0,-1.2) {};
+    \draw (o)--(-1.3,0); \draw (o)--(1.3,0);
+    \arm{-1.3}{0}{5}{afive}
+    \arm{1.3}{0}{3}{afour}
+    \node[font=\small] at (0,-1.9) {$A_{5}$ and $A_{3}$};
+  \end{scope}
+\end{tikzpicture}
+\caption{The balance move of \cref{lem:balance}, shown with $k=2$, $t=2$ (the centre's other children
+are not drawn). Whenever the centre has at least three children, evening out two arms whose sizes differ
+by two or more strictly increases the ratio. So a best spider has all its arms of two consecutive sizes.}
+\label{fig:balance}
+\end{figure}
 
-\paragraph{$4\le n\le491$.} By Lemma~\ref{lem:balance}, a maximizer with $D\ge3$ is a permutation of a
-canonical configuration $(c,s,a,b)$: $c$ cherries, $a$ arms $A_s$ and $b$ arms $A_{s+1}$. Its value has
-an exact integer numerator and denominator. For each $n$ the kernel compares every canonical
-configuration on $n$ vertices, and every configuration with $D\le2$, against the table entry, by
-cross-multiplied inequalities of natural numbers (\lean{BGSpiderTable.spider\_opt\_table}). The sweep is
-split into 89 chunk files of about five sizes each. At $n=21$ two non-isomorphic spiders tie
-($C^{10}$ and $C^3A_3^2$); the table records $C^3A_3^2$.
+Two further exact exchanges are used: two leaves at the centre are never better than one cherry, and a
+general local-exchange criterion that is affine in $R_0$, and so reduces to checking two quadratics in
+the number $D_0$ of other children.
 
-\paragraph{$n\ge492$: structure.} Let $l$ be a maximizer of $F$ with $n\ge492$. Then (Lean: \lean{structProp\_492}) the centre has at least three children; there is no arm $A_j$
-with $j\ge13$ (split it into $A_{j-11}$ and two $A_5$); none with $7\le j\le12$ (exchange eleven $A_j$ for
-$2j+1$ copies of $A_5$, and a global comparison with the rule spider); at most eight cherries (nine
-cherries lose to two $A_4$); no arm with $j\le3$; so every arm is $A_4$, $A_5$ or $A_6$, $A_4$ and $A_6$
-do not occur together, and there are at most ten of each. The global comparison uses
-$(\prod T)^2=(3/2)^{n-1}\prod h$ with $h(\text{cherry})=1$ and $h(A_j)=\tfrac23\alpha_j^2$; its tightest
-instance is $24.45<28.43$.
+\begin{inlean}
+\lean{BGSpiderOpt.lean} models a spider as a list of children with the closed-form value \lean{F} over
+$\mathbb{Q}$ and proves \lean{balance\_identity}, \lean{F\_balance\_lt}, \lean{balanced\_of\_isMax},
+\lean{F\_leafpair\_lt} and \lean{F\_exchange\_lt}. The link to real trees is
+\lean{BGSpiderRule.Aobj\_spiderU}: for the tree \lean{spiderU l} built from a child list \lean{l},
+\lean{Aobj} equals \lean{F l}.
+\end{inlean}
 
-\paragraph{$n\ge492$: the candidates.} A candidate is determined by its counts $(c,k_4,k_5,k_6)$, and
-$F=\Phi(c,k_4,k_5,k_6)$ with
-$\Phi=(\tfrac32)^{c}G_4^{k_4}G_5^{k_5}G_6^{k_6}\bigl(1+\frac{c/3+k_4B_4+k_5B_5+k_6B_6}{c+k_4+k_5+k_6}\bigr)$,
-$G_4=\tfrac{513}{80}$, $G_5=\tfrac{621}{64}$, $G_6=\tfrac{6561}{448}$, $B_4=\tfrac3{19}$, $B_5=\tfrac3{23}$,
-$B_6=\tfrac19$. The triple $(c,k_4,k_6)$ fixes the residue class $s$ and hence the rule winner's counts;
-after dividing out a common power of $G_5$, the comparison $\Phi(\text{candidate})\le\Phi(\text{winner})$
-becomes $P(m)\ge0$ for an explicit quadratic $P$ in the common number $m$ of five-cherry arms. There are
-189 triples and 223 certificates: 221 write $P(L+t)$ with nonnegative coefficients in $t$, and two (the
-competitions that decide the thresholds $722$ and $2319$) write it in the Bernstein basis on a bounded
-interval. Lean checks each identity with \lean{ring} and each sign with \lean{norm\_num}
-(\lean{BGSpiderCand.candProp\_492}).
+\subsection{Sizes up to 491: a kernel sweep}
 
-Together these prove Theorem~\ref{thm:main}: Theorem~\ref{thm:reduction} reduces to spiders, and this
-section finds the best spider.
+By \cref{lem:balance}, a maximizer with $D\ge3$ is determined by four numbers $(c,s,a,b)$: $c$ cherries,
+$a$ arms $A_s$ and $b$ arms $A_{s+1}$. For each $n$ there are only a few thousand such configurations,
+plus the configurations with $D\le2$. Each value has an explicit integer numerator and denominator. For
+each $n\le491$ the kernel compares every candidate against the table entry by a cross-multiplied
+inequality of natural numbers.
 
-\section{The formal statement}\label{sec:lean}
+At $n=21$ two non-isomorphic spiders tie ($C^{10}$ and $C^3A_3^2$); the table records $C^3A_3^2$. The
+table also shows how varied small maximizers are. Below $n=46$ arms of every size from one to eight
+appear, with up to eight cherries at the centre. From $n=46$ on every arm is an $A_4$, $A_5$ or $A_6$,
+but a few cherries remain at the centre until $n=333$, and the $A_4$/$A_6$ choice keeps shifting until
+$n=2319$.
 
-This section is for a reader who wants to check that the Lean theorem means what Theorem~\ref{thm:main}
-says. The relevant definitions are short.
+\begin{inlean}
+\lean{BGSpiderTable.lean} proves the soundness of the check (\lean{spider\_opt\_of\_check}); the table
+itself is \lean{BGSpiderTableData.tabData}, and the 89 generated files \lean{BGSpiderTableChunk\_*} run
+the check for about five sizes each, assembled by \lean{BGSpiderTableAll.spider\_opt\_table}. The table
+rows are printed in \cref{app:table}, generated from the Lean file itself.
+\end{inlean}
+
+\subsection{Sizes from 492: structure, then 223 certificates}
+
+For large $n$ a sweep is impossible, so we argue. Let $l$ be a spider maximizing $F$ with $n\ge492$. A
+sequence of exchanges pins down its shape:
+\begin{enumerate}
+\item the centre has at least three children (otherwise a global bound shows it is far from optimal);
+\item no arm $A_j$ has $j\ge13$: split it into $A_{j-11}$ and two $A_5$'s;
+\item no arm has $7\le j\le12$: trade eleven $A_j$'s for $2j+1$ copies of $A_5$, and compare globally
+  with the rule spider;
+\item at most eight cherries: nine cherries lose to two $A_4$'s;
+\item no arm has $j\le3$;
+\item hence every arm is $A_4$, $A_5$ or $A_6$; by balance $A_4$ and $A_6$ never occur together; and there
+  are at most ten of each.
+\end{enumerate}
+The global comparison uses the identity $(\prod T)^2=(3/2)^{n-1}\prod h$ with $h(\text{cherry})=1$ and
+$h(A_j)=\tfrac23\alpha_j^2$; its tightest instance is $24.45<28.43$.
+
+What remains is a finite list of shapes whose sizes grow with $n$. A candidate is determined by its
+counts $(c,k_4,k_5,k_6)$, and
+\[
+  F=\Phi(c,k_4,k_5,k_6)=\Big(\frac32\Big)^{c}G_4^{k_4}G_5^{k_5}G_6^{k_6}
+  \Big(1+\frac{c/3+k_4B_4+k_5B_5+k_6B_6}{c+k_4+k_5+k_6}\Big)
+\]
+with $G_4=\tfrac{513}{80}$, $G_5=\tfrac{621}{64}$, $G_6=\tfrac{6561}{448}$, $B_4=\tfrac3{19}$,
+$B_5=\tfrac3{23}$, $B_6=\tfrac19$. The triple $(c,k_4,k_6)$ fixes the residue class $s$, hence the rule
+winner's counts. After dividing out a common power of $G_5$, the comparison
+$\Phi(\text{candidate})\le\Phi(\text{winner})$ becomes $P(m)\ge0$ for an explicit quadratic $P$ in the
+common number $m$ of five-cherry arms. There are 189 triples and 223 certificates. 221 of them write
+$P(L+t)$ with nonnegative coefficients in $t$, which is visibly positive for every $t\ge0$. The other
+two, the competitions that decide the thresholds $722$ and $2319$, write it in the Bernstein basis on a
+bounded interval, because there the rival really does win outside the interval (\cref{fig:race}).
+
+\begin{figure}[htbp]\centering
+\begin{tikzpicture}
+\begin{groupplot}[group style={group size=2 by 1,horizontal sep=16mm},
+  width=0.48\textwidth,height=5cm,xlabel={$n$},grid=major,grid style={black!10},
+  tick label style={font=\scriptsize},label style={font=\small},title style={font=\small},
+  scaled x ticks=false]
+\nextgroupplot[title={$s=3$: $A_4^8$ against $A_6^3$},ylabel={$10^6\,(F_{A_4}/F_{A_6}-1)$},
+  xmin=550,xmax=1000,ymin=-1000,ymax=1150]
+  \addplot[only marks,mark=*,mark size=1pt,afour] table[x=n,y=d] {figdata/race_s3.dat};
+  \draw[black!60] (axis cs:550,0)--(axis cs:1000,0);
+  \draw[dashed,afive] (axis cs:727.5,-1000)--(axis cs:727.5,1150);
+  \node[font=\scriptsize,afive,anchor=west] at (axis cs:740,800) {switch: $722\mid733$};
+\nextgroupplot[title={$s=4$: $A_4^7$ against $A_6^4$},
+  xmin=1600,xmax=3000,ymin=-250,ymax=520]
+  \addplot[only marks,mark=*,mark size=0.8pt,afour] table[x=n,y=d] {figdata/race_s4.dat};
+  \draw[black!60] (axis cs:1600,0)--(axis cs:3000,0);
+  \draw[dashed,afive] (axis cs:2324.5,-250)--(axis cs:2324.5,520);
+  \node[font=\scriptsize,afive,anchor=west] at (axis cs:2350,380) {switch: $2319\mid2330$};
+\end{groupplot}
+\end{tikzpicture}
+\caption{The two late switches in the rule. In residue classes $s=3$ and $s=4$ the maximizer uses $A_4$'s
+until the relative advantage of $A_6$'s, which grows slowly with $n$, overtakes it. The margins are tiny:
+at the last size before each switch the $A_4$ spider wins by $2.0\cdot10^{-5}$ and $3.6\cdot10^{-6}$ in
+relative terms. The two Bernstein-basis certificates prove these signs exactly on each side.}
+\label{fig:race}
+\end{figure}
+
+\begin{inlean}
+\lean{BGSpiderStruct.structProp\_492} proves the shape constraints (the local exchanges close by
+\lean{nlinarith} once certain quadratics are shown positive). \lean{BGSpiderCandBase.lean} defines
+$\Phi$ and $P$. The generated files \lean{BGSpiderCandCells0}--\lean{8} hold the certificates, one file
+per cherry count, each checked by \lean{ring} (the identity) and \lean{norm\_num} (the signs), and
+\lean{BGSpiderCand.candProp\_492} assembles the 189 cases. \lean{BGSpiderRule.bg\_maximizer\_of}
+combines these with the reduction, and \lean{BGMaximizerFinal.bg\_maximizer} is the theorem for
+$n\ge492$.
+\end{inlean}
+
+Together, \cref{thm:reduction} and this section prove \cref{thm:main}.
+
+%=====================================================================================================
+\section{What exactly the Lean theorem says}\label{sec:lean}
+%=====================================================================================================
+
+The main theorem in Lean is
+\begin{verbatim}
+theorem R3Cert.BGMaximizerAll.bg_maximizer_all (n : Nat) (h4 : 4 <= n) :
+    usize (bgMax n) = n /\ forall t : UTree,
+      usize t = n -> Aobj t <= Aobj (bgMax n)
+\end{verbatim}
+and its companion \lean{bg\_maximizer\_all\_perm} states the same inequality for the permanent of the
+Laplacian divided by the product of degrees, computed on the realized graphs. The proof of
+\lean{bg\_maximizer\_all} is a ten-line case split on $n$ that calls the four range theorems. What a
+reader must trust is not that proof (the kernel checked it) but the definitions it is about:
 
 \begin{itemize}
 \item \lean{UTree} is the type of finite rooted trees, built by \lean{node} from a list of subtrees, and
-  \lean{usize} counts vertices. Every finite tree arises, rooted anywhere.
-\item \lean{Step3.realize (dtRealize t)} turns $t$ into an explicit edge list, and \lean{aGraph} into a
-  Mathlib \lean{SimpleGraph} on its vertex type.
+  \lean{usize} counts vertices. Every finite tree, rooted anywhere, is a \lean{UTree}; rerooting is
+  handled inside the proof, so the quantifier really ranges over all trees.
+\item \lean{Step3.realize (dtRealize t)} turns $t$ into an explicit edge list, and \lean{aGraph} turns
+  that into a Mathlib \lean{SimpleGraph} on its vertex type.
 \item \lean{lapl G} is the matrix with $\deg i$ on the diagonal, $-1$ on edges and $0$ elsewhere, and
   \lean{Matrix.permanent} is Mathlib's permanent.
-\item \lean{Aobj t} is defined as the matching sum of the realized tree; \lean{pi\_utree} proves
-  \[
-  \texttt{(lapl (aGraph ...)).permanent / (prod over v of degree v) = Aobj t}.
-  \]
+\item \lean{Aobj t} is the weighted matching sum of the realized tree, and \lean{pi\_utree} proves that
+  it equals \lean{(lapl (aGraph ...)).permanent} divided by the product of the degrees.
 \item \lean{bgMax n} is \lean{spiderU (tab n)} for $n\le491$ and \lean{spiderU (W n)} otherwise, where
   \lean{tab} reads the table \lean{BGSpiderTableData.tabData} and \lean{W} implements the rule of
-  Theorem~\ref{thm:main}.
+  \cref{thm:main}.
 \end{itemize}
 
-So \lean{bg\_maximizer\_all\_perm} states, for every $n\ge4$ and every tree $t$ on $n$ vertices, that
+So \lean{bg\_maximizer\_all\_perm} states: for every $n\ge4$ and every tree $t$ on $n$ vertices,
 $\per L/\prod\deg$ of $t$ is at most that of $\mathrm{bgMax}(n)$, with the permanent and the degrees read
-off the actual graph. The file \lean{AxiomGuard.lean} prints the axioms of the 17 headline theorems.
+off the actual graph. The file \lean{AxiomGuard.lean} prints the axioms of the 17 headline theorems. A
+\lean{sorry} anywhere in their dependencies would appear there as \lean{sorryAx}, and a
+\lean{native\_decide} as \lean{Lean.ofReduceBool}.
 
 \paragraph{What is not claimed in Lean.} The Lean theorem gives \emph{a} maximizer. That it is unique up
-to isomorphism (except at $n=21$) is established by exact computation for $n\le491$ (below) and for
-$n\ge2320$ by an exact rational certificate, but uniqueness is not formalized.
+to isomorphism (except at $n=21$) is established by exact computation for $n\le491$ (\cref{sec:indep})
+and for $n\ge2320$ by an exact rational certificate, but uniqueness is not formalized.
 
+%=====================================================================================================
 \section{Certificates and Telperion}\label{sec:telperion}
+%=====================================================================================================
 
 Most of the proof's bulk is data: envelope tables, rate-cell constants, table rows, polynomial
 coefficients. We produce it with generators written in Python using exact integer and rational
-arithmetic, and we never trust the generators: each certificate is a Lean file whose checks the kernel
+arithmetic, and we never trust the generators. Each certificate is a Lean file whose checks the kernel
 evaluates, so a wrong certificate is simply a failed build.
 
-The certificates are packaged with Telperion, a pipeline built on exactly that division of labour: an
-untrusted \emph{emitter} produces a certificate, a small adapter renders it as Lean, and the Lean kernel is
-the only trusted component. For each certificate family the repository contains the generator, a
-\emph{frozen} copy of its output with hashes, and a driver that regenerates the family from scratch and
-compares byte for byte, both with the frozen copy and with the files in the formalization:
+\begin{figure}[htbp]\centering
+\begin{tikzpicture}[node distance=6mm,font=\small,arr/.style={-{Stealth[length=2mm]},thick}]
+  \node[box,fill=black!5] (gen) {generator\\ \scriptsize Python, exact arithmetic};
+  \node[box,fill=black!5,right=of gen] (cert) {certificate\\ \scriptsize tables, constants,\\ \scriptsize polynomials};
+  \node[box,fill=black!5,right=of cert] (file) {Lean file\\ \scriptsize data + checks};
+  \node[box,fill=soft,right=14mm of file] (ker) {Lean kernel\\ \scriptsize evaluates, type-checks};
+  \node[box,fill=coolsoft,below=9mm of cert] (frz) {frozen record\\ \scriptsize hashes, byte-for-byte diff};
+  \draw[arr] (gen)--(cert); \draw[arr] (cert)--(file); \draw[arr] (file)--(ker);
+  \draw[arr,dashed] (cert)--(frz);
+  \begin{scope}[on background layer]
+    \node[draw=black!40,dashed,rounded corners,fit=(gen)(cert)(file)(frz),inner sep=6pt,
+      label={[font=\scriptsize,text=black!60]above:untrusted: a bug here can only cause a failed build}] {};
+    \node[draw=afive,thick,rounded corners,fit=(ker),inner sep=6pt,
+      label={[font=\scriptsize,text=afive]above:trusted}] {};
+  \end{scope}
+\end{tikzpicture}
+\caption{The certificate pipeline. Only the kernel is trusted. The frozen record lets anyone regenerate a
+family from scratch and confirm that the Lean files in the repository are exactly what the generator
+produces.}
+\label{fig:pipeline}
+\end{figure}
 
-\begin{center}
+The certificates are packaged with Telperion, a pipeline built on exactly that division of labour: an
+untrusted \emph{emitter} produces a certificate, a small adapter renders it as Lean, and the Lean kernel
+is the only trusted component (\cref{fig:pipeline}). For each certificate family the repository contains
+the generator, a \emph{frozen} copy of its output with hashes, and a driver that regenerates the family
+from scratch and compares it byte for byte, both with the frozen copy and with the files in the
+formalization:
+
+\begin{center}\small
 \begin{tabular}{@{}lrl@{}}
 \toprule
 family & Lean files & content \\
@@ -480,26 +1131,39 @@ family & Lean files & content \\
 \end{tabular}
 \end{center}
 
+The byte-for-byte check matters for review. A reader does not have to read 57 files of packed integers;
+it is enough to read the generator, run it, and see that it reproduces the files the kernel checked. And
+even that is only needed to understand the proof, not to trust it: the kernel's verdict does not depend
+on how the data was produced.
+
 \paragraph{Making the kernel do it.} Three facts about the Lean kernel shaped the certificates.
-(i) It does not reduce definitions by well-founded recursion efficiently, so every recursive check is
-structural, with explicit fuel. (ii) It does not share the evaluation of repeated argument subterms, so a
-loop state reused twice is evaluated twice; we emit literal constants and force evaluation of natural
-numbers before passing them on (\lean{BGEnvCert.Force}). (iii) Arithmetic in $\mathbb{Q}$ is slow, so large
-checks use natural numbers and fixed point, and only small ones use $\mathbb{Q}$. We use
-\lean{decide +kernel} and never \lean{native\_decide}, so the compiler is not trusted. Because the kernel
-keeps every intermediate term of a declaration in memory, large checks are split into many small
-theorems and many files; the heaviest files still need 15--35\,GiB each.
+\begin{enumerate}[label=(\roman*)]
+\item The kernel unfolds definitions by well-founded recursion very slowly, so every recursive check is
+  structural, with an explicit fuel parameter.
+\item It does not share the evaluation of repeated argument subterms: a loop state used twice is
+  evaluated twice, and a chain of such loops blows up. We emit literal constants, and force evaluation of
+  natural numbers before passing them on (\lean{BGEnvCert.Force}).
+\item Arithmetic in $\mathbb{Q}$ is slow in the kernel, so large checks use natural numbers and fixed
+  point, and only small ones use $\mathbb{Q}$.
+\end{enumerate}
+We use \lean{decide +kernel} and never \lean{native\_decide}, so the compiler is not trusted. Because the
+kernel keeps every intermediate term of a declaration in memory, large checks are split into many small
+theorems and many files, and a unifying file assembles them. Even so, the heaviest files need
+15--35\,GiB each. The sharding is what makes the proof checkable on a single large workstation.
 
-\section{Independent computations}
+%=====================================================================================================
+\section{Independent computations}\label{sec:indep}
+%=====================================================================================================
 
-None of the following is needed for the Lean proof; they are independent checks.
+None of the following is needed for the Lean proof. They are independent checks of the answer by
+entirely different methods.
 
 \begin{itemize}
 \item \emph{Certified search, $n\le491$.} A bottom-up search over all rooted trees, with no degree cap,
   storing every quantity as an outward-rounded interval and discarding a partial state only when it is
   provably strictly beaten in every completion. Surviving candidates are re-evaluated in exact rational
   arithmetic. For every $n\le491$ the exact maximum equals the table value, and \emph{every} maximizing
-  tree is a spider. (952\,s on one core; \texttt{certificates/checks}.)
+  tree is a spider. (952\,s on one core.)
 \item \emph{Brute force.} Exact enumeration of all non-isomorphic trees agrees for $n\le18$.
 \item \emph{Spider optimization.} An exhaustive exact optimization over the spider family for
   $n\le2400$, together with an exact rational certificate for $n\ge2320$, agrees with the table and the
@@ -507,32 +1171,109 @@ None of the following is needed for the Lean proof; they are independent checks.
   $n\le600$.
 \end{itemize}
 
+%=====================================================================================================
+\section{Discussion}\label{sec:discussion}
+%=====================================================================================================
+
+\subsection{What the answer says}
+
+The maximizer is \emph{rigid}. For large $n$ it is a star of identical eleven-vertex blocks with a
+bounded number of defects, at most ten, whose type is dictated by $n\bmod 11$. The value per vertex is
+set by a single local structure, the five-cherry arm, and the global optimum is as close to ``all
+five-cherry arms'' as divisibility allows. This is the typical shape of answers in ergodic optimization,
+where an optimal orbit is periodic and a subaction certifies it, and indeed that is how the proof of
+the growth rate works: the potential $\varrho_{\mathrm{wit}}$ is tight exactly on the three vertex types
+of the optimal block. It would be interesting to know how general this is. For which other weighted
+matching problems on trees, or other tree functionals computed by a cavity recursion, is the extremal
+tree a periodic arrangement of a single block, certified by a finite piecewise-affine subaction?
+
+The answer also explains why the problem resisted guesses. The earlier conjectures were natural
+extrapolations from small trees, and the table in \cref{app:table} shows why that is treacherous. For
+small $n$ the maximizer wanders through arms of many sizes with many cherries at the centre. It settles
+into $A_4$'s, $A_5$'s and $A_6$'s only at $n=46$, keeps a few centre cherries until $n=333$, and the
+$A_4$/$A_6$ competition keeps changing until $n=2319$. A conjecture based on data up to $n=100$, or even
+$n=1000$, would have been wrong in its details.
+
+It is also worth noting what the maximizer is \emph{not}. The earlier candidates, subdivided stars and
+Pant's caterpillars, spread their high-degree vertices along a path. The maximizer does the opposite:
+it has a single hub, and every other vertex is within distance three of it. In the language of the
+cavity recursion, the hub is where the messages of many arms are pooled, and pooling pays because
+$\log(1+R/k)$ rewards a large total message at one vertex.
+
+\subsection{Permanents}
+
+The permanent is \#P-hard, and its extremal theory is thin: questions of the form ``which matrix in a
+natural class maximizes the permanent?'' are often hard even when the class is simple. For Laplacians of
+trees, the matching-sum formula turns the permanent into a partition function that factorizes over the
+tree, and that is what made this problem solvable. The same structure applies to other matrix functions
+of trees built from $D$ and $A$. For example, the signless Laplacian $D+A$ of a tree has the same
+permanent, since a matched edge contributes $A_{ij}A_{ji}=1$ either way, so \cref{thm:main} answers the
+analogous question for it too. Immanants of $L$ interpolate between the determinant and the permanent,
+and orderings of trees by such quantities have been studied~\cite{Csikvari2010}. The
+Brualdi--Goldwasser question for bipartite graphs, where cycles appear and the matching-sum formula
+fails, and for trees with a prescribed degree sequence, are natural next targets.
+
+\subsection{Method}
+
+Most of the proof is a small number of ideas (the cavity recursion, the subaction, tangent envelopes,
+exchange arguments) applied through a large number of verified inequalities. This is a common shape for
+extremal results, and such proofs are often hard to check: the ideas are in the paper, but the
+inequalities are in a computer program that a referee cannot easily audit. Here every inequality is
+checked by the Lean kernel, and every certificate can be regenerated and compared byte for byte. We think
+this division, conceptual proof for people and certificate checking for the kernel, is a good model for
+computer-assisted extremal combinatorics, and the practical lessons of \cref{sec:telperion} (sharding,
+fixed point, structural recursion) apply well beyond this problem.
+
+A related point concerns how the work was done. Much of the exploration, formalization and certificate
+engineering was carried out with an AI system. In a project of that kind the natural worry is an
+error that no one notices. Formal verification changes that: an error in a certificate or a proof step
+is a failed build, not a hidden mistake. The remaining human responsibility, checking that the
+definitions and the statement mean what the paper says, is exactly the part that \cref{sec:lean} isolates.
+
+\subsection{What remains}
+
+\begin{itemize}
+\item \emph{A conceptual proof of the reduction.} The thresholds $150$, $491$ and $492$ are artefacts of
+  the method. A direct argument that every maximizer is a spider, for all $n$, would be more
+  illuminating than the certificates, and would probably say something about when cavity-recursion
+  optimizers are ``star-shaped''.
+\item \emph{Uniqueness in Lean.} Uniqueness (except at $n=21$) is known by computation and certificate
+  but not formalized.
+\item \emph{The constant.} \Cref{fig:ratio} suggests that $\max\pi/\rho^{n-1}$ approaches a periodic
+  pattern of period 11. Since the maximizer is explicit this is a computation in principle, but a clean
+  closed form for the limit points would be nice.
+\item \emph{Independent review.} The kernel checks the deductions; human review of the statement and the
+  definitions is still needed, and welcome.
+\end{itemize}
+
+\section{Limitations}
+
+\begin{itemize}
+\item The result has not been refereed. The Lean kernel checks the deductions; the correspondence
+  between the formal definitions and the mathematical statement (\cref{sec:lean}) is what a human
+  reviewer should check.
+\item The proof is long and mostly computational. We do not have a short conceptual proof that the
+  maximizer is a spider, only per-vertex inequalities verified by certificate.
+\item Uniqueness is not formalized.
+\item The trusted base is the Lean kernel, Mathlib's definitions of the permanent and of simple graphs,
+  and our definitions listed in \cref{sec:lean}.
+\item The full build needs a machine with at least 64\,GiB of memory and several CPU-hours.
+\end{itemize}
+
 \section{Reproducing the results}
 
 The repository \url{https://github.com/DrMurphyIsIn/brualdi-goldwasser} contains the Lean project
-(Lean \texttt{v4.32.0}, Mathlib), the certificate generators with their frozen outputs, and the
-Telperion engine.
+(Lean \texttt{v4.32.0}, Mathlib), the certificate generators with their frozen outputs, the Telperion
+engine, the source of this paper and a project page with an interactive version of \cref{thm:main}
+(\url{https://drmurphyisin.github.io/brualdi-goldwasser/}).
 \begin{verbatim}
 cd formalization && lake exe cache get && lake build -j 4
 lake env lean AxiomGuard.lean
 certificates/verify.sh         # regenerate all certificates, compare
 certificates/verify.sh --full  # also the certified search, n <= 491
 \end{verbatim}
-The full build takes several CPU-hours and needs a machine with at least 64\,GiB of memory.
-
-\section{Limitations}
-
-\begin{itemize}
-\item The result has not been refereed. The Lean kernel checks the deductions; the correspondence
-  between the formal definitions and the mathematical statement (\S\ref{sec:lean}) is what a human
-  reviewer should check.
-\item The proof is long and mostly computational. We do not have a short conceptual proof that the
-  maximizer is a spider, only per-vertex inequalities verified by certificate, and the thresholds
-  ($n=150$, $491$, $492$) are artefacts of the method.
-\item Uniqueness is not formalized.
-\item The trusted base is the Lean kernel, Mathlib's definitions of the permanent and of simple graphs,
-  and our definitions listed in \S\ref{sec:lean}.
-\end{itemize}
+The plots in this paper are generated from the same data by \texttt{paper/figdata.py}, and the appendix
+table by \texttt{paper/gen\_table.py}.
 
 \section*{Acknowledgements}
 The formalization, the certificate generators and much of the exploration were developed with extensive
@@ -560,6 +1301,9 @@ Comm.\ Math.\ Phys.\ \textbf{25} (1972), 190--232.
 \bibitem{Bousch2001} T.~Bousch,
 \emph{La condition de Walters},
 Ann.\ Sci.\ \'Ec.\ Norm.\ Sup\'er.\ \textbf{34} (2001), 287--311.
+\bibitem{Csikvari2010} P.~Csikv\'ari,
+\emph{On a poset of trees},
+Combinatorica \textbf{30} (2010), 125--137.
 \bibitem{Mathlib} The mathlib Community,
 \emph{The Lean mathematical library},
 CPP 2020, 367--381.
@@ -569,20 +1313,13 @@ CPP 2020, 367--381.
 \section{The maximizers for $4\le n\le491$}\label{app:table}
 
 Notation: $C^{c}$ is $c$ cherries at the centre, $A_j^{m}$ is $m$ arms with $j$ cherries, $L$ a leaf at
-the centre. The third column is $\pi/\rho^{\,n-1}$, which by Theorem~\ref{thm:growth} lies in
+the centre. The third column is $\pi/\rho^{\,n-1}$, which by \cref{thm:growth} lies in
 $[\tfrac{64}{621}\rho,\,2]$. At $n=21$, $C^{10}$ ties with the listed tree.
 Generated from \texttt{BGSpiderTableData.lean} by \texttt{paper/gen\_table.py}.
 
 {\small
 \setlength{\tabcolsep}{4pt}
-\begin{longtable}{@{}rlr@{\quad}rlr@{\quad}rlr@{}}
-\toprule
-$n$ & maximizer & $\pi/\rho^{n-1}$ & $n$ & maximizer & $\pi/\rho^{n-1}$ & $n$ & maximizer & $\pi/\rho^{n-1}$\\
-\midrule
-\endhead
 \input{table_maximizers.tex}
-\bottomrule
-\end{longtable}
 }
 
 \end{document}

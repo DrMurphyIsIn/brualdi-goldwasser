@@ -60,5 +60,9 @@ for i in range(per):
         else:
             cells.append("& &")
     lines.append(" & ".join(cells) + r" \\")
-Path(__file__).with_name("table_maximizers.tex").write_text("\n".join(lines) + "\n")
+head = [r"\begin{longtable}{@{}rlr@{\quad}rlr@{\quad}rlr@{}}", r"\toprule",
+        r"$n$ & maximizer & $\pi/\rho^{n-1}$ & $n$ & maximizer & $\pi/\rho^{n-1}$ & $n$ & maximizer & $\pi/\rho^{n-1}$\\",
+        r"\midrule", r"\endhead"]
+tail = [r"\bottomrule", r"\end{longtable}"]
+Path(__file__).with_name("table_maximizers.tex").write_text("\n".join(head + lines + tail) + "\n")
 print("rows", len(out), "per column", per)
