@@ -1,0 +1,13 @@
+name = "R3Cert"
+defaultTargets = ["R3Cert"]
+
+[[require]]
+name = "mathlib"
+scope = "leanprover-community"
+rev = "v4.32.0"
+
+# The import closure of R3Cert.BGMaximizerAll.bg_maximizer_all (module names kept from the
+# development repository DrMurphyIsIn/Arda, proof/formalization/R3Cert, for traceability).
+[[lean_lib]]
+name = "R3Cert"
+globs = ["R3Cert.+"]
