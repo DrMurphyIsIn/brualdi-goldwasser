@@ -7,6 +7,8 @@ authors:
 repository-code: "https://github.com/DrMurphyIsIn/brualdi-goldwasser"
 url: "https://drmurphyisin.github.io/brualdi-goldwasser/"
 license: Apache-2.0
+version: v1.0.0
+date-released: 2026-09-26
 keywords:
   - Laplacian permanent
   - Laplacian ratio
