@@ -13,10 +13,9 @@
   form `Aobj_spiderU`, existence of a spider-family maximizer) with its two inputs
   `BGSpiderStruct.structProp_492` and `BGSpiderCand.candProp_492`.
 
-  Kernel-checked, no `sorry`, only propext / Classical.choice / Quot.sound.  Sizes n <= 491 are
-  settled by the certified exhaustive search proof/verification/bg_certified_interval.py (exact
-  arithmetic, NOT Lean): every maximizer there is a spider, given by the table in
-  proof/docs/BG_SPIDER_OPTIMIZATION_2026-09-24.md.
+  Kernel-checked, no `sorry`, only propext / Classical.choice / Quot.sound.  Sizes 4 <= n <= 491 are
+  settled in Lean as well (BGMaximizerTiny / BGMaximizerSmall / BGMaximizerMid), and the four ranges are
+  assembled in `BGMaximizerAll.bg_maximizer_all`.
 -/
 import Mathlib
 import R3Cert.BGSpiderRule

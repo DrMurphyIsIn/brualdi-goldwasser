@@ -3,7 +3,8 @@
 
   Brualdi and Goldwasser (1984) asked for the maximum of the Laplacian ratio
   `pi(T) = per(L(T)) / prod_v deg(v)` over trees on `n` vertices (`Aobj`, via `pi_utree`).
-  The exact maximizer is open.  This file pins down its exponential order EXACTLY:
+  This file pins down the exponential order of the maximum EXACTLY (the maximizer itself is
+  `BGMaximizerAll.bg_maximizer_all`):
 
       (64/621) * rhoB^n  <=  max_{|T| = n} pi(T)  <=  2 * rhoB^(n-1),
       rhoB = (621/64)^(1/11) ~ 1.22948,
@@ -19,8 +20,7 @@
   `621/64 = rhoB^11`, the unique equality case of the sharp ceiling `bg_sharp`) plus at most ten
   filler vertices (cherries and one leaf).
 
-  Kernel-checked, no `sorry`.  This is the growth rate, not the exact maximizer:
-  conjecture1_proved = False.
+  Kernel-checked, no `sorry`.
 -/
 import Mathlib
 import R3Cert.R47RootRate

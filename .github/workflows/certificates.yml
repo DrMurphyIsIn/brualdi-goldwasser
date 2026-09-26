@@ -1,0 +1,24 @@
+# Regenerate every certificate family from scratch and compare it byte for byte with the frozen Telperion
+# records and with the Lean sources.  GitHub-hosted; safe for pull requests (no secrets, read-only).
+name: certificates
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  regenerate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install sympy numpy mpmath networkx
+      - run: certificates/verify.sh

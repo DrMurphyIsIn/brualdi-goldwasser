@@ -1,0 +1,52 @@
+# Full kernel check of the formalization.  Runs ONLY on the maintainer's self-hosted runner, ONLY for
+# pushes to main and manual dispatch.  There is deliberately no pull_request trigger: code from forks
+# never runs on the self-hosted machine.  (GitHub-hosted runners cannot build the heaviest certificate
+# files, which need 15-35 GiB of memory each.)
+name: lean
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: lean-main
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+jobs:
+  lean-verify:
+    if: github.repository == 'DrMurphyIsIn/brualdi-goldwasser' && github.ref == 'refs/heads/main'
+    runs-on: [self-hosted, macOS, ARM64, bg-lean]
+    timeout-minutes: 900
+    defaults:
+      run:
+        working-directory: formalization
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          clean: false          # keep .lake between runs; lake rebuilds only what changed
+      - name: Toolchain
+        run: |
+          export PATH="$HOME/.elan/bin:$PATH"
+          elan show
+      - name: Mathlib cache
+        run: |
+          export PATH="$HOME/.elan/bin:$PATH"
+          lake exe cache get
+      - name: Build (memory-bounded parallelism)
+        run: |
+          export PATH="$HOME/.elan/bin:$PATH"
+          lake build -j 3        # heaviest files peak at 15-35 GiB each; this machine also runs other work
+      # A `sorry` would show up as sorryAx and `native_decide` as Lean.ofReduceBool, so this check covers both.
+      - name: Axioms of every headline theorem
+        run: |
+          export PATH="$HOME/.elan/bin:$PATH"
+          lake env lean AxiomGuard.lean | tee axioms.txt
+          # every line must be exactly the three standard axioms
+          if grep "depends on axioms" axioms.txt | grep -v "\[propext, Classical.choice, Quot.sound\]"; then
+            echo "non-standard axiom found"; exit 1
+          fi
+          test "$(grep -c 'depends on axioms' axioms.txt)" -eq 17

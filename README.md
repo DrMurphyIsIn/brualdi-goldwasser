@@ -88,6 +88,25 @@ The full Lean build is heavy: some certificate fragments need 15–35 GiB of mem
 development takes several CPU-hours. Build with limited parallelism on a machine with at least 64 GiB of
 memory (for example `lake build -j 4`).
 
+## Reading the proof
+
+- **The paper**, [`paper/paper.pdf`](paper/paper.pdf), tells the whole argument: the matching sum, the sharp
+  ceiling, the reduction to spiders, the spider optimization, and how the certificates are checked.
+- **The project page**, <https://drmurphyisin.github.io/brualdi-goldwasser/>, lets you pick any n and see
+  its maximizer drawn, with a table for every n up to 3000.
+- **The Lean source** is big (about 57,000 lines, most of it generated certificate data), and it was carried
+  over from a larger research repository. [`formalization/READING_GUIDE.md`](formalization/READING_GUIDE.md)
+  says which files hold the definitions a reviewer needs, and which leftover comments and flags to ignore.
+
+## Continuous integration
+
+- `certificates` (GitHub-hosted, also on pull requests) regenerates every certificate family and compares
+  it byte for byte.
+- `lean` (self-hosted, pushes to `main` and manual runs only) builds the whole formalization and checks
+  that all 17 headline theorems use only the standard axioms. It runs on the maintainer's machine because
+  GitHub-hosted runners don't have enough memory for the heaviest files. Pull requests never trigger it.
+- `pages` publishes `site/` and the paper.
+
 ## Status
 
 This result has **not yet been independently reviewed.** The Lean kernel checks the proof, but the
@@ -100,8 +119,9 @@ scrutiny. We welcome review, questions and issues.
 formalization/   Lean 4 project: the import closure of bg_maximizer_all (+ the sharp rate ceiling)
 certificates/    generators and frozen Telperion records for every certificate family
 telperion/       vendored Telperion engine (BSL 1.1)
-paper/           the paper
-site/            the project page
+paper/           the paper (paper.tex, gen_table.py builds its appendix from the Lean table)
+site/            the project page (build.py fills template.html from the Lean table)
+scripts/         setup for the isolated self-hosted CI runner
 ```
 
 ## License

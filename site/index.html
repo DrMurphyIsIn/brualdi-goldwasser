@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Brualdi-Goldwasser Maximizer</title>
+<meta name="description" content="Which tree maximizes per(L)/prod deg? A complete answer for every n, kernel-checked in Lean 4: spiders of five-cherry arms. The answer, the proof, an explorer for every n, and how to verify it.">
+<script>
+(function(){try{var t=localStorage.getItem("bg-site-theme");if(t==="dark"||t==="light"){document.documentElement.setAttribute("data-theme",t);}}catch(e){}})();
+</script>
+<style>
+:root {
+  --paper: #f7f5f0; --surface: #fffdf9; --sunk: #efece5;
+  --ink: #1d1c1a; --muted: #5b5750; --faint: #8d887f; --line: #d9d4ca;
+  --accent: #8a2f45; --accent-soft: #f1dfe4; --cool: #0f6f7f; --cool-soft: #d9ecef;
+  --proved: #2e7d4f; --open: #b86e00; --pass: #cfe8d6; --pass-ink: #1f5a36;
+  --cond: #f5e6bf; --cond-ink: #6b4d00;
+  --a4: #0f6f7f; --a5: #8a2f45; --a6: #b86e00; --other: #6b6b6b;
+  --serif: "Iowan Old Style", "Palatino Linotype", Palatino, "Book Antiqua", Georgia, serif;
+  --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --mono: "SFMono-Regular", Menlo, Consolas, "Liberation Mono", monospace;
+  --maxw: 1040px;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --paper: #16171a; --surface: #1e2024; --sunk: #121316;
+    --ink: #e8e6e1; --muted: #b3afa7; --faint: #7d7973; --line: #34373d;
+    --accent: #e27f98; --accent-soft: #3a2229; --cool: #58c0cf; --cool-soft: #1c3236;
+    --proved: #6fcf97; --open: #f0b25a; --pass: #24402e; --pass-ink: #b9e8c7;
+    --cond: #4a3d14; --cond-ink: #f2dc9a;
+    --a4: #58c0cf; --a5: #e27f98; --a6: #f0b25a; --other: #a3a3a3;
+  }
+}
+:root[data-theme="dark"] {
+  --paper: #16171a; --surface: #1e2024; --sunk: #121316;
+  --ink: #e8e6e1; --muted: #b3afa7; --faint: #7d7973; --line: #34373d;
+  --accent: #e27f98; --accent-soft: #3a2229; --cool: #58c0cf; --cool-soft: #1c3236;
+  --proved: #6fcf97; --open: #f0b25a; --pass: #24402e; --pass-ink: #b9e8c7;
+  --cond: #4a3d14; --cond-ink: #f2dc9a;
+  --a4: #58c0cf; --a5: #e27f98; --a6: #f0b25a; --other: #a3a3a3;
+}
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body { margin: 0; background: var(--paper); color: var(--ink); font-family: var(--sans); font-size: 16px; line-height: 1.55; }
+a { color: var(--cool); }
+code, pre, .mono { font-family: var(--mono); font-size: 0.92em; }
+pre { background: var(--sunk); border: 1px solid var(--line); border-radius: 6px; padding: 10px 12px; overflow-x: auto; white-space: pre; }
+h1, h2, h3 { font-family: var(--serif); font-weight: 600; line-height: 1.2; margin: 0 0 0.4em; }
+h1 { font-size: 2.1rem; }
+h2 { font-size: 1.5rem; margin-top: 1.6em; }
+h3 { font-size: 1.15rem; margin-top: 1.4em; }
+p { margin: 0 0 1em; max-width: 68ch; }
+ul, ol { max-width: 70ch; padding-left: 1.3em; }
+li { margin-bottom: 0.35em; }
+.wrap { max-width: var(--maxw); margin: 0 auto; padding: 24px 16px 60px; }
+header.top { border-bottom: 1px solid var(--line); padding-bottom: 18px; margin-bottom: 18px; }
+header.top .sub { color: var(--muted); font-size: 1.05rem; max-width: 72ch; }
+.banner { display: inline-block; font-family: var(--mono); font-size: 0.85rem; background: var(--pass); color: var(--pass-ink); border-radius: 6px; padding: 4px 10px; margin: 6px 8px 12px 0; }
+.banner.cond { background: var(--cond); color: var(--cond-ink); }
+.topbar { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 8px; }
+.theme-btn { background: var(--surface); color: var(--muted); border: 1px solid var(--line); border-radius: 6px; padding: 4px 10px; font: inherit; font-size: 0.85rem; cursor: pointer; }
+nav.tabs { display: flex; flex-wrap: wrap; gap: 6px; margin: 8px 0 18px; }
+nav.tabs .tab { font: inherit; font-size: 0.95rem; cursor: pointer; background: var(--surface); color: var(--muted); border: 1px solid var(--line); border-radius: 999px; padding: 6px 14px; }
+nav.tabs .tab[aria-selected="true"] { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+.panel { display: none; }
+.panel.active { display: block; }
+.step { display: grid; grid-template-columns: 2.2em 1fr; gap: 6px 10px; margin: 1.2em 0; }
+.step .letter { font-family: var(--serif); color: var(--accent); font-size: 1.3rem; line-height: 1.1; }
+.step .body { min-width: 0; }
+.claim { border-left: 3px solid var(--accent); background: var(--surface); padding: 10px 14px; margin: 1em 0; max-width: 72ch; border-radius: 0 6px 6px 0; }
+.claim.cool { border-left-color: var(--cool); }
+.note { color: var(--muted); font-size: 0.92rem; max-width: 72ch; }
+.warn { background: var(--cond); color: var(--cond-ink); border-radius: 6px; padding: 8px 12px; font-size: 0.92rem; max-width: 72ch; margin: 0.6em 0 1em; }
+.plotwrap { background: var(--surface); border: 1px solid var(--line); border-radius: 8px; padding: 10px; margin: 12px 0 18px; }
+.plotwrap svg { width: 100%; height: auto; display: block; }
+#spiderSvg { max-height: 520px; }
+.controls { display: flex; flex-wrap: wrap; gap: 10px 18px; align-items: center; margin: 6px 0 8px; font-size: 0.95rem; color: var(--muted); }
+.controls label { display: inline-flex; align-items: center; gap: 6px; }
+.controls input[type="range"] { width: 220px; max-width: 60vw; }
+.controls input[type="number"], .controls input[type="search"] { font: inherit; font-size: 0.95rem; background: var(--paper); color: var(--ink); border: 1px solid var(--line); border-radius: 4px; padding: 2px 6px; width: 7em; }
+.readout { font-family: var(--mono); font-size: 0.9rem; color: var(--ink); background: var(--sunk); border-radius: 6px; padding: 8px 12px; margin: 6px 0; overflow-x: auto; }
+.legend { display: flex; flex-wrap: wrap; gap: 14px; font-size: 0.85rem; color: var(--muted); margin: 4px 0; }
+.legend span::before { content: ""; display: inline-block; width: 10px; height: 10px; border-radius: 50%; background: var(--c); margin-right: 5px; vertical-align: -1px; }
+.tablewrap { overflow-x: auto; border: 1px solid var(--line); border-radius: 8px; background: var(--surface); max-height: 520px; overflow-y: auto; }
+table { border-collapse: collapse; width: 100%; font-size: 0.9rem; }
+th, td { text-align: left; padding: 6px 10px; border-bottom: 1px solid var(--line); white-space: nowrap; }
+th { position: sticky; top: 0; background: var(--sunk); font-weight: 600; color: var(--muted); }
+td.num { font-family: var(--mono); text-align: right; }
+tr.hl td { background: var(--accent-soft); }
+.grid2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 12px; margin: 12px 0; }
+.card { background: var(--surface); border: 1px solid var(--line); border-radius: 8px; padding: 12px 14px; }
+.card h3 { margin-top: 0; }
+.card .k { font-family: var(--mono); font-size: 0.85rem; color: var(--muted); word-break: break-word; }
+.pill { display: inline-block; font-size: 0.78rem; border-radius: 999px; padding: 1px 8px; background: var(--pass); color: var(--pass-ink); }
+footer { border-top: 1px solid var(--line); margin-top: 40px; padding-top: 14px; color: var(--faint); font-size: 0.85rem; }
+</style>
+</head>
+<body>
+<div class="wrap">
+<header class="top">
+  <div class="topbar">
+    <div>
+      <span class="banner">kernel-checked in Lean 4 &middot; standard axioms only</span>
+      <span class="banner cond">not yet refereed</span>
+    </div>
+    <button class="theme-btn" id="themeBtn" type="button">Theme</button>
+  </div>
+  <h1>Which tree maximizes the Laplacian ratio?</h1>
+  <p class="sub">In 1984 Brualdi and Goldwasser asked which tree on <i>n</i> vertices maximizes
+  &pi;(T) = per L(T) / &prod; deg(v). This project answers the question for every <i>n</i>, with a proof
+  checked by the Lean kernel.</p>
+</header>
+
+<nav class="tabs" role="tablist">
+  <button class="tab" role="tab" data-p="answer" aria-selected="true">The answer</button>
+  <button class="tab" role="tab" data-p="explore" aria-selected="false">Explore every n</button>
+  <button class="tab" role="tab" data-p="proof" aria-selected="false">The proof</button>
+  <button class="tab" role="tab" data-p="verify" aria-selected="false">Verify it</button>
+</nav>
+
+<!-- ============================ ANSWER ============================ -->
+<section class="panel active" id="p-answer">
+  <p>A <b>cherry</b> is a pendant path of length two. An <b>arm</b> A<sub>j</sub> is a vertex, hanging from
+  a centre, that carries <i>j</i> cherries. A <b>spider of cherry arms</b> is a centre whose branches are
+  all leaves, cherries or arms.</p>
+
+  <div class="claim">
+    <b>Theorem.</b> For every <i>n</i> &ge; 4 the Laplacian ratio is maximized by a spider of cherry arms.
+    For <i>n</i> &ge; 492 the centre carries only arms, almost all A<sub>5</sub>. With
+    <i>s</i> = 6(<i>n</i>&minus;1) mod 11:
+    <ul style="margin:0.4em 0 0">
+      <li><i>s</i> = 1&ndash;4: <i>s</i> arms are A<sub>6</sub> (but for <i>s</i> = 3, <i>n</i> &le; 722 and
+      <i>s</i> = 4, <i>n</i> &le; 2319, instead 11&minus;<i>s</i> arms are A<sub>4</sub>);</li>
+      <li><i>s</i> = 5&ndash;10: 11&minus;<i>s</i> arms are A<sub>4</sub>.</li>
+    </ul>
+    For 4 &le; <i>n</i> &le; 491 the maximizer is an explicit table (see <a href="#" data-go="explore">Explore</a>).
+  </div>
+
+  <div class="plotwrap">
+    <div class="controls">
+      <label>n <input type="range" id="nRange" min="4" max="1200" value="492"></label>
+      <label><input type="number" id="nBox" min="4" value="492"></label>
+    </div>
+    <div class="legend">
+      <span style="--c:var(--a5)">A<sub>5</sub></span><span style="--c:var(--a4)">A<sub>4</sub></span>
+      <span style="--c:var(--a6)">A<sub>6</sub></span><span style="--c:var(--other)">other arm / cherry / leaf</span>
+    </div>
+    <svg id="spiderSvg" viewBox="-300 -300 600 600" role="img" aria-label="the maximizing spider"></svg>
+    <div class="readout" id="readout"></div>
+  </div>
+
+  <h2>Why five cherries</h2>
+  <p>The weight of a pendant subtree is a matching sum, and the five-cherry arm A<sub>5</sub> (11 vertices)
+  has weight exactly 621/64. We prove that <b>every</b> pendant subtree <i>b</i> has weight at most
+  &rho;<sup>|b|</sup> with &rho; = (621/64)<sup>1/11</sup> &asymp; 1.22948, and that A<sub>5</sub> is the
+  only one attaining it. So the maximum grows exactly like &rho;<sup>n</sup>:</p>
+  <p class="readout">(64/621) &rho;<sup>n</sup> &le; max<sub>|T|=n</sub> &pi;(T) &le; 2 &rho;<sup>n&minus;1</sup></p>
+  <p>A maximizer uses as many five-cherry arms as the arithmetic of <i>n</i> allows. The residue
+  <i>n</i>&minus;1 mod 11 is absorbed by a few A<sub>4</sub> (9 vertices) or A<sub>6</sub> (13 vertices),
+  and which of those wins is a delicate second-order competition, which is why the thresholds 722 and
+  2319 appear.</p>
+
+  <div class="plotwrap">
+    <svg id="ratioSvg" viewBox="0 0 900 300" role="img" aria-label="pi divided by rho^(n-1) for the maximizer"></svg>
+    <p class="note" style="margin:6px 4px 0">The maximum divided by &rho;<sup>n&minus;1</sup>, for 4 &le; n &le; 1200. It stays
+    between the proven bounds, and oscillates with period 11 once the arms settle.</p>
+  </div>
+
+  <h2>History</h2>
+  <p>Brualdi and Goldwasser (1984) proved &pi;(T) &ge; 2, with equality exactly for the star, and asked for
+  the maximum. Wu, Dong and Lai (2025) conjectured that the maximizer is a particular subdivided star.
+  Pant (2026) refuted that conjecture with caterpillars carrying many cherries, and left the question
+  open.</p>
+</section>
+
+<!-- ============================ EXPLORE ============================ -->
+<section class="panel" id="p-explore">
+  <p>The maximizer for every <i>n</i>: the table (4 &le; <i>n</i> &le; 491) is read directly from the
+  Lean source <code>BGSpiderTableData.lean</code>; beyond it, the rule. Notation: C<sup>c</sup> is
+  <i>c</i> cherries at the centre, A<sub>j</sub><sup>m</sup> is <i>m</i> arms with <i>j</i> cherries,
+  L a leaf.</p>
+  <div class="controls">
+    <label>jump to n <input type="search" id="findN" placeholder="e.g. 2319"></label>
+    <span id="findOut" class="mono"></span>
+  </div>
+  <div class="tablewrap">
+    <table>
+      <thead><tr><th>n</th><th>maximizer</th><th>centre degree</th><th>&pi; / &rho;<sup>n&minus;1</sup></th><th>source</th></tr></thead>
+      <tbody id="tbody"></tbody>
+    </table>
+  </div>
+  <p class="note">At n = 21 two different trees tie: the listed C<sup>3</sup>A<sub>3</sub><sup>2</sup> and
+  C<sup>10</sup>. The maximizer is otherwise unique up to isomorphism in every size checked (by exact
+  computation for n &le; 491 and an exact certificate for n &ge; 2320), but uniqueness is not part of the
+  Lean theorem.</p>
+</section>
+
+<!-- ============================ PROOF ============================ -->
+<section class="panel" id="p-proof">
+  <p>The proof has three layers: a sharp inequality that fixes the growth rate, a reduction showing
+  every maximizer is a spider, and an exact optimization over spiders. Each is split by size.</p>
+
+  <div class="step"><div class="letter">1</div><div class="body">
+    <h3>Matching sums and the cavity recursion</h3>
+    <p>For a tree, per L(T) = &Sigma;<sub>M</sub> &prod;<sub>v unmatched</sub> deg v over matchings M, so
+    &pi;(T) = &Sigma;<sub>M</sub> &prod;<sub>uv&isin;M</sub> 1/(deg u deg v). A pendant subtree <i>b</i>
+    with root degree <i>d</i> has weight T<sub>b</sub> = &prod; T<sub>c</sub> (d+R)/d and message
+    y<sub>b</sub> = 1/(d+R), where R = &Sigma; y<sub>c</sub> over the children.</p>
+  </div></div>
+
+  <div class="step"><div class="letter">2</div><div class="body">
+    <h3>The sharp ceiling</h3>
+    <p>T<sub>b</sub> &le; &rho;<sup>|b|</sup> for every pendant subtree, with equality only at A<sub>5</sub>.
+    Proof: log T<sub>b</sub> &minus; |b| log &rho; is a sum of per-vertex terms, and an explicit
+    <i>subaction</i> (a potential on vertex states) makes every per-vertex inequality hold, so the sum
+    telescopes. The only tight constraints are the three vertex types of A<sub>5</sub>, consistent because
+    27 &middot; 23 = 621.</p>
+    <p class="note">Lean: <code>R3Cert.BGSCL.bg_sharp</code>, <code>R3Cert.Step3.bg_max_growth</code></p>
+  </div></div>
+
+  <div class="step"><div class="letter">3</div><div class="body">
+    <h3>Every maximizer is a spider</h3>
+    <p>Root at a vertex of maximum degree <i>k</i>. A non-atom child must cost more than it can gain.</p>
+    <ul>
+      <li><b>k &ge; 24:</b> a tangent price makes A<sub>5</sub> the envelope; non-atoms lose at least 1/75.</li>
+      <li><b>k &le; 23, n &ge; 492:</b> 32 rate cells give a linear deficit &alpha;|b| for every non-atom branch.</li>
+      <li><b>150 &le; n &le; 491:</b> rate cells with degree-dependent credits and per-(k, n) root knapsacks.</li>
+      <li><b>7 &le; n &le; 149:</b> a sharded Bellman envelope certificate (57 Lean files), fixed point, kernel-evaluated.</li>
+      <li><b>4 &le; n &le; 6:</b> every tree evaluated exactly.</li>
+    </ul>
+  </div></div>
+
+  <div class="step"><div class="letter">4</div><div class="body">
+    <h3>The best spider</h3>
+    <p>A spider's value has a closed form. An exact balance identity shows arm sizes in a maximizer differ
+    by at most one. For n &le; 491 the kernel sweeps every balanced configuration (89 chunk files). For
+    n &ge; 492 exchange arguments confine the maximizer to arms of 4, 5, 6 cherries, and 223 polynomial
+    certificates (checked by <code>ring</code> and <code>norm_num</code>) pick out the rule.</p>
+  </div></div>
+
+  <p><a href="paper.pdf">Read the paper (PDF)</a> for the full argument.</p>
+</section>
+
+<!-- ============================ VERIFY ============================ -->
+<section class="panel" id="p-verify">
+  <p>The Lean kernel is the only trusted component. Every certificate was produced by an untrusted
+  generator and is checked by the kernel; a wrong certificate is a failed build.</p>
+<pre>git clone https://github.com/DrMurphyIsIn/brualdi-goldwasser
+cd brualdi-goldwasser/formalization
+lake exe cache get
+lake build -j 4                  # several CPU-hours, 64 GiB RAM recommended
+lake env lean AxiomGuard.lean    # every headline theorem: [propext, Classical.choice, Quot.sound]
+
+cd ..
+certificates/verify.sh           # regenerate every certificate family, byte-for-byte
+certificates/verify.sh --full    # also the independent certified all-tree search, n &lt;= 491</pre>
+
+  <h2>The statement</h2>
+<pre>theorem R3Cert.BGMaximizerAll.bg_maximizer_all_perm (n : Nat) (h4 : 4 &lt;= n)
+    (t : UTree) (ht : usize t = n) :
+    (lapl (aGraph (realize (dtRealize t)))).permanent
+        / (prod v, (aGraph (realize (dtRealize t))).degree v)
+      &lt;= (lapl (aGraph (realize (dtRealize (bgMax n))))).permanent
+        / (prod v, (aGraph (realize (dtRealize (bgMax n)))).degree v)</pre>
+  <p class="note">Here <code>lapl G</code> has deg on the diagonal and &minus;1 on edges, and
+  <code>permanent</code> is Mathlib's. What a reviewer should check is that these definitions mean what
+  they say; the kernel checks the rest.</p>
+
+  <h2>Certificate families</h2>
+  <div class="grid2">
+    <div class="card"><h3>spider_table</h3><p>Table rows and the per-n spider sweep, n &le; 491.</p><div class="k">91 Lean files</div></div>
+    <div class="card"><h3>envcert_g149</h3><p>Envelope tables, tangents and spider bounds, 7 &le; n &le; 149.</p><div class="k">57 Lean files</div></div>
+    <div class="card"><h3>mid_cells</h3><p>Credited rate cells and root knapsacks, 150 &le; n &le; 491.</p><div class="k">45 Lean files</div></div>
+    <div class="card"><h3>cand_certs</h3><p>The 223 polynomial certificates, n &ge; 492.</p><div class="k">10 Lean files</div></div>
+  </div>
+  <p>Each family has a generator, a frozen Telperion record with hashes, and a driver that regenerates it
+  from scratch and compares it with the frozen copy and with the Lean files.</p>
+
+  <h2>Status and limits</h2>
+  <ul>
+    <li>Not yet refereed. We welcome review and issues.</li>
+    <li>Uniqueness of the maximizer is established computationally, not in Lean.</li>
+    <li>The heaviest Lean files need 15&ndash;35 GiB of memory each.</li>
+    <li>Developed with extensive assistance from an AI system (Claude, by Anthropic), under the author's
+    direction; correctness rests on the Lean kernel.</li>
+  </ul>
+</section>
+
+<footer>
+  Peter W. Murphy, MD &middot; mathematics and Lean code Apache-2.0, documents CC-BY-4.0, vendored
+  Telperion engine BSL 1.1 &middot;
+  <a href="https://github.com/DrMurphyIsIn/brualdi-goldwasser">source</a>
+</footer>
+</div>
+
+<script>
+(function () {
+  "use strict";
+  var ROWS = [[0,1,1,0],[2,0,0,0],[1,1,1,0],[3,0,0,0],[2,1,1,0],[4,0,0,0],[2,2,1,0],[5,0,0,0],[2,3,1,0],[6,0,0,0],[3,3,1,0],[7,0,0,0],[3,4,1,0],[8,0,0,0],[4,4,1,0],[9,0,0,0],[4,5,1,0],[3,3,2,0],[5,5,1,0],[4,3,2,0],[5,6,1,0],[4,3,1,1],[6,6,1,0],[4,4,2,0],[6,7,1,0],[5,4,2,0],[7,7,1,0],[5,4,1,1],[7,8,1,0],[5,5,2,0],[8,8,1,0],[6,5,2,0],[4,4,3,0],[7,5,2,0],[5,4,3,0],[7,5,1,1],[5,4,2,1],[7,6,2,0],[6,4,2,1],[8,6,2,0],[6,4,1,2],[8,6,1,1],[6,5,3,0],[5,4,4,0],[7,5,3,0],[5,4,3,1],[7,5,2,1],[6,4,3,1],[7,5,1,2],[6,4,2,2],[7,6,3,0],[6,4,1,3],[5,4,5,0],[6,5,4,0],[5,4,4,1],[7,5,4,0],[6,4,4,1],[8,5,4,0],[6,4,3,2],[8,5,3,1],[6,4,2,3],[5,4,6,0],[6,4,1,4],[5,4,5,1],[6,5,5,0],[5,4,4,2],[7,5,5,0],[6,4,4,2],[8,5,5,0],[6,4,3,3],[8,5,4,1],[6,4,2,4],[5,4,6,1],[6,4,1,5],[5,4,5,2],[6,5,6,0],[5,4,4,3],[7,5,6,0],[5,4,3,4],[8,5,6,0],[6,4,3,4],[8,5,5,1],[6,4,2,5],[5,4,6,2],[6,4,1,6],[5,4,5,3],[6,5,7,0],[5,4,4,4],[7,5,7,0],[5,4,3,5],[8,5,7,0],[5,4,2,6],[5,4,7,2],[6,4,2,6],[5,4,6,3],[6,4,1,7],[5,4,5,4],[6,5,8,0],[5,4,4,5],[7,5,8,0],[5,4,3,6],[8,5,8,0],[5,4,2,7],[5,4,7,3],[5,4,1,8],[5,4,6,4],[5,5,9,0],[5,4,5,5],[6,5,9,0],[5,4,4,6],[7,5,9,0],[5,4,3,7],[4,4,7,4],[5,4,2,8],[4,4,6,5],[5,4,1,9],[4,4,5,6],[5,5,10,0],[5,4,5,6],[6,5,10,0],[5,4,4,7],[7,5,10,0],[5,4,3,8],[4,4,7,5],[5,4,2,9],[4,4,6,6],[5,4,1,10],[4,4,5,7],[5,5,11,0],[4,4,4,8],[6,5,11,0],[4,4,3,9],[7,5,11,0],[4,4,2,10],[4,4,7,6],[5,4,2,10],[4,4,6,7],[5,4,1,11],[4,4,5,8],[5,5,12,0],[4,4,4,9],[6,5,12,0],[4,4,3,10],[3,4,7,7],[4,4,2,11],[3,4,6,8],[4,4,1,12],[4,4,6,8],[4,5,13,0],[4,4,5,9],[5,5,13,0],[4,4,4,10],[6,5,13,0],[4,4,3,11],[3,4,7,8],[4,4,2,12],[3,4,6,9],[4,4,1,13],[3,4,5,10],[4,5,14,0],[3,4,4,11],[5,5,14,0],[3,4,3,12],[3,4,8,8],[3,4,2,13],[3,4,7,9],[4,4,2,13],[3,4,6,10],[4,4,1,14],[3,4,5,11],[4,5,15,0],[3,4,4,12],[5,5,15,0],[3,4,3,13],[2,4,7,10],[3,4,2,14],[2,4,6,11],[3,4,1,15],[2,4,5,12],[3,5,16,0],[3,4,5,12],[4,5,16,0],[3,4,4,13],[2,4,8,10],[3,4,3,14],[2,4,7,11],[3,4,2,15],[2,4,6,12],[3,4,1,16],[2,4,5,13],[3,5,17,0],[2,4,4,14],[4,5,17,0],[2,4,3,15],[1,4,7,12],[2,4,2,16],[2,4,7,12],[2,4,1,17],[2,4,6,13],[2,5,18,0],[2,4,5,14],[3,5,18,0],[2,4,4,15],[1,4,8,12],[2,4,3,16],[1,4,7,13],[2,4,2,17],[1,4,6,14],[2,4,1,18],[1,4,5,15],[2,5,19,0],[1,4,4,16],[3,5,19,0],[1,4,3,17],[1,4,8,13],[1,4,2,18],[1,4,7,14],[1,4,1,19],[1,4,6,15],[2,4,1,19],[1,4,5,16],[2,5,20,0],[1,4,4,17],[0,4,8,14],[1,4,3,18],[0,4,7,15],[1,4,2,19],[0,4,6,16],[1,4,1,20],[0,4,5,17],[1,5,21,0],[0,4,4,18],[0,4,9,14],[0,4,3,19],[0,4,8,15],[0,4,2,20],[0,4,7,16],[1,4,2,20],[0,4,6,17],[1,4,1,21],[0,4,5,18],[1,5,22,0],[0,4,4,19],[0,4,9,15],[0,4,3,20],[0,4,8,16],[0,4,2,21],[0,4,7,17],[0,4,1,22],[0,4,6,18],[0,5,23,0],[0,4,5,19],[1,5,23,0],[0,4,4,20],[0,4,9,16],[0,4,3,21],[0,4,8,17],[0,4,2,22],[0,4,7,18],[0,4,1,23],[0,4,6,19],[0,5,24,0],[0,4,5,20],[1,5,24,0],[0,4,4,21],[0,4,9,17],[0,4,3,22],[0,4,8,18],[0,4,2,23],[0,4,7,19],[0,4,1,24],[0,4,6,20],[0,5,25,0],[0,4,5,21],[1,5,25,0],[0,4,4,22],[0,4,9,18],[0,4,3,23],[0,4,8,19],[0,4,2,24],[0,4,7,20],[0,4,1,25],[0,4,6,21],[0,5,26,0],[0,4,5,22],[1,5,26,0],[0,4,4,23],[0,4,9,19],[0,4,3,24],[0,4,8,20],[0,4,2,25],[0,4,7,21],[0,4,1,26],[0,4,6,22],[0,5,27,0],[0,4,5,23],[1,5,27,0],[0,4,4,24],[0,4,9,20],[0,4,3,25],[0,4,8,21],[0,4,2,26],[0,4,7,22],[0,4,1,27],[0,4,6,23],[0,5,28,0],[0,4,5,24],[1,5,28,0],[0,4,4,25],[0,4,9,21],[0,4,3,26],[0,4,8,22],[0,4,2,27],[0,4,7,23],[0,4,1,28],[0,4,6,24],[0,5,29,0],[0,4,5,25],[1,5,29,0],[0,4,4,26],[0,4,9,22],[0,4,3,27],[0,4,8,23],[0,4,2,28],[0,4,7,24],[0,4,1,29],[0,4,6,25],[0,5,30,0],[0,4,5,26],[1,5,30,0],[0,4,4,27],[0,4,9,23],[0,4,3,28],[0,4,8,24],[0,4,2,29],[0,4,7,25],[0,4,1,30],[0,4,6,26],[0,5,31,0],[0,4,5,27],[0,5,30,1],[0,4,4,28],[0,4,9,24],[0,4,3,29],[0,4,8,25],[0,4,2,30],[0,4,7,26],[0,4,1,31],[0,4,6,27],[0,5,32,0],[0,4,5,28],[0,5,31,1],[0,4,4,29],[0,4,9,25],[0,4,3,30],[0,4,8,26],[0,4,2,31],[0,4,7,27],[0,4,1,32],[0,4,6,28],[0,5,33,0],[0,4,5,29],[0,5,32,1],[0,4,4,30],[0,4,9,26],[0,4,3,31],[0,4,8,27],[0,4,2,32],[0,4,7,28],[0,4,1,33],[0,4,6,29],[0,5,34,0],[0,4,5,30],[0,5,33,1],[0,4,4,31],[0,4,9,27],[0,4,3,32],[0,4,8,28],[0,4,2,33],[0,4,7,29],[0,4,1,34],[0,4,6,30],[0,5,35,0],[0,4,5,31],[0,5,34,1],[0,4,4,32],[0,4,9,28],[0,4,3,33],[0,4,8,29],[0,4,2,34],[0,4,7,30],[0,4,1,35],[0,4,6,31],[0,5,36,0],[0,4,5,32],[0,5,35,1],[0,4,4,33],[0,4,9,29],[0,4,3,34],[0,4,8,30],[0,4,2,35],[0,4,7,31],[0,4,1,36],[0,4,6,32],[0,5,37,0],[0,4,5,33],[0,5,36,1],[0,4,4,34],[0,4,9,30],[0,4,3,35],[0,4,8,31],[0,4,2,36],[0,4,7,32],[0,4,1,37],[0,4,6,33],[0,5,38,0],[0,4,5,34],[0,5,37,1],[0,4,4,35],[0,4,9,31],[0,4,3,36],[0,4,8,32],[0,4,2,37],[0,4,7,33],[0,4,1,38],[0,4,6,34],[0,5,39,0],[0,4,5,35],[0,5,38,1],[0,4,4,36],[0,5,37,2],[0,4,3,37],[0,4,8,33],[0,4,2,38],[0,4,7,34],[0,4,1,39],[0,4,6,35],[0,5,40,0],[0,4,5,36],[0,5,39,1],[0,4,4,37],[0,5,38,2],[0,4,3,38],[0,4,8,34],[0,4,2,39],[0,4,7,35],[0,4,1,40],[0,4,6,36],[0,5,41,0],[0,4,5,37],[0,5,40,1],[0,4,4,38],[0,5,39,2],[0,4,3,39],[0,4,8,35],[0,4,2,40],[0,4,7,36],[0,4,1,41],[0,4,6,37],[0,5,42,0],[0,4,5,38],[0,5,41,1],[0,4,4,39],[0,5,40,2],[0,4,3,40],[0,4,8,36],[0,4,2,41],[0,4,7,37],[0,4,1,42],[0,4,6,38],[0,5,43,0],[0,4,5,39],[0,5,42,1],[0,4,4,40],[0,5,41,2],[0,4,3,41],[0,4,8,37],[0,4,2,42],[0,4,7,38],[0,4,1,43],[0,4,6,39],[0,5,44,0],[0,4,5,40],[0,5,43,1],[0,4,4,41],[0,5,42,2],[0,4,3,42],[0,4,8,38]];   // n = 4.. 491: [cherries, s, a, b] = C cherries, a arms A_s, b arms A_{s+1}
+  var LR = Math.log(621 / 64) / 11;
+
+  function logG(j) { return j * Math.log(1.5) + Math.log((4 * j + 3) / (3 * (j + 1))); }
+  function yA(j) { return 3 / (4 * j + 3); }
+
+  // composition: {c: cherries, arms: {j: count}}
+  function comp(n) {
+    if (n <= 491) {
+      var r = ROWS[n - 4], arms = {};
+      if (r[2]) arms[r[1]] = r[2];
+      if (r[3]) arms[r[1] + 1] = r[3];
+      return { c: r[0], arms: arms, src: "table (Lean)" };
+    }
+    var s = (6 * (n - 1)) % 11, k4 = 0, k6 = 0;
+    if (s >= 1 && s <= 4) {
+      if ((s === 3 && n <= 722) || (s === 4 && n <= 2319)) k4 = 11 - s; else k6 = s;
+    } else if (s >= 5) k4 = 11 - s;
+    var k5 = (n - 1 - 9 * k4 - 13 * k6) / 11, a = {};
+    if (k4) a[4] = k4;
+    a[5] = k5;
+    if (k6) a[6] = k6;
+    return { c: 0, arms: a, src: "rule (Lean)" };
+  }
+  function degree(cp) { var d = cp.c; for (var j in cp.arms) d += cp.arms[j]; return d; }
+  function ratio(cp, n) {
+    var lg = cp.c * Math.log(1.5), R = cp.c / 3;
+    for (var j in cp.arms) { lg += cp.arms[j] * logG(+j); R += cp.arms[j] * yA(+j); }
+    lg += Math.log(1 + R / degree(cp));
+    return Math.exp(lg - (n - 1) * LR);
+  }
+  function label(cp, html) {
+    var parts = [];
+    function pw(base, m) { return m > 1 ? base + (html ? "<sup>" + m + "</sup>" : "^" + m) : base; }
+    if (cp.c) parts.push(pw("C", cp.c));
+    var js = Object.keys(cp.arms).map(Number).sort(function (x, y) { return y - x; });
+    js.forEach(function (j) {
+      if (!cp.arms[j]) return;
+      var b = j === 0 ? "L" : (html ? "A<sub>" + j + "</sub>" : "A" + j);
+      parts.push(pw(b, cp.arms[j]));
+    });
+    return parts.join(" ");
+  }
+
+  // ---------- spider drawing ----------
+  var NS = "http://www.w3.org/2000/svg";
+  function el(name, attrs, parent) {
+    var e = document.createElementNS(NS, name);
+    for (var k in attrs) e.setAttribute(k, attrs[k]);
+    if (parent) parent.appendChild(e);
+    return e;
+  }
+  function armColor(j) { return j === 5 ? "var(--a5)" : j === 4 ? "var(--a4)" : j === 6 ? "var(--a6)" : "var(--other)"; }
+
+  function drawSpider(n) {
+    var svg = document.getElementById("spiderSvg");
+    while (svg.firstChild) svg.removeChild(svg.firstChild);
+    var cp = comp(n), kids = [];
+    Object.keys(cp.arms).map(Number).sort().forEach(function (j) { for (var i = 0; i < cp.arms[j]; i++) kids.push(j); });
+    for (var i = 0; i < cp.c; i++) kids.push(-1);   // cherries at the centre
+    var D = kids.length, R1 = 150, stroke = "var(--faint)";
+    var dot = Math.max(1.2, Math.min(4, 60 / Math.sqrt(n)));
+    var g = el("g", {}, svg);
+    kids.forEach(function (j, idx) {
+      var th = 2 * Math.PI * idx / D - Math.PI / 2;
+      var ax = R1 * Math.cos(th), ay = R1 * Math.sin(th);
+      var col = j < 0 ? "var(--other)" : armColor(j);
+      el("line", { x1: 0, y1: 0, x2: ax, y2: ay, stroke: stroke, "stroke-width": 0.8 }, g);
+      if (j < 0) {   // cherry: a path of two
+        var bx = 1.6 * ax, by = 1.6 * ay;
+        el("line", { x1: ax, y1: ay, x2: bx, y2: by, stroke: stroke, "stroke-width": 0.8 }, g);
+        el("circle", { cx: bx, cy: by, r: dot, fill: col }, g);
+      } else {
+        var spread = Math.min(2 * Math.PI / D, 0.9), L1 = Math.min(55, 900 / D + 12), L2 = L1 * 1.9;
+        for (var k = 0; k < j; k++) {
+          var t = th + (j === 1 ? 0 : spread * (k / (j - 1) - 0.5) * 0.9);
+          var mx = ax + L1 * Math.cos(t), my = ay + L1 * Math.sin(t);
+          var lx = ax + L2 * Math.cos(t), ly = ay + L2 * Math.sin(t);
+          el("line", { x1: ax, y1: ay, x2: lx, y2: ly, stroke: stroke, "stroke-width": 0.6 }, g);
+          el("circle", { cx: mx, cy: my, r: dot * 0.8, fill: col }, g);
+          el("circle", { cx: lx, cy: ly, r: dot * 0.8, fill: col }, g);
+        }
+      }
+      el("circle", { cx: ax, cy: ay, r: dot * 1.1, fill: col }, g);
+    });
+    el("circle", { cx: 0, cy: 0, r: 6, fill: "var(--surface)", stroke: "var(--ink)", "stroke-width": 1.5 }, g);
+    // fit
+    var bb = g.getBBox(), pad = 10;
+    svg.setAttribute("viewBox", (bb.x - pad) + " " + (bb.y - pad) + " " + (bb.width + 2 * pad) + " " + (bb.height + 2 * pad));
+    var s = (6 * (n - 1)) % 11;
+    document.getElementById("readout").innerHTML =
+      "n = " + n + " &nbsp; maximizer: " + label(cp, true) + " &nbsp; centre degree " + degree(cp) +
+      " &nbsp; &pi;/&rho;<sup>n&minus;1</sup> = " + ratio(cp, n).toFixed(5) +
+      (n >= 492 ? " &nbsp; s = 6(n&minus;1) mod 11 = " + s : "") + " &nbsp; [" + cp.src + "]";
+  }
+
+  // ---------- ratio plot ----------
+  function drawRatio() {
+    var svg = document.getElementById("ratioSvg"), W = 900, H = 300, L = 50, B = 30, T = 12, Rm = 12;
+    var N1 = 4, N2 = 1200, lo = 1.08, hi = 1.36;
+    function X(n) { return L + (n - N1) / (N2 - N1) * (W - L - Rm); }
+    function Y(v) { return T + (hi - v) / (hi - lo) * (H - T - B); }
+    [1.1, 1.15, 1.2, 1.25, 1.3, 1.35].forEach(function (v) {
+      el("line", { x1: L, x2: W - Rm, y1: Y(v), y2: Y(v), stroke: "var(--line)", "stroke-width": 1 }, svg);
+      var t = el("text", { x: L - 6, y: Y(v) + 4, "text-anchor": "end", "font-size": 11, fill: "var(--muted)" }, svg);
+      t.textContent = v.toFixed(2);
+    });
+    [4, 150, 300, 492, 722, 900, 1200].forEach(function (n) {
+      var t = el("text", { x: X(n), y: H - 10, "text-anchor": "middle", "font-size": 11, fill: "var(--muted)" }, svg);
+      t.textContent = n;
+    });
+    el("line", { x1: X(492), x2: X(492), y1: T, y2: H - B, stroke: "var(--faint)", "stroke-dasharray": "3 3" }, svg);
+    var tt = el("text", { x: X(492) + 4, y: T + 12, "font-size": 11, fill: "var(--muted)" }, svg);
+    tt.textContent = "table | rule";
+    for (var n = N1; n <= N2; n++) {
+      var v = ratio(comp(n), n);
+      el("circle", { cx: X(n), cy: Y(v), r: 1.3, fill: n <= 491 ? "var(--cool)" : "var(--accent)" }, svg);
+    }
+  }
+
+  // ---------- table ----------
+  function buildTable() {
+    var tb = document.getElementById("tbody"), html = [];
+    for (var n = 4; n <= 3000; n++) {
+      var cp = comp(n);
+      html.push("<tr id=\"r" + n + "\"><td class=\"num\">" + n + "</td><td>" + label(cp, true) + "</td><td class=\"num\">" +
+        degree(cp) + "</td><td class=\"num\">" + ratio(cp, n).toFixed(5) + "</td><td>" + cp.src + "</td></tr>");
+    }
+    tb.innerHTML = html.join("");
+  }
+
+  // ---------- wiring ----------
+  var rng = document.getElementById("nRange"), box = document.getElementById("nBox");
+  function setN(v) {
+    v = Math.max(4, Math.min(100000, Math.floor(+v) || 4));
+    box.value = v; rng.value = Math.min(v, 1200);
+    drawSpider(v);
+  }
+  rng.addEventListener("input", function () { setN(rng.value); });
+  box.addEventListener("change", function () { setN(box.value); });
+
+  var built = false;
+  function show(p) {
+    document.querySelectorAll(".tab").forEach(function (t) { t.setAttribute("aria-selected", t.dataset.p === p ? "true" : "false"); });
+    document.querySelectorAll(".panel").forEach(function (x) { x.classList.toggle("active", x.id === "p-" + p); });
+    if (p === "explore" && !built) { buildTable(); built = true; }
+  }
+  document.querySelectorAll(".tab").forEach(function (t) { t.addEventListener("click", function () { show(t.dataset.p); }); });
+  document.querySelectorAll("[data-go]").forEach(function (a) { a.addEventListener("click", function (e) { e.preventDefault(); show(a.dataset.go); }); });
+
+  var find = document.getElementById("findN"), fout = document.getElementById("findOut");
+  find.addEventListener("change", function () {
+    var n = Math.floor(+find.value);
+    if (!(n >= 4)) { fout.textContent = ""; return; }
+    if (n > 3000) { var cp = comp(n); fout.innerHTML = "n = " + n + ": " + label(cp, true) + " (rule)"; return; }
+    var r = document.getElementById("r" + n);
+    document.querySelectorAll("tr.hl").forEach(function (x) { x.classList.remove("hl"); });
+    if (r) { r.classList.add("hl"); r.scrollIntoView({ block: "center" }); fout.textContent = ""; }
+  });
+
+  var tb = document.getElementById("themeBtn");
+  tb.addEventListener("click", function () {
+    var cur = document.documentElement.getAttribute("data-theme");
+    var dark = cur ? cur === "dark" : window.matchMedia("(prefers-color-scheme: dark)").matches;
+    var next = dark ? "light" : "dark";
+    document.documentElement.setAttribute("data-theme", next);
+    try { localStorage.setItem("bg-site-theme", next); } catch (e) {}
+  });
+
+  setN(492);
+  drawRatio();
+})();
+</script>
+</body>
+</html>
