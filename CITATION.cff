@@ -9,6 +9,11 @@ url: "https://drmurphyisin.github.io/brualdi-goldwasser/"
 license: Apache-2.0
 version: v1.0.0
 date-released: 2026-09-26
+doi: 10.5281/zenodo.22983413
+identifiers:
+  - type: doi
+    value: 10.5281/zenodo.22983413
+    description: "Zenodo archive of release v1.0.0"
 keywords:
   - Laplacian permanent
   - Laplacian ratio

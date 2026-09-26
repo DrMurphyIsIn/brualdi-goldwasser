@@ -1,5 +1,7 @@
 # Which tree maximizes the Laplacian ratio?
 
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.22983413.svg)](https://doi.org/10.5281/zenodo.22983413)
+
 In 1984 Richard Brualdi and John Goldwasser studied the permanent of the Laplacian matrix of a tree
 and asked a deceptively simple question: among all trees on *n* vertices, which one makes the
 **Laplacian ratio**
