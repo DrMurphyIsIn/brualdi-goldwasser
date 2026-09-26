@@ -9,7 +9,7 @@
 #   4. registers the runner with the repository, with the label `bg-lean`
 #      (fetches a one-hour registration token with `gh`, which must be logged in as the repo owner);
 #   5. installs a LaunchDaemon that runs the runner as `bgrunner` at boot, at reduced CPU priority;
-#   6. optionally (--seed-lake DIR) copies an already-built .lake into the runner's checkout, so the first
+#   6. optionally (--seed-lake DIR) copies an already-built .lake to ~bgrunner/bg-lake-seed, so the first
 #      CI run does not rebuild everything (APFS clone copy: fast, no extra disk until files diverge);
 #   7. optionally (--block-loopback) adds a pf firewall anchor that blocks `bgrunner` from connecting to
 #      localhost services, so CI jobs cannot reach anything listening on this machine.
@@ -39,10 +39,20 @@ while [ $# -gt 0 ]; do
   esac
 done
 
-ME="$(id -un)"
+# The owning (human) user.  Normally the script runs as that user and calls sudo itself; if it is started
+# as root through sudo (SUDO_USER set), use SUDO_USER, and run gh as that user so it finds their login.
+if [ "$(id -u)" = 0 ]; then
+  ME="${SUDO_USER:-}"
+  [ -n "$ME" ] && [ "$ME" != root ] || { echo "run as your normal user (or via sudo from it), not as a root login"; exit 1; }
+  as_me() { sudo -u "$ME" -H "$@"; }
+else
+  ME="$(id -un)"
+  as_me() { "$@"; }
+fi
 MYHOME="$(eval echo "~$ME")"
-[ "$ME" != "root" ] || { echo "run as your normal user, not root (the script calls sudo itself)"; exit 1; }
-command -v gh >/dev/null || { echo "needs the GitHub CLI (gh), logged in as the repository owner"; exit 1; }
+GH="$(command -v gh || true)"
+[ -n "$GH" ] || { echo "needs the GitHub CLI (gh), logged in as the repository owner"; exit 1; }
+as_me "$GH" auth status >/dev/null 2>&1 || { echo "gh is not logged in for $ME (run: gh auth login)"; exit 1; }
 
 echo "== 1. user and group"
 if ! dscl . -read "/Groups/$RUNNER_USER" >/dev/null 2>&1; then
@@ -75,14 +85,14 @@ echo "ok: $RUNNER_USER cannot read $MYHOME and is not an admin"
 
 echo "== 3. elan and the runner"
 sudo -u "$RUNNER_USER" -H bash -c 'cd ~ && [ -x ~/.elan/bin/elan ] || (curl -sSfL https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh | sh -s -- -y --default-toolchain none)'
-VER="$(gh api repos/actions/runner/releases/latest --jq .tag_name | sed 's/^v//')"
+VER="$(as_me "$GH" api repos/actions/runner/releases/latest --jq .tag_name | sed 's/^v//')"
 TARBALL="actions-runner-osx-arm64-$VER.tar.gz"
 sudo -u "$RUNNER_USER" -H bash -c "mkdir -p ~/actions-runner && cd ~/actions-runner && \
   { [ -x ./run.sh ] || { curl -sSfL -o $TARBALL https://github.com/actions/runner/releases/download/v$VER/$TARBALL && tar xzf $TARBALL && rm $TARBALL; }; }"
 
 echo "== 4. register with $REPO"
 if ! sudo test -f "$RUNNER_HOME/actions-runner/.runner"; then
-  TOKEN="$(gh api -X POST "repos/$REPO/actions/runners/registration-token" --jq .token)"
+  TOKEN="$(as_me "$GH" api -X POST "repos/$REPO/actions/runners/registration-token" --jq .token)"
   sudo -u "$RUNNER_USER" -H bash -c "cd ~/actions-runner && ./config.sh --unattended --url https://github.com/$REPO \
     --token '$TOKEN' --name \"$(scutil --get LocalHostName)-bg-lean\" --labels bg-lean --work _work --replace"
   unset TOKEN
@@ -116,10 +126,11 @@ sudo launchctl bootstrap system "$PLIST"
 
 if [ -n "$SEED_LAKE" ]; then
   echo "== 6. seed .lake from $SEED_LAKE"
-  DEST="$RUNNER_HOME/actions-runner/_work/brualdi-goldwasser/brualdi-goldwasser/formalization"
-  sudo mkdir -p "$DEST"
-  sudo cp -cR "$SEED_LAKE" "$DEST/.lake"
-  sudo chown -R "$RUNNER_USER:$RUNNER_USER" "$RUNNER_HOME/actions-runner/_work"
+  # Kept outside the checkout (actions/checkout empties a fresh work directory); lean.yml clones it into
+  # formalization/.lake after checkout when .lake is missing.
+  sudo rm -rf "$RUNNER_HOME/bg-lake-seed"
+  sudo cp -cR "$SEED_LAKE" "$RUNNER_HOME/bg-lake-seed"
+  sudo chown -R "$RUNNER_USER:$RUNNER_USER" "$RUNNER_HOME/bg-lake-seed"
   echo "seeded (lake still rehashes sources and rebuilds anything that differs)"
 fi
 

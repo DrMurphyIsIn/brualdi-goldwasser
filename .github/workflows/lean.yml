@@ -28,6 +28,9 @@ jobs:
       - uses: actions/checkout@v4
         with:
           clean: false          # keep .lake between runs; lake rebuilds only what changed
+      - name: Seed .lake on first run
+        run: |
+          if [ ! -d .lake ] && [ -d "$HOME/bg-lake-seed" ]; then cp -cR "$HOME/bg-lake-seed" .lake; echo seeded; fi
       - name: Toolchain
         run: |
           export PATH="$HOME/.elan/bin:$PATH"
