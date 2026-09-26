@@ -102,16 +102,60 @@ permanent of a Laplacian grows with the degrees, they normalized it and introduc
 They showed that $\pi(T)\ge 2$ for every tree on at least two vertices, with equality exactly for the
 star, and they asked the natural companion question: \emph{which tree on $n$ vertices maximizes $\pi$?}
 
-The question stayed open for four decades. Wu, Dong and Lai~\cite{WDL2025} studied it again in 2025 and
-conjectured that the maximizer is a particular subdivided star. In 2026 Pant~\cite{Pant2026} refuted that
-conjecture with explicit families of caterpillars, paths whose vertices each carry many pendant paths of
-length two, and left the question open, proposing no replacement.
+\subsection{A short history}
 
-This paper answers it for every $n$.
+\paragraph{1984: the question.} Brualdi and Goldwasser's paper~\cite{BG1984} is the starting point for
+Laplacian permanents. Among much else, they showed that over trees on $n$ vertices the permanent
+$\per L(T)$ itself is smallest for the star and largest for the path, so the permanent alone is not
+interesting to optimize: it mostly rewards long paths with many vertices of degree two. Dividing by
+$\prod_v\deg v$ removes that trivial effect, and they introduced the ratio $\pi(T)$ for exactly this
+purpose. They proved the lower bound $\pi\ge2$ and posed extremal problems for the ratio, including
+bounds for trees with a given bipartition and the maximum over all trees on $n$ vertices.
+
+\paragraph{2024--2025: the minimum side, and a conjecture for the maximum.} The minimum-type questions
+were resolved first. Wu~\cite{Wu2024} determined the minimum of $\pi$ over trees on $n$ vertices with
+diameter at least $k$, and Wu, Dong and Lai~\cite{WDL2025} the minimum over trees with a given
+bipartition. For the maximum, Wu, Dong and Lai made a precise conjecture. For odd $n$ the maximizer should
+be the subdivided star with $(n-1)/2$ legs of length two, that is, a centre carrying only cherries,
+$C^{(n-1)/2}$ in the notation below, with value
+\[
+  \pi\big(C^{(n-1)/2}\big)=2\Big(\frac32\Big)^{(n-3)/2};
+\]
+for even $n$ they conjectured explicit subdivided stars with closed-form values in the two classes
+$n\equiv0$ and $n\equiv2\pmod4$. The conjecture is natural: cherries are the best small building block
+(a cherry has matching weight $\tfrac32$ on two vertices), and for small $n$ it is correct.
+
+\paragraph{2026: counterexamples.} Pant~\cite{Pant2026} refuted the conjecture. His trees are
+caterpillars $T(a_1,\dots,a_m)$: a path $x_1x_2\cdots x_m$ in which $x_i$ carries $a_i$ cherries. He gave
+three infinite families, $A_t=T(3,t,3)$ on $2t+15$ vertices, $B_t=T(t,t,t,t)$ on $8t+4$ vertices and
+$C_t=T(t,t,t+1,t)$ on $8t+6$ vertices, whose ratios exceed the conjectured values from $t=4$ on, that is
+from $n=23$, $36$ and $38$ respectively, one family for each residue class of the conjecture. He also
+observed that the equality statement already fails at $n=21$, where $T(3,3,3)$ attains the conjectured
+value with a different degree sequence. He concluded that determining the maximum remains open, and he
+proposed no replacement.
+
+\paragraph{How the pieces fit.} With the complete answer in hand (\cref{thm:main}), the earlier work
+lines up exactly, which we find a pleasing check on everything involved:
+\begin{itemize}
+\item The Wu--Dong--Lai formulas give the true maximum for every $n\le22$, and for every even $n\le34$.
+  They first fail at $n=23$, $36$ and $38$, precisely the sizes of Pant's first counterexamples $A_4$,
+  $B_4$ and $C_4$.
+\item At $n=21$ exactly two trees are maximal: the conjectured $C^{10}$ and Pant's $T(3,3,3)$. Rooted at
+  its middle vertex, $T(3,3,3)$ is the spider $C^3A_3^2$ (three cherries and two arms with three cherries
+  each), and the two values agree: both equal $19683/256$.
+\item At $n=23$ Pant's $A_4=T(3,4,3)$ is \emph{the} maximizer: rooted at its middle vertex it is the
+  spider $C^4A_3^2$. His other two families are caterpillars with four hubs, which are never spiders, so by
+  \cref{thm:reduction} they are never maximal; at $n=36$ and $38$ the maximizers are $C^4A_4^3$ and
+  $C^5A_4^3$.
+\end{itemize}
+So the answer grows out of both earlier proposals. Wu, Dong and Lai were right that pendant paths of
+length two are the basic unit; Pant was right that grouping them on several hubs beats a single hub of
+cherries. What neither family captures is the eventual structure: one hub carrying \emph{arms}, each a
+second-level hub with exactly five cherries.
 
 \subsection{The answer}
 
-The answer is built from two small pieces (\cref{fig:spider}).
+This paper answers the question for every $n$. The answer is built from two small pieces (\cref{fig:spider}).
 
 \begin{definition}[cherries, arms, spiders]
 A \emph{cherry} is a pendant path of length two. For $j\ge1$ an \emph{arm} $A_j$ is a vertex, adjacent
@@ -1267,7 +1311,7 @@ The repository \url{https://github.com/DrMurphyIsIn/brualdi-goldwasser} contains
 engine, the source of this paper and a project page with an interactive version of \cref{thm:main}
 (\url{https://drmurphyisin.github.io/brualdi-goldwasser/}).
 \begin{verbatim}
-cd formalization && lake exe cache get && lake build -j 4
+cd formalization && lake exe cache get && ./build.sh
 lake env lean AxiomGuard.lean
 certificates/verify.sh         # regenerate all certificates, compare
 certificates/verify.sh --full  # also the certified search, n <= 491
@@ -1295,6 +1339,9 @@ Discrete Appl.\ Math.\ \textbf{372} (2025), 224--236.
 \bibitem{Pant2026} P.~Pant,
 \emph{Counterexamples to a conjecture on Laplacian ratios of trees},
 arXiv:2605.14176 (2026).
+\bibitem{Wu2024} T.~Wu,
+\emph{Solution to an open problem on Laplacian ratio},
+arXiv:2402.15669 (2024).
 \bibitem{HL1972} O.~J.~Heilmann and E.~H.~Lieb,
 \emph{Theory of monomer-dimer systems},
 Comm.\ Math.\ Phys.\ \textbf{25} (1972), 190--232.

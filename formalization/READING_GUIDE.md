@@ -40,7 +40,8 @@ definitions of `UTree`, `usize`, `Aobj`, `realize`, `aGraph`), `BGSpiderRule.lea
 
 ## Build notes
 
-- `lake build -j 3` or `-j 4` on a machine with at least 64 GiB of memory. Some certificate files need
-  15-35 GiB each while the kernel checks them.
+- `./build.sh` on a machine with at least 64 GiB of memory. Some certificate files need 15-35 GiB each while
+  the kernel checks them, and lake has no option to limit parallelism, so the script builds them a few at a
+  time (`./build.sh 6` for more at once) and then runs `lake build`.
 - There is no `native_decide` anywhere: every computation is evaluated by the kernel (`decide +kernel`).
   A `sorry` or `native_decide` would show up in `AxiomGuard.lean` as `sorryAx` or `Lean.ofReduceBool`.

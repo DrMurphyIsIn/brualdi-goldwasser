@@ -92,6 +92,15 @@ tr.hl td { background: var(--accent-soft); }
 .card h3 { margin-top: 0; }
 .card .k { font-family: var(--mono); font-size: 0.85rem; color: var(--muted); word-break: break-word; }
 .pill { display: inline-block; font-size: 0.78rem; border-radius: 999px; padding: 1px 8px; background: var(--pass); color: var(--pass-ink); }
+.btn { font: inherit; font-size: 0.88rem; cursor: pointer; background: var(--surface); color: var(--ink); border: 1px solid var(--line); border-radius: 6px; padding: 4px 10px; }
+.btn:hover { border-color: var(--faint); }
+.btn.sm { padding: 0 8px; font-size: 0.85rem; }
+.controls select { font: inherit; font-size: 0.9rem; background: var(--paper); color: var(--ink); border: 1px solid var(--line); border-radius: 4px; padding: 2px 6px; max-width: 70vw; }
+nav.subtabs { display: flex; flex-wrap: wrap; gap: 6px; margin: 10px 0 4px; }
+nav.subtabs .subtab { font: inherit; font-size: 0.9rem; cursor: pointer; background: transparent; color: var(--muted); border: none; border-bottom: 2px solid transparent; padding: 4px 8px; }
+nav.subtabs .subtab[aria-selected="true"] { color: var(--ink); border-bottom-color: var(--accent); }
+.cnt { display: flex; justify-content: space-between; align-items: center; gap: 8px; padding: 3px 0; border-bottom: 1px dashed var(--line); font-size: 0.9rem; }
+#tlSvg { min-height: 160px; }
 footer { border-top: 1px solid var(--line); margin-top: 40px; padding-top: 14px; color: var(--faint); font-size: 0.85rem; }
 </style>
 </head>
@@ -113,6 +122,9 @@ footer { border-top: 1px solid var(--line); margin-top: 40px; padding-top: 14px;
 
 <nav class="tabs" role="tablist">
   <button class="tab" role="tab" data-p="answer" aria-selected="true">The answer</button>
+  <button class="tab" role="tab" data-p="treelab" aria-selected="false">Tree lab</button>
+  <button class="tab" role="tab" data-p="spiderlab" aria-selected="false">Spider lab</button>
+  <button class="tab" role="tab" data-p="races" aria-selected="false">The races</button>
   <button class="tab" role="tab" data-p="explore" aria-selected="false">Explore every n</button>
   <button class="tab" role="tab" data-p="proof" aria-selected="false">The proof</button>
   <button class="tab" role="tab" data-p="verify" aria-selected="false">Verify it</button>
@@ -167,11 +179,50 @@ footer { border-top: 1px solid var(--line); margin-top: 40px; padding-top: 14px;
   </div>
 
   <h2>History</h2>
-  <p>Brualdi and Goldwasser (1984) proved &pi;(T) &ge; 2, with equality exactly for the star, and asked for
-  the maximum. Wu, Dong and Lai (2025) conjectured that the maximizer is a particular subdivided star.
-  Pant (2026) refuted that conjecture with caterpillars carrying many cherries, and left the question
-  open.</p>
+  <p><b>1984: the question.</b> Brualdi and Goldwasser studied the permanent of the Laplacian of trees and
+  bipartite graphs. Over trees on <i>n</i> vertices, the permanent itself is smallest for the star and
+  largest for the path, which mostly rewards having many vertices of degree two. Dividing by the product of
+  the degrees removes that effect, and they introduced the ratio &pi;(T) for that purpose. They proved
+  &pi;(T) &ge; 2, with equality exactly for the star, and posed extremal problems for the ratio, among them
+  the maximum over all trees on <i>n</i> vertices.</p>
+  <p><b>2024&ndash;2025: the minimum side, and a conjecture.</b> T. Wu determined the minimum over trees
+  of diameter at least <i>k</i> (2024), and Wu, Dong and Lai the minimum over trees with a given
+  bipartition (2025). For the maximum, Wu, Dong and Lai conjectured explicit subdivided stars. For odd
+  <i>n</i>: a centre carrying only cherries, with &pi; = 2(3/2)<sup>(n&minus;3)/2</sup>. For even <i>n</i>:
+  explicit variants in the classes <i>n</i> &equiv; 0 and 2 mod 4. Cherries are the best small building
+  block, and for small <i>n</i> the conjecture is right.</p>
+  <p><b>2026: counterexamples.</b> P. Pant refuted the conjecture with caterpillars
+  T(a<sub>1</sub>,&hellip;,a<sub>m</sub>): a path whose <i>i</i>-th vertex carries a<sub>i</sub> cherries.
+  His three families T(3,t,3), T(t,t,t,t) and T(t,t,t+1,t) beat the conjecture from <i>n</i> = 23, 36 and
+  38, one in each residue class, and he noticed that at <i>n</i> = 21 the tree T(3,3,3) ties the conjectured
+  value. He concluded that the maximum remains open.</p>
+  <p><b>How the pieces fit.</b> With the complete answer, the earlier work lines up exactly:</p>
+  <div class="tablewrap" style="max-height:none">
+  <table>
+    <thead><tr><th>n</th><th>Wu&ndash;Dong&ndash;Lai conjecture</th><th>Pant</th><th>the true maximizer</th></tr></thead>
+    <tbody>
+      <tr><td class="num">&le; 22</td><td>correct value</td><td></td><td>agrees</td></tr>
+      <tr><td class="num">21</td><td>C<sup>10</sup> (maximal)</td><td>T(3,3,3) = C<sup>3</sup>A<sub>3</sub><sup>2</sup> (maximal)</td><td>exactly these two tie</td></tr>
+      <tr><td class="num">23</td><td>first failure</td><td>T(3,4,3) = C<sup>4</sup>A<sub>3</sub><sup>2</sup></td><td>Pant's tree is the maximizer</td></tr>
+      <tr><td class="num">24&ndash;34 even</td><td>correct value</td><td></td><td>agrees</td></tr>
+      <tr><td class="num">36</td><td>first failure (n &equiv; 0 mod 4)</td><td>T(4,4,4,4) beats it</td><td>C<sup>4</sup>A<sub>4</sub><sup>3</sup></td></tr>
+      <tr><td class="num">38</td><td>first failure (n &equiv; 2 mod 4)</td><td>T(4,4,5,4) beats it</td><td>C<sup>5</sup>A<sub>4</sub><sup>3</sup></td></tr>
+      <tr><td class="num">&ge; 492</td><td></td><td></td><td>arms of 4, 5, 6 cherries by the rule</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <p>A caterpillar with three hubs is a spider seen from its middle hub, which is why Pant's T(3,4,3) can be
+  optimal. With four or more hubs it is never a spider, so by the reduction theorem it is never optimal.
+  Wu, Dong and Lai were right that cherries are the basic unit. Pant was right that grouping cherries on
+  several hubs beats a single hub of cherries. The eventual answer is one hub carrying <i>arms</i>, each a
+  second-level hub with exactly five cherries.</p>
+  <p class="note">Sources: Brualdi &amp; Goldwasser, Discrete Math. 48 (1984); T. Wu,
+  <a href="https://arxiv.org/abs/2402.15669">arXiv:2402.15669</a>; Wu, Dong &amp; Lai, Discrete Appl. Math. 372
+  (2025) 224&ndash;236; P. Pant, <a href="https://arxiv.org/abs/2605.14176">arXiv:2605.14176</a>. The comparisons
+  in the table are computed exactly from the Lean table of maximizers.</p>
 </section>
+
+<!--LABS_HTML-->
 
 <!-- ============================ EXPLORE ============================ -->
 <section class="panel" id="p-explore">
@@ -248,7 +299,7 @@ footer { border-top: 1px solid var(--line); margin-top: 40px; padding-top: 14px;
 <pre>git clone https://github.com/DrMurphyIsIn/brualdi-goldwasser
 cd brualdi-goldwasser/formalization
 lake exe cache get
-lake build -j 4                  # several CPU-hours, 64 GiB RAM recommended
+./build.sh                       # several CPU-hours, 64 GiB RAM recommended
 lake env lean AxiomGuard.lean    # every headline theorem: [propext, Classical.choice, Quot.sound]
 
 cd ..
@@ -442,6 +493,7 @@ certificates/verify.sh --full    # also the independent certified all-tree searc
     document.querySelectorAll(".tab").forEach(function (t) { t.setAttribute("aria-selected", t.dataset.p === p ? "true" : "false"); });
     document.querySelectorAll(".panel").forEach(function (x) { x.classList.toggle("active", x.id === "p-" + p); });
     if (p === "explore" && !built) { buildTable(); built = true; }
+    document.dispatchEvent(new CustomEvent("bg-show", { detail: p }));
   }
   document.querySelectorAll(".tab").forEach(function (t) { t.addEventListener("click", function () { show(t.dataset.p); }); });
   document.querySelectorAll("[data-go]").forEach(function (a) { a.addEventListener("click", function (e) { e.preventDefault(); show(a.dataset.go); }); });
@@ -465,9 +517,15 @@ certificates/verify.sh --full    # also the independent certified all-tree searc
     try { localStorage.setItem("bg-site-theme", next); } catch (e) {}
   });
 
+  window.BG = { ROWS: ROWS, comp: comp };
   setN(492);
   drawRatio();
+  var h = (location.hash || "").slice(1);
+  if (h && document.getElementById("p-" + h)) show(h);
 })();
+</script>
+<script>
+/*LABS_JS*/
 </script>
 </body>
 </html>

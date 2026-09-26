@@ -11,6 +11,8 @@ body = src.split("def tabData")[1].split(":=", 1)[1].split("\n\n")[0]
 rows = [list(map(int, t)) for t in re.findall(r"\((\d+), (\d+), (\d+), (\d+)\)", body)]
 assert len(rows) == 488
 html = (HERE / "template.html").read_text().replace("/*ROWS*/[]", json.dumps(rows, separators=(",", ":")))
+html = html.replace("<!--LABS_HTML-->", (HERE / "labs.html").read_text())
+html = html.replace("/*LABS_JS*/", (HERE / "labs.js").read_text())
 (HERE / "index.html").write_text(html)
 print("wrote", HERE / "index.html", len(html), "bytes")
 

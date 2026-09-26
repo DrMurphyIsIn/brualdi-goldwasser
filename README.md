@@ -55,7 +55,7 @@ no added axioms.
 ```bash
 cd formalization
 lake exe cache get          # Mathlib build cache
-lake build                  # the full development (see "Resources" below)
+./build.sh                  # the full development, in memory-safe batches (see "Resources")
 lake env lean AxiomGuard.lean
 ```
 
@@ -86,14 +86,18 @@ certificates/verify.sh --full     # also the independent all-tree search for n <
 
 The full Lean build is heavy: some certificate fragments need 15–35 GiB of memory each and the whole
 development takes several CPU-hours. Build with limited parallelism on a machine with at least 64 GiB of
-memory (for example `lake build -j 4`).
+memory. Lake cannot limit its own parallelism, so use `./build.sh` in `formalization/`, which builds the
+heavy certificate files a few at a time before the rest.
 
 ## Reading the proof
 
 - **The paper**, [`paper/paper.pdf`](paper/paper.pdf), tells the whole argument: the matching sum, the sharp
   ceiling, the reduction to spiders, the spider optimization, and how the certificates are checked.
 - **The project page**, <https://drmurphyisin.github.io/brualdi-goldwasser/>, lets you pick any n and see
-  its maximizer drawn, with a table for every n up to 3000.
+  its maximizer drawn, with a table for every n up to 3000. Three labs let you try the proof's ideas by
+  hand: a *tree lab* (build a tree; step through its matchings, watch the cavity recursion, see the
+  subaction inequality's slack at every vertex), a *spider lab* (scramble a spider and let the balance
+  lemma repair it) and *the races* (the 722 and 2319 switches, decided in exact arithmetic).
 - **The Lean source** is big (about 57,000 lines, most of it generated certificate data), and it was carried
   over from a larger research repository. [`formalization/READING_GUIDE.md`](formalization/READING_GUIDE.md)
   says which files hold the definitions a reviewer needs, and which leftover comments and flags to ignore.

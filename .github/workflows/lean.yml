@@ -39,10 +39,10 @@ jobs:
         run: |
           export PATH="$HOME/.elan/bin:$PATH"
           lake exe cache get
-      - name: Build (memory-bounded parallelism)
+      - name: Build (heavy certificates in batches)
         run: |
           export PATH="$HOME/.elan/bin:$PATH"
-          lake build -j 3        # heaviest files peak at 15-35 GiB each; this machine also runs other work
+          ./build.sh 3           # lake cannot limit parallelism; this batches the 15-35 GiB certificate files
       # A `sorry` would show up as sorryAx and `native_decide` as Lean.ofReduceBool, so this check covers both.
       - name: Axioms of every headline theorem
         run: |

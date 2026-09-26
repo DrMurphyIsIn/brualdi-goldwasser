@@ -1,0 +1,94 @@
+<!-- ============================ TREE LAB ============================ -->
+<section class="panel" id="p-treelab">
+  <p>Build a tree and watch the three ideas at the heart of the proof work on it. Click a vertex to select
+  it, then add children, remove it, or make it the root. Everything here is computed exactly, in
+  rational arithmetic, in your browser.</p>
+
+  <div class="controls">
+    <label>preset
+      <select id="tlPreset">
+        <option value="fig3">the example of the paper (6 vertices)</option>
+        <option value="a5">a five-cherry arm on a parent</option>
+        <option value="path">path on 7 vertices</option>
+        <option value="star">star on 7 vertices</option>
+        <option value="pant">Pant-style caterpillar T(2,2,2)</option>
+        <option value="max21">the maximizer at n = 21</option>
+        <option value="max34">the maximizer at n = 34</option>
+        <option value="random">a random tree (10 vertices)</option>
+      </select>
+    </label>
+    <button class="btn" id="tlAdd" type="button">add child</button>
+    <button class="btn" id="tlDel" type="button">remove subtree</button>
+    <button class="btn" id="tlRoot" type="button">make root</button>
+  </div>
+
+  <nav class="subtabs">
+    <button class="subtab" data-m="match" aria-selected="true">1. Matchings</button>
+    <button class="subtab" data-m="cavity" aria-selected="false">2. Cavity recursion</button>
+    <button class="subtab" data-m="profit" aria-selected="false">3. Profit and subaction</button>
+  </nav>
+
+  <div class="plotwrap">
+    <svg id="tlSvg" viewBox="0 0 600 300" role="img" aria-label="the tree"></svg>
+    <div id="tlMatchCtl" class="controls">
+      <button class="btn" id="tlPrev" type="button">&larr; previous</button>
+      <button class="btn" id="tlNext" type="button">next &rarr;</button>
+      <button class="btn" id="tlPlay" type="button">play</button>
+      <span class="mono" id="tlMatchPos"></span>
+    </div>
+    <div class="readout" id="tlReadout"></div>
+  </div>
+  <div id="tlExplain" class="note"></div>
+</section>
+
+<!-- ============================ SPIDER LAB ============================ -->
+<section class="panel" id="p-spiderlab">
+  <p>A spider is fixed by how many cherries sit at the centre and how many arms of each size it has. Its
+  ratio has a closed form, F = (3/2)<sup>c + &Sigma;j</sup> &prod; &alpha;<sub>j</sub> &middot; (1 + (c/3 +
+  &Sigma; b<sub>j</sub>)/D), so you can explore the whole family by hand. Change the counts, or scramble a
+  spider and let the <b>balance lemma</b> repair it: whenever the centre has at least three children,
+  moving one cherry from an arm to an arm at least two smaller strictly increases F.</p>
+
+  <div class="grid2" style="grid-template-columns: minmax(240px, 320px) 1fr;">
+    <div class="card">
+      <h3>Centre's children</h3>
+      <div id="slCounts"></div>
+      <div class="controls" style="margin-top:10px">
+        <button class="btn" id="slOpt" type="button">load the maximizer for this n</button>
+        <button class="btn" id="slScr" type="button">scramble</button>
+        <button class="btn" id="slBal" type="button">one balance move</button>
+        <button class="btn" id="slBalAll" type="button">balance fully</button>
+      </div>
+    </div>
+    <div>
+      <div class="plotwrap"><svg id="slSvg" viewBox="-300 -300 600 600" style="max-height:340px" role="img" aria-label="the spider"></svg></div>
+      <div class="readout" id="slReadout"></div>
+      <div class="plotwrap"><svg id="slHist" viewBox="0 0 600 130" role="img" aria-label="history of F"></svg>
+      <p class="note" style="margin:4px">F relative to the optimum for this n, after each move. Balance moves only ever go up.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ RACES ============================ -->
+<section class="panel" id="p-races">
+  <p>For large <i>n</i> almost every arm is A<sub>5</sub>, and the leftover <i>n</i>&minus;1 mod 11 is
+  absorbed in one of two ways: <i>s</i> arms A<sub>6</sub> (13 vertices each) or 11&minus;<i>s</i> arms
+  A<sub>4</sub> (9 vertices each), where <i>s</i> = 6(<i>n</i>&minus;1) mod 11. Fours send bigger messages
+  to the centre; sixes waste less weight. Which wins depends on <i>n</i>, and in two classes the answer
+  flips late: at <i>n</i> = 722 and at <i>n</i> = 2319. Pick a class and slide <i>n</i>; the sign is
+  decided in exact arithmetic.</p>
+  <div class="controls">
+    <label>class s
+      <select id="raS"><option>1</option><option>2</option><option selected>3</option><option>4</option></select>
+    </label>
+    <label>n <input type="range" id="raN" min="0" max="100" value="50"></label>
+    <span class="mono" id="raNval"></span>
+  </div>
+  <div class="plotwrap">
+    <svg id="raSvg" viewBox="0 0 900 320" role="img" aria-label="the race"></svg>
+  </div>
+  <div class="readout" id="raReadout"></div>
+  <p class="note">The curve is 10<sup>6</sup> &times; (F<sub>fours</sub>/F<sub>sixes</sub> &minus; 1): above zero the
+  fours win. In the proof, these two late crossings are the only competitions that need Bernstein-basis
+  certificates; the other 221 comparisons are one-sided for every n &ge; 492.</p>
+</section>
