@@ -60,13 +60,7 @@ definitions plus the short closed form `F` and the list `bgChildren n`. The comp
 three standard axioms (`propext`, `Classical.choice`, `Quot.sound`): no `sorry`, no `native_decide`,
 no added axioms.
 
-```bash
-cd formalization
-lake exe cache get          # Mathlib build cache
-./build.sh                  # the full development, in memory-safe batches (see "Resources")
-lake env lean AxiomGuard.lean
-lake env lean Statement.lean   # the theorem in Mathlib's vocabulary
-```
+How to build and check all of this yourself is in [Getting started](#getting-started) below.
 
 The proof splits by size:
 
@@ -91,12 +85,110 @@ certificates/verify.sh            # all families + exact re-checks (~15 min)
 certificates/verify.sh --full     # also the independent all-tree search for n <= 491 (+16 min)
 ```
 
+## Getting started
+
+### What you need
+
+| | needed for | version | notes |
+|---|---|---|---|
+| **git** | cloning | any | |
+| **elan** (the Lean toolchain manager) | the Lean proof | any | installs the exact Lean version pinned in `formalization/lean-toolchain` (**Lean 4 v4.32.0**) automatically |
+| **Mathlib** | the Lean proof | **v4.32.0** (pinned in `formalization/lake-manifest.json`) | fetched automatically, with a prebuilt cache |
+| **RAM** | the Lean proof | **96 GB recommended** | the heaviest certificate file alone peaks at 63 GB (see [Resources](#resources)) |
+| **disk** | the Lean proof | about **15 GB** | Mathlib and its cache about 12 GB, this project's build about 2 GB |
+| **Python ≥ 3.11** + [`certificates/requirements.txt`](certificates/requirements.txt) | regenerating the certificates | sympy, numpy, mpmath, networkx | nothing else outside the standard library |
+| **TeX Live** (or MacTeX) with pgfplots | building the paper (optional) | 2023 or later | see [`paper/README.md`](paper/README.md) |
+| **Rust** (cargo) | the Comparator / nanoda check (optional) | stable | see [`formalization/comparator/README.md`](formalization/comparator/README.md) |
+
+You don't need anything to *read* the result: [`paper/paper.pdf`](paper/paper.pdf) and the
+[project page](https://drmurphyisin.github.io/brualdi-goldwasser/) are ready to go. The Lean proof has
+been built and checked on macOS (Apple Silicon); the certificate checks also run on Ubuntu in CI.
+
+### 1. Clone
+
+```bash
+git clone https://github.com/DrMurphyIsIn/brualdi-goldwasser.git
+cd brualdi-goldwasser
+```
+
+The repository is small (about 30 MB). A specific release can be checked out with `git checkout v1.1.0`;
+release `v1.0.0` is archived with DOI [10.5281/zenodo.22983413](https://doi.org/10.5281/zenodo.22983413).
+
+### 2. Install Lean
+
+If you don't already have elan:
+
+```bash
+curl https://elan.lean-lang.org/elan-init.sh -sSf | sh -s -- -y --default-toolchain none
+source ~/.elan/env        # or open a new terminal
+```
+
+(On Windows, see <https://lean-lang.org/install/>.) Inside `formalization/`, elan reads
+`lean-toolchain` and installs Lean v4.32.0 the first time you run `lake`.
+
+### 3. Fetch Mathlib and build
+
+```bash
+cd formalization
+lake exe cache get        # download Mathlib's prebuilt files (a few minutes)
+./build.sh                # build and kernel-check everything
+```
+
+`./build.sh` checks the heavy certificate files one at a time and then everything else. On a machine
+with 96 GB or more, `./build.sh 2` does two at a time; that is how it was measured: **1 hour 14 minutes**
+from scratch on an Apple M3 Ultra, peak **63 GB**. On an already-built tree it takes seconds.
+
+### 4. Check the statement and the axioms
+
+```bash
+lake env lean Statement.lean     # the theorem in Mathlib's vocabulary
+lake env lean AxiomGuard.lean    # the axioms of all 20 headline theorems
+```
+
+Every line printed should read `depends on axioms: [propext, Classical.choice, Quot.sound]`. A `sorry`
+anywhere in a proof would show up here as `sorryAx`, and a `native_decide` as `Lean.ofReduceBool`.
+
+### 5. Regenerate the certificates
+
+```bash
+cd ..                                   # back to the repository root
+python3 -m venv .venv && source .venv/bin/activate
+pip install -r certificates/requirements.txt
+certificates/verify.sh                  # about 15 minutes
+certificates/verify.sh --full           # also the independent all-tree search for n <= 491 (+16 min)
+```
+
+This regenerates every certificate family from scratch and compares it byte for byte with the files the
+Lean kernel checked. It ends with `all certificate families reproduce exactly`.
+
+### 6. Optional extras
+
+- **An independent second kernel.** [`formalization/comparator/`](formalization/comparator/) holds a
+  challenge/solution pair for the Lean FRO's [Comparator](https://github.com/leanprover/comparator), which
+  replays the proof in Lean's kernel and in [nanoda](https://github.com/ammkrn/nanoda_lib), an independent
+  implementation in Rust. Its README has the steps. It is slow: expect several hours.
+- **The paper:** [`paper/README.md`](paper/README.md). **The project page:** [`site/README.md`](site/README.md).
+
+### Troubleshooting
+
+- **The build is killed, or the machine starts swapping.** A certificate file ran out of memory. Use
+  `./build.sh` (one heavy file at a time) and close other large programs; `G149/Frag22` alone needs
+  about 63 GB.
+- **`lake exe cache get` fails, or Mathlib starts compiling from source.** Check that you are inside
+  `formalization/` and that elan picked up v4.32.0 (`lean --version`). Compiling Mathlib from source also
+  works, but takes hours longer.
+- **`certificates/verify.sh` reports a difference.** Make sure you are on a clean checkout
+  (`git status`) and on a supported Python (≥ 3.11). Anything else is worth an issue.
+
+Found a problem, or have a question about the mathematics? See [CONTRIBUTING.md](CONTRIBUTING.md).
+
 ## Resources
 
-The full Lean build is heavy: some certificate fragments need 15–35 GiB of memory each and the whole
-development takes several CPU-hours. Build with limited parallelism on a machine with at least 64 GiB of
-memory. Lake cannot limit its own parallelism, so use `./build.sh` in `formalization/`, which builds the
-heavy certificate files a few at a time before the rest.
+The full Lean build is heavy because the Lean kernel keeps every intermediate term of a declaration in
+memory while it checks it, and some certificates are large. Measured peaks: `G149/Frag22` alone
+reaches 63 GB; the next heaviest certificate files need 40–50 GB; most files need far less. Lake cannot limit its
+own parallelism, so `formalization/build.sh` builds the heavy certificate files a few at a time (one by
+default) before everything else.
 
 ## Reading the proof
 
@@ -116,7 +208,7 @@ heavy certificate files a few at a time before the rest.
 - `certificates` (GitHub-hosted, also on pull requests) regenerates every certificate family and compares
   it byte for byte.
 - `lean` (self-hosted, pushes to `main` and manual runs only) builds the whole formalization and checks
-  that all 17 headline theorems use only the standard axioms. It runs on the maintainer's machine because
+  that all 20 headline theorems, and the statement in `Statement.lean`, use only the standard axioms. It runs on the maintainer's machine because
   GitHub-hosted runners don't have enough memory for the heaviest files. Pull requests never trigger it.
 - `pages` publishes `site/` and the paper.
 
@@ -135,6 +227,8 @@ telperion/       vendored Telperion engine (BSL 1.1)
 paper/           the paper (paper.tex, gen_table.py builds its appendix from the Lean table)
 site/            the project page (build.py fills template.html from the Lean table)
 scripts/         setup for the isolated self-hosted CI runner
+CONTRIBUTING.md  how to review the work and report problems
+CITATION.cff     how to cite this work
 ```
 
 ## License

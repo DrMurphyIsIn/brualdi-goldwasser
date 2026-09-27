@@ -393,7 +393,7 @@ footer { border-top: 1px solid var(--line); margin-top: 40px; padding-top: 14px;
 <pre>git clone https://github.com/DrMurphyIsIn/brualdi-goldwasser
 cd brualdi-goldwasser/formalization
 lake exe cache get
-./build.sh                       # several CPU-hours, 64 GiB RAM recommended
+./build.sh                       # about 1-2 hours; 96 GB of RAM recommended
 lake env lean AxiomGuard.lean    # every headline theorem: [propext, Classical.choice, Quot.sound]
 
 cd ..

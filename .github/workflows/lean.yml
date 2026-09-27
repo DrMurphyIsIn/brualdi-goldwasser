@@ -1,7 +1,7 @@
 # Full kernel check of the formalization.  Runs ONLY on the maintainer's self-hosted runner, ONLY for
 # pushes to main and manual dispatch.  There is deliberately no pull_request trigger: code from forks
 # never runs on the self-hosted machine.  (GitHub-hosted runners cannot build the heaviest certificate
-# files, which need 15-35 GiB of memory each.)
+# files: the largest alone peaks at about 63 GB.)
 name: lean
 
 on:

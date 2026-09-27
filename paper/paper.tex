@@ -1219,7 +1219,7 @@ on how the data was produced.
 We use \lean{decide +kernel} and never \lean{native\_decide}, so the compiler is not trusted. Because the
 kernel keeps every intermediate term of a declaration in memory, large checks are split into many small
 theorems and many files, and a unifying file assembles them. Even so, the heaviest files need
-15--35\,GiB each. The sharding is what makes the proof checkable on a single large workstation.
+up to about $63$\,GB each. The sharding is what makes the proof checkable on a single large workstation.
 
 %=====================================================================================================
 \section{Independent computations}\label{sec:indep}
@@ -1471,7 +1471,8 @@ definitions and the statement mean what the paper says, is exactly the part that
 \item Uniqueness is not formalized.
 \item The trusted base is the Lean kernel, Mathlib's definitions of the permanent and of simple graphs,
   and our definitions listed in \cref{sec:lean}.
-\item The full build needs a machine with at least 64\,GiB of memory and several CPU-hours.
+\item The full build needs a machine with about $96$\,GB of memory (the heaviest certificate file alone
+  peaks at $63$\,GB) and takes one to two hours on a recent workstation.
 \end{itemize}
 
 \section{Reproducing the results}

@@ -1,0 +1,8 @@
+# Python packages for regenerating and re-checking the certificates (certificates/verify.sh).
+# Python >= 3.11. Tested in CI with Python 3.12 on Ubuntu (fresh install each run).
+# Everything else the generators use is in the Python standard library; the vendored Telperion
+# engine (../telperion/src) is put on the path by bgfreeze.py and needs only sympy.
+sympy>=1.12
+numpy>=1.23
+mpmath>=1.3
+networkx>=3.0
