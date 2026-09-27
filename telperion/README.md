@@ -9,9 +9,11 @@ checks them.
 It was built for computer-assisted proofs, where the conceptual argument fits in a paper but rests on
 hundreds or thousands of concrete inequalities that a referee cannot realistically check by hand.
 
-To browse everything Telperion can do before reading further, open the
-[Telperion registry explorer](https://drmurphyisin.github.io/brualdi-goldwasser/telperion-explorer/),
-a searchable page of every registered emitter and certificate kind.
+To see Telperion at work before reading further, open the
+[Telperion registry explorer](https://drmurphyisin.github.io/brualdi-goldwasser/telperion-explorer/).
+It walks through the Brualdi-Goldwasser theorem (the first research program to reach its goal) with live
+plots, then shows the whole missions registry: every formal statement Telperion tracks, with its status,
+dependencies and verification record, and the open Riemann-hypothesis campaigns.
 
 ## The trust model
 
@@ -404,7 +406,9 @@ Alongside the source it carries most of the development repository's supporting 
 - `CHANGELOG.md` and `CONTRIBUTING.md`.
 
 The project site also hosts the [Telperion registry explorer](https://drmurphyisin.github.io/brualdi-goldwasser/telperion-explorer/),
-a browsable page of every registered emitter and certificate kind.
+a page generated from the development repository's missions registry, with a Brualdi-Goldwasser tab in
+front. The registry's `bg` campaign is a snapshot from 2026-09-24, two days before the final theorem; the
+page says so.
 
 The subpackage `telperion.bg` is a research lab of probes specific to the Brualdi–Goldwasser problem. It is
 not part of the engine: the engine never imports it, and the development repository enforces that
