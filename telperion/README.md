@@ -136,45 +136,231 @@ others. The emitters follow a set of rules learned the hard way:
   many small theorems, and many files, which a unifying file assembles.
 - `native_decide` is never used, so Lean's compiler is never trusted.
 
-## Guarding against proofs that prove nothing
+## Checking that the theorems mean what they should
 
-A green build means Lean accepted every proof. It does not mean the theorems say anything. Telperion adds
-checks for the ways a build can be green but empty:
+A green build means Lean accepted every proof. It does not mean the theorems say anything useful, or say
+what you intended. The kernel cannot tell a meaningful theorem from a tautology, or the claim you meant
+from a slightly weaker one that also compiles. Telperion has a layer of checks aimed at exactly these gaps.
 
-- an **honesty lint** refuses `sorry`, `admit`, smuggled `axiom` declarations and decorative stubs such
-  as `theorem foo : True := trivial`;
-- a **non-vacuity gate** refuses emitted theorems that are reflexive tautologies (`X = X`, `0 ≤ 0`);
-- **negative controls** demonstrate the trust model directly. They bypass the Python self-check, forge
-  a certificate of a *false* instance, emit it with the same emitter, and confirm that the Lean kernel
-  rejects it. They also check the positive half: a genuine certificate of a true instance is accepted;
-- an **auditor** runs the same checks on Lean written by anyone else (a person, or an automated prover);
-- a **bridge to [Comparator](https://github.com/leanprover/comparator)**, the Lean FRO's independent
-  judge, produces challenge files. Comparator then confirms that a proof proves exactly a separately
-  written statement, uses only allowed axioms, and passes a replay in Lean's kernel and in
-  [nanoda](https://github.com/ammkrn/nanoda_lib), an independent kernel implementation.
+- **Honesty lint** (`lean_lint`). Refuses `sorry`, `admit`, smuggled `axiom` declarations and decorative
+  stubs such as `theorem foo : True := trivial`. It runs on every emitted file.
+- **Non-vacuity** (`nonvacuity`). Refuses emitted theorems that are reflexive tautologies (`X = X`,
+  `0 ≤ 0`). A companion registry (`emitter_sensitivity`) goes further for emitters whose proofs replay an
+  identity: it corrupts the certificate and confirms the claim then fails, so the certificate is shown to
+  be load-bearing.
+- **Negative controls** (`negative_control`, `negative_control_harness`, `negctrl_adapters/`). These
+  demonstrate the trust model instead of asserting it. For each emitter they bypass the Python
+  self-check, forge a certificate of a *false* instance, emit it with the same code used for true
+  instances, and confirm that the Lean kernel rejects it. They also check the positive half: a genuine
+  certificate of a true instance must be accepted, so a harness that rejects everything cannot pass.
+- **Statement match** (`statement_match`, `signature_gate`). Checks that a compiled theorem states the
+  *intended* proposition, not a weaker one: it elaborates the intended statement against the emitted
+  proof, so only a definitionally equal statement passes. `port_match` does the same when the two sides
+  live in Lean projects with different toolchains.
+- **Dual engines** (`faithfulness`). Cross-checks a primary implementation of a quantity against an
+  independent one at seeded exact rational points, and refuses on any disagreement. Families can declare
+  such an independent implementation directly.
+- **An independent recheck** (`recheck`). Certificates can be exported to a JSON interchange format and
+  re-verified by a deliberately separate code path that uses only the Python standard library (no sympy).
+- **An auditor** (`audit`, `telperion audit`). Runs the same checks on Lean written by anyone else: a
+  person, or an automated prover.
+- **Self-application** (`self_hosting`, `metacircular`, `coverage`). Telperion certifies the hypotheses of
+  its own reusable Lean lemmas, studies which part of its checking layer must itself be trusted, and
+  profiles its own refusals to show which certificate shapes are missing.
 
-## Other tools
+## Independent verification with Comparator and nanoda
 
-- **`telperion` command line:** `certify`, `diagnose`, `verify` (elaborate against a pre-built Lean
-  environment and report axioms), `audit`, `lint-lean`, `package`, `recheck`, `margins` and others; run
-  `telperion --help`.
-- **Diagnosis and coverage:** when certification fails, `diagnose` separates "false", "true but not in
-  this form" and "set up wrongly"; `coverage` clusters refusals across a corpus to show which certificate
-  shape is missing.
-- **Maintenance:** a proof-repair pass for Mathlib renames (driven by Mathlib's own deprecation records),
-  a content-addressed index of emitted statements that finds the same lemma proved twice, and a merger
-  that combines emitted files while refusing name clashes between different statements.
-- **Performance:** a content-addressed certification cache and parallel certification. The cache is a
-  speed layer only; a stale entry would produce a file that fails to compile or to match its frozen copy.
-- **A missions registry:** a graph of mathematical claims with statuses (draft, open, proved, refuted),
-  in which only a verification gate may mark a claim proved, and the independent judge above can check
-  proved claims against their registered statements.
-- **An MCP server** (`telperion-mcp`, with the `mcp` extra) exposes the certify, validate and emit
-  workflow as tools for AI agents. There is deliberately no tool that emits without certifying and
-  validating first.
-- **Experimental:** an evolutionary search for certificates, and bridges that mine candidate problems from
-  public sources or submit to external proof platforms. These make network requests only when invoked,
-  and everything they produce still goes through the same certify, emit and kernel gate.
+Telperion's own checks all run in Lean's kernel. For a second, independent opinion it produces challenges
+for [Comparator](https://github.com/leanprover/comparator), the Lean FRO's tool for judging a proof
+against a separately written statement. Given a *challenge* module (the statements, with `sorry`) and a
+*solution* module (the proofs), Comparator:
+
+1. builds both, inside the [landrun](https://github.com/Zouuup/landrun) sandbox;
+2. exports both with `lean4export`;
+3. checks that the solution proves **exactly** the challenge's statements, not something weaker;
+4. checks that the proofs use only a whitelist of axioms (by default `propext`, `Quot.sound`,
+   `Classical.choice`);
+5. replays the proofs in Lean's kernel and, with `enable_nanoda`, in
+   [nanoda](https://github.com/ammkrn/nanoda_lib), an independent implementation of the Lean kernel
+   written in Rust.
+
+A soundness bug would then have to fool two independently written kernels, and a mis-stated theorem
+would have to match a statement written separately from the proof.
+
+`telperion.comparator` builds the configuration from an emitted family:
+
+```python
+from telperion.comparator import challenge_for_result, write_challenge_config
+
+config = challenge_for_result(result, profile, challenge_module="MyProject.Challenge")
+write_challenge_config("comparator/demo.comparator.json", config)
+```
+
+which writes
+
+```json
+{
+  "challenge_module": "MyProject.Challenge",
+  "solution_module": "demo",
+  "theorem_names": ["Demo.demo_nonneg_1", "Demo.demo_nonneg_2", "Demo.demo_nonneg_3"],
+  "permitted_axioms": ["propext", "Quot.sound", "Classical.choice"],
+  "enable_nanoda": true
+}
+```
+
+Then run `lake env comparator comparator/demo.comparator.json` in a project where Comparator is built.
+Large emissions can be split into one configuration per shard. Some practical points:
+
+- **Versions.** Build Comparator from the tag matching your Lean toolchain (for example `v4.32.0`).
+  Its `lean4export` binary is built as a dependency and is found under
+  `.lake/packages/lean4export/.lake/build/bin`; point `COMPARATOR_LEAN4EXPORT` at it, and
+  `COMPARATOR_NANODA` at `nanoda_bin` (built with `cargo build --release` in `nanoda_lib`).
+- **The sandbox.** landrun only runs on Linux. For your own proofs, a pass-through wrapper works; it must
+  keep the `--` separator, because `lean4export` uses it and landrun's argument parser drops it. For
+  proofs from anyone else, use a real sandbox.
+- **Cost.** The nanoda replay is single-threaded and can take hours on proofs with large certificates.
+
+The missions registry (below) uses the same bridge to judge its proved claims: it generates a challenge
+from each claim's *registered* statement, independently of the file that proves it.
+
+## Evolutionary certificate search (`telperion evolve`)
+
+When the shape of a certificate is known but its ingredients are not, `telperion evolve` searches for them.
+It runs an island-model MAP-Elites loop: several independent populations of candidate certificates
+("genomes"), each kept in an archive of niches so that diverse candidates survive. Each generation, the best
+candidate found so far is copied into every island. Each candidate is scored by
+
+- an adversarial exact search that tries to **break** the claim (`hunt`, below);
+- the exact certification tier it reaches (`certify`);
+- and its complexity, so simpler certificates win ties.
+
+Mutations come from three operators: *structured* ones, which are deterministic and need no model; *LLM*
+ones, which ask a local language model through [Ollama](https://ollama.com) (default
+`qwen2.5-coder:7b`) to propose new certificate ingredients; and a *hybrid* of the two.
+
+```bash
+telperion evolve --islands 4 --gens 20 --seed 0            # with a local Ollama model if one is running
+telperion evolve --islands 4 --gens 20 --seed 0 --no-llm   # structured mutations only: deterministic in the seed
+```
+
+The measurement harness (`evolve/measure.py`) compares the two modes over many trials: how often the
+champion certifies, how many evaluations it takes, and whether the model invented anything outside the
+built-in pool. `evolve/freeze.py` turns a champion into Lean through the ordinary emitters, and
+`evolve/kernel.py` builds it against a Lean project.
+
+The search changes nothing about trust. It only *proposes*; a champion becomes a theorem only by passing
+the same certify, emit and kernel gate as everything else, and nothing it finds is frozen automatically.
+The current genome encodes one certificate family (unimodal-ratio certificates, where the maximum of a
+sequence sits at its up-to-down crossing), and the loop is built so other genomes can be added.
+
+## Working with AI provers and agents
+
+Telperion is designed to be a *deterministic backend* for probabilistic provers: a language model can
+propose, and Telperion certifies or refuses in exact arithmetic.
+
+- **One goal at a time** (`prove.prove_goal`). Takes a single claim `0 ≤ target` over nonnegative
+  variables and returns either a complete, self-contained Lean theorem, or a triage: *false* (with an
+  exact rational counterexample), *true but not in this certificate form*, or *certifiable but set up
+  wrongly*. It tries Pólya certificates first, then sums of squares.
+- **From words to a statement** (`formalize`). A language model turns an informal claim into a candidate
+  formal goal. It only proposes the *statement*; the deterministic core then certifies or rejects it, so
+  a wrong translation cannot produce a false theorem. As always, a human should still read the statement.
+- **Filling gaps** (`gap_fill`). Given a Lean file in which an analytic step is a lemma proved by `sorry`,
+  it extracts the goal, recognizes its certificate shape, generates the proof, and re-verifies it, with an
+  automatic repair pass for Mathlib renames. An experimental warm Lean worker (`lean_server`, off unless
+  configured) keeps a Lean process running so that repeated checks can take under a second.
+- **Measuring the benefit** (`backend_lift`). A harness that measures how many goals an LLM prover
+  solves with Telperion as a backend that it misses alone.
+- **An MCP server** (`telperion-mcp`, with the `mcp` extra). Exposes the certify, validate and emit
+  workflow as tools for AI agents such as Claude Code (`claude mcp add telperion -- telperion-mcp`). There
+  is deliberately no tool that emits without certifying and validating first.
+
+## Probing a claim before proving it
+
+Much of the work in a computer-assisted proof happens before any certificate exists: deciding whether a
+claim is true, where it is tight, and whether a certificate of a given kind can possibly work. These probes
+answer such questions exactly.
+
+- **`diagnose`**: when certification fails, separates "false" from "true but not in this form" from "set
+  up wrongly", and suggests transformations.
+- **`hunt`**: an adversarial exact minimizer that tries hard to *break* a claim, over the orthant or a
+  box, before anyone tries to prove it.
+- **`relax`**: relaxes an integer parameter to a continuous one. If the relaxed claim fails, no smooth
+  certificate can prove the original, and the proof must use integrality.
+- **`probe_sharp`**: finds where the *certificate* stops working and where the *claim* stops being true,
+  and reports the gap between them.
+- **`margins`**: finds exactly where a family is tight (its equality cases) and by how much it holds
+  elsewhere.
+- **`upgradability`**, **`circularity`**, **`super_solution`**: tell a finite check that really covers
+  every case from a sample that only probes an unbounded one; refuse a "lemma" that already implies the
+  goal it is meant to reduce to; and test Bellman-style super-solutions exactly.
+- **`verdict`**, **`ledger`**: close every probe with one of four explicit verdicts, and keep an
+  append-only record of dead ends with their refutations, so failed routes are not retried.
+- **`cilog`**: a catalogue of Lean build failures and their known repairs, matched against a build log.
+
+## More certificate finders
+
+Beyond the emitters' own certifiers, three standalone finders search for certificates the simpler
+methods cannot find:
+
+- **`sos_sdp`**: sums-of-squares certificates found by semidefinite programming (with the `sdp` extra),
+  then rounded to exact rationals and checked exactly.
+- **`psd`**: exact positive-semidefiniteness certificates by a square-root-free Cholesky factorization,
+  with no floating point at all.
+- **`sonc`**: sums of nonnegative circuit polynomials, an AM–GM-based certificate that covers some
+  polynomials sums of squares cannot.
+
+## Managing a project
+
+- **`telperion init`**: scaffolds a new project: a family template with validation built in, a Lean
+  project pinned to a known-good toolchain, and a GitHub Actions workflow that compiles the emitted Lean.
+- **`telperion status`**: generates a status report by *running* the project's checks, so a claim in the
+  report cannot outrun its verification; `review-brief` produces a checklist for a skeptical reviewer.
+- **`telperion latex`**: renders a certified family as a paper appendix stamped with the *same* input hash
+  as the Lean files, so a reader can confirm the paper and the formalization match by comparing two
+  strings.
+- **Maintenance**: a proof-repair pass for Mathlib renames, driven by Mathlib's own deprecation records;
+  a content-addressed index of emitted statements that finds the same lemma proved under two names; a
+  merger that combines emitted files and refuses name clashes between different statements; per-theorem
+  dependency extraction, for re-checking exactly what a change touches; and a certification cache that is
+  a speed layer only.
+- **`telperion verify`**: elaborates Lean against a pre-built project and reports its axioms, in one call.
+
+## The missions registry
+
+For long campaigns with many interlocking claims, `telperion mission` keeps a registry: a graph of
+mathematical statements, each a node with a status (draft, open, proved, refuted or deprecated) and
+dependencies on other nodes.
+
+- **Only a verification gate can mark a node proved or refuted.** It checks that a compiled Lean artifact
+  contains the node's registered statement, is free of `sorry`, and is actually built by CI (a file that
+  nothing compiles proves nothing), and it propagates results through the graph.
+- **Statements are separate from proofs.** Each node's statement is rendered into its own Lean file with
+  a hash in its header, so hand edits are detected, and definitions copied into proof projects are checked
+  for drift against the registry's originals.
+- **Provenance.** The registry records who wrote each statement and who read it back to confirm it says
+  what its title claims. That reading is the one link no machine checks, so the registry makes
+  self-certification visible and refuses a readback by the statement's own author. (Identities are
+  self-reported, so this guards against mistakes rather than against deliberate deception.)
+- **An independent judge.** Proved nodes can be re-checked by Comparator against their registered
+  statements.
+- **Coordination.** Sessions claim nodes with an expiring lock, and every attempt (proved, refuted, no-go
+  or stalled) goes into an append-only log.
+
+## Connecting to the wider world
+
+These modules make network requests, but only when you invoke them, and nothing they bring in is trusted:
+it all goes through the same certify, emit and kernel gate.
+
+- **Source mining** (`telperion source-mine`, `telperion palomar-mine`). Watches public sources for results
+  whose certificate shapes Telperion can emit: the [Palomar](https://palomar-registry.org) registry of
+  verified formalizations, commits to Lean mathematics libraries on GitHub, formalization repositories
+  that publish Comparator challenges, and (read-only) discussion on the Lean Zulip. Each hit becomes a
+  *lead*: a port of something already formalized, or a candidate to formalize.
+- **External proof platforms** (`telperion p2m`). A client for [prove2.me](https://prove2.me) that triages
+  its problems by certificate shape and submits attempts. The client enforces its own safety rules: a
+  protocol-version check, throttling, backoff, and a circuit breaker that stops all requests after repeated
+  server errors. Credentials live outside the repository.
 
 ## Installation
 
