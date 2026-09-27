@@ -1251,43 +1251,176 @@ entirely different methods.
 \section{Discussion}\label{sec:discussion}
 %=====================================================================================================
 
-\subsection{What the answer says}
+\Cref{thm:main} answers the question Brualdi and Goldwasser asked. In this section we look at what the
+answer says: about the shape of extremal trees, about the size of the maximum, about where the problem
+sits among extremal problems on trees, and about permanents and methods more generally. We end with
+what remains open. Unless stated otherwise, everything below is a consequence of \cref{thm:main} and the
+closed form of \cref{sec:spiders}; the few statements that go beyond it are labelled as questions or
+heuristics.
 
-The maximizer is \emph{rigid}. For large $n$ it is a star of identical eleven-vertex blocks with a
-bounded number of defects, at most ten, whose type is dictated by $n\bmod 11$. The value per vertex is
-set by a single local structure, the five-cherry arm, and the global optimum is as close to ``all
-five-cherry arms'' as divisibility allows. This is the typical shape of answers in ergodic optimization,
-where an optimal orbit is periodic and a subaction certifies it, and indeed that is how the proof of
-the growth rate works: the potential $\varrho_{\mathrm{wit}}$ is tight exactly on the three vertex types
-of the optimal block. It would be interesting to know how general this is. For which other weighted
-matching problems on trees, or other tree functionals computed by a cavity recursion, is the extremal
-tree a periodic arrangement of a single block, certified by a finite piecewise-affine subaction?
+\subsection{The shape of the maximizer}
 
-The answer also explains why the problem resisted guesses. The earlier conjectures were natural
-extrapolations from small trees, and the table in \cref{app:table} shows why that is treacherous. For
-small $n$ the maximizer wanders through arms of many sizes with many cherries at the centre. It settles
-into $A_4$'s, $A_5$'s and $A_6$'s only at $n=46$, keeps a few centre cherries until $n=333$, and the
-$A_4$/$A_6$ competition keeps changing until $n=2319$. A conjecture based on data up to $n=100$, or even
-$n=1000$, would have been wrong in its details.
+\paragraph{One hub, bounded depth.} Every maximizer is a spider, so every vertex is within distance
+three of the centre and the diameter is at most $6$. (Among the maximizers in \cref{app:table} and those
+given by the rule, the diameter is exactly $6$ once the centre carries two arms with cherries.) This is
+a sharp contrast with the permanent itself: Brualdi and Goldwasser showed that $\per L(T)$ is largest for
+the path, whose diameter is $n-1$. Dividing by $\prod_v\deg v$ does not merely rescale the problem; it
+moves the extremal trees from maximal diameter to bounded diameter. At the other end, the minimum of
+$\pi$ is attained by the star~\cite{BG1984}. So both extremes of the Laplacian ratio have a single hub:
+the star, whose hub carries leaves, and the spider of five-cherry arms, whose hub carries second-level
+hubs.
 
-It is also worth noting what the maximizer is \emph{not}. The earlier candidates, subdivided stars and
-Pant's caterpillars, spread their high-degree vertices along a path. The maximizer does the opposite:
-it has a single hub, and every other vertex is within distance three of it. In the language of the
-cavity recursion, the hub is where the messages of many arms are pooled, and pooling pays because
-$\log(1+R/k)$ rewards a large total message at one vertex.
+\paragraph{The degree profile.} For large $n$ the maximizer is made of $\lfloor(n-1)/11\rfloor-O(1)$
+copies of the eleven-vertex block $A_5$, plus at most ten defect arms $A_4$ or $A_6$. Its degree sequence is
+therefore, up to $O(1)$ vertices: about $5n/11$ leaves, about $5n/11$ vertices of degree $2$, about $n/11$
+vertices of degree $6$, and a single vertex, the centre, of degree about $n/11$. Exactly one vertex has
+unbounded degree. The degree-$6$ vertices are where the optimization happens: an arm vertex with $j$
+cherries balances the number of cherries it collects against the degree it pays for them, and $j=5$ is
+the unique best balance (\cref{fig:rates}).
+
+\paragraph{Rigidity.} For large $n$ the maximizer is a star of identical blocks with a bounded number
+of defects, and the defects are dictated by $n\bmod11$. This is the typical shape of answers in ergodic
+optimization, where an optimal orbit is periodic and a subaction certifies it~\cite{Bousch2001,Jenkinson2019},
+and indeed that is how the growth-rate proof works: the potential $\varrho_{\mathrm{wit}}$ is tight exactly
+on the three vertex types of the optimal block (\cref{sec:ceiling}).
+
+\paragraph{Why the problem resisted guesses.} The earlier conjectures were natural extrapolations from
+small trees, and \cref{app:table} shows why that is treacherous. For small $n$ the maximizer wanders
+through arms of many sizes, with many cherries at the centre. It settles into $A_4$'s, $A_5$'s and
+$A_6$'s only at $n=46$, keeps a few centre cherries until $n=333$, and the choice between $A_4$'s and
+$A_6$'s keeps changing until $n=2319$. The Wu--Dong--Lai formulas are exactly right up to $n=22$ (and for
+even $n$ up to $34$), so the conjecture was well supported by the data one could reasonably compute by
+hand; it simply described a regime that ends early.
+
+\subsection{The size of the maximum}
+
+\Cref{thm:growth} pins the growth rate but leaves a factor of about $16$ between its lower and upper
+constants. \Cref{thm:main} removes it: the maximum is known exactly for every $n$, and its normalized
+value converges along each residue class.
+
+\begin{corollary}\label{cor:constant}
+Let $\rho=(621/64)^{1/11}$, and put
+\[
+  \delta_4=\frac{T(A_4)}{\rho^{9}}=\frac{513/80}{\rho^{9}}\approx0.9989741,\qquad
+  \delta_6=\frac{T(A_6)}{\rho^{13}}=\frac{6561/448}{\rho^{13}}\approx0.9984859 .
+\]
+\begin{enumerate}
+\item For every $n\equiv1\pmod{11}$ with $n\ge254$,
+\[
+  \max_{|T|=n}\pi(T)=\frac{26}{23}\Big(\frac{621}{64}\Big)^{(n-1)/11}.
+\]
+\item For each residue $s=6(n-1)\bmod11$, as $n\to\infty$ within the class,
+\[
+  \frac{\max_{|T|=n}\pi(T)}{\rho^{\,n-1}}\ \longrightarrow\ c_s=\frac{26}{23}\,\delta_4^{\,k_4(s)}\,\delta_6^{\,k_6(s)},
+\]
+where $k_6(s)=s$, $k_4(s)=0$ for $1\le s\le4$; $k_4(s)=11-s$, $k_6(s)=0$ for $5\le s\le10$; and
+$k_4(0)=k_6(0)=0$. In particular
+\[
+  \limsup_{n\to\infty}\frac{\max\pi}{\rho^{n-1}}=\frac{26}{23}\approx1.130435,\qquad
+  \liminf_{n\to\infty}\frac{\max\pi}{\rho^{n-1}}=c_5=\frac{26}{23}\delta_4^{\,6}\approx1.123494 .
+\]
+\end{enumerate}
+\end{corollary}
+
+\begin{proof}
+For $n\equiv1\pmod{11}$ we have $s=0$, and for $254\le n\le491$ the table, and for $n\ge492$ the rule,
+gives the spider $A_5^{k}$ with $k=(n-1)/11$. Its value is $T(A_5)^k(1+y(A_5))=(621/64)^k\cdot\tfrac{26}{23}$,
+since every arm sends the message $\tfrac3{23}$. For general $s$ and $n\ge2320$ the rule gives $k_4$ arms
+$A_4$, $k_6$ arms $A_6$ and $k_5$ arms $A_5$ with $n-1=9k_4+11k_5+13k_6$, so
+\[
+  \frac{F}{\rho^{\,n-1}}=\delta_4^{k_4}\,\delta_6^{k_6}\Big(1+\frac{k_4\cdot\frac3{19}+k_5\cdot\frac3{23}+k_6\cdot\frac19}{k_4+k_5+k_6}\Big),
+\]
+and the bracket tends to $1+\tfrac3{23}=\tfrac{26}{23}$ because $k_4,k_6$ are bounded while $k_5\to\infty$.
+\end{proof}
+
+\begin{table}[h]\centering\footnotesize\setlength{\tabcolsep}{3.2pt}
+\begin{tabular}{@{}l*{11}{c}@{}}
+\toprule
+$s$ & 0 & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9 & 10\\
+\midrule
+$c_s$ & 1.13043 & 1.12872 & 1.12701 & 1.12531 & 1.12360 & 1.12349 & 1.12465 & 1.12580 & 1.12696 & 1.12812 & 1.12928\\
+\bottomrule
+\end{tabular}
+\caption{The limit of $\max\pi/\rho^{n-1}$ in each residue class $s=6(n-1)\bmod11$ (\cref{cor:constant}). These are the
+eleven levels visible at the right of \cref{fig:ratio}.}
+\label{tab:cs}
+\end{table}
+
+So the maximum is $c_{s(n)}\rho^{\,n-1}(1+O(1/n))$, with eleven explicit constants, all within $0.7\%$ of
+each other. The period-$11$ oscillation in \cref{fig:ratio} is exactly this: each class carries a fixed
+number of defect arms, and each defect costs a factor $\delta_4$ or $\delta_6$, about one part in a
+thousand. The first part of the corollary is also a pleasant closed form: for $n\equiv1\pmod{11}$ the
+answer to Brualdi and Goldwasser's question is a single power of a rational number, times $\tfrac{26}{23}$.
+(The corollary is not stated separately in Lean, but it is a finite computation from the formal
+theorem and the closed form $F$.)
+
+\paragraph{Where the late switches come from.} The two switches in the rule, at $n=722$ and $n=2319$
+(\cref{fig:race}), have a simple explanation. In a class $s\in\{1,2,3,4\}$ the remainder can be absorbed
+either by $s$ arms $A_6$ or by $11-s$ arms $A_4$. In the bulk, the sixes are cheaper: the fours cost
+$(11-s)\log(1/\delta_4)$ and the sixes cost $s\log(1/\delta_6)$, and for $s\le4$ the former is larger. But
+fours send larger messages to the centre ($\tfrac3{19}>\tfrac3{23}>\tfrac19$), and the root bonus
+$\log(1+R/D)$ rewards that by an amount proportional to $1/D$, where $D\approx n/11$ is the centre degree.
+So the fours win while $D$ is small and lose once the bonus has decayed below the bulk difference. Equating
+the two to first order predicts switches near $n\approx738$ for $s=3$ and $n\approx2335$ for $s=4$, against
+the true switches at $722\mid733$ and $2319\mid2330$; for $s=2$ it predicts about $449$, against the true
+switch at $423\mid434$ (below $492$, where the table takes over). The heuristic explains the thresholds;
+the certificates of \cref{sec:spiders} are what prove them.
+
+\subsection{Where the problem sits among extremal problems on trees}
+
+Many classical tree invariants have the path and the star as their extremal trees. The number of
+matchings (the Hosoya index), for example, is largest for the path and smallest for the
+star~\cite{WagnerGutman2010}. Csikvári's generalized tree shift~\cite{Csikvari2010} explains a great deal of
+this: it is a partial order on trees with the path at the bottom and the star at the top, and many
+invariants (the number of closed walks, the spectral radius, the Estrada index and others) are monotone
+along it, so their extremes are forced to be the path and the star.
+
+The Laplacian ratio is a weighted count of matchings, but it is not of this kind. Its minimum is the
+star, the top of the poset; if it were monotone along the poset its maximum would be the path, and it is
+not. The weight $1/(\deg u\deg v)$ on each matched edge is what breaks monotonicity: it rewards matchings
+near low-degree vertices, but low degree limits how many edges a vertex can contribute. The result is an
+extremal tree that is neither a path nor a star, and whose shape depends on $n$ modulo $11$. This suggests
+a natural family of problems in between.
+
+\begin{itemize}
+\item For $\alpha\ge0$ let $\pi_\alpha(T)=\sum_M\prod_{uv\in M}(\deg u\deg v)^{-\alpha}$. Then $\pi_0$ is
+  the Hosoya index, maximized by the path, and $\pi_1=\pi$ is maximized by spiders of five-cherry arms.
+  How does the maximizer move as $\alpha$ increases from $0$ to $1$ and beyond: through which shapes, and
+  at which values of $\alpha$ does it change? The cavity recursion and the subaction method apply
+  verbatim, with $\log\rho$ replaced by an $\alpha$-dependent rate.
+\end{itemize}
+
+\subsection{A statistical-physics reading}
+
+By \cref{thm:matchsum}, $\pi(T)$ is the partition function of a monomer-dimer system on $T$ in which a
+dimer on the edge $uv$ has activity $1/(\deg u\deg v)$~\cite{HL1972}. In that language, $\log\rho$ is the
+largest free energy per vertex that any tree can achieve, and \cref{thm:sharp} says the five-cherry arm is
+its unique ``ground state'': the only pendant structure that achieves it exactly. The maximizer is then a
+ground-state configuration with the fewest defects that the vertex count allows, and $\log(1/\delta_4)$ and
+$\log(1/\delta_6)$ are the energies of the two cheapest defects. The subaction $\varrho_{\mathrm{wit}}$ of
+\cref{sec:ceiling} plays the role that calibrated sub-actions play in Aubry--Mather theory and ergodic
+optimization~\cite{Bousch2001,Jenkinson2019}: a local certificate that no configuration can beat the
+ground state. It would be interesting to know how general this is. For which other weighted matching
+problems on trees, or other tree functionals computed by a cavity recursion, is the extremal tree a
+periodic arrangement of a single block, certified by a finite piecewise-affine subaction?
 
 \subsection{Permanents}
 
-The permanent is \#P-hard, and its extremal theory is thin: questions of the form ``which matrix in a
-natural class maximizes the permanent?'' are often hard even when the class is simple. For Laplacians of
-trees, the matching-sum formula turns the permanent into a partition function that factorizes over the
-tree, and that is what made this problem solvable. The same structure applies to other matrix functions
-of trees built from $D$ and $A$. For example, the signless Laplacian $D+A$ of a tree has the same
-permanent, since a matched edge contributes $A_{ij}A_{ji}=1$ either way, so \cref{thm:main} answers the
-analogous question for it too. Immanants of $L$ interpolate between the determinant and the permanent,
-and orderings of trees by such quantities have been studied~\cite{Csikvari2010}. The
-Brualdi--Goldwasser question for bipartite graphs, where cycles appear and the matching-sum formula
-fails, and for trees with a prescribed degree sequence, are natural next targets.
+The permanent is \#P-hard~\cite{Valiant1979}, and its extremal theory is thin: questions of the form
+``which matrix in a natural class maximizes the permanent?'' are often hard even when the class is
+simple. For Laplacians of trees, the matching-sum formula turns the permanent into a partition function
+that factorizes over the tree, and that is what made this problem solvable. The same structure applies
+to other matrix functions of trees built from $D$ and $A$. For example, the signless Laplacian $D+A$ of a
+tree has the same permanent, since a matched edge contributes $A_{ij}A_{ji}=1$ either way, so
+\cref{thm:main} answers the analogous question for it too. Immanants of $L$ interpolate between the
+determinant and the permanent, and orderings of trees by such quantities have been
+studied~\cite{Csikvari2010}.
+
+For graphs with cycles the matching-sum formula no longer holds: a permutation can follow a cycle of the
+graph, and such terms contribute alongside the matchings. Brualdi and Goldwasser also studied bipartite
+graphs~\cite{BG1984}, and the maximum of $\per L/\prod\deg$ over connected graphs, or over connected
+bipartite graphs, on $n$ vertices is a natural next question. Whether cycles help or hurt, and whether an
+analogue of the sharp ceiling holds, we do not know.
 
 \subsection{Method}
 
@@ -1298,7 +1431,9 @@ inequalities are in a computer program that a referee cannot easily audit. Here 
 checked by the Lean kernel, and every certificate can be regenerated and compared byte for byte. We think
 this division, conceptual proof for people and certificate checking for the kernel, is a good model for
 computer-assisted extremal combinatorics, and the practical lessons of \cref{sec:telperion} (sharding,
-fixed point, structural recursion) apply well beyond this problem.
+fixed point, structural recursion) apply well beyond this problem. The method also degrades gracefully:
+where a uniform argument was too weak (small $n$), it was replaced by a larger certificate rather than
+by an unchecked computation.
 
 A related point concerns how the work was done. Much of the exploration, formalization and certificate
 engineering was carried out with an AI system. In a project of that kind the natural worry is an
@@ -1315,9 +1450,12 @@ definitions and the statement mean what the paper says, is exactly the part that
   optimizers are ``star-shaped''.
 \item \emph{Uniqueness in Lean.} Uniqueness (except at $n=21$) is known by computation and certificate
   but not formalized.
-\item \emph{The constant.} \Cref{fig:ratio} suggests that $\max\pi/\rho^{n-1}$ approaches a periodic
-  pattern of period 11. Since the maximizer is explicit this is a computation in principle, but a clean
-  closed form for the limit points would be nice.
+\item \emph{The interpolating family $\pi_\alpha$.} Which trees maximize $\pi_\alpha$, and where does the
+  maximizer change shape?
+\item \emph{Constrained versions.} Trees of maximum degree at most $\Delta$ (the rate cells of
+  \cref{sec:reduction} already work under degree caps), trees with a prescribed degree sequence, and trees
+  with a given diameter, the constraint under which the minimum was studied~\cite{Wu2024}.
+\item \emph{Graphs with cycles.} Bipartite and general connected graphs, as above.
 \item \emph{Independent review.} The kernel checks the deductions; human review of the statement and the
   definitions is still needed, and welcome.
 \end{itemize}
@@ -1419,6 +1557,11 @@ arXiv:2605.14176 (2026).
 \emph{The complexity of computing the permanent},
 Theoret.\ Comput.\ Sci.\ \textbf{8} (1979), 189--201.
 \href{https://doi.org/10.1016/0304-3975(79)90044-6}{doi:10.1016/0304-3975(79)90044-6}.
+\bibitem{WagnerGutman2010} S.~Wagner and I.~Gutman,
+\emph{Maxima and minima of the Hosoya index and the Merrifield--Simmons index: a survey of results and
+techniques},
+Acta Appl.\ Math.\ \textbf{112} (2010), 323--346.
+\href{https://doi.org/10.1007/s10440-010-9575-5}{doi:10.1007/s10440-010-9575-5}.
 \bibitem{WDL2025} T.~Wu, X.~Dong and H.-J.~Lai,
 \emph{Two problems on Laplacian ratios of trees},
 Discrete Appl.\ Math.\ \textbf{372} (2025), 224--236.
