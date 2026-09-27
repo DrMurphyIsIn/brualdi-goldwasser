@@ -10,3 +10,8 @@ producing the single self-contained file `index.html` (no external scripts or ne
 python3 site/build.py          # standard library only
 open site/index.html           # or any browser; #treelab, #spiderlab, #races open the labs directly
 ```
+
+`telperion-explorer/index.html` is the Telperion Registry Explorer: a page generated in the Telperion
+development repository from its missions registry, then patched by `scripts/explorer_feature_bg.py` to put
+a Brualdi-Goldwasser tab in front (the script's docstring explains how). It is also self-contained. The
+`pages` workflow publishes it at <https://drmurphyisin.github.io/brualdi-goldwasser/telperion-explorer/>.
