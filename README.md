@@ -75,7 +75,7 @@ The proof splits by size:
 
 Large parts of the proof are *certificates*: tables of exact rational or integer data, plus Lean
 checks that the kernel evaluates. They are produced by generators in `certificates/`, packaged with
-[Telperion](telperion/), a certificate pipeline in which the generator is untrusted and the Lean kernel
+[Telperion](telperion/README.md), a certificate pipeline in which the generator is untrusted and the Lean kernel
 is the only trusted component. A wrong certificate is simply a failed build.
 
 Every certificate family regenerates from scratch, byte for byte:
@@ -223,7 +223,7 @@ scrutiny. We welcome review, questions and issues.
 ```
 formalization/   Lean 4 project: the import closure of bg_maximizer_all (+ the sharp rate ceiling)
 certificates/    generators and frozen Telperion records for every certificate family
-telperion/       vendored Telperion engine (BSL 1.1)
+telperion/       vendored Telperion engine (BSL 1.1); telperion/README.md describes it on its own terms
 paper/           the paper (paper.tex, gen_table.py builds its appendix from the Lean table)
 site/            the project page (build.py fills template.html from the Lean table)
 scripts/         setup for the isolated self-hosted CI runner
