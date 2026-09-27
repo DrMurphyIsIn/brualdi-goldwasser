@@ -379,8 +379,8 @@ versions pinned by the project it is used in; here, Lean 4 v4.32.0 and Mathlib v
 
 ## About this copy
 
-This directory is a vendored snapshot (version 0.1.6) of the engine's source, taken from the separate
-repository where Telperion is developed. It includes the source only, not that repository's test suite,
+This directory is a vendored snapshot (version 0.1.6, synced 2026-09-27) of the complete engine source,
+including every emitter, taken from the separate repository where Telperion is developed. It includes the source only, not that repository's test suite,
 documentation or worked examples.
 
 The subpackage `telperion.bg` is a research lab of probes specific to the Brualdi–Goldwasser problem. It is
