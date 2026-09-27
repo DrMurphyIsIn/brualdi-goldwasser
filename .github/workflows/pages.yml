@@ -1,10 +1,14 @@
 # Publish site/ (plus the paper PDF) to GitHub Pages.
+# Runs on the self-hosted runner (push to main only, never pull requests), so deploys do not wait
+# for GitHub-hosted runners. actions/upload-pages-artifact needs GNU tar on macOS, so the artifact is
+# packed here with the system tar in the format actions/deploy-pages expects (artifact.tar, named
+# github-pages).
 name: pages
 
 on:
   push:
     branches: [main]
-    paths: [site/**, paper/**, formalization/R3Cert/BGSpiderTableData.lean]
+    paths: [site/**, paper/**, formalization/R3Cert/BGSpiderTableData.lean, .github/workflows/pages.yml]
   workflow_dispatch:
 
 permissions:
@@ -18,15 +22,21 @@ concurrency:
 
 jobs:
   deploy:
-    runs-on: ubuntu-latest
+    if: github.repository == 'DrMurphyIsIn/brualdi-goldwasser' && github.ref == 'refs/heads/main'
+    runs-on: [self-hosted, macOS, ARM64, bg-lean]
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - uses: actions/checkout@v4
       - run: python3 site/build.py
-      - uses: actions/upload-pages-artifact@v3
+      - name: Pack site
+        run: tar -cf "$RUNNER_TEMP/artifact.tar" -C site --exclude=.git --exclude=.github .
+      - uses: actions/upload-artifact@v4
         with:
-          path: site
+          name: github-pages
+          path: ${{ runner.temp }}/artifact.tar
+          retention-days: 1
+          if-no-files-found: error
       - id: deployment
         uses: actions/deploy-pages@v4
