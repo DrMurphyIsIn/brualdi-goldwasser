@@ -57,7 +57,7 @@ sub('<div class="banner">conjecture1_proved = False</div>',
 sub('<p class="sub">One registry of formal statements about the Riemann zeta function and its zeros, kept in TOML files and checked by a Lean 4 kernel, with the reverse-Dyson quasicrystal program in front. Every status on this page is read from the registry; nothing is inferred, and nothing here is a proof of the Riemann Hypothesis.</p>',
     '<p class="sub">Telperion keeps its research programs as a registry of formal statements: each one written down in Lean, tracked in TOML files, and marked proved only when the Lean kernel has checked a proof of exactly that statement. This page puts the first program to reach its goal in front: the <strong>Brualdi-Goldwasser problem</strong>, which asks which tree maximizes the Laplacian ratio, now answered for every size. Behind it are the three Riemann-hypothesis campaigns, which are open research: they hold many proved steps, and nothing here is a proof of the Riemann Hypothesis.</p>')
 sub('<p class="note">The plots are computed live in your browser from bundled data.',
-    '<p class="note">New here? Start with the first tab, then the registry. The plots are computed live in your browser from bundled data.')
+    '<p class="note">New here? Start with the first tab, then the registry. For the Brualdi-Goldwasser theorem on its own, with interactive labs, see the <a href="../">project page</a>. The plots are computed live in your browser from bundled data.')
 
 # ------------------------------------------------------------------ nav
 sub('<button class="tab" role="tab" id="tab-qc" aria-selected="true" data-panel="qc">The quasicrystal</button>',
@@ -261,7 +261,7 @@ sub('<script id="plot-data" type="application/json">', f'<script id="bg-data" ty
 
 # ------------------------------------------------------------------ footer
 sub('<p><strong>Telperion Registry Explorer.</strong>',
-    '<p><strong>Telperion Registry Explorer.</strong> The Brualdi-Goldwasser tab is drawn from the public repository (its statement, certificate manifest and paper figure data).')
+    '<p><strong>Telperion Registry Explorer.</strong> Companion to the <a href="../">Brualdi-Goldwasser project page</a>. The Brualdi-Goldwasser tab is drawn from the public repository (its statement, certificate manifest and paper figure data).')
 
 dst.write_text(s)
 print("wrote", dst, len(s), "bytes")

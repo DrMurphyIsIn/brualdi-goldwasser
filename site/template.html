@@ -118,6 +118,8 @@ footer { border-top: 1px solid var(--line); margin-top: 40px; padding-top: 14px;
   <p class="sub">In 1984 Brualdi and Goldwasser asked which tree on <i>n</i> vertices maximizes
   &pi;(T) = per L(T) / &prod; deg(v). This project answers the question for every <i>n</i>, with a proof
   checked by the Lean kernel.</p>
+  <p class="note">The certificates behind the proof were produced with Telperion. See it at work in the
+  <a href="telperion-explorer/">Telperion Registry Explorer</a>, which puts this theorem first.</p>
 </header>
 
 <nav class="tabs" role="tablist">
@@ -325,7 +327,9 @@ certificates/verify.sh --full    # also the independent certified all-tree searc
     <div class="card"><h3>cand_certs</h3><p>The 223 polynomial certificates, n &ge; 492.</p><div class="k">10 Lean files</div></div>
   </div>
   <p>Each family has a generator, a frozen Telperion record with hashes, and a driver that regenerates it
-  from scratch and compares it with the frozen copy and with the Lean files.</p>
+  from scratch and compares it with the frozen copy and with the Lean files. The
+  <a href="telperion-explorer/">Telperion Registry Explorer</a> shows the registry these families were
+  developed in, with the Brualdi-Goldwasser campaign in front.</p>
 
   <h2>Status and limits</h2>
   <ul>

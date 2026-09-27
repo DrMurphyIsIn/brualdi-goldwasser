@@ -76,7 +76,10 @@ The proof splits by size:
 Large parts of the proof are *certificates*: tables of exact rational or integer data, plus Lean
 checks that the kernel evaluates. They are produced by generators in `certificates/`, packaged with
 [Telperion](telperion/README.md), a certificate pipeline in which the generator is untrusted and the Lean kernel
-is the only trusted component. A wrong certificate is simply a failed build.
+is the only trusted component. A wrong certificate is simply a failed build. To see Telperion at work, open
+the [Telperion Registry Explorer](https://drmurphyisin.github.io/brualdi-goldwasser/telperion-explorer/):
+it walks through this theorem and shows the registry of formal statements that Telperion tracks, of which
+Brualdi-Goldwasser is the first to reach its goal.
 
 Every certificate family regenerates from scratch, byte for byte:
 
