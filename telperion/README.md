@@ -9,6 +9,10 @@ checks them.
 It was built for computer-assisted proofs, where the conceptual argument fits in a paper but rests on
 hundreds or thousands of concrete inequalities that a referee cannot realistically check by hand.
 
+To browse everything Telperion can do before reading further, open the
+[Telperion registry explorer](https://drmurphyisin.github.io/brualdi-goldwasser/telperion-explorer/),
+a searchable page of every registered emitter and certificate kind.
+
 ## The trust model
 
 The whole design follows from one rule: **the generator is untrusted, and the Lean kernel is the only
