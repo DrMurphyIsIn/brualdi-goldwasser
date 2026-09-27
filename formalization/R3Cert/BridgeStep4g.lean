@@ -21,8 +21,10 @@
   Genuine proofs (no `sorry`).  conjecture1_proved=False.
 -/
 import Mathlib
-import R3Cert.BridgeStep4d
 import R3Cert.BridgeStep4f
+import R3Cert.Bridge
+import R3Cert.BridgeStep4c
+import R3Cert.NearStar
 
 namespace R3Cert
 namespace Step3
@@ -134,27 +136,6 @@ theorem litChildren_good : ∀ (d : ℕ) (ch : List Branch), ∀ p ∈ litChildr
         exact litRealize_good K
     · exact litChildren_good d rest p h
 end
-
-/-- **The literal hub follows the convention with its TRUE root degree** (child count, no
-    parent edge). -/
-theorem litHub_good (c : ℕ) (ch : List Branch) :
-    GoodTree (c + ch.length) (litHub c ch) := by
-  rw [litHub]
-  refine GoodTree.node _ _ ?_ ?_
-  · intro p hp
-    rcases List.mem_append.mp hp with h | h
-    · have hpe : p = litCherry (c + ch.length) := List.eq_of_mem_replicate h
-      subst hpe
-      show 1 / (((c + ch.length : ℕ) : ℝ) * 2)
-        = 1 / (((c + ch.length : ℕ) : ℝ) * (((1 : ℕ) : ℝ) + 1))
-      norm_num
-    · exact (litChildren_good (c + ch.length) ch p h).1
-  · intro p hp
-    rcases List.mem_append.mp hp with h | h
-    · have hpe : p = litCherry (c + ch.length) := List.eq_of_mem_replicate h
-      subst hpe
-      exact goodTree_cherryMid
-    · exact (litChildren_good (c + ch.length) ch p h).2
 
 /-! ### The last isolation lemma -/
 

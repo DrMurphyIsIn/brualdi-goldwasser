@@ -60,51 +60,7 @@ theorem udeg_backbone (arms : List ℕ) (c : ℕ) (rest : List Hub) :
 
 /-! ### The chain recursion (internal hub: full degree = children + parent) -/
 
-/-- **The internal backbone recursion.** -/
-theorem Ztot_dtSub_backbone (arms : List ℕ) (c : ℕ) (rest : List Hub) :
-    Ztot (dtSub (backboneU ((arms, c) :: rest)))
-      = (((arms.map armU).map (fun K => Ztot (dtSub K))).prod * (3 / 2) ^ c
-          * ((tailU rest).map (fun K => Ztot (dtSub K))).prod)
-        * (1 + ((arms.map (fun j : ℕ =>
-              3 / (((arms.length + c + (tailU rest).length + 1 : ℕ) : ℝ)
-                * (4 * (j : ℝ) + 3)))).sum
-            + (c : ℝ) * (1 / (3 * ((arms.length + c + (tailU rest).length + 1 : ℕ) : ℝ)))
-            + ((dtChildren (arms.length + c + (tailU rest).length + 1) (tailU rest)).map
-                (fun p => p.1 * (Zopen p.2 / Ztot p.2))).sum)) := by
-  rw [backboneU_eq, dtSub_node]
-  have hlen : (arms.map armU ++ List.replicate c cherryU ++ tailU rest).length
-      = arms.length + c + (tailU rest).length := by
-    simp [List.length_append]
-    omega
-  rw [hlen]
-  exact Ztot_hubNode (arms.length + c + (tailU rest).length + 1) (by omega) arms c
-    (tailU rest) (fun K _ => Ztot_dt_pos K)
-
 /-! ### The root amplitude -/
-
-/-- **The root backbone amplitude** (true root: degree = child count; the hub must be
-    nonempty). -/
-theorem Aobj_backbone (arms : List ℕ) (c : ℕ) (rest : List Hub)
-    (hne : 0 < arms.length + c + (tailU rest).length) :
-    Aobj (backboneU ((arms, c) :: rest))
-      = (((arms.map armU).map (fun K => Ztot (dtSub K))).prod * (3 / 2) ^ c
-          * ((tailU rest).map (fun K => Ztot (dtSub K))).prod)
-        * (1 + ((arms.map (fun j : ℕ =>
-              3 / (((arms.length + c + (tailU rest).length : ℕ) : ℝ)
-                * (4 * (j : ℝ) + 3)))).sum
-            + (c : ℝ) * (1 / (3 * ((arms.length + c + (tailU rest).length : ℕ) : ℝ)))
-            + ((dtChildren (arms.length + c + (tailU rest).length) (tailU rest)).map
-                (fun p => p.1 * (Zopen p.2 / Ztot p.2))).sum)) := by
-  have hA : Aobj (backboneU ((arms, c) :: rest))
-      = Ztot (dtRealize (backboneU ((arms, c) :: rest))) := rfl
-  rw [hA, backboneU_eq, dtRealize_node]
-  have hlen : (arms.map armU ++ List.replicate c cherryU ++ tailU rest).length
-      = arms.length + c + (tailU rest).length := by
-    simp [List.length_append]
-    omega
-  rw [hlen]
-  exact Ztot_hubNode (arms.length + c + (tailU rest).length) hne arms c
-    (tailU rest) (fun K _ => Ztot_dt_pos K)
 
 end Step3
 end R3Cert

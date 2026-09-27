@@ -22,7 +22,7 @@
   Genuine proofs (no `sorry`).
 -/
 import Mathlib
-import R3Cert.R47Cert
+import R3Cert.R47StepSize
 
 namespace R3Cert
 namespace Step3
@@ -50,52 +50,7 @@ theorem q_dressed_le_of_udeg (K : UTree) (h6 : 6 ≤ udeg K) :
 
 /-! ### Arm dressed activities are exact -/
 
-/-- **A load-j arm's dressed cavity contribution is exactly the loaded activity**:
-    `Q/D = 3/(4j+3) = zw 1 j`. -/
-theorem q_dressed_armU (j : ℕ) :
-    Zopen (dtSub (armU j)) / Ztot (dtSub (armU j)) / (udeg (armU j) : ℝ) = zw 1 j := by
-  rw [Q_armU, udeg_armU, zw]
-  push_cast
-  have h1 : (4 * (j : ℝ) + 3) ≠ 0 := by positivity
-  have h2 : ((j : ℝ) + 1) ≠ 0 := by positivity
-  have h3 : (3 * 1 + 4 * (j : ℝ)) ≠ 0 := by positivity
-  field_simp
-  ring
-
-theorem zw_one_four : zw 1 4 = 3 / 19 := by norm_num [zw]
-
-theorem zw_one_four_le : zw 1 4 ≤ 3 / 16 := by norm_num [zw]
-
-theorem zw_one_five_le : zw 1 5 ≤ 3 / 16 := by norm_num [zw]
-
 /-! ### The per-vertex folding identity -/
-
-/-- **The dressing lemma**: the raw cherry-block form of a hub of structural degree `d`
-    and load `c` (full degree `D = d + c`) folds exactly into the certified
-    `F(d,c) (1 + z(d,c) T)` form -- via `3D + c = 3d + 4c`.  `T` is the dressed
-    neighbour sum `Σ Qᵢ/Dᵢ`. -/
-theorem fold_FZ (d c : ℕ) (T : ℝ) (hd : 0 < d) :
-    (3 / 2 : ℝ) ^ c * (1 + (c : ℝ) / (3 * ((d : ℝ) + (c : ℝ)))
-        + 1 / ((d : ℝ) + (c : ℝ)) * T)
-      = Fw (d : ℝ) c * (1 + zw (d : ℝ) c * T) := by
-  have hdR : (0 : ℝ) < (d : ℝ) := by exact_mod_cast hd
-  cases c with
-  | zero =>
-    rw [Fw_zero]
-    simp only [zw]
-    push_cast
-    have hD : ((d : ℝ) + 0) ≠ 0 := by positivity
-    have hz : (3 * (d : ℝ) + 4 * 0) ≠ 0 := by positivity
-    field_simp
-    ring
-  | succ n =>
-    simp only [Fw, zw, Nat.add_sub_cancel]
-    push_cast
-    have hD : ((d : ℝ) + ((n : ℝ) + 1)) ≠ 0 := by positivity
-    have hD2 : (2 * ((d : ℝ) + ((n : ℝ) + 1))) ≠ 0 := by positivity
-    have hz : (3 * (d : ℝ) + 4 * ((n : ℝ) + 1)) ≠ 0 := by positivity
-    field_simp
-    ring
 
 end Step3
 end R3Cert

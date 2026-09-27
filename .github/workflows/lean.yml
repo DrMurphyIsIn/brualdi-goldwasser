@@ -42,7 +42,7 @@ jobs:
       - name: Build (heavy certificates in batches)
         run: |
           export PATH="$HOME/.elan/bin:$PATH"
-          ./build.sh 3           # lake cannot limit parallelism; this batches the 15-35 GiB certificate files
+          ./build.sh 2           # lake cannot limit parallelism; 2 heavy certificate files at once peak near 63 GB
       # A `sorry` would show up as sorryAx and `native_decide` as Lean.ofReduceBool, so this check covers both.
       - name: Axioms of every headline theorem
         run: |

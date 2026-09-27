@@ -14,7 +14,9 @@
       child (a genuine induction); `(1, c≥1)` gives `t ≥ 10`; `n_ch ≥ 2` gives `t ≥ 9`.
 -/
 import Mathlib
-import R3Cert.Structure
+import R3Cert.ExactCruxes
+import R3Cert.JTail
+import R3Cert.Sweep
 
 namespace R3Cert
 
@@ -135,14 +137,6 @@ theorem E1_holds (b : Branch) : ¬ (1 / 3 < cav b ∧ cav b ≤ 2 / 5) := by
 
 /-- The concrete reachable-cavity predicate: `mu` is the cavity of some DEC branch. -/
 def Reachable (mu : ℝ) : Prop := ∃ b : Branch, cav b = mu
-
-/-- **E0 as an instance of the abstract classification, on the concrete `Reachable`.** -/
-theorem E0_cavity_classification_holds : E0_cavity_classification Reachable := by
-  rintro mu ⟨b, rfl⟩; exact E0_holds b
-
-/-- **E1 as an instance of the abstract forbidden-band statement, on the concrete `Reachable`.** -/
-theorem E1_forbidden_band_holds : E1_forbidden_band Reachable := by
-  rintro mu ⟨b, rfl⟩; exact E1_holds b
 
 /-! ## The tree-induction assembly -- CONDITIONAL on a valid potential (the open crux isolated).
 

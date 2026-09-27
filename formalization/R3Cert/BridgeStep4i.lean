@@ -60,65 +60,7 @@ theorem aGraph_degree_ne (E : List AEdge)
 
 /-! ### The `hw` discharge and the `IsEdgeEnum` instance for the competitors -/
 
-theorem childCount_litHub (c : ℕ) (ch : List Branch) :
-    childCount (litHub c ch) = c + ch.length := by
-  rw [litHub, childCount, List.length_append, List.length_replicate, litChildren_length]
-
-/-- **`hw` for the literal hub realizations**: every lifted weight is the reciprocal degree
-    product of the address graph. -/
-theorem litHub_hw (c : ℕ) (ch : List Branch) :
-    ∀ q ∈ liftEdges (realize (litHub c ch)), q.2.2
-      = 1 / (((aGraph (realize (litHub c ch))).degree q.1 : ℝ)
-          * ((aGraph (realize (litHub c ch))).degree q.2.1 : ℝ)) := by
-  intro q hq
-  obtain ⟨e, heE, h1, h2, h3⟩ := of_mem_liftEdges hq
-  have hdeg1 : (aGraph (realize (litHub c ch))).degree q.1
-      = (realize (litHub c ch)).countP (touchB e.1) := by
-    rw [degree_eq_card_touching _ (realize_hloop _) (realize_keys _),
-      card_touching_eq_countP _ (realize_nodup _), h1]
-  have hdeg2 : (aGraph (realize (litHub c ch))).degree q.2.1
-      = (realize (litHub c ch)).countP (touchB e.2.1) := by
-    rw [degree_eq_card_touching _ (realize_hloop _) (realize_keys _),
-      card_touching_eq_countP _ (realize_nodup _), h2]
-  rw [h3, hdeg1, hdeg2]
-  exact realize_weights (litHub c ch) (c + ch.length) (litHub_good c ch)
-    (childCount_litHub c ch) e heE
-
-/-- The realized competitor trees are `IsEdgeEnum`s of their address graphs. -/
-theorem litHub_isEdgeEnum (c : ℕ) (ch : List Branch) :
-    IsEdgeEnum (aGraph (realize (litHub c ch))) (liftEdges (realize (litHub c ch))) :=
-  isEdgeEnum_liftEdges _ (realize_nodup _) (realize_hloop _) (realize_keys _) (litHub_hw c ch)
-
 /-! ### The composed real-graph statements -/
-
-/-- **THE REAL-GRAPH AMPLITUDE IDENTITY**: the Laplacian permanent ratio of the realized
-    competitor graph IS the raw matching partition function of the literal hub. -/
-theorem pi_litHub (c : ℕ) (ch : List Branch)
-    (hac : (aGraph (realize (litHub c ch))).IsAcyclic) :
-    (lapl (aGraph (realize (litHub c ch)))).permanent
-        / (∏ v, ((aGraph (realize (litHub c ch))).degree v : ℝ))
-      = Ztot (litHub c ch) := by
-  rw [pi_eq_msum _ hac (aGraph_degree_ne _ (realize_hloop _) (realize_keys _))
-      (litHub_isEdgeEnum c ch),
-    msum_liftEdges, ← Ztot_eq_msum]
-
-/-- **THE AMPLITUDE BRIDGE ON THE REAL GRAPHS**: the hub ratio of Laplacian permanent ratios
-    converges to `exp (logPhi b) * rhoB^(Vb b)` -- the DEC amplitude of the gadget branch.
-    Acyclicity of the address graphs is the one remaining structural hypothesis. -/
-theorem amplitude_bridge_real (cH : ℕ) (arm b : Branch)
-    (hacg : ∀ p : ℕ,
-      (aGraph (realize (litHub cH (List.replicate p arm ++ [b])))).IsAcyclic)
-    (hacb : ∀ p : ℕ,
-      (aGraph (realize (litHub cH (List.replicate p arm)))).IsAcyclic) :
-    Tendsto (fun p : ℕ =>
-        ((lapl (aGraph (realize (litHub cH (List.replicate p arm ++ [b]))))).permanent
-          / (∏ v, ((aGraph (realize (litHub cH
-              (List.replicate p arm ++ [b])))).degree v : ℝ)))
-        / ((lapl (aGraph (realize (litHub cH (List.replicate p arm))))).permanent
-          / (∏ v, ((aGraph (realize (litHub cH (List.replicate p arm)))).degree v : ℝ))))
-      atTop (𝓝 (Real.exp (logPhi b) * rhoB ^ (Vb b))) := by
-  refine Tendsto.congr (fun p => ?_) (amplitude_bridge_logPhi cH arm b)
-  rw [pi_litHub _ _ (hacg p), pi_litHub _ _ (hacb p)]
 
 end Step3
 end R3Cert

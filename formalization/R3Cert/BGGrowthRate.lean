@@ -24,8 +24,13 @@
 -/
 import Mathlib
 import R3Cert.R47RootRate
-import R3Cert.R47NearStarValue
 import R3Cert.LemmaA
+import R3Cert.R47Backbone
+import R3Cert.R47HeadId
+import R3Cert.R47HubState
+import R3Cert.R47RateZBound
+import R3Cert.R47StepSize
+import R3Cert.R47Tree
 
 namespace R3Cert
 namespace Step3

@@ -41,8 +41,9 @@ definitions of `UTree`, `usize`, `Aobj`, `realize`, `aGraph`), `BGSpiderRule.lea
 - **Generated files** (`BGSpiderTableChunk_*`, `BGEnvCert/G149/*`, `BGSpiderMidCells*`, `BGSpiderMidRoot*`,
   `BGSpiderCandCells*`, `BGSpiderCand.lean`) are certificates. Their generators are in `../certificates`,
   and `../certificates/verify.sh` regenerates them byte for byte.
-- Some files in the closure are not used by the main theorem; they come along because a used file imports
-  them.
+- Every module in `R3Cert/` is used: each contributes at least one declaration to the dependency graph of
+  the headline theorems (checked by walking that graph; release v1.1.0 removed 54 modules and 17
+  declarations that were not).
 
 ## Build notes
 

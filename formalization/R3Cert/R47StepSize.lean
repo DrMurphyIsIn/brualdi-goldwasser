@@ -20,7 +20,7 @@
   conjecture1_proved=False.  Genuine proofs (no `sorry`).
 -/
 import Mathlib
-import R3Cert.R47Step
+import R3Cert.R47BackboneAmp
 
 namespace R3Cert
 namespace Step3
@@ -111,38 +111,6 @@ theorem usize_backbone (h : Hub) (t : List Hub) :
   omega
 
 /-! ### Conservation -/
-
-/-- A step's source and target are nonempty. -/
-theorem Step.ne_nil {s s' : List Hub} (hst : Step s s') : s ≠ [] ∧ s' ≠ [] := by
-  cases hst <;> exact ⟨by simp, by simp⟩
-
-/-- **Fixed-n at the state level**: the topped-up merge conserves the vertex count
-    exactly -- the absorbed hub becomes the new load-5 arm's root, and the borrows move
-    cherries without creating or destroying vertices. -/
-theorem Step.stateSize_eq {s s' : List Hub} (hst : Step s s') :
-    stateSize s' = stateSize s := by
-  induction hst with
-  | @merge armsA cA armsB others cb rest hcb hsplit =>
-    have hlen := hsplit.length_eq
-    have hsum := hsplit.sum_eq
-    simp only [List.length_append, List.length_replicate, List.sum_append,
-      List.sum_const_nat] at hlen hsum
-    simp only [stateSize, List.map_cons, List.sum_cons, hubSize, List.length_append,
-      List.length_replicate, List.length_cons, List.length_nil, List.sum_append,
-      List.sum_const_nat, List.sum_cons, List.sum_nil]
-    omega
-  | @tail hd s s' hst ih =>
-    simp only [stateSize, List.map_cons, List.sum_cons] at ih ⊢
-    omega
-
-/-- **The rewrite is fixed-n**: the realized backbone's vertex count is invariant under
-    every step. -/
-theorem Step.usize_eq {s s' : List Hub} (hst : Step s s') :
-    usize (backboneU s') = usize (backboneU s) := by
-  obtain ⟨hs, hs'⟩ := hst.ne_nil
-  obtain ⟨a, t, rfl⟩ := List.exists_cons_of_ne_nil hs
-  obtain ⟨b, u, rfl⟩ := List.exists_cons_of_ne_nil hs'
-  rw [usize_backbone, usize_backbone, hst.stateSize_eq]
 
 end Step3
 end R3Cert

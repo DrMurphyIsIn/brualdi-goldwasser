@@ -12,7 +12,10 @@
   Genuine proofs (no `sorry`).
 -/
 import Mathlib
-import R3Cert.R47Legs
+import R3Cert.R47Dress
+import R3Cert.R47HeadId
+import R3Cert.R47StepSize
+import R3Cert.R47VeeId
 
 namespace R3Cert
 namespace Step3

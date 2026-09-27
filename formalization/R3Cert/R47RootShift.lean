@@ -76,17 +76,6 @@ theorem usize_rootShift (ds rest : List UTree) :
   simp only [usize_node, usizeList_cons, usizeList_append, usizeList_nil]
   omega
 
-/-- **The single-edge root-shift as a straightening step relation.**  Reroot to the adjacent child when
-    that lowers `strDefect` (`Aobj` equal by `Aobj_rootShift`, `usize` equal). -/
-def RootShiftStep (t t' : UTree) : Prop :=
-  ∃ ds rest : List UTree,
-    t = UTree.node (UTree.node ds :: rest) ∧ t' = UTree.node (ds ++ [UTree.node rest]) ∧
-    strDefect t' < strDefect t
-
-theorem RootShiftStep.straightStep {t t' : UTree} (h : RootShiftStep t t') : StraightStep_sized t t' := by
-  obtain ⟨ds, rest, rfl, rfl, hlt⟩ := h
-  exact ⟨usize_rootShift ds rest, le_of_eq (Aobj_rootShift ds rest).symm, hlt⟩
-
 /-! ### Composite reroot: reach ANY rerooting via shifts + child-reorderings, `Aobj`/`usize` invariant -/
 
 /-- One elementary re-rooting move: shift the root to its first child, OR reorder the root's children
@@ -117,15 +106,6 @@ theorem RerootRel.usize {t t' : UTree} (h : RerootRel t t') : usize t = usize t'
   induction h with
   | refl => rfl
   | tail _ hbc ih => exact ih.trans hbc.usize
-
-/-- **The composite reroot as a straightening step**: reroot to ANY lower-`strDefect` rooting.  `Aobj` and
-    `usize` are invariant (composed over `Aobj_rootShift` / `Aobj_node_perm`), so this is a
-    `StraightStep_sized` whenever the target rooting has strictly lower defect.  Reaching the measured 99.3%
-    coverage (`COVER_RELATION_STATUS.md`). -/
-def CompRerootStep (t t' : UTree) : Prop := RerootRel t t' ∧ strDefect t' < strDefect t
-
-theorem CompRerootStep.straightStep {t t' : UTree} (h : CompRerootStep t t') : StraightStep_sized t t' :=
-  ⟨h.1.usize, le_of_eq h.1.aobj, h.2⟩
 
 end Step3
 end R3Cert

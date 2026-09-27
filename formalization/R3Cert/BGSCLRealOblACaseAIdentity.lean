@@ -29,7 +29,6 @@ import Mathlib
 import R3Cert.R47Tree
 import R3Cert.R47Head
 import R3Cert.R47RootRate
-import R3Cert.BGSCLRealOblACaseA
 
 namespace R3Cert
 namespace Step3
@@ -86,23 +85,6 @@ theorem f2_increment_identity (rest : List UTree) :
   have hn2 : ((rest.length : ℝ) + 2) ≠ 0 := by positivity
   field_simp
   ring
-
-/-- **Case-A `Aobj`-monotonicity in the cavity model**: the leaf-path-extension does not decrease `Aobj`.
-    Combines the increment identity with the banked sign certificate `f2_aobj_increment_nonneg`. -/
-theorem f2_aobj_monotone (rest : List UTree) :
-    Aobj (UTree.node (flpLeaf :: flpLeaf :: rest)) ≤ Aobj (UTree.node (flpStem :: rest)) := by
-  have hid := f2_increment_identity rest
-  have hP : 0 ≤ (rest.map fun K => Ztot (dtSub K)).prod := by
-    apply List.prod_nonneg
-    intro x hx
-    simp only [List.mem_map] at hx
-    obtain ⟨K, _, rfl⟩ := hx
-    exact le_of_lt (Ztot_dt_pos K)
-  have hQ : 0 ≤ qSum rest := qSum_nonneg rest
-  have hn : 0 ≤ (rest.length : ℝ) := Nat.cast_nonneg _
-  have hsign := R3Cert.BGSCL.f2_aobj_increment_nonneg
-    (rest.map fun K => Ztot (dtSub K)).prod (qSum rest) (rest.length : ℝ) hP hQ hn
-  linarith [hid, hsign]
 
 end Step3
 end R3Cert

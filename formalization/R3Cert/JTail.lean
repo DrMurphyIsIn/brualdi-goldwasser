@@ -17,7 +17,6 @@
 -/
 import Mathlib
 import R3Cert.Sweep
-import R3Cert.Jensen
 
 namespace R3Cert
 
@@ -231,22 +230,6 @@ theorem child_term_le (k : ℕ) (B : ℝ) (hB : 2007 ≤ B) :
 
 /-! ## The reduction and the j-tail closure. -/
 
-/-- **The `U(s,j)` reduction:** for an all-near-star node, `log(1+x) <= x` on the coupling plus the j-independent
-    head bound give `Q <= s*omega + lambda + sum ell + (3*sum mu - j)/B`. -/
-theorem nodeAmp_le_U (s j : ℕ) (ell mu : Fin j → ℝ) (hmu : ∀ i, 0 ≤ mu i) :
-    nodeAmp s j ell mu ≤ (s : ℝ) * omegaVal + lambdaVal + (∑ i, ell i)
-      + (3 * (∑ i, mu i) - (j : ℝ)) / (4 * ((s : ℝ) + j) + 3) := by
-  have hsummu : 0 ≤ ∑ i, mu i := Finset.sum_nonneg (fun i _ => hmu i)
-  have hcoup_pos : 0 < (4 * (s : ℝ) + 3 * j + 3 + 3 * ∑ i, mu i) / (4 * ((s : ℝ) + j) + 3) := by positivity
-  have hlog := Real.log_le_sub_one_of_pos hcoup_pos
-  have hsub : (4 * (s : ℝ) + 3 * j + 3 + 3 * ∑ i, mu i) / (4 * ((s : ℝ) + j) + 3) - 1
-      = (3 * (∑ i, mu i) - (j : ℝ)) / (4 * ((s : ℝ) + j) + 3) := by
-    field_simp; ring
-  rw [hsub] at hlog
-  have head := node_head_le s j
-  unfold nodeAmp
-  linarith [head, hlog]
-
 /-- `-omega + lambda <= 1503/11315` (the constant that meets the exact integer corner). -/
 theorem neg_omega_lambda_le : -omegaVal + lambdaVal ≤ 1503 / 11315 := by
   have e : -omegaVal + lambdaVal = Real.log (4 / 3) - Real.log (3 / 2) + Lval := by
@@ -258,53 +241,6 @@ theorem neg_omega_lambda_le : -omegaVal + lambdaVal ≤ 1503 / 11315 := by
   have h43 := log_four_third_enclosure
   have h32 := log_three_half_enclosure
   linarith [h43.2, h32.1, hLup]
-
-/-- **The D2 j-tail:** an all-near-star node with `s <= 64` and `j >= 501` satisfies `Q <= omega`.  The per-child
-    bracket sum is `<= -3j/(5B)`, and the closure `s*omega + lambda - 3j/(5B) <= omega` holds via
-    `neg_omega_lambda_le` and the exact integer corner `3885*501 = 30060*64 + 22545`. -/
-theorem node_jtail_le (s j : ℕ) (hj : 501 ≤ j) (hs : s ≤ 64) (sp : Fin j → ℕ) :
-    nodeAmp s j (fun i => gVal (sp i)) (fun i => 3 / (4 * ((sp i : ℕ) : ℝ) + 3)) ≤ omegaVal := by
-  set B := 4 * ((s : ℝ) + j) + 3 with hBdef
-  have hBpos : 0 < B := by rw [hBdef]; positivity
-  have hjr : (501 : ℝ) ≤ (j : ℝ) := by exact_mod_cast hj
-  have hsr : (s : ℝ) ≤ 64 := by exact_mod_cast hs
-  have hB2007 : 2007 ≤ B := by
-    have hs0 : (0 : ℝ) ≤ (s : ℝ) := by positivity
-    rw [hBdef]; linarith
-  -- reduction
-  have hmu : ∀ i, 0 ≤ (fun i => 3 / (4 * ((sp i : ℕ) : ℝ) + 3)) i := fun i => by positivity
-  have hred := nodeAmp_le_U s j (fun i => gVal (sp i)) (fun i => 3 / (4 * ((sp i : ℕ) : ℝ) + 3)) hmu
-  rw [← hBdef] at hred
-  -- child-sum: ∑ ell + (3 ∑ mu - j)/B = ∑ (ell_i + (3 mu_i - 1)/B)
-  have hsum_eq : (∑ i, gVal (sp i)) + (3 * (∑ i, 3 / (4 * ((sp i : ℕ) : ℝ) + 3)) - (j : ℝ)) / B
-      = ∑ i, (gVal (sp i) + (3 * (3 / (4 * ((sp i : ℕ) : ℝ) + 3)) - 1) / B) := by
-    rw [Finset.sum_add_distrib]
-    congr 1
-    rw [← Finset.sum_div, Finset.sum_sub_distrib, Finset.sum_const, Finset.card_univ, Fintype.card_fin,
-      ← Finset.mul_sum]
-    ring
-  have hchild : ∀ i, gVal (sp i) + (3 * (3 / (4 * ((sp i : ℕ) : ℝ) + 3)) - 1) / B ≤ -(3 / 5) / B :=
-    fun i => child_term_le (sp i) B hB2007
-  have hsumle : (∑ i, (gVal (sp i) + (3 * (3 / (4 * ((sp i : ℕ) : ℝ) + 3)) - 1) / B))
-      ≤ ∑ _i : Fin j, (-(3 / 5) / B) := Finset.sum_le_sum (fun i _ => hchild i)
-  have hconst : (∑ _i : Fin j, (-(3 / 5) / B)) = (j : ℝ) * (-(3 / 5) / B) := by
-    rw [Finset.sum_const, Finset.card_univ, Fintype.card_fin, nsmul_eq_mul]
-  -- closure: s*omega + lambda - 3j/(5B) <= omega
-  have hcorner : (1503 : ℝ) / 11315 ≤ 3 * (j : ℝ) / (5 * B) := by
-    rw [hBdef, div_le_div_iff₀ (by norm_num) (by positivity)]; nlinarith [hjr, hsr]
-  have hsω : (s : ℝ) * omegaVal ≤ 0 := mul_nonpos_of_nonneg_of_nonpos (by positivity) omegaVal_neg.le
-  have hfin : (s : ℝ) * omegaVal + lambdaVal + (j : ℝ) * (-(3 / 5) / B) ≤ omegaVal := by
-    have hj3 : (j : ℝ) * (-(3 / 5) / B) = -(3 * (j : ℝ) / (5 * B)) := by ring
-    rw [hj3]
-    linarith [hsω, neg_omega_lambda_le, hcorner]
-  calc nodeAmp s j (fun i => gVal (sp i)) (fun i => 3 / (4 * ((sp i : ℕ) : ℝ) + 3))
-      ≤ (s : ℝ) * omegaVal + lambdaVal + (∑ i, gVal (sp i))
-          + (3 * (∑ i, 3 / (4 * ((sp i : ℕ) : ℝ) + 3)) - (j : ℝ)) / B := hred
-    _ = (s : ℝ) * omegaVal + lambdaVal
-          + ((∑ i, gVal (sp i)) + (3 * (∑ i, 3 / (4 * ((sp i : ℕ) : ℝ) + 3)) - (j : ℝ)) / B) := by ring
-    _ ≤ (s : ℝ) * omegaVal + lambdaVal + (j : ℝ) * (-(3 / 5) / B) := by
-        rw [hsum_eq]; linarith [le_trans hsumle (le_of_eq hconst)]
-    _ ≤ omegaVal := hfin
 
 /-! ## Sharper j-tail: tightening the `-omega+lambda` constant lowers the threshold `501 -> 96`.
 
@@ -358,49 +294,5 @@ theorem neg_omega_lambda_le' : -omegaVal + lambdaVal ≤ 894 / 10000 := by
     unfold omegaVal lambdaVal; ring
   rw [e]
   linarith [log_four_third_enclosure.2, log_three_half_enclosure.1, omega_enclosure.1]
-
-/-- **The sharpened D2 j-tail:** an all-near-star node with `s <= 64` and `j >= 96` satisfies `Q <= omega`.
-    Identical to `node_jtail_le` but with the tighter constant (`neg_omega_lambda_le'`) and reference
-    (`child_term_le_lo`, `B >= 387`), lowering the threshold `501 -> 96`. -/
-theorem node_jtail_le' (s j : ℕ) (hj : 96 ≤ j) (hs : s ≤ 64) (sp : Fin j → ℕ) :
-    nodeAmp s j (fun i => gVal (sp i)) (fun i => 3 / (4 * ((sp i : ℕ) : ℝ) + 3)) ≤ omegaVal := by
-  set B := 4 * ((s : ℝ) + j) + 3 with hBdef
-  have hBpos : 0 < B := by rw [hBdef]; positivity
-  have hjr : (96 : ℝ) ≤ (j : ℝ) := by exact_mod_cast hj
-  have hsr : (s : ℝ) ≤ 64 := by exact_mod_cast hs
-  have hB387 : 387 ≤ B := by
-    have hs0 : (0 : ℝ) ≤ (s : ℝ) := by positivity
-    rw [hBdef]; linarith
-  have hmu : ∀ i, 0 ≤ (fun i => 3 / (4 * ((sp i : ℕ) : ℝ) + 3)) i := fun i => by positivity
-  have hred := nodeAmp_le_U s j (fun i => gVal (sp i)) (fun i => 3 / (4 * ((sp i : ℕ) : ℝ) + 3)) hmu
-  rw [← hBdef] at hred
-  have hsum_eq : (∑ i, gVal (sp i)) + (3 * (∑ i, 3 / (4 * ((sp i : ℕ) : ℝ) + 3)) - (j : ℝ)) / B
-      = ∑ i, (gVal (sp i) + (3 * (3 / (4 * ((sp i : ℕ) : ℝ) + 3)) - 1) / B) := by
-    rw [Finset.sum_add_distrib]
-    congr 1
-    rw [← Finset.sum_div, Finset.sum_sub_distrib, Finset.sum_const, Finset.card_univ, Fintype.card_fin,
-      ← Finset.mul_sum]
-    ring
-  have hchild : ∀ i, gVal (sp i) + (3 * (3 / (4 * ((sp i : ℕ) : ℝ) + 3)) - 1) / B ≤ -(3 / 5) / B :=
-    fun i => child_term_le_lo (sp i) B hB387
-  have hsumle : (∑ i, (gVal (sp i) + (3 * (3 / (4 * ((sp i : ℕ) : ℝ) + 3)) - 1) / B))
-      ≤ ∑ _i : Fin j, (-(3 / 5) / B) := Finset.sum_le_sum (fun i _ => hchild i)
-  have hconst : (∑ _i : Fin j, (-(3 / 5) / B)) = (j : ℝ) * (-(3 / 5) / B) := by
-    rw [Finset.sum_const, Finset.card_univ, Fintype.card_fin, nsmul_eq_mul]
-  have hcorner : (894 : ℝ) / 10000 ≤ 3 * (j : ℝ) / (5 * B) := by
-    rw [hBdef, div_le_div_iff₀ (by norm_num) (by positivity)]; nlinarith [hjr, hsr]
-  have hsω : (s : ℝ) * omegaVal ≤ 0 := mul_nonpos_of_nonneg_of_nonpos (by positivity) omegaVal_neg.le
-  have hfin : (s : ℝ) * omegaVal + lambdaVal + (j : ℝ) * (-(3 / 5) / B) ≤ omegaVal := by
-    have hj3 : (j : ℝ) * (-(3 / 5) / B) = -(3 * (j : ℝ) / (5 * B)) := by ring
-    rw [hj3]
-    linarith [hsω, neg_omega_lambda_le', hcorner]
-  calc nodeAmp s j (fun i => gVal (sp i)) (fun i => 3 / (4 * ((sp i : ℕ) : ℝ) + 3))
-      ≤ (s : ℝ) * omegaVal + lambdaVal + (∑ i, gVal (sp i))
-          + (3 * (∑ i, 3 / (4 * ((sp i : ℕ) : ℝ) + 3)) - (j : ℝ)) / B := hred
-    _ = (s : ℝ) * omegaVal + lambdaVal
-          + ((∑ i, gVal (sp i)) + (3 * (∑ i, 3 / (4 * ((sp i : ℕ) : ℝ) + 3)) - (j : ℝ)) / B) := by ring
-    _ ≤ (s : ℝ) * omegaVal + lambdaVal + (j : ℝ) * (-(3 / 5) / B) := by
-        rw [hsum_eq]; linarith [le_trans hsumle (le_of_eq hconst)]
-    _ ≤ omegaVal := hfin
 
 end R3Cert

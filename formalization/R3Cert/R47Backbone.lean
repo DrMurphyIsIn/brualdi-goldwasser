@@ -11,7 +11,7 @@
   Genuine proofs (no `sorry`).
 -/
 import Mathlib
-import R3Cert.R47HubForms
+import R3Cert.R47HubState
 
 namespace R3Cert
 namespace Step3
@@ -56,40 +56,6 @@ theorem Popen_dtChildren (d : ℕ) (ch : List UTree) :
     rw [dtChildren_cons, Popen_cons, ih, List.map_cons, List.prod_cons]
 
 /-! ### The degree-parameterized hub-node assembly -/
-
-/-- **The hub-node partition function** for any full degree `d`: arms + own cherries + an
-    arbitrary further child block `ts` (the chain tail, or nothing). -/
-theorem Ztot_hubNode (d : ℕ) (hd : 0 < d) (arms : List ℕ) (c : ℕ) (ts : List UTree)
-    (hts : ∀ K ∈ ts, 0 < Ztot (dtSub K)) :
-    Ztot (RTree.node (dtChildren d (arms.map armU ++ List.replicate c cherryU ++ ts)))
-      = (((arms.map armU).map (fun K => Ztot (dtSub K))).prod * (3 / 2) ^ c
-          * (ts.map (fun K => Ztot (dtSub K))).prod)
-        * (1 + ((arms.map (fun j : ℕ => 3 / ((d : ℝ) * (4 * (j : ℝ) + 3)))).sum
-            + (c : ℝ) * (1 / (3 * (d : ℝ)))
-            + ((dtChildren d ts).map (fun p => p.1 * (Zopen p.2 / Ztot p.2))).sum)) := by
-  have hne : ∀ p ∈ dtChildren d (arms.map armU ++ List.replicate c cherryU ++ ts),
-      Ztot p.2 ≠ 0 := by
-    intro p hp
-    obtain ⟨K, hK, -, hp2⟩ := mem_dtChildren hp
-    rw [hp2]
-    rcases List.mem_append.mp hK with hK' | hKts
-    · rcases List.mem_append.mp hK' with hKa | hKc
-      · obtain ⟨j, -, hj⟩ := List.mem_map.mp hKa
-        rw [← hj]
-        exact (Ztot_dtSub_armU_pos j).ne'
-      · have hKch : K = cherryU := List.eq_of_mem_replicate hKc
-        rw [hKch, Ztot_dtSub_cherryU]
-        norm_num
-    · exact (hts K hKts).ne'
-  rw [Ztot, Matched_factor _ hne, dtChildren_append, dtChildren_append,
-    Popen_append, Popen_append, Popen_dtChildren, Popen_dtChildren, Popen_dtChildren,
-    List.map_append, List.map_append, List.sum_append, List.sum_append,
-    sum_wQ_arms d hd arms, sum_wQ_cherries d hd c]
-  have hcherry : ((List.replicate c cherryU).map (fun K => Ztot (dtSub K))).prod
-      = (3 / 2) ^ c := by
-    rw [List.map_replicate, Ztot_dtSub_cherryU, List.prod_replicate]
-  rw [hcherry]
-  ring
 
 end Step3
 end R3Cert

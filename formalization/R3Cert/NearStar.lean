@@ -27,7 +27,7 @@
 -/
 import Mathlib
 import R3Cert.Reach
-import R3Cert.TieHarmonic
+import R3Cert.JTail
 
 namespace R3Cert
 
@@ -141,14 +141,5 @@ theorem nearStar_logPhi (c k : ℕ) : logPhi (nearStarB c k) = gVal (c + k) := b
 /-- **`logPhi (N(c,k)) <= 0` for the whole near-star family**, from the proven `gVal_nonpos`. -/
 theorem nearStar_nonpos (c k : ℕ) : logPhi (nearStarB c k) ≤ 0 := by
   rw [nearStar_logPhi]; exact gVal_nonpos (c + k)
-
-/-- **The tie diagonal: `logPhi (N(c,k)) = 0` exactly when `c+k = 5`** (all 6 ties, cavity `3/23`). -/
-theorem nearStar_tie (c k : ℕ) (h : c + k = 5) : logPhi (nearStarB c k) = 0 := by
-  rw [nearStar_logPhi, h]; exact gVal_five_zero
-
-/-- **The full near-star family arithmetic bound, packaged.** -/
-theorem nearStar_family_le_zero (c k : ℕ) :
-    logPhi (nearStarB c k) ≤ 0 ∧ (c + k = 5 → logPhi (nearStarB c k) = 0) :=
-  ⟨nearStar_nonpos c k, fun h => nearStar_tie c k h⟩
 
 end R3Cert

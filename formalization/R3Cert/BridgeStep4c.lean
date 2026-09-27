@@ -27,8 +27,8 @@
   (`amplitude_bridge`).  Genuine proofs (no `sorry`).  conjecture1_proved=False.
 -/
 import Mathlib
-import R3Cert.BridgeStep2
 import R3Cert.NearStar
+import R3Cert.Bridge
 
 namespace R3Cert
 

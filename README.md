@@ -107,7 +107,7 @@ heavy certificate files a few at a time before the rest.
   hand: a *tree lab* (build a tree; step through its matchings, watch the cavity recursion, see the
   subaction inequality's slack at every vertex), a *spider lab* (scramble a spider and let the balance
   lemma repair it) and *the races* (the 722 and 2319 switches, decided in exact arithmetic).
-- **The Lean source** is big (about 57,000 lines, most of it generated certificate data), and it was carried
+- **The Lean source** is big (about 44,000 lines, most of it generated certificate data), and it was carried
   over from a larger research repository. [`formalization/READING_GUIDE.md`](formalization/READING_GUIDE.md)
   says which files hold the definitions a reviewer needs, and which leftover comments and flags to ignore.
 

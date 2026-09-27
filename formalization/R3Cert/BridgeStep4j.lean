@@ -99,25 +99,5 @@ theorem aGraph_realize_isAcyclic (t : RTree) : (aGraph (realize t)).IsAcyclic :=
 
 /-! ### The unconditional capstones -/
 
-/-- **THE REAL-GRAPH AMPLITUDE IDENTITY, unconditional.** -/
-theorem pi_litHub' (c : ℕ) (ch : List Branch) :
-    (lapl (aGraph (realize (litHub c ch)))).permanent
-        / (∏ v, ((aGraph (realize (litHub c ch))).degree v : ℝ))
-      = Ztot (litHub c ch) :=
-  pi_litHub c ch (aGraph_realize_isAcyclic _)
-
-/-- **THE AMPLITUDE BRIDGE ON THE REAL GRAPHS, unconditional**: the hub ratio of the real
-    Laplacian permanent ratios converges to the DEC amplitude of the gadget branch. -/
-theorem amplitude_bridge_real' (cH : ℕ) (arm b : Branch) :
-    Tendsto (fun p : ℕ =>
-        ((lapl (aGraph (realize (litHub cH (List.replicate p arm ++ [b]))))).permanent
-          / (∏ v, ((aGraph (realize (litHub cH
-              (List.replicate p arm ++ [b])))).degree v : ℝ)))
-        / ((lapl (aGraph (realize (litHub cH (List.replicate p arm))))).permanent
-          / (∏ v, ((aGraph (realize (litHub cH (List.replicate p arm)))).degree v : ℝ))))
-      atTop (𝓝 (Real.exp (logPhi b) * rhoB ^ (Vb b))) :=
-  amplitude_bridge_real cH arm b (fun _ => aGraph_realize_isAcyclic _)
-    (fun _ => aGraph_realize_isAcyclic _)
-
 end Step3
 end R3Cert
