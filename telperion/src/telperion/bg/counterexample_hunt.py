@@ -1,7 +1,7 @@
-"""Adversarial counterexample hunt -- the ARDA illumination engine pointed at the open BG pieces.
+"""Adversarial counterexample hunt -- a quality-diversity search pointed at the open BG pieces.
 
 Refutation is the one mode where evolutionary search is epistemically clean: a FOUND witness is
-definitive (it refutes), and an empty hunt is strong evidence.  This ports ARDA's MAP-Elites
+definitive (it refutes), and an empty hunt is strong evidence.  This uses MAP-Elites
 illumination (keep the best fitness per BEHAVIOR niche, not just the global best) so the search explores
 strange tree shapes instead of collapsing back onto the near-star -- a counterexample, if it exists, hides
 in an unusual structure far from the known peak, exactly where niche-diversity search looks.

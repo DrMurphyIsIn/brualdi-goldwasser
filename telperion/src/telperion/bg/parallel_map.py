@@ -1,6 +1,6 @@
 """Parallel island model + migration for empirical mapping of the tree landscape.
 
-Gleaned from ARDA's island / mega-arena architecture (parallel populations with periodic migration).
+A standard island model (parallel populations with periodic migration).
 Uses Python multiprocessing (ProcessPoolExecutor) for real across-core parallelism -- the practical
 acceleration for empirical variable mapping, where the bottleneck is the NUMBER of trees/configs
 evaluated (each rho evaluation is already linear-time via the cavity DP).

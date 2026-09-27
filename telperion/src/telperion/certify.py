@@ -157,8 +157,8 @@ _SPECIAL_KINDS = (
     # separable-convex (min/homogeneous) extremum.
     "symmetric_quad", "polytope_max", "second_order", "integrality_gate",
     "domination_ratio", "achievability", "separable_convex",
-    # Trading-derived certificate shapes (2026-09-02): objective-degeneracy
-    # (leverage↔position_size Sharpe homogeneity) + Kelly concave-stationary max.
+    # Objective-degeneracy (scale invariance / parameter cancellation) and
+    # concave-stationary-max certificate shapes (2026-09-02).
     "scale_invariance", "concave_stationary_max",
     # Open-front build-out (2026-09-02): symbolic-in-n d=2 moment-matrix PSD
     # (three-piece completing-the-square). (separable-convex MAX/vertex ships as a
