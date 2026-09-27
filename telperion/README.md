@@ -382,8 +382,25 @@ versions pinned by the project it is used in; here, Lean 4 v4.32.0 and Mathlib v
 This directory is a vendored snapshot (version 0.1.6, synced 2026-09-27) of the complete engine source,
 including every emitter, taken from the separate repository where Telperion is developed. It differs from
 the development version only in a handful of comments and docstrings, which were reworded to remove
-references to unrelated private projects; no code or mathematics was changed. It includes the source only, not that repository's test suite,
-documentation or worked examples.
+references to unrelated private projects; no code or mathematics was changed.
+
+Alongside the source it carries most of the development repository's supporting material:
+
+- `tests/`: the test suite, about 3,000 tests. Run it with `pip install -e ".[dev,sdp,rh_jensen]"` and then
+  `python -m pytest` from this directory; CI does the same on every change (`.github/workflows/telperion.yml`).
+  Some tests need files that live only in the development repository (its missions registry, repository
+  scripts and Lean projects). Twelve modules that cannot load without them are left out, and about a hundred
+  individual tests are skipped with a stated reason; `tests/conftest.py` lists them all.
+- `examples/`: 22 small worked examples, one or a few per certificate shape, each small enough to read in a
+  sitting.
+- `docs/`: design notes and references: architecture, the trust boundary (`TRUSTED_FLOOR.md`), the tactic
+  contract, Comparator, the missions registry, the honesty patterns, and the emitter catalogues and status
+  notes from the Riemann-hypothesis work. A few links in them point at files that are not published here;
+  those are left as plain text.
+- `CHANGELOG.md` and `CONTRIBUTING.md`.
+
+The project site also hosts the [Telperion registry explorer](https://drmurphyisin.github.io/brualdi-goldwasser/telperion-explorer/),
+a browsable page of every registered emitter and certificate kind.
 
 The subpackage `telperion.bg` is a research lab of probes specific to the Brualdi–Goldwasser problem. It is
 not part of the engine: the engine never imports it, and the development repository enforces that

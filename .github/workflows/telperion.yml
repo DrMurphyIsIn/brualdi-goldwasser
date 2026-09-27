@@ -1,0 +1,33 @@
+# Run Telperion's own test suite (the engine, its emitters and the worked examples).
+# GitHub-hosted; safe for pull requests (no secrets, read-only).
+name: telperion
+
+on:
+  push:
+    branches: [main]
+    paths: [telperion/**, .github/workflows/telperion.yml]
+  pull_request:
+    paths: [telperion/**, .github/workflows/telperion.yml]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    env:
+      OMP_NUM_THREADS: "1"
+      OPENBLAS_NUM_THREADS: "1"
+      MKL_NUM_THREADS: "1"
+    defaults:
+      run:
+        working-directory: telperion
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install -e ".[dev,sdp,rh_jensen]"
+      - run: python -m pytest -q -p no:cacheprovider -rfE
