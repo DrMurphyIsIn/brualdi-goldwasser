@@ -1240,7 +1240,9 @@ entirely different methods.
   \lean{brualdi\_goldwasser\_attained} with \lean{sorry} and imports only the definitions of the answer.
   Comparator checks that the solution proves exactly those statements, using only the three standard
   axioms, and replays the exported proof both in Lean's kernel and in nanoda~\cite{nanoda}, an
-  independent implementation of the Lean kernel in Rust.
+  independent implementation of the Lean kernel in Rust. This check has passed: on 27 September 2026 both
+  kernels accepted the solution (5.1 hours, 63\,GB peak memory; run on macOS, where Comparator's Linux
+  sandbox was replaced by a pass-through shim).
 \item \emph{Spider optimization.} An exhaustive exact optimization over the spider family for
   $n\le2400$, together with an exact rational certificate for $n\ge2320$, agrees with the table and the
   rule; an exact Pareto dynamic programme over the family with no balance assumption agrees for
