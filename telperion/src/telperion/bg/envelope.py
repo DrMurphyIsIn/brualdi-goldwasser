@@ -1,4 +1,4 @@
-"""The F <= h(mu) envelope: mapped, and shown NON-inductive (single-variable proofs ruled out).
+"""The F <= h(mu) envelope: mapped; the TIGHT envelope h* is not inductive (a larger h can be -- see below).
 
 `recursive_transfer.py` reduced BG to the per-vertex step `F_v = (64/621) a_v^11 prod_c F_c` and located
 the crux at "dangerous" vertices.  The natural attempt to close it is an ENVELOPE: an explicit `h(mu)` with
@@ -10,18 +10,24 @@ EXACTLY 1 at the tie message `mu = 3/23` and is `< 1` everywhere else; the tie's
 envelope extremizers at their messages (leaf: `mu=1, F=64/621`; arm/mid: `mu=1/3, F=486/529`) -- a
 self-consistent spine.
 
-WHY NO SINGLE-VARIABLE ENVELOPE CLOSES IT (the negative result).  The induction step needs
+WHY THE TIGHT ENVELOPE h* DOES NOT CLOSE IT (true, and checked here).  The induction step needs
 `(64/621) a_v^11 prod_c h(mu_c) <= h(mu_v)` for every realizable `(a_v, {mu_c})`.  Tested with the TIGHT
 envelope `h = h*`, this FAILS: thousands of actual vertices have `(64/621) a_v^11 prod_c h*(mu_c) > h*(mu_v)`
--- overshooting by up to ~100x.  The reason is structural: `F_c <= h(mu_c)` is correct per child, but
-`prod_c h(mu_c)` is NOT jointly realizable -- distinct children attain their per-message maxima on DIFFERENT
-subtrees that cannot coexist as siblings.  A bound in `mu` alone cannot see this sibling correlation, and a
-LARGER `h` only worsens the product.  So NO single-variable `F <= h(mu)` envelope is inductive.
+-- overshooting by up to ~100x -- because `prod_c h*(mu_c)` is not jointly realizable (distinct children
+attain their per-message maxima on subtrees that cannot coexist as siblings).
 
-This RULES OUT the entire class of per-message envelope proofs and sharpens the target: any closing
-invariant must be JOINT over siblings (multi-variable) -- PROOF_STATUS dead-end #1 ("collective, non-local;
-not a sum / product of local terms") at the finest recursive resolution.  The envelope run is a reasoned
-dead-end, not a proof.  `conjecture1_proved = False`.
+CORRECTION (2026-09-29): SINGLE-VARIABLE ENVELOPES ARE *NOT* RULED OUT.  This module used to conclude, from
+the failure of `h*`, that "a LARGER h only worsens the product" and hence that NO single-variable envelope
+is inductive.  That step is invalid: a larger `h` also raises the right-hand side `h(mu_v)`, and the
+tight envelope is not the only candidate.  An explicit counterexample to the old claim is the concave
+piecewise-linear witness `U` of "The maximum Laplacian ratio of a tree for all n >= 303: concave witnesses
+and one-variable certificates" (draft, 28 Sep 2026; communicated by J. L. Goldwasser), Theorem 4.1: in this
+module's convention `h = exp(11 U)` (leaf `h(1) = 64/621`, `h(1/3) = 486/529`, `h(3/23) = 1`), and
+`(64/621) a^11 prod_c h(mu_c) <= h(mu_v)` holds for EVERY child count, by Jensen at the mean message (U
+concave).  Checked numerically for all child counts <= 3000 and on 52,369 real branches (no violation;
+equality only at the leaf->cherry and cherry^5->A_5 ties); the draft certifies it in exact arithmetic.
+So `mu_envelope_not_inductive` below certifies only that `h*` itself is not a supersolution.  It is not a
+no-go for the per-message class, and it is not PROOF_STATUS dead-end #1.  `conjecture1_proved = False`.
 """
 from __future__ import annotations
 
@@ -116,7 +122,8 @@ class EnvelopeCertificate:
     def mu_envelope_not_inductive(self):
         """Supersolution test: count vertices where `(64/621) a^11 prod_c h*(mu_c) > h*(mu_v)` (the step a
         mu-envelope would need).  Returns `(violations, total, worst_ratio)`; a positive violation count
-        means NO single-variable `h(mu)` closes the induction."""
+        means the TIGHT envelope h* is not a supersolution.  It does NOT rule out other single-variable
+        envelopes: a larger concave-in-log witness is inductive (see the module docstring)."""
         verts, env = self._verts_and_env()
         viol = total = 0
         worst = Fr(0)
@@ -137,15 +144,14 @@ class EnvelopeCertificate:
     def finding(self) -> str:
         viol, total, worst = self.mu_envelope_not_inductive()
         return (
-            "NEGATIVE -- single-variable F <= h(mu) envelope proofs are RULED OUT. The empirical envelope "
-            "h*(mu) peaks at EXACTLY 1 at the tie (mu=3/23) and is < 1 elsewhere, with the tie's children "
-            "(leaf mu=1, arm mu=1/3) the extremizers -- a self-consistent spine. BUT the envelope is not a "
-            f"supersolution: {viol}/{total} vertices have (64/621) a^11 prod_c h*(mu_c) > h*(mu_v), "
-            f"overshooting by up to {float(worst):.0f}x. Reason: prod_c h(mu_c) is not JOINTLY realizable -- "
-            "siblings attain their per-message maxima on incompatible subtrees, invisible to a mu-only bound "
-            "(a larger h only worsens the product). So no single-variable h(mu) is inductive; a closing "
-            "invariant must be JOINT over siblings -- dead-end #1 (collective/non-local) at the finest "
-            "recursive resolution. conjecture1_proved = False."
+            "The empirical envelope h*(mu) peaks at EXACTLY 1 at the tie (mu=3/23) and is < 1 elsewhere, "
+            "with the tie's children (leaf mu=1, arm mu=1/3) the extremizers -- a self-consistent spine. The "
+            f"TIGHT envelope is not a supersolution: {viol}/{total} vertices have (64/621) a^11 prod_c "
+            f"h*(mu_c) > h*(mu_v), overshooting by up to {float(worst):.0f}x, because prod_c h*(mu_c) is not "
+            "jointly realizable. This does NOT rule out single-variable envelopes (an earlier version of this "
+            "finding claimed it did; RETRACTED 2026-09-29): a larger h also raises h(mu_v), and the concave "
+            "witness h = exp(11U) of the concave-witness draft (communicated by J. L. Goldwasser) IS "
+            "inductive. conjecture1_proved = False."
         )
 
     def check(self) -> bool:

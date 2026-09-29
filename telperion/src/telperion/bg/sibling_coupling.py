@@ -25,19 +25,23 @@ relative modes (how the messages are distributed among siblings) do NOT enter th
 exactly the setting where an orthogonal transformation isolates one coupled coordinate (the LR / Ermakov
 picture): the interaction is mean-field in `S`.
 
-WHY NO DECOUPLED (single-variable) INVARIANT CLOSES IT.  A decoupled invariant is `x >= phi(mu)`.  For a
-CONVEX `phi`, Jensen collapses the worst sibling distribution to EQUAL siblings, reducing the j-body step
-to the two-parameter condition `G(j,S) = c0 - 11 log(1 + S/(j+1)) + j*phi(S/j) - phi(1/(j+1+S)) >= 0`.
-Solving for the best convex `phi` (`phi(3/23)=0`, `phi >= 0`, `phi(1) <= c0`) is a linear program; its
-optimal worst-case slack is `t* ~ -5.2 < 0` -- INFEASIBLE.  So no single-variable invariant closes the
-induction, convex or not (the non-convex case is ruled out already by `envelope.py`).  The coupling is
-irreducibly JOINT over siblings: a closing invariant must be genuinely MULTI-VARIABLE (a quadratic /
-Gaussian form in the joint sibling state, in the LR sense) -- PROOF_STATUS dead-end #1 (collective /
-non-local) made precise.
+THE DECOUPLED (single-variable) INVARIANT -- CORRECTED 2026-09-29.  A decoupled invariant is
+`x >= phi(mu)`.  For a CONVEX `phi`, Jensen collapses the worst sibling distribution to EQUAL siblings,
+reducing the j-body step to the two-parameter condition
+`G(j,S) = c0 - 11 log(1 + S/(j+1)) + j*phi(S/j) - phi(1/(j+1+S)) >= 0`.
+This module used to record that the best convex `phi` (`phi(3/23)=0`, `phi >= 0`, `phi(1) <= c0`) is
+LP-INFEASIBLE with worst-case slack `t* ~ -5.2`, and concluded that no single-variable invariant closes
+the induction.  THAT WAS WRONG.  The LP in `docs/sibling_coupling_convex_lp.py` imposed the second
+differences with the wrong sign, so it searched CONCAVE `phi`; with the sign fixed it is feasible (grid
+optimum `t* ~ +0.009`; the exact optimum is 0, tight at the two ties).  An explicit feasible `phi` is
+`phi = -11 U` with `U` the concave piecewise-linear witness of Theorem 4.1 of "The maximum Laplacian ratio
+of a tree for all n >= 303: concave witnesses and one-variable certificates" (draft, 28 Sep 2026;
+communicated by J. L. Goldwasser): `G >= 0` for every j (checked numerically for j <= 3000; certified in
+exact arithmetic in the draft), with equality only at (j,S) = (1,1) and (5,5/3).  So a single-variable
+convex invariant DOES close the ceiling induction; the coupling is NOT irreducibly joint for that bound.
 
-HONEST SCOPE.  This is a reformulation + a structural (LR) analysis + a rigorous no-go for the
-single-variable class.  It does NOT construct the multivariate invariant or prove BG; it frames the open
-target precisely.  `conjecture1_proved = False`.
+HONEST SCOPE.  This is a reformulation + a structural (LR) analysis.  Its former "no-go for the
+single-variable class" is RETRACTED (see above).  It does not prove BG.  `conjecture1_proved = False`.
 """
 from __future__ import annotations
 
@@ -48,9 +52,11 @@ from .sporadic_tie import amp_product
 
 RHO_B_11 = Fr(621, 64)   # rho_B^11 exactly; BG(rooted) <=> (prod a)^11 <= RHO_B_11^n
 
-# The best-convex-phi linear program is INFEASIBLE with this worst-case slack (see module docstring;
-# reproduce with scipy via the LP in the deep-dive notes).  Recorded as evidence, not a runtime dep.
-CONVEX_PHI_LP_SLACK = -5.2
+# The best-convex-phi linear program's worst-case slack.  The value formerly recorded here, -5.2, came from
+# an LP whose convexity rows had the wrong sign (it searched concave phi).  Corrected 2026-09-29: the exact
+# optimum is 0 (feasible, tight at the ties); docs/sibling_coupling_convex_lp.py now reports ~ +0.009 on its
+# grid (the grid misses S = 5/3).  Recorded as evidence, not a runtime dep.
+CONVEX_PHI_LP_SLACK = 0.0
 
 
 def amplitude_product(n, edges, root=0) -> Fr:
@@ -124,11 +130,11 @@ class SiblingCouplingCertificate:
         return True
 
     def single_variable_invariant_ruled_out(self) -> bool:
-        """No single-variable invariant `x >= phi(mu)` closes the induction: the per-message envelope is
-        not a supersolution (`envelope.py`), and the best CONVEX phi is LP-infeasible (slack < 0)."""
-        from .envelope import EnvelopeCertificate
-        viol, total, _worst = EnvelopeCertificate(m_max=8).mu_envelope_not_inductive()
-        return total > 0 and viol > 0 and CONVEX_PHI_LP_SLACK < 0
+        """RETRACTED 2026-09-29; always False.  This used to return True on the strength of two facts: the
+        tight envelope h* is not a supersolution (still true, `envelope.py`), and a convex-phi LP was
+        infeasible (false: the LP had a sign error).  A convex single-variable invariant exists (module
+        docstring), so the class is not ruled out.  Kept for API compatibility."""
+        return CONVEX_PHI_LP_SLACK < 0
 
     def finding(self) -> str:
         return (
@@ -137,20 +143,19 @@ class SiblingCouplingCertificate:
             "mean of vertex amplitudes <= rho_B (exact: (prod a)^11 <= (621/64)^n), equality EXACTLY at the "
             "tie. The siblings couple ONLY through the symmetric mode S = sum mu_c (a_v = 1 + S/(j+1) depends "
             "on children only via (S,j)) -- the Lewis-Riesenfeld mean-field / orthogonal-decoupling setting. "
-            "But a DECOUPLED invariant x >= phi(mu) cannot close it: the per-message envelope is not a "
-            "supersolution, and the best convex phi is LP-infeasible (worst-case slack ~ -5.2). So the "
-            "invariant must be genuinely MULTI-VARIABLE (a quadratic/Gaussian form in the joint sibling "
-            "state) -- dead-end #1 (collective/non-local) made precise. Framed, not closed. "
+            "A DECOUPLED invariant x >= phi(mu) with CONVEX phi DOES close the ceiling induction (Jensen at "
+            "the mean message): phi = -11U with U the concave witness of the concave-witness draft "
+            "(communicated by J. L. Goldwasser). The former single-variable NO-GO (convex-phi LP slack -5.2) "
+            "is RETRACTED: that LP had a sign error and searched concave phi. "
             "conjecture1_proved = False."
         )
 
     def check(self) -> bool:
-        """Certifies the reformulation, the tie saturation, the symmetric-mode coupling, and the
-        single-variable no-go -- NOT BG."""
+        """Certifies the reformulation, the tie saturation and the symmetric-mode coupling -- NOT BG.
+        (The single-variable no-go formerly included here is retracted.)"""
         return (
             self.energy_reformulation_holds()
             and self.bg_is_geometric_mean_bound()
             and self.tie_saturates_the_bound()
             and self.coupling_is_symmetric_mode()
-            and self.single_variable_invariant_ruled_out()
         )

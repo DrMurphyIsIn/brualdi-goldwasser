@@ -4,6 +4,10 @@
 Lewis-Riesenfeld Gaussian invariant: a quadratic form in the sibling state, conserved by the (mean-field)
 recursion.  This module builds it and reports the outcome honestly.
 
+NOTE (2026-09-29): the premise that a multi-variable invariant is NEEDED is retracted.  The single-variable
+no-go in `sibling_coupling.py` came from an LP with a sign error; a concave single-variable witness closes
+the ceiling induction (see that module).  The analysis below stands on its own terms.
+
 THE SIBLING HESSIAN (the Gaussian form).  At the tie hub with children messages `mu_c` (tie: `j=5`,
 `mu_c=1/3`, `S=5/3`), the hub energy is `x_hub = c0 - 11 log(1 + S/(j+1)) + sum_c x_c`.  Its Hessian in the
 sibling-message coordinates splits as

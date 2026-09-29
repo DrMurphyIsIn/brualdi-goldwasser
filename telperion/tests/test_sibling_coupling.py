@@ -52,7 +52,7 @@ def test_symmetric_mode_coupling():
 def test_certificate_check_and_scope():
     cert = SiblingCouplingCertificate(m_max=7)
     assert cert.check()
-    assert cert.single_variable_invariant_ruled_out()
+    assert not cert.single_variable_invariant_ruled_out()   # retracted 2026-09-29
     f = cert.finding()
-    assert "MULTI-VARIABLE" in f
+    assert "RETRACTED" in f
     assert "conjecture1_proved = False" in f

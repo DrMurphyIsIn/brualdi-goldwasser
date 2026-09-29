@@ -36,13 +36,13 @@ def test_mu_envelope_is_not_a_supersolution():
     viol, total, worst = cert.mu_envelope_not_inductive()
     assert total > 0
     assert viol > 0                               # the step (64/621)a^11 prod h*(mu_c) <= h*(mu_v) FAILS
-    assert worst > 1                              # overshoots the envelope (single-variable h can't close)
+    assert worst > 1                              # overshoots the TIGHT envelope h* (a larger h can close)
 
 
 def test_certificate_check_and_scope():
     cert = EnvelopeCertificate(m_max=9)
     assert cert.check()
     f = cert.finding()
-    assert "RULED OUT" in f
-    assert "JOINT over siblings" in f
+    assert "TIGHT envelope is not a supersolution" in f
+    assert "does NOT rule out single-variable envelopes" in f
     assert "conjecture1_proved = False" in f
