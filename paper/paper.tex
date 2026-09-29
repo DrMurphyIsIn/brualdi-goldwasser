@@ -26,6 +26,13 @@
 \theoremstyle{definition}
 \newtheorem{definition}[theorem]{Definition}
 \newtheorem{remark}[theorem]{Remark}
+% cleveref names shared-counter environments after the counter ("Theorem"); alias them per environment.
+\usepackage{etoolbox}
+\AtBeginEnvironment{lemma}{\crefalias{theorem}{lemma}}
+\AtBeginEnvironment{proposition}{\crefalias{theorem}{proposition}}
+\AtBeginEnvironment{corollary}{\crefalias{theorem}{corollary}}
+\AtBeginEnvironment{definition}{\crefalias{theorem}{definition}}
+\AtBeginEnvironment{remark}{\crefalias{theorem}{remark}}
 
 \newcommand{\per}{\operatorname{per}}
 \renewcommand{\deg}{\operatorname{deg}}
@@ -619,24 +626,27 @@ $A_5$:
   $\Fs$.
 \end{itemize}
 Every other instance of \eqref{eq:sub} holds with room to spare. Checking that is a finite computation
-once one notices that \eqref{eq:sub} only involves a vertex and its children's local states, and that
-large degrees are easy (the term $\log(1+R/d)$ is bounded, while the credit of the children grows with
-their number). The verification splits into cells by degree and by ranges of the children's messages;
+once one notices that \eqref{eq:sub} only involves a vertex and its children's local states. Large
+degrees need no case split: a vertex with four or more children carries no credit itself, and a single
+tangent-line bound on $\log(1+R/d)$ settles all of them at once. The verification splits into cells by degree and by ranges of the children's messages;
 in each cell the inequality compares a rational envelope against a rational enclosure of a logarithm.
 
 \paragraph{Equality.} If $\bell(b)=0$ then every inequality along $b$ is tight. Tightness at the root
 forces degree six, and at degree six it forces all five children to be cherries: a single non-cherry
 child makes the cell strict. The strictness needs the numerical fact $2\Fs-\log\tfrac32<\tfrac1{96}$,
-which follows from $\log x<x-1$ at $x=(621/64)^2(2/3)^{11}\neq1$. At degree three the non-strict
+which follows from $\log x<x-1$ at $x=(621/64)^2(2/3)^{11}\neq1$. (The strict form is needed because the
+formal proof relaxes the message bound $y<\frac13$ of a vertex with two children to $y\le\frac13$; even
+with the strict bound the non-strict form would be needed, since such messages come arbitrarily close to
+$\frac13$.) At degree three the non-strict
 version of this bound is exactly tight, so it cannot be weakened.
 
 \begin{inlean}
 The subaction bridge (\lean{ceiling\_of\_witness}) and \lean{$\rho$wit} are in \lean{BGSCLSubaction.lean};
-the cells are in \lean{BGSCLSubactionD4Cells.lean} (35 cells for vertices with four children),
+the cells are in \lean{BGSCLSubactionD4Cells.lean} (35 cells for vertices of degree four, which have three children),
 \lean{BGSCLSubactionTailWrap.lean} (high degree) and the dispatcher \lean{BGSCLSubactionDispatch.lean},
-which sorts a vertex's children and sends it to the right cell. The logarithm enclosures are Taylor or
-$\operatorname{atanh}$ series with explicit remainders, proved as ordinary Mathlib lemmas, so no floating
-point is trusted. \lean{BGSCLSharp.bg\_sharp} packages both halves of \cref{thm:sharp}.
+which sorts a vertex's children and sends it to the right cell. The logarithm bounds are the tangent inequality
+$\log x\le x-1$ and Taylor bounds for $\exp$ with explicit remainders, proved as ordinary Mathlib
+lemmas, so no floating point is trusted. \lean{BGSCLSharp.bg\_sharp} packages both halves of \cref{thm:sharp}.
 \end{inlean}
 
 \subsection{The growth rate}
@@ -687,8 +697,9 @@ how much each departure from spider shape costs, and to show the cost always exc
 \subsection{Setting up the comparison}
 
 \paragraph{Rooting at maximum degree.} Rerooting a tree changes neither $\pi$ nor the vertex count, so
-we may root at a vertex of maximum degree $k$. Then every vertex has at most $k-1$ children. This cap is
-what makes finitely many local inequalities sufficient for each $k$. Call the root's children
+we may root at a vertex of maximum degree $k$. Then every vertex has at most $k-1$ children. For the low-degree
+arguments below this cap is what makes finitely many local inequalities suffice; the high-degree argument
+needs no cap. Call the root's children
 $b_1,\dots,b_k$. The \emph{atoms} are the leaf, the cherry and the arms $A_j$; the tree is a spider
 centred at the root exactly when every $b_i$ is an atom (\cref{fig:reduction}).
 
@@ -700,8 +711,8 @@ By \cref{thm:sharp} every term of the sum is $\le0$, so a tree's total profit is
 $\log(1+S/k)$ minus the losses of its branches. A non-atom branch has a strictly negative profit, but it
 might send a larger message and so raise the root bonus. We must show that trade never pays.
 
-\paragraph{The benchmark.} We compare against explicit spiders. The $A_5/A_4$ spider, with
-$q\equiv5(n-1)\pmod{11}$ arms $A_4$ and the rest $A_5$, satisfies
+\paragraph{The benchmark.} We compare against explicit spiders. For $n-1\ge90$ (so that its at most ten arms
+$A_4$ fit) the $A_5/A_4$ spider, with $q\equiv5(n-1)\pmod{11}$ arms $A_4$ and the rest $A_5$, satisfies
 \begin{equation}\label{eq:floor}
   \log\pi-(n-1)\Fs\ \ge\ \log\tfrac{26}{23}-\tfrac{10}{960},
 \end{equation}
@@ -752,7 +763,8 @@ a sum over branches of
 \]
 a branch's profit plus the market value of its message. On this range of prices we show that $A_5$
 maximizes $V_\mu$ over all branches, and that every non-atom lies below it by at least $\tfrac1{75}$.
-(The closest non-atom competitor, at $0.01452$ below, is a vertex carrying five cherries and one $A_4$.)
+(The closest non-atom competitor is a vertex carrying five cherries and one $A_4$: it falls $0.0145$ below at
+$\mu=0$ and $0.0152$ below at the largest price $\mu=\frac{23}{624}$.)
 So a tree with a non-atom branch has $\log\pi-(n-1)\Fs\le\log\tfrac{26}{23}-\tfrac1{75}$, which is below
 the benchmark \eqref{eq:floor} because $\tfrac1{75}>\tfrac{10}{960}$.
 
@@ -832,7 +844,9 @@ of maximum degree $\le D$ every message satisfies $y\ge 1/(2D-1)$, which narrows
 each cell must handle. Second, non-atom branches carry a \emph{credit} $\kappa$ depending on their
 number of children, $\bell(b)+\varrho_{\mathrm{wit}}(b)\le-\alpha|b|-\kappa(b)$, which they pass up to
 the root. The root is then bounded by an explicit knapsack over atoms, certified separately for each
-pair $(k,n)$.
+pair $(k,n)$. The comparison spiders are the $A_5/A_4$ benchmark for $n\ge275$; for $150\le n\le274$ the
+benchmark is too weak, and the comparison uses spiders $C^cA_5^aA_4^q$ that also carry a few cherries at
+the centre.
 
 \begin{inlean}
 \lean{BGSpiderMid.lean} proves the generic credited telescoping. The generated files
@@ -848,7 +862,8 @@ For small trees a uniform rate is far too weak, so we compute instead. The objec
 \emph{Bellman envelope}: a table $w(m,g)$ that bounds, for every branch of size $m$, its profit plus the
 value of its message at price $\mu_g$, where the prices run over a grid (\cref{fig:envelope}).
 
-Fix a rational rate $f$ close to $\Fs$ (it cancels between a tree and a spider of the same size), put
+Fix a rational rate $f$ close to $\Fs$ (it cancels between a tree and a spider of the same size; the
+certificate uses $f=28392988613/2^{37}$ and the prices $\mu_g=(g+1)/200$ for $0\le g<100$), put
 $V_{\mu}(b)=\log T_b-|b|f+\mu y_b$, and consider a vertex with its children. The function
 $x\mapsto\log x+\mu/x$ is concave on the relevant range, so its tangent bounds $V_\mu$ at the vertex by
 a constant plus $\sum_cV_{\nu}(c)$ at a new price $\nu$. In words: a vertex's value at price $\mu$ is
@@ -887,8 +902,8 @@ branch. The table for $n\le149$ is stored in fixed point and checked entry by en
 \label{fig:envelope}
 \end{figure}
 
-We cover root degrees $2\le k\le23$, using separate tables for vertex-degree caps
-$C\in\{1,\dots,8,12,16,22\}$; roots of degree $\ge24$ are handled by the high-degree argument. The
+We cover root degrees $2\le k\le23$, using separate tables for caps
+$C\in\{1,\dots,8,12,16,22\}$ on the number of children of a vertex (so vertex degree at most $C+1$); roots of degree $\ge24$ are handled by the high-degree argument. The
 final root inequality, with at least one non-atom child, is compared against certified lower bounds for
 explicit spiders.
 
@@ -906,7 +921,9 @@ The file \lean{MainK} assembles them into \lean{envcertK}, and
 
 \subsection{The smallest trees, and the summary}
 
-For $4\le n\le6$ there are few enough trees to evaluate every one exactly over $\mathbb{Q}$.
+For $4\le n\le6$ there are few enough trees to evaluate every one exactly over $\mathbb{Q}$. The
+maximizers are the paths $P_4,P_5,P_6$, which are spiders; the formal proof checks that the tabled spider is
+optimal at these sizes.
 
 \begin{theorem}\label{thm:reduction}
 For every $n\ge7$, every tree on $n$ vertices that maximizes $\pi$ is, after rerooting at a vertex of
@@ -943,9 +960,9 @@ to the number of arms, so the optimization is a balance between the arm factors 
 bracket.
 
 \begin{lemma}[balance]\label{lem:balance}
-Put $Q_c(x,y)=\alpha_x\alpha_y(c+b_x+b_y)$. For integers $k,t\ge0$,
+Put $Q_\kappa(x,y)=\alpha_x\alpha_y(\kappa+b_x+b_y)$. For integers $k,t\ge0$,
 \[
-  Q_c(k+t+1,k+1)-Q_c(k+t+2,k)=\frac{(t+1)\big((c-3)(8k+4t+15)+3\big)}{9(k+1)(k+2)(k+t+2)(k+t+3)}.
+  Q_\kappa(k+t+1,k+1)-Q_\kappa(k+t+2,k)=\frac{(t+1)\big((\kappa-3)(8k+4t+15)+3\big)}{9(k+1)(k+2)(k+t+2)(k+t+3)}.
 \]
 Consequently, if $D\ge3$, moving a cherry from an arm to an arm at least two smaller strictly increases
 $F$, and in every maximizer with $D\ge3$ all arm sizes (leaves included) differ by at most one.
@@ -953,9 +970,9 @@ $F$, and in every maximizer with $D\ge3$ all arm sizes (leaves included) differ 
 
 \begin{proof}
 The move (\cref{fig:balance}) keeps $n$, $D$ and the power of $\tfrac32$, and multiplies $F$ by
-$Q_c(\text{new})/Q_c(\text{old})$ with $c=D+R_0\ge3$, where $R_0$ is the message sum of the other
-children. The right side of the identity is then positive. The identity itself is a polynomial
-identity in $k,t,c$.
+$Q_\kappa(\text{new})/Q_\kappa(\text{old})$ with $\kappa=D+R_0\ge3$, where $R_0$ is the message sum of the
+other children. The right side of the identity is then positive. The identity itself is a polynomial
+identity in $k,t,\kappa$.
 \end{proof}
 
 \begin{figure}[htbp]\centering
@@ -996,8 +1013,9 @@ the number $D_0$ of other children.
 
 \begin{inlean}
 \lean{BGSpiderOpt.lean} models a spider as a list of children with the closed-form value \lean{F} over
-$\mathbb{Q}$ and proves \lean{balance\_identity}, \lean{F\_balance\_lt}, \lean{balanced\_of\_isMax},
-\lean{F\_leafpair\_lt} and \lean{F\_exchange\_lt}. The link to real trees is
+$\mathbb{Q}$ and proves \lean{balance\_identity}, \lean{F\_balance\_lt}, \lean{balanced\_of\_isMax}
+and \lean{F\_leafpair\_lt}; the general exchange criterion \lean{F\_exchange\_lt} is in
+\lean{BGSpiderStruct.lean}. The link to real trees is
 \lean{BGSpiderRule.Aobj\_spiderU}: for the tree \lean{spiderU l} built from a child list \lean{l},
 \lean{Aobj} equals \lean{F l}.
 \end{inlean}
@@ -1005,21 +1023,21 @@ $\mathbb{Q}$ and proves \lean{balance\_identity}, \lean{F\_balance\_lt}, \lean{b
 \subsection{Sizes up to 491: a kernel sweep}
 
 By \cref{lem:balance}, a maximizer with $D\ge3$ is determined by four numbers $(c,s,a,b)$: $c$ cherries,
-$a$ arms $A_s$ and $b$ arms $A_{s+1}$. For each $n$ there are only a few thousand such configurations,
+$a$ arms $A_s$ and $b$ arms $A_{s+1}$. For each $n$ there are at most about thirty thousand such configurations ($30{,}135$ at $n=491$),
 plus the configurations with $D\le2$. Each value has an explicit integer numerator and denominator. For
 each $n\le491$ the kernel compares every candidate against the table entry by a cross-multiplied
 inequality of natural numbers.
 
 At $n=21$ two non-isomorphic spiders tie ($C^{10}$ and $C^3A_3^2$); the table records $C^3A_3^2$. The
 table also shows how varied small maximizers are. Below $n=46$ arms of every size from one to eight
-appear, with up to eight cherries at the centre. From $n=46$ on every arm is an $A_4$, $A_5$ or $A_6$,
+appear, with up to nine cherries at the centre (at $n=19$). From $n=46$ on every arm is an $A_4$, $A_5$ or $A_6$,
 but a few cherries remain at the centre until $n=333$, and the $A_4$/$A_6$ choice keeps shifting until
 $n=2319$.
 
 \begin{inlean}
 \lean{BGSpiderTable.lean} proves the soundness of the check (\lean{spider\_opt\_of\_check}); the table
 itself is \lean{BGSpiderTableData.tabData}, and the 89 generated files \lean{BGSpiderTableChunk\_*} run
-the check for about five sizes each, assembled by \lean{BGSpiderTableAll.spider\_opt\_table}. The table
+the check for between two and $28$ sizes each (the first covers $4\le n\le105$), assembled by \lean{BGSpiderTableAll.spider\_opt\_table}. The table
 rows are printed in \cref{app:table}, generated from the Lean file itself.
 \end{inlean}
 
