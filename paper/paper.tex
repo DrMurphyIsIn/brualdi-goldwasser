@@ -800,8 +800,13 @@ Atoms are exempt, because $A_5$ has zero profit and cannot lose anything. Then
 \[
   \log\pi-(n-1)\Fs\ \le\ R_k-\alpha(n-1),
 \]
-where $R_k$ bounds what the root can gain. With $R_k\le0.319$ and the rates below, this falls under the
-benchmark once $n-1\ge491$. That is where the threshold $492$ comes from.
+where $R_k$ bounds what the root can gain; it is computed separately for each root degree $k$, one root
+cell per degree. The bound falls under the benchmark floor $\log\frac{26}{23}-\frac1{96}$ once
+$n-1>(R_k-\log\frac{26}{23}+\frac1{96})/\alpha$. The largest root constant, $R_2\approx0.3194$, does not
+matter, because its rate $\frac1{135}$ is large. The binding case is root degree $6$, where
+$R_6\le0.2447$ with $\alpha=\frac1{3700}$ requires $n-1\ge491$ (at $n-1=490$ the inequality fails by
+$6.6\cdot10^{-5}$), while degrees $7$ to $23$ need at most $n-1\ge464$ and degrees $2$ to $5$ at most
+$n-1\ge298$. That is where the threshold $492$ comes from.
 
 \begin{center}\small
 \begin{tabular}{@{}lccccc@{}}
