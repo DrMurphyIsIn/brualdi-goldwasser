@@ -1,6 +1,6 @@
 # Which tree maximizes the Laplacian ratio?
 
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.22983413.svg)](https://doi.org/10.5281/zenodo.22983413)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.22983412.svg)](https://doi.org/10.5281/zenodo.22983412)
 
 In 1984 Richard Brualdi and John Goldwasser studied the permanent of the Laplacian matrix of a tree
 and asked a deceptively simple question: among all trees on *n* vertices, which one makes the
@@ -114,8 +114,10 @@ git clone https://github.com/DrMurphyIsIn/brualdi-goldwasser.git
 cd brualdi-goldwasser
 ```
 
-The repository is small (about 30 MB). A specific release can be checked out with `git checkout v1.1.0`;
-release `v1.0.0` is archived with DOI [10.5281/zenodo.22983413](https://doi.org/10.5281/zenodo.22983413).
+The repository is small (about 30 MB). A specific release can be checked out with `git checkout v1.2.0`.
+Releases are archived on Zenodo: the concept DOI [10.5281/zenodo.22983412](https://doi.org/10.5281/zenodo.22983412)
+always resolves to the latest version; `v1.2.0` is [10.5281/zenodo.23046040](https://doi.org/10.5281/zenodo.23046040)
+and `v1.0.0` is [10.5281/zenodo.22983413](https://doi.org/10.5281/zenodo.22983413).
 
 ### 2. Install Lean
 

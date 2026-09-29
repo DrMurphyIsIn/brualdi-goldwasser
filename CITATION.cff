@@ -7,13 +7,16 @@ authors:
 repository-code: "https://github.com/DrMurphyIsIn/brualdi-goldwasser"
 url: "https://drmurphyisin.github.io/brualdi-goldwasser/"
 license: Apache-2.0
-version: v1.0.0
-date-released: 2026-09-26
-doi: 10.5281/zenodo.22983413
+version: v1.2.0
+date-released: 2026-09-29
+doi: 10.5281/zenodo.23046040
 identifiers:
   - type: doi
-    value: 10.5281/zenodo.22983413
-    description: "Zenodo archive of release v1.0.0"
+    value: 10.5281/zenodo.23046040
+    description: "Zenodo archive of release v1.2.0"
+  - type: doi
+    value: 10.5281/zenodo.22983412
+    description: "Zenodo concept DOI (all versions; resolves to the latest)"
 keywords:
   - Laplacian permanent
   - Laplacian ratio
