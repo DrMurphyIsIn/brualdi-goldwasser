@@ -507,7 +507,18 @@
     var name = b.j === -1 ? "the cherry" : "the arm A" + b.j + " (" + (2 * b.j + 1) + " vertices)";
     document.getElementById("ldReadout").innerHTML = "at λ = " + l.toFixed(3) + ", the best of the leaf, cherry and arms is <b>" + name + "</b>, weight per vertex " +
       Math.exp(b.v).toFixed(6) + "<br>breakpoints: " + bp.map(function (p) { return "A" + p[0] + "→A" + (p[0] + 1) + " at " + p[1].toFixed(4); }).join(", ") +
-      ", … → 1+√5 = " + g.toFixed(4);
+      ", … → 1+√5 = " + g.toFixed(4) + "<br>" + ceilingStatus(l);
+  }
+  function ceilingStatus(l) {              // the growth-rate ceiling at this λ: which proof regime, or open
+    var g = 1 + Math.sqrt(5), how;
+    if (l < 0.1) return "ceiling at this λ: open (below 0.1 the rate is known to first order, via the Randić limit)";
+    if (l >= g) return "ceiling at this λ: proved (cherry regime, λ ≥ 1+√5: growth rate ½ log(1+λ/2)); hand proof from an interval-arithmetic anchor at 1+√5, not formalized in Lean";
+    if (l <= 0.47) how = "power shoulder, 0.1 ≤ λ ≤ 0.47";
+    else if (l <= 1.6) how = "quadratic shoulder, 0.47 ≤ λ ≤ 1.6";
+    else if (l <= 3.22) how = "three-piece linear, 1.6 ≤ λ ≤ 3.22";
+    else how = "hand argument for the thin window 3.22 ≤ λ < 1+√5";
+    return "ceiling at this λ: proved (" + how + "); computer-assisted (interval arithmetic), not formalized in Lean" +
+      (Math.abs(l - 1) < 0.0025 ? "; at λ = 1 exactly it is also the sharp ceiling of the Lean proof" : "");
   }
   function goldenRender() {
     var svg = document.getElementById("ldGoldSvg"); clear(svg);
