@@ -447,10 +447,103 @@
     raceRender();
   }
 
+  // ================================================================= LADDER
+  function atomRate(j, l) {                 // log T / |b| per vertex, activity l; j = -1 cherry, 0 leaf, j >= 1 arm
+    if (j === -1) return 0.5 * Math.log((2 + l) / 2);
+    if (j === 0) return 0;
+    var Tc = (2 + l) / 2, yc = 1 / (2 + l);
+    return (j * Math.log(Tc) + Math.log((j + 1 + l * j * yc) / (j + 1))) / (2 * j + 1);
+  }
+  function bestAtom(l) {
+    var best = -1, bv = atomRate(-1, l);
+    for (var j = 1; j <= 400; j++) { var v = atomRate(j, l); if (v > bv + 1e-15) { bv = v; best = j; } }
+    return { j: best, v: bv };
+  }
+  var LBREAK = null;
+  function breakpoints() {
+    if (LBREAK) return LBREAK;
+    LBREAK = [];
+    for (var j = 3; j <= 8; j++) {
+      var a = 0.05, b = 1 + Math.sqrt(5) - 1e-9, g = function (l) { return atomRate(j, l) - atomRate(j + 1, l); };
+      for (var it = 0; it < 80; it++) { var m = (a + b) / 2; if (g(a) * g(m) <= 0) b = m; else a = m; }
+      LBREAK.push([j, a]);
+    }
+    return LBREAK;
+  }
+  var LMAX = 4.2;
+  function sliderL() { return Math.max(0.01, (+document.getElementById("ldL").value / 1000) * LMAX); }
+  function ladderRender() {
+    var l = sliderL(), svg = document.getElementById("ldSvg"); clear(svg);
+    var W = 900, H = 360, L = 66, R = 14, T = 14, B = 36, lo = -0.012, hi = 0.0065;
+    var X = function (x) { return L + x / LMAX * (W - L - R); };
+    var Y = function (v) { return T + (hi - Math.max(lo, Math.min(hi, v))) / (hi - lo) * (H - T - B); };
+    [-0.01, -0.005, 0, 0.005].forEach(function (v) {
+      el("line", { x1: L, x2: W - R, y1: Y(v), y2: Y(v), stroke: v === 0 ? "var(--ink)" : "var(--line)", "stroke-width": v === 0 ? 1.2 : 1 }, svg);
+      el("text", { x: L - 6, y: Y(v) + 4, "text-anchor": "end", "font-size": 11, fill: "var(--muted)" }, svg, v.toFixed(3));
+    });
+    [0, 0.5, 1, 1.5, 2, 2.5, 3, 3.5, 4].forEach(function (x) { el("text", { x: X(x), y: H - 14, "text-anchor": "middle", "font-size": 11, fill: "var(--muted)" }, svg, String(x)); });
+    el("text", { x: W - R, y: H - 2, "text-anchor": "end", "font-size": 11, fill: "var(--muted)" }, svg, "λ");
+    var g = 1 + Math.sqrt(5);
+    el("line", { x1: X(g), x2: X(g), y1: T, y2: H - B, stroke: "var(--faint)", "stroke-dasharray": "3 3" }, svg);
+    el("text", { x: X(g) + 4, y: T + 12, "font-size": 11, fill: "var(--muted)" }, svg, "1+√5");
+    el("line", { x1: X(1), x2: X(1), y1: T, y2: H - B, stroke: "var(--faint)", "stroke-dasharray": "3 3" }, svg);
+    el("text", { x: X(1) + 4, y: T + 12, "font-size": 11, fill: "var(--muted)" }, svg, "λ = 1");
+    var best = bestAtom(l).j;
+    for (var j = 1; j <= 12; j++) {
+      var col = j === 5 ? "var(--a5)" : j === 4 ? "var(--a4)" : j === 6 ? "var(--a6)" : "var(--other)";
+      var seg = [], flush = function () { if (seg.length > 1) el("polyline", { points: seg.join(" "), fill: "none", stroke: col, "stroke-width": j === best ? 3 : 1.1, opacity: j === best ? 1 : 0.7 }, svg); seg = []; };
+      for (var i = 0; i <= 480; i++) {
+        var x = 0.01 + i / 480 * (LMAX - 0.01), v = atomRate(j, x) - atomRate(-1, x);
+        if (v < lo || v > hi) { flush(); continue; }
+        seg.push(X(x).toFixed(1) + "," + Y(v).toFixed(1));
+      }
+      flush();
+      var xl = Math.min(LMAX - 0.05, 0.25 + 0.3 * (j - 1)), yl = Y(atomRate(j, xl) - atomRate(-1, xl));
+      if (j <= 8) el("text", { x: X(xl) + 3, y: yl - 4, "font-size": 11, fill: col }, svg, "A" + j);
+    }
+    el("line", { x1: X(l), x2: X(l), y1: T, y2: H - B, stroke: "var(--accent)", "stroke-width": 1.5 }, svg);
+    var b = bestAtom(l), bp = breakpoints();
+    document.getElementById("ldLval").textContent = "λ = " + l.toFixed(3);
+    var name = b.j === -1 ? "the cherry" : "the arm A" + b.j + " (" + (2 * b.j + 1) + " vertices)";
+    document.getElementById("ldReadout").innerHTML = "at λ = " + l.toFixed(3) + ", the best block is <b>" + name + "</b>, weight per vertex " +
+      Math.exp(b.v).toFixed(6) + "<br>breakpoints: " + bp.map(function (p) { return "A" + p[0] + "→A" + (p[0] + 1) + " at " + p[1].toFixed(4); }).join(", ") +
+      ", … → 1+√5 = " + g.toFixed(4);
+  }
+  function goldenRender() {
+    var svg = document.getElementById("ldGoldSvg"); clear(svg);
+    var W = 900, H = 300, L = 56, R = 14, T = 14, B = 34, xmax = 6, lo = 1, hi = 2;
+    var X = function (x) { return L + x / xmax * (W - L - R); };
+    var Y = function (v) { return T + (hi - v) / (hi - lo) * (H - T - B); };
+    [1, 1.25, 1.5, 1.75, 2].forEach(function (v) {
+      el("line", { x1: L, x2: W - R, y1: Y(v), y2: Y(v), stroke: "var(--line)" }, svg);
+      el("text", { x: L - 6, y: Y(v) + 4, "text-anchor": "end", "font-size": 11, fill: "var(--muted)" }, svg, v.toFixed(2));
+    });
+    [0, 1, 2, 3, 4, 5, 6].forEach(function (x) { el("text", { x: X(x), y: H - 12, "text-anchor": "middle", "font-size": 11, fill: "var(--muted)" }, svg, String(x)); });
+    var Hf = function (l) { return 2 * (1 + l) / (2 + l); }, Z = function (l) { return Math.sqrt((2 + l) / 2); };
+    [[Hf, "var(--a5)", "hub factor H(λ)"], [Z, "var(--a4)", "cherry rate ζ(λ)"]].forEach(function (c, k) {
+      var pts = []; for (var i = 0; i <= 300; i++) { var x = i / 300 * xmax; pts.push(X(x).toFixed(1) + "," + Y(c[0](x)).toFixed(1)); }
+      el("polyline", { points: pts.join(" "), fill: "none", stroke: c[1], "stroke-width": 2 }, svg);
+      el("text", { x: X(5.2), y: Y(c[0](5.2)) + (k ? 16 : -8), "font-size": 12, fill: c[1] }, svg, c[2]);
+    });
+    var g = 1 + Math.sqrt(5), phi = (1 + Math.sqrt(5)) / 2;
+    el("circle", { cx: X(g), cy: Y(phi), r: 5, fill: "none", stroke: "var(--accent)", "stroke-width": 2 }, svg);
+    el("text", { x: X(g) + 8, y: Y(phi) + 18, "font-size": 12, fill: "var(--ink)" }, svg, "(1+√5, φ = " + phi.toFixed(4) + ")");
+    el("text", { x: X(1.3), y: Y(1.93), "font-size": 12, fill: "var(--muted)" }, svg, "long arms win");
+    el("text", { x: X(4.2), y: Y(1.08), "font-size": 12, fill: "var(--muted)" }, svg, "cherries win");
+  }
+  function initLadder() {
+    var r = document.getElementById("ldL");
+    r.value = Math.round(1 / LMAX * 1000);
+    r.addEventListener("input", ladderRender);
+    document.getElementById("ldOne").addEventListener("click", function () { r.value = Math.round(1 / LMAX * 1000); ladderRender(); });
+    document.getElementById("ldGold").addEventListener("click", function () { r.value = Math.round((1 + Math.sqrt(5)) / LMAX * 1000); ladderRender(); });
+    ladderRender(); goldenRender();
+  }
+
   var inited = {};
   function start(p) {
     if (inited[p]) return;
-    if (p === "treelab") initTreeLab(); else if (p === "spiderlab") initSpiderLab(); else if (p === "races") initRaces(); else return;
+    if (p === "treelab") initTreeLab(); else if (p === "spiderlab") initSpiderLab(); else if (p === "races") initRaces(); else if (p === "ladder") initLadder(); else return;
     inited[p] = true;
   }
   document.addEventListener("bg-show", function (e) { start(e.detail); });

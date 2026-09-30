@@ -124,6 +124,7 @@ footer { border-top: 1px solid var(--line); margin-top: 40px; padding-top: 14px;
 
 <nav class="tabs" role="tablist">
   <button class="tab" role="tab" data-p="answer" aria-selected="true">The answer</button>
+  <button class="tab" role="tab" data-p="ladder" aria-selected="false">Why five: the ladder</button>
   <button class="tab" role="tab" data-p="treelab" aria-selected="false">Tree lab</button>
   <button class="tab" role="tab" data-p="spiderlab" aria-selected="false">Spider lab</button>
   <button class="tab" role="tab" data-p="races" aria-selected="false">The races</button>
@@ -173,6 +174,9 @@ footer { border-top: 1px solid var(--line); margin-top: 40px; padding-top: 14px;
   <i>n</i>&minus;1 mod 11 is absorbed by a few A<sub>4</sub> (9 vertices) or A<sub>6</sub> (13 vertices),
   and which of those wins is a delicate second-order competition, which is why the thresholds 722 and
   2319 appear.</p>
+  <p>Why five, rather than four or six? Give every matched edge an extra weight &lambda;: as &lambda; grows, the
+  best arm climbs 3, 4, 5, 6, &hellip; and runs off to infinity at 1 + &radic;5, where the golden ratio appears.
+  Brualdi and Goldwasser's &lambda; = 1 sits on the five-cherry rung. See <a href="#" data-go="ladder">Why five: the ladder</a>.</p>
 
   <div class="plotwrap">
     <svg id="ratioSvg" viewBox="0 0 900 300" role="img" aria-label="pi divided by rho^(n-1) for the maximizer"></svg>

@@ -69,6 +69,62 @@
   </div>
 </section>
 
+<!-- ============================ LADDER ============================ -->
+<section class="panel" id="p-ladder">
+  <p>Why five cherries, and not four or six? Put the problem in a family. Give every matched edge an extra
+  weight &lambda; &gt; 0, so that &pi;<sub>&lambda;</sub>(T) = &Sigma;<sub>M</sub> &lambda;<sup>|M|</sup>
+  &prod;<sub>uv&isin;M</sub> 1/(deg u deg v). Brualdi and Goldwasser's ratio is &lambda; = 1. For each &lambda;,
+  ask which building block (a leaf, a cherry, or an arm A<sub>j</sub> carrying <i>j</i> cherries) gives the most
+  weight per vertex.</p>
+
+  <div class="claim"><b>The arm ladder.</b> As &lambda; increases, the best block climbs A<sub>3</sub>, A<sub>4</sub>,
+  A<sub>5</sub>, A<sub>6</sub>, &hellip;: each neighbouring pair changes places exactly once, at breakpoints
+  &lambda;<sub>3</sub> &asymp; 0.4305, &lambda;<sub>4</sub> &asymp; 0.8725, &lambda;<sub>5</sub> &asymp; 1.1924,
+  &lambda;<sub>6</sub> &asymp; 1.4356, &hellip;, which increase to 1 + &radic;5 &asymp; 3.236. There the arms run
+  off to infinity and plain cherries take over. The Brualdi&ndash;Goldwasser value &lambda; = 1 sits on the
+  A<sub>5</sub> rung. That is why the answer is five.</div>
+
+  <div class="controls">
+    <label>&lambda; <input type="range" id="ldL" min="0" max="1000" value="300"></label>
+    <span class="mono" id="ldLval"></span>
+    <button class="btn" id="ldOne" type="button">&lambda; = 1</button>
+    <button class="btn" id="ldGold" type="button">&lambda; = 1 + &radic;5</button>
+  </div>
+  <div class="plotwrap">
+    <svg id="ldSvg" viewBox="0 0 900 360" role="img" aria-label="the arm ladder"></svg>
+    <p class="note" style="margin:6px 4px 0">Weight per vertex of each block, relative to the cherry:
+    (log T(A<sub>j</sub>))/(2j+1) &minus; &frac12; log((2+&lambda;)/2), for j = 1, &hellip;, 12. Above zero the arm beats a
+    plain cherry. The highlighted curve is the best block at the chosen &lambda;.</p>
+  </div>
+  <div class="readout" id="ldReadout"></div>
+
+  <h2>One balance condition, one cubic</h2>
+  <p>A long arm is <i>j</i> cherries plus one hub vertex. The hub is worth adding only if what it buys beats
+  what that same vertex would earn inside a cherry. As <i>j</i> grows the hub multiplies the weight by
+  H(&lambda;) = 2(1+&lambda;)/(2+&lambda;), and a cherry earns &zeta;(&lambda;) = &radic;((2+&lambda;)/2) per vertex.
+  So long arms win exactly when H &gt; &zeta;. Squaring and clearing denominators, the balance point is</p>
+  <p class="readout">8(1+&lambda;)<sup>2</sup> = (2+&lambda;)<sup>3</sup> &nbsp;&hArr;&nbsp; (x&minus;2)(x<sup>2</sup>&minus;6x+4) = 0
+  &nbsp; with x = 2+&lambda;, &nbsp; so &lambda; = 0 or &lambda; = 1 &plusmn; &radic;5.</p>
+  <p>At the top of the ladder, &lambda; = 1 + &radic;5, the hub factor and the cherry rate coincide, and both
+  equal the <b>golden ratio</b> &phi; = (1+&radic;5)/2. The other root, &lambda; = 0, is the bottom of the
+  ladder. There, to first order in &lambda;, the matching sum only sees single edges, and the problem becomes
+  maximizing the Randi&#263; index &Sigma;<sub>uv</sub> 1/(deg u deg v), whose maximum over large trees, (15n&minus;1)/56,
+  is attained by spiders of three-cherry arms A<sub>3</sub> when n &equiv; 1 (mod 7): the bottom rung of the ladder. So one cubic governs the whole ladder, with the Randi&#263; index at one end and
+  the golden ratio at the other.</p>
+  <div class="plotwrap">
+    <svg id="ldGoldSvg" viewBox="0 0 900 300" role="img" aria-label="hub factor against cherry rate"></svg>
+    <p class="note" style="margin:6px 4px 0">The hub factor H(&lambda;) against the cherry rate &zeta;(&lambda;). They cross
+    once for &lambda; &gt; 0, at 1 + &radic;5, at height &phi;.</p>
+  </div>
+
+  <p class="note">What is proved and what is not. The ladder (which block is best among leaves, cherries
+  and arms) and the balance cubic are elementary and proved. At &lambda; = 1, no pendant subtree of <i>any</i>
+  shape beats A<sub>5</sub>; that is the sharp ceiling in the Lean proof. For other &lambda;, that the best block
+  is also the best pendant subtree of any shape (so that it sets the growth rate of &pi;<sub>&lambda;</sub>), and that the
+  maximizers are spiders of the best arm, is supported by exact computation and is being prepared for
+  publication; treat it as a conjecture for now.</p>
+</section>
+
 <!-- ============================ RACES ============================ -->
 <section class="panel" id="p-races">
   <p>For large <i>n</i> almost every arm is A<sub>5</sub>, and the leftover <i>n</i>&minus;1 mod 11 is

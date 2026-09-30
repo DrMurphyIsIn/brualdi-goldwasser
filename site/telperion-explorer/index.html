@@ -270,6 +270,15 @@ nav.tabs .group { align-self: center; color: var(--muted); font-size: 0.85rem; m
     <p class="note">Try the arms yourself on the project site: the <a href="https://drmurphyisin.github.io/brualdi-goldwasser/#spiderlab">Spider lab</a> builds any spider and computes its ratio exactly, and the <a href="https://drmurphyisin.github.io/brualdi-goldwasser/#treelab">Tree lab</a> lets you edit an arbitrary tree.</p>
   </div></div>
 
+  <div class="step"><div class="letter">&#9679;</div><div class="body">
+    <h3>Why five: the &lambda;-ladder</h3>
+    <p>Give every matched edge an extra weight &lambda;, so that &pi;<sub>&lambda;</sub>(T) = &Sigma;<sub>M</sub> &lambda;<sup>|M|</sup> &prod;<sub>uv&isin;M</sub> 1/(deg u deg v); Brualdi and Goldwasser's ratio is &lambda; = 1. As &lambda; increases, the best building block climbs A<sub>3</sub>, A<sub>4</sub>, A<sub>5</sub>, A<sub>6</sub>, &hellip;, with breakpoints 0.4305, 0.8725, 1.1924, 1.4356, &hellip; increasing to 1 + &radic;5. There the arms run off to infinity and plain cherries take over. The value &lambda; = 1 sits on the A<sub>5</sub> rung.</p>
+    <p>One balance condition decides the whole ladder: a long arm's hub vertex must buy more, H(&lambda;) = 2(1+&lambda;)/(2+&lambda;), than the same vertex would earn in a cherry, &zeta;(&lambda;) = &radic;((2+&lambda;)/2). The balance point is a single cubic,</p>
+    <pre>8(1+&lambda;)^2 = (2+&lambda;)^3   &lt;=&gt;   (x-2)(x^2-6x+4) = 0,  x = 2+&lambda;,</pre>
+    <p>with roots &lambda; = 0, the bottom of the ladder, where the problem becomes the Randi&#263; index, and &lambda; = 1 + &radic;5, the top, where hub factor and cherry rate both equal the golden ratio &phi;. Explore it interactively on the project page: <a href="https://drmurphyisin.github.io/brualdi-goldwasser/#ladder">Why five: the ladder</a>.</p>
+    <p class="note">The ladder among leaves, cherries and arms, and the cubic, are proved. That the best block also sets the growth rate of &pi;<sub>&lambda;</sub> is proved at &lambda; = 1 (the sharp ceiling) and conjectured in general, with supporting computation.</p>
+  </div></div>
+
   <div class="step"><div class="letter">c</div><div class="body">
     <h3>How big the maximum is</h3>
     <p>Because five-cherry arms dominate, the maximum grows like <code>rho^n</code>. The proof pins this down on both sides, <code>(64/621) rho^n &le; max pi &le; 2 rho^(n-1)</code>. The chart shows the exact maximum divided by <code>rho^(n-1)</code>. For large <code>n</code> it settles into eleven separate strands, one for each value of <code>6(n - 1) mod 11</code>, because that is all the rule above depends on. The top strand is exact: for <code>n = 1 (mod 11)</code> and <code>n &ge; 254</code> the maximum is exactly <code>(26/23) rho^(n-1)</code>, and <code>26/23</code> is the limsup of the whole sequence.</p>
