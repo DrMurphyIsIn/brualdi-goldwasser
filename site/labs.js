@@ -505,7 +505,7 @@
     var b = bestAtom(l), bp = breakpoints();
     document.getElementById("ldLval").textContent = "λ = " + l.toFixed(3);
     var name = b.j === -1 ? "the cherry" : "the arm A" + b.j + " (" + (2 * b.j + 1) + " vertices)";
-    document.getElementById("ldReadout").innerHTML = "at λ = " + l.toFixed(3) + ", the best block is <b>" + name + "</b>, weight per vertex " +
+    document.getElementById("ldReadout").innerHTML = "at λ = " + l.toFixed(3) + ", the best of the leaf, cherry and arms is <b>" + name + "</b>, weight per vertex " +
       Math.exp(b.v).toFixed(6) + "<br>breakpoints: " + bp.map(function (p) { return "A" + p[0] + "→A" + (p[0] + 1) + " at " + p[1].toFixed(4); }).join(", ") +
       ", … → 1+√5 = " + g.toFixed(4);
   }
