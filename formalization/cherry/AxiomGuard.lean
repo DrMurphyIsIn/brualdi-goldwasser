@@ -40,3 +40,13 @@ import LeanCherry
 -- Part (B), 0 < λ < 1 + √5, with the window removed from the inputs (still external below 3.22; not proved in Lean).
 #print axioms LeanCherry.partB_witnessInput_of_low
 #print axioms LeanCherry.part_B_of_inputs_low
+-- Part (B) on [2.35, 1 + √5): the window witness and a best arm (by exact-rational box checks on [2.35, 3.22)),
+-- and the reduction below 2.35 (still external there; not proved in Lean).
+#print axioms LeanCherry.window_witness_ext
+#print axioms LeanCherry.window_witness_full
+#print axioms LeanCherry.part_B_of_inputs_lower
+-- Part (B) on [2, 1 + √5): the same, with the boxes extended down to 2, and the reduction below 2 (still
+-- external there; not proved in Lean).
+#print axioms LeanCherry.window_witness_ext2
+#print axioms LeanCherry.window_witness_full2
+#print axioms LeanCherry.part_B_of_inputs_lower2

@@ -1,0 +1,13 @@
+{
+  "challenge_module": "ChNegInputRange",
+  "solution_module": "CherrySolution",
+  "theorem_names": [
+    "LeanCherry.part_B_of_inputs_lower2"
+  ],
+  "permitted_axioms": [
+    "propext",
+    "Quot.sound",
+    "Classical.choice"
+  ],
+  "enable_nanoda": true
+}

@@ -183,9 +183,10 @@ footer { border-top: 1px solid var(--line); margin-top: 40px; padding-top: 14px;
   kernel-checked in Lean (<a href="https://github.com/DrMurphyIsIn/brualdi-goldwasser/tree/main/formalization/cherry">formalization/cherry</a>): the ceiling with equality only for the cherry, a strict upper bound for every tree,
   the lower bound, and the growth rate &radic;(1 + &lambda;/2). For every &lambda; &gt; 0 Lean also checks the
   one-block formula, that the best branch sets the growth rate, and the witness framework of the
-  computer-assisted proof. On the thin window [3.22, 1 + &radic;5) it now proves the result by hand, with no
-  numerical input beyond e<sup>0.4796</sup> &le; 1.6155 (the inequality, not its equality clause). Below 3.22 it
-  reduces the result to two external inputs (witnesses and a best arm on [0.1, 3.22); the branch bound itself and a
+  computer-assisted proof. On [2, 1 + &radic;5) it now proves the result (the inequality, not its equality
+  clause): by hand on the thin window [3.22, 1 + &radic;5), with no numerical input beyond
+  e<sup>0.4796</sup> &le; 1.6155, and on [2, 3.22) not by hand but by 45 exact-rational box checks (2,078 inequalities, checked by the kernel), with the root types with many children (k = 0, m &ge; 8, or m &ge; 5 below 2.35) handled by hand. Below 2 it
+  reduces the result to two external inputs (witnesses and a best arm on [0.1, 2); the branch bound itself and a
   best arm on (0, 0.1]) that it does not prove: that range still rests on computer-assisted interval arithmetic.</p>
 
   <div class="plotwrap">
@@ -357,13 +358,15 @@ certificates/verify.sh --full    # also the independent certified all-tree searc
     up to one step taken as a hypothesis). On the window [3.22, 1 + &radic;5) the ceiling is <i>proved</i> in Lean, by
     hand: the explicit window witness is a witness and some arm attains f*, and the only numerical input is
     e<sup>0.4796</sup> &le; 1.6155, from Mathlib's <code>Real.exp_bound'</code>. This is the inequality without its
-    equality clause; strictness is not formalized, and the lower end 3.22 is forced by the Lean constants. Below 3.22
-    Lean only <i>reduces</i> the ceiling to two external inputs, witnesses and a best arm on [0.1, 3.22) and the branch
+    equality clause; strictness is not formalized. On [2, 3.22) the ceiling is also <i>proved</i> in Lean,
+    not by hand but by 45 exact-rational box checks (2,078 inequalities, checked by the kernel), with the root types with many children (k = 0, m &ge; 8, or m &ge; 5 below 2.35) handled by hand; the floor 2 comes from the proof route, not from the witness, which numerically shows no
+    violation down to 1.5. Below 2
+    Lean only <i>reduces</i> the ceiling to two external inputs, witnesses and a best arm on [0.1, 2) and the branch
     bound itself and a best arm on (0, 0.1], which it does not prove; that range still rests on computer-assisted
-    interval arithmetic, and the equality clause, the explicit witnesses on [0.1, 3.22) and the typed induction are
-    not formalized. That project was audited six times by independent AI-run audits and replayed by Comparator with
-    nanoda (for the witness framework, (a)&ndash;(c) only, and the window statements and the reduction; run locally,
-    not sandboxed). The Lean theorem about the maximizer itself is &lambda; = 1 only.</li>
+    interval arithmetic, and the equality clause, the explicit witnesses on [0.1, 2) and the typed induction are
+    not formalized. That project was audited seven times by independent AI-run audits and replayed by Comparator with
+    nanoda (for the witness framework, (a)&ndash;(c) only, and the statements on [2, 1 + &radic;5) and the reductions;
+    run locally, not sandboxed). The Lean theorem about the maximizer itself is &lambda; = 1 only.</li>
     <li>The heaviest Lean files need 15&ndash;35 GiB of memory each.</li>
     <li>Developed with extensive assistance from an AI system (Claude, by Anthropic), under the author's
     direction; correctness rests on the Lean kernel.</li>

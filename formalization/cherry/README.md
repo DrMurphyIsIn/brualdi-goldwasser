@@ -17,9 +17,10 @@ anchor to every larger λ.
 
 This directory is a second, separate Lean 4 project that checks the cherry regime λ ≥ 1 + √5 with the Lean
 kernel, together with a general "one-block formula" that holds for every λ > 0, and the witness framework
-that organizes the computer-assisted part below 1 + √5. On the thin window [3.22, 1 + √5) just below the
-cherry regime, that part is now **proved** in Lean, by hand. Below 3.22 it is **not** proved in Lean: Lean
-reduces it to explicitly stated numerical inputs, which remain computer-assisted. The project does not
+that organizes the computer-assisted part below 1 + √5. On [2, 1 + √5), just below the cherry regime, that
+part is now **proved** in Lean: by hand on the thin window [3.22, 1 + √5), and by a computation checked by the
+kernel (45 exact-rational boxes) on [2, 3.22). Below 2 it is **not** proved in Lean: Lean reduces it to
+explicitly stated numerical inputs, which remain computer-assisted. The project does not
 touch, and is not needed by, the λ = 1 theorem in `../`.
 
 ## What is proved
@@ -73,7 +74,7 @@ cherry (`hinge_witness`), and the witness theorem re-derives from it T_b ≤ φ^
 
 Part (B) is the statement that, for 0 < λ < 1 + √5, every planted branch b satisfies
 log T_b ≤ |b| f*(λ), where f*(λ) is the best arm rate, sup over j ≥ 1 of log T(A_j)/(2j + 1), and A_j is a
-root carrying j cherries. Lean proves it in two pieces.
+root carrying j cherries. Lean proves it in three pieces.
 
 **Part (B) on the window [3.22, 1 + √5): proved, by hand.** For every λ in [3.22, 1 + √5), `window_witness`
 proves that the explicit three-piece function h = max(0, s_1(y − y†), ε + κ(y − y_C)) is a witness for
@@ -85,22 +86,45 @@ interval checks of the computer-assisted version are replaced by monotonicity, t
 (`WinC2.lean`), and the constants of the witness by closed-form enclosures in η = 1 + √5 − λ
 (`WinConst.lean`). Its only numerical input is e^{0.4796} ≤ 1.6155, from Mathlib's `Real.exp_bound'`. This is
 the inequality of part (B) without its equality clause: every Bellman case on the window is proved in the
-non-strict form, and strictness is not formalized. The lower end 3.22 is forced by the Lean constants (the
-proof needs √(1 + λ/2) ≥ 1.6155), not by the argument, which extends somewhat lower.
+non-strict form, and strictness is not formalized. The hand proof needs λ ≥ 3.22 (it uses
+√(1 + λ/2) ≥ 1.6155); below that, the same witness is handled by the computation described next.
 
-**Part (B) below 3.22: reduced, not proved.** Lean proves (`part_B_of_inputs_low`, through
+**Part (B) on [2, 3.22): proved, by a computation checked by the kernel.** `window_witness_full2` proves, for
+every λ in [2, 1 + √5), that the same three-piece function h is a witness for (λ, f*(λ)), and that the
+supremum f*(λ) is attained by some arm. On [3.22, 1 + √5) it uses `window_witness`. On [2, 3.22) the proof is
+not a hand proof but a computation inside Lean: λ is split into 45 closed boxes (37 on [2.35, 3.22] in
+`WinExtBoxes.lean`, 8 on [2, 2.35] in `WinExt2Boxes.lean`). On each box every quantity of the argument is
+enclosed between exact rationals by proved monotone bounds (`WinExtBox.lean`), and the resulting 2,078
+rational inequalities are closed by `norm_num` and checked by the kernel, as is the fact that the boxes cover
+the range without a gap. f* enters only through exact identities and closed-form bounds on the cherry
+deficit ε, so no arm is enumerated, and it does not matter which arm is best inside a box. The root types
+with many children (k = 0 and m ≥ 8, or m ≥ 5 below 2.35) are handled by hand, by the argument used on the
+window, with y† ≥ 1/6 and the slope bound λ/(m + 1 + λ m y_C) ≤ κ in place of y† ≥ 1/9 and λ ≤ 8κ below 2.35
+(`WinExt2Core.lean`); the box conditions are needed only for fewer children. (`window_witness_ext` and
+`window_witness_full` are the intermediate step, down to 2.35; `window_witness_ext2` is the piece [2, 2.35).)
+As on the window, this is the inequality of part (B) without its equality clause. With the witness theorem it
+gives, with no external input, the branch bound, ρ(λ) = e^{f*(λ)} and the two-sided bound on M_n(λ) with a
+best arm on all of [2, 1 + √5).
+
+The floor at 2 comes from the proof route, not from the witness. The box method stops at λ = 2, where one
+case split of the argument (for m = 2 children) changes sign, and in box form it would also stop near 1.87,
+at the condition for m = 4. Numerically, the witness shows no violation of its Bellman inequality down to
+λ = 1.5, but that is not proved.
+
+**Part (B) below 2: reduced, not proved.** Lean proves (`part_B_of_inputs_lower2`, through
 `part_B_of_inputs`) that two external inputs imply, for every 0 < λ < 1 + √5, the branch bound
 log T_b ≤ |b| f*(λ), ρ(λ) = e^{f*(λ)}, and the two-sided bound on M_n(λ) with a best arm as b*. The inputs are
-hypotheses of that theorem, stated in `WinBell.lean` and `PartB.lean`, and Lean does not prove them:
+hypotheses of that theorem, stated in `WinExt2Main.lean` and `PartB.lean`, and Lean does not prove them:
 
-- for every λ in [0.1, 3.22), a witness for (λ, f*(λ)) exists, and some arm attains f*
-  (`PartB_WitnessInputLow`);
+- for every λ in [0.1, 2), a witness for (λ, f*(λ)) exists, and some arm attains f*
+  (`PartB_WitnessInputLower2`);
 - for every λ in (0, 0.1], the branch bound log T_b ≤ |b| f*(λ) itself holds, and some arm attains f*
   (`PartB_SmallInput`).
 
-Both inputs are what the computer-assisted interval arithmetic supplies. So below 3.22 part (B) still rests
-on that arithmetic; what Lean adds is that nothing else is needed. (`part_B_of_inputs` is the earlier form of
-the reduction, whose witness input also covered the window.)
+Both inputs are what the computer-assisted interval arithmetic supplies. So below 2 part (B) still rests on
+that arithmetic; what Lean adds is that nothing else is needed. (`part_B_of_inputs`, `part_B_of_inputs_low`
+and `part_B_of_inputs_lower` are earlier forms of the reduction, whose witness inputs also covered
+[2, 1 + √5), [2, 3.22) and [2, 2.35) respectively.)
 
 **At λ = 1:** π_1(T) = per L(T) / ∏_v deg v for every tree on at least two vertices, with Mathlib's
 `Matrix.permanent` and L = D − A (`pi_one_eq_permanent_tree`). This ties the family back to Brualdi and
@@ -115,11 +139,11 @@ M_n(λ) is defined as the maximum of π_λ over all trees on the vertex set {0, 
 
 ## What is not formalized
 
-- **Part (B) below 3.22.** Its two inputs above, that is, the explicit witnesses on [0.1, 3.22) with their
+- **Part (B) below 2.** Its two inputs above, that is, the explicit witnesses on [0.1, 2) with their
   Bellman inequalities, the existence of a best arm there, and the typed induction on (0, 0.1], are
   computer-assisted and not in Lean.
 - The equality clause of part (B) (equality exactly for a best arm), everywhere, including the strict
-  inequalities of the window argument.
+  inequalities of the window argument and of the box computation.
 - In the witness theorem (d), the step from a corner of h to a strict supporting line, which is a
   hypothesis.
 - The strictness clauses of the monomer-density inequality and of the monotonicity.
@@ -132,14 +156,15 @@ M_n(λ) is defined as the maximum of π_λ over all trees on the vertex set {0, 
 ```bash
 cd formalization/cherry
 lake exe cache get              # Mathlib's prebuilt files (same pins as ../)
-lake build                      # about 3-4 minutes on an Apple M3 Ultra, under 6 GB of memory
-lake env lean AxiomGuard.lean   # the axioms of the 25 headline theorems
+lake build                      # about 4-5 minutes on an Apple M3 Ultra, about 6 GB of memory
+lake env lean AxiomGuard.lean   # the axioms of the 31 headline theorems
 ```
 
 The toolchain is Lean 4 v4.32.0 and Mathlib v4.32.0 (commit `81a5d257`), the same pins as `../`. If you
 have already built `../`, you can reuse its Mathlib with `cp -c -R ../.lake/packages .lake/packages` (an
-APFS clone on macOS) before `lake build`. Unlike `../`, this project is small: 33 files and about 6,800
-lines, with no generated certificate data.
+APFS clone on macOS) before `lake build`. Unlike `../`, this project is small: 42 files and about 9,200
+lines. Its only generated certificate data are the two box files, `WinExtBoxes.lean` and `WinExt2Boxes.lean`
+(see "Generated files" below).
 
 The `lean-cherry` workflow (`.github/workflows/lean-cherry.yml`, self-hosted, pushes to `main` that touch this
 directory) builds it and checks the axiom guard.
@@ -151,8 +176,10 @@ definitions (the matching sum with Mathlib degrees, the maximum over trees on `F
 recursion, ρ) and the theorems from scratch, importing only Mathlib, and Comparator checks that the
 solution (`import LeanCherry`) proves exactly those statements and that both Lean's kernel and nanoda
 accept the proofs. For the witness framework, (a)-(c) of the witness theorem were replayed this way, and so
-were the window statements (`window_witness`, `window_ceiling`) and the reduction below 3.22
-(`part_B_of_inputs_low`); (d), the examples and `part_B_of_inputs` were not. Its README has the details and
+were the window statements (`window_witness`, `window_ceiling`), the reduction below 3.22
+(`part_B_of_inputs_low`), the extension to [2, 1 + √5) (`window_witness_ext2`, `window_witness_full2`) and the
+reduction below 2 (`part_B_of_inputs_lower2`); (d), the examples, `part_B_of_inputs` and the intermediate step
+down to 2.35 were not. Its README has the details and
 the results; the runs were local and not sandboxed.
 
 ## Files
@@ -176,18 +203,41 @@ the results; the runs were local and not sandboxed.
 | `WinConst.lean` | the window: the constants of the witness and their enclosures in η = 1 + √5 − λ |
 | `WinC2.lean` | the window: the Bellman inequality for 1 ≤ m ≤ 7 children, by hand |
 | `WinBell.lean` | the window witness, `window_witness`, `window_ceiling`, and part (B) from the inputs below 3.22 |
+| `WinExtCore.lean` | the window argument, run from a list of facts about the constants (`WFacts`) |
+| `WinExtBox.lean` | proved monotone enclosures, by exact rationals, of the window constants on a λ-box |
+| `WinExtAssemble.lean` | a box's rational inequalities (`BoxOK`) give `WFacts` on the whole box |
+| `WinExtBoxes.lean` | generated: the 37 boxes covering [2.35, 3.22] and their certificates |
+| `WinExtMain.lean` | `window_witness_ext`, `window_witness_full`, and part (B) from the inputs below 2.35 |
+| `WinExt2Core.lean`, `WinExt2Assemble.lean` | the same with the k = 0, m ≥ 5 types by hand (`WFacts2`, `BoxOK2`) |
+| `WinExt2Boxes.lean` | generated: the 8 boxes covering [2, 2.35] and their certificates |
+| `WinExt2Main.lean` | `window_witness_ext2`, `window_witness_full2`, and part (B) from the inputs below 2 |
 | `Lambda1.lean`, `R3Copy.lean` | the λ = 1 link to per L/∏ deg |
 | `Whole.lean`, `AddLeaf.lean`, `Graph.lean`, `MatchSum.lean`, `Extra.lean` | plumbing |
-| `AxiomGuard.lean` | `#print axioms` for the 25 headline theorems |
+| `AxiomGuard.lean` | `#print axioms` for the 31 headline theorems |
+| `scripts/` | the generators of `WinExt2Core.lean`, `WinExt2Assemble.lean` and the two box files |
 
 `R3Copy.lean` is a verbatim copy of the λ = 1 permanent/matching development of `../R3Cert`, renamed into
 this namespace; its header records the provenance. Some module names (`ThmE`, `LemmaM`) are the working
 names of the development and carry no meaning beyond that.
 
+### Generated files
+
+Four files are written by scripts in `scripts/` (run them from that directory, with Python 3 and no other
+dependencies). `make_ext2.py` writes `WinExt2Core.lean` and `WinExt2Assemble.lean` by a textual
+transformation of `WinExtCore.lean` and `WinExtAssemble.lean`. `emit_lean.py` and `emit_lean2.py` write
+`WinExtBoxes.lean` and `WinExt2Boxes.lean` from the box constants in `boxes.json` and `boxes2.json`.
+Rerunning them reproduces the committed files byte for byte; this was checked in the independent audit
+(AI-run) and again before publication. The search that chose the box constants is not included. They need
+no trust: the kernel checks every inequality, and the coverage of the range.
+
+`BoxOK2` still carries two fields that are no longer needed: `h8` (λ ≤ 8κ), which its proof never uses, and
+`hydl9` (a lower bound 1/9 on y†), which the new field `hydl6` (1/6) implies. Both are checked for every box.
+This is cosmetic, and they were left in place so that the code is exactly the code that was audited.
+
 ## Provenance
 
 The formalization was produced with AI assistance (Claude, Anthropic) under the author's direction, like
-the rest of this repository. Before publication it was independently audited six times, each audit by a
+the rest of this repository. Before publication it was independently audited seven times, each audit by a
 separate AI-run session that rebuilt the project from scratch, checked axioms and definitions, compared the
 statements with the mathematics, checked small cases by brute force, and replayed the headline theorems
 with Comparator against its own transcriptions. Those audits are AI checks, not human review; the Lean

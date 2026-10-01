@@ -31,3 +31,5 @@ import LeanCherry.WinArms
 import LeanCherry.WinConst
 import LeanCherry.WinC2
 import LeanCherry.WinBell
+import LeanCherry.WinExtMain
+import LeanCherry.WinExt2Main

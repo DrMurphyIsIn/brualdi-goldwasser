@@ -1,0 +1,13 @@
+{
+  "challenge_module": "ChNegWinLow",
+  "solution_module": "CherrySolution",
+  "theorem_names": [
+    "LeanCherry.window_witness_full2"
+  ],
+  "permitted_axioms": [
+    "propext",
+    "Quot.sound",
+    "Classical.choice"
+  ],
+  "enable_nanoda": true
+}
