@@ -17,14 +17,19 @@ implementation of the Lean kernel in Rust.
 | `graph` | `ChGraph.lean` | `pi_lam_lt_tree`, `Mn_le`, `Mn_ge`, `Mn_rate` |
 | `branch` | `ChBr.lean` + `ChBranch.lean` | `Br.Tl_eq_cherry_iff`, `rho_eq`, `rho_isGreatest`, `rho_isLUB` |
 | `oneblock` | `ChOneBlockBr/Tl/Graph.lean` + `ChOneBlock.lean` | `Mn_le_rho`, `Mn_ge_block`, `Mn_tendsto_rho`, `rhoB_eq_cherry`, `rhoB_le`, `rhoSet_bdd`, `Br.Tl_le_pow` |
+| `witness` | `ChOneBlockBr/Tl/Graph.lean` + `ChWitness.lean` | `Witness.mt_main_a`, `Witness.mt_main_b`, `Witness.mt_main_c` (the definition of a witness, and the witness theorem (a)-(c)) |
 
-Three negative controls show that the check has teeth. Each changes one thing and must be **rejected**:
+Only (a)-(c) of the witness theorem are replayed. Its part (d), the examples (the golden hinge) and
+`part_B_of_inputs` are checked by Lean's kernel in the build, but not by this second kernel.
+
+Four negative controls show that the check has teeth. Each changes one thing and must be **rejected**:
 
 | configuration | change | expected |
 |---|---|---|
 | `neg_degree` | π_λ with degree + 1 instead of the degree | definition mismatch on `piL` |
 | `neg_rate` | growth rate √(1 + λ/3) instead of √(1 + λ/2) | statement mismatch on `Mn_rate` |
 | `neg_upper` | M_n ≤ (1 + λ)ρ^n instead of ρ^{n−1} (weaker, and true) | statement mismatch on `Mn_le_rho` |
+| `neg_convex` | a witness without the convexity field | definition mismatch on `Witness.mk` |
 
 Comparator matches constants by name and by term, so the challenges use the solution's names, and the
 branch type sits in its own module so that its auxiliary definitions get the same names on both sides.

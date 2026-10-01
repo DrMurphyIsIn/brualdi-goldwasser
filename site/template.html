@@ -182,8 +182,10 @@ footer { border-top: 1px solid var(--line); margin-top: 40px; padding-top: 14px;
   short hand argument described on that tab. That cherry regime, &lambda; &ge; 1 + &radic;5, is now also
   kernel-checked in Lean (<a href="https://github.com/DrMurphyIsIn/brualdi-goldwasser/tree/main/formalization/cherry">formalization/cherry</a>): the ceiling with equality only for the cherry, a strict upper bound for every tree,
   the lower bound, and the growth rate &radic;(1 + &lambda;/2). For every &lambda; &gt; 0 Lean also checks the
-  one-block formula, that the best branch sets the growth rate, but below 1 + &radic;5 it does not determine
-  that rate.</p>
+  one-block formula, that the best branch sets the growth rate, and the witness framework of the
+  computer-assisted proof. Below 1 + &radic;5 it reduces the result to two external inputs (witnesses and a best
+  arm on [0.1, 1 + &radic;5); the branch bound itself and a best arm on (0, 0.1]) that it does not prove: that
+  range still rests on computer-assisted interval arithmetic.</p>
 
   <div class="plotwrap">
     <svg id="ratioSvg" viewBox="0 0 900 300" role="img" aria-label="pi divided by rho^(n-1) for the maximizer"></svg>
@@ -347,12 +349,16 @@ certificates/verify.sh --full    # also the independent certified all-tree searc
     <li>Not yet refereed. We welcome review and issues.</li>
     <li>Uniqueness of the maximizer is established computationally, not in Lean.</li>
     <li>The growth-rate ceiling for the &lambda;-family for every &lambda; &gt; 0 (see <a href="#" data-go="ladder">Why five: the ladder</a>)
-    is computer-assisted (interval arithmetic) for 0 &lt; &lambda; &lt; 1 + &radic;5, not formalized in Lean, and a hand proof (calculus at 1 + &radic;5 with the golden-ratio identities, then a monotonicity argument) for &lambda; &ge; 1 + &radic;5.
+    is computer-assisted (interval arithmetic) for 0 &lt; &lambda; &lt; 1 + &radic;5 and a hand proof (calculus at 1 + &radic;5 with the golden-ratio identities, then a monotonicity argument) for &lambda; &ge; 1 + &radic;5.
     The cherry regime &lambda; &ge; 1 + &radic;5 is also kernel-checked in a separate Lean project (<a href="https://github.com/DrMurphyIsIn/brualdi-goldwasser/tree/main/formalization/cherry">formalization/cherry</a>: the
     branch ceiling with its equality case, the bounds on the maximum, &rho;(&lambda;) and the growth rate), together with
-    the one-block formula for every &lambda; &gt; 0; below 1 + &radic;5 the value of the growth rate is not formalized.
-    That project was audited four times by independent AI-run audits and replayed by Comparator with nanoda (run
-    locally, not sandboxed). The Lean theorem about the maximizer itself is &lambda; = 1 only.</li>
+    the one-block formula and the witness framework for every &lambda; &gt; 0 (the witness theorem (a)&ndash;(c), and (d)
+    up to one step taken as a hypothesis). Below 1 + &radic;5 Lean only <i>reduces</i> the ceiling to two external inputs,
+    witnesses and a best arm on [0.1, 1 + &radic;5) and the branch bound itself and a best arm on (0, 0.1], which it does
+    not prove; that range still rests on computer-assisted interval arithmetic, and its equality clause, the explicit
+    witnesses and the typed induction are not formalized. That project was audited five times by independent AI-run
+    audits and replayed by Comparator with nanoda (for the witness framework, (a)&ndash;(c) only; run locally, not
+    sandboxed). The Lean theorem about the maximizer itself is &lambda; = 1 only.</li>
     <li>The heaviest Lean files need 15&ndash;35 GiB of memory each.</li>
     <li>Developed with extensive assistance from an AI system (Claude, by Anthropic), under the author's
     direction; correctness rests on the Lean kernel.</li>

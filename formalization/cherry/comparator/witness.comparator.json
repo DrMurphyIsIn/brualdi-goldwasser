@@ -1,0 +1,15 @@
+{
+  "challenge_module": "ChWitness",
+  "solution_module": "CherrySolution",
+  "theorem_names": [
+    "LeanCherry.Witness.mt_main_a",
+    "LeanCherry.Witness.mt_main_b",
+    "LeanCherry.Witness.mt_main_c"
+  ],
+  "permitted_axioms": [
+    "propext",
+    "Quot.sound",
+    "Classical.choice"
+  ],
+  "enable_nanoda": true
+}

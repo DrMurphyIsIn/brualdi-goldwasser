@@ -14,4 +14,4 @@ name = "LeanCherry"
 name = "CherryComparator"
 srcDir = "comparator"
 roots = ["ChHeadline", "ChLambda1", "ChBr", "ChBranch", "ChGraph", "ChOneBlockBr", "ChOneBlockTl", "ChOneBlockGraph",
-         "ChOneBlock", "ChNegDegree", "ChNegRate", "ChNegUpper", "CherrySolution"]
+         "ChOneBlock", "ChWitness", "ChNegDegree", "ChNegRate", "ChNegUpper", "ChNegConvex", "CherrySolution"]

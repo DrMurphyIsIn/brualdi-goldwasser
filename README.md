@@ -86,7 +86,7 @@ the anchor λ = 1 + √5, using the golden identities 1 + λ/2 = φ² and 1 + λ
 argument). The λ = 1 case is the sharp ceiling of the main Lean proof.
 
 The cherry regime is now **also kernel-checked in Lean**, in a separate small project,
-[`formalization/cherry/`](formalization/cherry/README.md) (about 4,500 lines, a few minutes to build). For
+[`formalization/cherry/`](formalization/cherry/README.md) (about 5,400 lines, a few minutes to build). For
 every λ ≥ 1 + √5 it proves, with only the three standard axioms:
 
 - for every finite tree T on n ≥ 1 vertices, π_λ(T) < (1 + λ)(1 + λ/2)^((n−1)/2), stated on Mathlib's
@@ -100,12 +100,23 @@ branches, T_b^⌊(n−1)/|b|⌋ ≤ M_n(λ) ≤ (1 + λ)ρ(λ)^(n−1) for every
 λ = 1 it proves π_1(T) = per L(T)/∏ deg for every tree on at least two vertices, tying the family back to
 the original ratio.
 
-What it does **not** do: below 1 + √5, Lean does not determine ρ(λ). The value there (that the best block
-of the ladder sets the rate) and its equality cases remain computer-assisted and are not formalized. The
-formal proof of the anchor also takes a different route from the hand proof. This project was produced
-with AI assistance and independently audited four times, by AI-run audits, before publication; its
+Below 1 + √5 it formalizes the *framework* of the computer-assisted proof, not the proof. For every λ > 0 it
+proves the witness theorem: a convex *witness* that satisfies a Bellman inequality bounds every branch,
+bounds M_n(λ) and ρ(λ), and, when it is tight, gives ρ(λ) exactly (parts (a)-(c); part (d), on the tight
+branches, is formalized except one step, from a corner of the witness to a strict supporting line, which is
+taken as a hypothesis). The golden hinge at 1 + √5 is proved to be such a witness, giving ρ(1 + √5) = φ
+again. Part (B), the range 0 < λ < 1 + √5, is then **reduced** in Lean to two external inputs: for λ in
+[0.1, 1 + √5), the existence of a witness and of a best arm; for λ in (0, 0.1], the branch bound itself and a
+best arm. From those inputs Lean derives the ceiling, ρ(λ) = e^{f*(λ)} and the bounds on M_n(λ). The inputs
+themselves are not proved in Lean: **part (B) still rests on computer-assisted interval arithmetic.** The
+equality clause of part (B), the explicit witnesses below 1 + √5 and the typed induction near 0 are not
+formalized.
+
+The formal proof of the anchor also takes a different route from the hand proof. This project was produced
+with AI assistance and independently audited five times, by AI-run audits, before publication; its
 Comparator replay (both kernels, run locally and not sandboxed) is described in
-[`formalization/cherry/comparator/`](formalization/cherry/comparator/README.md). None of this changes the
+[`formalization/cherry/comparator/`](formalization/cherry/comparator/README.md); for the witness framework
+it covers (a)-(c) of the witness theorem only. None of this changes the
 λ = 1 theorem or its checks above.
 
 ## Certificates and Telperion
@@ -255,7 +266,7 @@ default) before everything else.
   that all 20 headline theorems, and the statement in `Statement.lean`, use only the standard axioms. It runs on the maintainer's machine because
   GitHub-hosted runners don't have enough memory for the heaviest files. Pull requests never trigger it.
 - `lean-cherry` (self-hosted, pushes to `main` that touch `formalization/cherry/`, and manual runs) builds the
-  cherry-regime project and checks that its 13 headline theorems use only the standard axioms.
+  cherry-regime project and checks that its 21 headline theorems use only the standard axioms.
 - `pages` publishes `site/` and the paper.
 
 ## Status
@@ -268,7 +279,8 @@ scrutiny. We welcome review, questions and issues.
 
 ```
 formalization/   Lean 4 project: the import closure of bg_maximizer_all (+ the sharp rate ceiling)
-formalization/cherry/  a second, small Lean 4 project: the λ-family's cherry regime λ >= 1+√5, the one-block formula
+formalization/cherry/  a second, small Lean 4 project: the λ-family's cherry regime λ >= 1+√5, the one-block formula,
+                 the witness framework, and part (B) reduced to its computer-assisted inputs
 certificates/    generators and frozen Telperion records for every certificate family
 telperion/       vendored Telperion engine (BSL 1.1); telperion/README.md describes it on its own terms
 paper/           the paper (paper.tex, gen_table.py builds its appendix from the Lean table)

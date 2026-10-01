@@ -23,3 +23,14 @@ import LeanCherry
 #print axioms LeanCherry.Mn_ge_block
 #print axioms LeanCherry.Mn_tendsto_rho
 #print axioms LeanCherry.rhoB_eq_cherry
+-- The witness framework, every λ > 0: the witness theorem (a)-(c), and (d) up to the strict-supporting-line step.
+#print axioms LeanCherry.Witness.mt_main_a
+#print axioms LeanCherry.Witness.mt_main_b
+#print axioms LeanCherry.Witness.mt_main_c
+#print axioms LeanCherry.Witness.tight_node
+#print axioms LeanCherry.Witness.tight_of_g_zero
+-- The golden hinge at λ = 1 + √5 is a witness, and gives ρ(1 + √5) = φ.
+#print axioms LeanCherry.hinge_witness
+#print axioms LeanCherry.rho_lam_c_via_witness
+-- Part (B), 0 < λ < 1 + √5, from two external numerical inputs (stated as hypotheses; not proved in Lean).
+#print axioms LeanCherry.part_B_of_inputs

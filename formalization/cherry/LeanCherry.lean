@@ -24,3 +24,6 @@ import LeanCherry.TreeStrict
 import LeanCherry.Realize
 import LeanCherry.Growth
 import LeanCherry.Rho
+import LeanCherry.Witness
+import LeanCherry.WitnessExamples
+import LeanCherry.PartB

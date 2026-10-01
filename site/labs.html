@@ -140,8 +140,7 @@
     weighted matching model is at least 2n/(2 + &lambda;) once &lambda; &ge; 2, which makes
     T<sub>b</sub>(&lambda;)/(2 + &lambda;)<sup>n/2</sup> nonincreasing in &lambda;; anchored at the single point 1 + &radic;5, where the ceiling is verified by calculus using the golden-ratio identities, that gives the ceiling for every larger &lambda;. This regime is also kernel-checked in Lean (<a href="https://github.com/DrMurphyIsIn/brualdi-goldwasser/tree/main/formalization/cherry">formalization/cherry</a>): the ceiling with equality only for the cherry, the bounds on the maximum, and the growth rate.</li>
   </ul>
-  <p class="note">For 0 &lt; &lambda; &lt; 1 + &radic;5 this result is computer-assisted (interval arithmetic), not
-  formalized in Lean; for &lambda; &ge; 1 + &radic;5 it is a hand proof (calculus at 1 + &radic;5 with the golden-ratio identities, then a monotonicity argument), and it is also kernel-checked in Lean (<a href="https://github.com/DrMurphyIsIn/brualdi-goldwasser/tree/main/formalization/cherry">formalization/cherry</a>), by a different route at the anchor. At &lambda; = 1 exactly it is also the sharp ceiling of the Lean proof. For every &lambda; &gt; 0 Lean also checks the one-block formula: with &rho;(&lambda;) the supremum of T<sub>b</sub><sup>1/|b|</sup> over all branches, the maximum lies between T<sub>b</sub><sup>&lfloor;(n&minus;1)/|b|&rfloor;</sup> and (1+&lambda;)&rho;<sup>n&minus;1</sup>, and its n-th root tends to &rho;. Below 1 + &radic;5 Lean does not determine &rho;(&lambda;); its value there is the computer-assisted part. It
+  <p class="note">For 0 &lt; &lambda; &lt; 1 + &radic;5 this result is computer-assisted (interval arithmetic). Lean checks the witness framework of this proof for every &lambda; &gt; 0 and reduces the range below 1 + &radic;5 to two external inputs (witnesses and a best arm on [0.1, 1 + &radic;5); the branch bound itself and a best arm on (0, 0.1]), which it does not prove, so that range still rests on computer-assisted interval arithmetic. For &lambda; &ge; 1 + &radic;5 it is a hand proof (calculus at 1 + &radic;5 with the golden-ratio identities, then a monotonicity argument), and it is also kernel-checked in Lean (<a href="https://github.com/DrMurphyIsIn/brualdi-goldwasser/tree/main/formalization/cherry">formalization/cherry</a>), by a different route at the anchor. At &lambda; = 1 exactly it is also the sharp ceiling of the Lean proof. For every &lambda; &gt; 0 Lean also checks the one-block formula: with &rho;(&lambda;) the supremum of T<sub>b</sub><sup>1/|b|</sup> over all branches, the maximum lies between T<sub>b</sub><sup>&lfloor;(n&minus;1)/|b|&rfloor;</sup> and (1+&lambda;)&rho;<sup>n&minus;1</sup>, and its n-th root tends to &rho;. Below 1 + &radic;5 the one-block formula alone does not determine &rho;(&lambda;); its value there comes from the computer-assisted inputs. It
   is about the growth rate only: it says nothing about the shape of the maximizers for &lambda; &ne; 1. As
   &lambda; &rarr; 0 the rate is governed to first order by the Randi&#263; limit above, which is why the bottom
   regime is anchored at A<sub>3</sub>.</p>
@@ -150,7 +149,7 @@
   and arms) and the balance cubic are elementary and proved. At &lambda; = 1, no pendant subtree of <i>any</i>
   shape beats A<sub>5</sub>; that is the sharp ceiling in the Lean proof. For every &lambda; &gt; 0 the same
   ceiling holds: for 0 &lt; &lambda; &lt; 1 + &radic;5 by the computer-assisted (interval arithmetic) arguments
-  above, not formalized in Lean, and for &lambda; &ge; 1 + &radic;5 by a hand proof (calculus at the anchor 1 + &radic;5,
+  above, which Lean reduces to their numerical inputs but does not prove, and for &lambda; &ge; 1 + &radic;5 by a hand proof (calculus at the anchor 1 + &radic;5,
   then a monotonicity argument) that is also kernel-checked in Lean. That the maximizers for other &lambda; are spiders of the best
   arm is supported by exact computation and is being prepared for publication; treat it as a conjecture for now.</p>
 
@@ -255,9 +254,10 @@
   <div class="readout" id="obReadout"></div>
   <p class="note">What is checked where. The one-block formula above (the definition of &rho; as a supremum, the two
   bounds, &rho; &le; 1 + &lambda; and the limit) is kernel-checked in Lean for every &lambda; &gt; 0 (<a href="https://github.com/DrMurphyIsIn/brualdi-goldwasser/tree/main/formalization/cherry">formalization/cherry</a>), and so is
-  &rho;(&lambda;) = &radic;(1 + &lambda;/2) for &lambda; &ge; 1 + &radic;5. Below 1 + &radic;5 Lean does not determine
-  &rho;: that &rho;(&lambda;) = e<sup>f*(&lambda;)</sup>, the best rate among the leaf, the cherry and the arms, is the
-  computer-assisted part (interval arithmetic), not formalized. The curve &rho; drawn here uses that value, computed
+  &rho;(&lambda;) = &radic;(1 + &lambda;/2) for &lambda; &ge; 1 + &radic;5. Below 1 + &radic;5, that &rho;(&lambda;) =
+  e<sup>f*(&lambda;)</sup>, the best rate among the leaf, the cherry and the arms, is proved by computer-assisted
+  interval arithmetic: Lean derives it from two external inputs (witnesses and a best arm on [0.1, 1 + &radic;5); the
+  branch bound itself and a best arm on (0, 0.1]) but does not prove those inputs. The curve &rho; drawn here uses that value, computed
   over the cherry and the arms A<sub>j</sub> with j &le; 400 (near 1 + &radic;5 the best arm grows without bound, so
   the curve is a close lower approximation there). At &lambda; = 1 the arm A<sub>5</sub> attains
   &rho;(1) = (621/64)<sup>1/11</sup>.</p>

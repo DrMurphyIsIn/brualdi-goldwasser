@@ -59,8 +59,11 @@ definitions of `UTree`, `usize`, `Aobj`, `realize`, `aGraph`), `BGSpiderRule.lea
 `cherry/` is a separate Lean project, not imported by anything here and not needed for the λ = 1 theorem.
 It formalizes the cherry regime λ ≥ 1 + √5 of the λ-family (the branch ceiling with equality only for the
 cherry, the strict upper bound for every tree, the lower bound, ρ(λ) = √(1 + λ/2) and the growth rate), the
-one-block formula for every λ > 0, and the λ = 1 link to per L/∏ deg. Its own
+one-block formula for every λ > 0, the witness framework (the witness theorem (a)-(c), and (d) up to one
+step taken as a hypothesis), part (B) for 0 < λ < 1 + √5 *reduced* to two computer-assisted inputs that
+Lean does not prove (`PartB.lean`), and the λ = 1 link to per L/∏ deg. Its own
 [README](cherry/README.md) states exactly what is and is not proved; read `TreeBridge.lean` (the
-definition `piL`), `Growth.lean` (`Mn`) and `Rho.lean` (`rhoSet`, `rhoB`) to check the statements. It is
+definition `piL`), `Growth.lean` (`Mn`), `Rho.lean` (`rhoSet`, `rhoB`), `Witness.lean` (`Witness`) and
+`PartB.lean` (the two inputs) to check the statements. It is
 small and builds in a few minutes; its comments are clean of the history described above.
 

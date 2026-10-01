@@ -16,8 +16,10 @@ using the golden identities 1 + λ/2 = φ² and 1 + λ = φ³, and then a monoto
 anchor to every larger λ.
 
 This directory is a second, separate Lean 4 project that checks the cherry regime λ ≥ 1 + √5 with the Lean
-kernel, together with a general "one-block formula" that holds for every λ > 0. It does not touch, and is
-not needed by, the λ = 1 theorem in `../`.
+kernel, together with a general "one-block formula" that holds for every λ > 0, and the witness framework
+that organizes the computer-assisted part below 1 + √5. That part itself is **not** proved in Lean: Lean
+reduces it to two explicitly stated numerical inputs, which remain computer-assisted. The project does not
+touch, and is not needed by, the λ = 1 theorem in `../`.
 
 ## What is proved
 
@@ -48,8 +50,38 @@ of T_b^{1/|b|} over all finite planted branches (the leaf included):
 - M_n(λ) ≤ (1 + λ) ρ(λ)^{n−1} (`Mn_le_rho`);
 - lim M_n(λ)^{1/n} = ρ(λ) (`Mn_tendsto_rho`).
 
-Below 1 + √5 this does **not** determine ρ(λ): it says that the best branch sets the growth rate, not which
-branch is best or what the rate is.
+On its own this does **not** determine ρ(λ) below 1 + √5: it says that the best branch sets the growth rate,
+not which branch is best or what the rate is.
+
+**For every λ > 0: the witness framework.** A *witness* for (λ, F) is an exempt set A of branches, an interval
+I with (0, ½] ⊆ I ⊆ [0, 1], and a function h that is convex and bounded below on I, subject to a Bellman
+inequality for every non-exempt type of root (`Witness`, with the deficit g(b) = |b|F − log T_b). Lean proves
+the witness theorem:
+
+- (a) from a witness, g ≥ h(y_b) ≥ 0 on non-exempt branches and g ≥ 0 on exempt ones, so T_b ≤ e^{F|b|} for
+  every branch (`Witness.mt_main_a`);
+- (b) M_n(λ) ≤ (1 + λ)e^{F(n−1)} and ρ(λ) ≤ e^F (`Witness.mt_main_b`);
+- (c) if some branch b* has g(b*) = 0, then ρ(λ) = e^F and e^{F|b*|⌊(n−1)/|b*|⌋} ≤ M_n(λ) (`Witness.mt_main_c`);
+- (d) the characterization of the tight branches (`tight_leaf`, `tight_node`, `tight_of_g_zero`), except for
+  one step: that a corner of h yields a supporting line touching its graph only at the mean message. That
+  step is taken as a hypothesis (`jensen_eq_forces`).
+
+The definition is not vacuous. The golden hinge at λ = 1 + √5 is proved to be a witness, tight at the
+cherry (`hinge_witness`), and the witness theorem re-derives from it T_b ≤ φ^{|b|} and ρ(1 + √5) = φ
+(`ceiling_at_lam_c_via_witness`, `rho_lam_c_via_witness`).
+
+**Part (B), 0 < λ < 1 + √5: reduced, not proved.** With f*(λ) the best arm rate, sup over j of
+log T(A_j)/(2j + 1), Lean proves (`part_B_of_inputs`) that two external inputs imply, for every
+0 < λ < 1 + √5, the branch ceiling log T_b ≤ |b| f*(λ), ρ(λ) = e^{f*(λ)}, and the two-sided bound on M_n(λ)
+with a best arm as b*. The inputs are hypotheses of that theorem, stated in `PartB.lean`, and Lean does not
+prove them:
+
+- for every λ in [0.1, 1 + √5), a witness for (λ, f*(λ)) exists, and some arm attains f* (`PartB_WitnessInput`);
+- for every λ in (0, 0.1], the branch bound log T_b ≤ |b| f*(λ) itself holds, and some arm attains f*
+  (`PartB_SmallInput`).
+
+Both inputs are what the computer-assisted interval arithmetic supplies. So part (B) still rests on that
+arithmetic; what Lean adds is that nothing else is needed.
 
 **At λ = 1:** π_1(T) = per L(T) / ∏_v deg v for every tree on at least two vertices, with Mathlib's
 `Matrix.permanent` and L = D − A (`pi_one_eq_permanent_tree`). This ties the family back to Brualdi and
@@ -64,11 +96,12 @@ M_n(λ) is defined as the maximum of π_λ over all trees on the vertex set {0, 
 
 ## What is not formalized
 
-- **Everything about λ < 1 + √5 beyond the one-block formula.** In particular the value ρ(λ) = e^{f*(λ)}
-  there (the best block of the ladder sets the rate) and the equality cases there. That part rests on
-  computer-assisted interval arithmetic and is not in Lean.
-- **The witness framework** used for the range below 1 + √5. Its formalization exists and is being
-  independently audited; it is not part of this publication yet.
+- **Part (B) itself.** Its two inputs above, that is, the explicit witnesses below 1 + √5 with their
+  Bellman inequalities, the existence of a best arm, and the typed induction on (0, 0.1], are
+  computer-assisted and not in Lean.
+- The equality clause of part (B) (equality exactly for a best arm).
+- In the witness theorem (d), the step from a corner of h to a strict supporting line, which is a
+  hypothesis.
 - The strictness clauses of the monomer-density inequality and of the monotonicity.
 - The formal proofs do not always follow the hand proofs. Most visibly, the anchor at 1 + √5 is proved in
   Lean by a pooled induction with a concave hinge (`Main.lean`, `Step.lean`, `Zero.lean`), not by the
@@ -80,12 +113,12 @@ M_n(λ) is defined as the maximum of π_λ over all trees on the vertex set {0, 
 cd formalization/cherry
 lake exe cache get              # Mathlib's prebuilt files (same pins as ../)
 lake build                      # about 3-4 minutes on an Apple M3 Ultra, under 6 GB of memory
-lake env lean AxiomGuard.lean   # the axioms of the 13 headline theorems
+lake env lean AxiomGuard.lean   # the axioms of the 21 headline theorems
 ```
 
 The toolchain is Lean 4 v4.32.0 and Mathlib v4.32.0 (commit `81a5d257`), the same pins as `../`. If you
 have already built `../`, you can reuse its Mathlib with `cp -c -R ../.lake/packages .lake/packages` (an
-APFS clone on macOS) before `lake build`. Unlike `../`, this project is small: 26 files and about 4,500
+APFS clone on macOS) before `lake build`. Unlike `../`, this project is small: 29 files and about 5,400
 lines, with no generated certificate data.
 
 The `lean-cherry` workflow (`.github/workflows/lean-cherry.yml`, self-hosted, pushes to `main` that touch this
@@ -97,7 +130,9 @@ directory) builds it and checks the axiom guard.
 definitions (the matching sum with Mathlib degrees, the maximum over trees on `Fin n`, the cavity
 recursion, ρ) and the theorems from scratch, importing only Mathlib, and Comparator checks that the
 solution (`import LeanCherry`) proves exactly those statements and that both Lean's kernel and nanoda
-accept the proofs. Its README has the details and the results; the runs were local and not sandboxed.
+accept the proofs. For the witness framework only (a)-(c) of the witness theorem were replayed this way, not
+(d), the examples or `part_B_of_inputs`. Its README has the details and the results; the runs were local
+and not sandboxed.
 
 ## Files
 
@@ -113,9 +148,12 @@ accept the proofs. Its README has the details and the results; the runs were loc
 | `Strict.lean` | equality only for the cherry |
 | `Growth.lean`, `Realize.lean` | `Mn`, its bounds, ρ and the growth rate |
 | `Rho.lean` | the one-block formula for every λ |
+| `Witness.lean` | witnesses and the witness theorem (a)-(d) |
+| `WitnessExamples.lean` | the trivial witness, and the golden hinge as a witness at 1 + √5 |
+| `PartB.lean` | part (B) from its two numerical inputs |
 | `Lambda1.lean`, `R3Copy.lean` | the λ = 1 link to per L/∏ deg |
 | `Whole.lean`, `AddLeaf.lean`, `Graph.lean`, `MatchSum.lean`, `Extra.lean` | plumbing |
-| `AxiomGuard.lean` | `#print axioms` for the 13 headline theorems |
+| `AxiomGuard.lean` | `#print axioms` for the 21 headline theorems |
 
 `R3Copy.lean` is a verbatim copy of the λ = 1 permanent/matching development of `../R3Cert`, renamed into
 this namespace; its header records the provenance. Some module names (`ThmE`, `LemmaM`) are the working
@@ -124,7 +162,7 @@ names of the development and carry no meaning beyond that.
 ## Provenance
 
 The formalization was produced with AI assistance (Claude, Anthropic) under the author's direction, like
-the rest of this repository. Before publication it was independently audited four times, each audit by a
+the rest of this repository. Before publication it was independently audited five times, each audit by a
 separate AI-run session that rebuilt the project from scratch, checked axioms and definitions, compared the
 statements with the mathematics, checked small cases by brute force, and replayed the headline theorems
 with Comparator against its own transcriptions. Those audits are AI checks, not human review; the Lean

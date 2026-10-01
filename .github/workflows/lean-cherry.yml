@@ -52,4 +52,4 @@ jobs:
           if grep "depends on axioms" axioms.txt | grep -v "\[propext, Classical.choice, Quot.sound\]"; then
             echo "non-standard axiom found"; exit 1
           fi
-          test "$(grep -c 'depends on axioms' axioms.txt)" -eq 13
+          test "$(grep -c 'depends on axioms' axioms.txt)" -eq 21
