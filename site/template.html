@@ -177,7 +177,7 @@ footer { border-top: 1px solid var(--line); margin-top: 40px; padding-top: 14px;
   <p>Why five, rather than four or six? Give every matched edge an extra weight &lambda;: as &lambda; grows, the
   best arm climbs 3, 4, 5, 6, &hellip; and runs off to infinity at 1 + &radic;5, where the golden ratio appears.
   Brualdi and Goldwasser's &lambda; = 1 sits on the five-cherry rung. See <a href="#" data-go="ladder">Why five: the ladder</a>.
-  Along the whole ladder, for every &lambda; &ge; 0.1, the best block is now known to set the growth rate of
+  Along the whole ladder, for every &lambda; &gt; 0, the best block is now known to set the growth rate of
   &pi;<sub>&lambda;</sub>: a computer-assisted result (interval arithmetic) up to 1 + &radic;5, extended past it by a
   short hand argument, not formalized in Lean, described on that tab.</p>
 
@@ -342,8 +342,8 @@ certificates/verify.sh --full    # also the independent certified all-tree searc
   <ul>
     <li>Not yet refereed. We welcome review and issues.</li>
     <li>Uniqueness of the maximizer is established computationally, not in Lean.</li>
-    <li>The growth-rate ceiling for the &lambda;-family for every &lambda; &ge; 0.1 (see <a href="#" data-go="ladder">Why five: the ladder</a>)
-    is computer-assisted (interval arithmetic) for 0.1 &le; &lambda; &lt; 1 + &radic;5 and a hand proof from an
+    <li>The growth-rate ceiling for the &lambda;-family for every &lambda; &gt; 0 (see <a href="#" data-go="ladder">Why five: the ladder</a>)
+    is computer-assisted (interval arithmetic) for 0 &lt; &lambda; &lt; 1 + &radic;5 and a hand proof from an
     interval-arithmetic anchor at 1 + &radic;5 for &lambda; &ge; 1 + &radic;5; neither is formalized in Lean. The Lean
     theorem is &lambda; = 1 only.</li>
     <li>The heaviest Lean files need 15&ndash;35 GiB of memory each.</li>

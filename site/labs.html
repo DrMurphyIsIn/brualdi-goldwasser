@@ -117,15 +117,19 @@
     once for &lambda; &gt; 0, at 1 + &radic;5, at height &phi;.</p>
   </div>
 
-  <h2>The ceiling along the ladder: every &lambda; &ge; 0.1</h2>
+  <h2>The ceiling along the ladder: every &lambda; &gt; 0</h2>
   <p>The ladder says which block is best. A second question is whether that block also sets the growth rate
   of &pi;<sub>&lambda;</sub>: whether no pendant subtree of <i>any</i> shape beats the best block per vertex. At
-  &lambda; = 1 that is the sharp ceiling of the Lean proof. It is now proved for every &lambda; &ge; 0.1, with no
+  &lambda; = 1 that is the sharp ceiling of the Lean proof. It is now proved for every &lambda; &gt; 0, with no
   gaps: by computer-assisted interval arithmetic (mpmath interval arithmetic, independently re-implemented in Arb)
-  up to 1 + &radic;5, and by a short hand argument from there on. On that whole range the maximal growth rate of
+  up to 1 + &radic;5, and by a short hand argument from there on. On the whole range the maximal growth rate of
   &pi;<sub>&lambda;</sub> is the best-atom rate f*(&lambda;), so the ladder picture above, which arm is best, is
-  the whole story for the growth rate. The proof runs in five regimes:</p>
+  the whole story for the growth rate. The proof runs in six regimes:</p>
   <ul>
+    <li><b>0 &lt; &lambda; &le; 0.1:</b> a degree-typed induction. The leaf, the cherry and the arms are exact
+    types, and every other branch carries a bound proportional to &lambda;. The interval boxes include &lambda; = 0
+    itself, and the only equality is the three-cherry arm A<sub>3</sub>. Computer-assisted (interval arithmetic,
+    independently re-implemented in Arb), not formalized in Lean.</li>
     <li><b>0.1 &le; &lambda; &le; 0.47:</b> a power shoulder.</li>
     <li><b>0.47 &le; &lambda; &le; 1.6:</b> a quadratic shoulder. This is the regime that contains &lambda; = 1.</li>
     <li><b>1.6 &le; &lambda; &le; 3.22:</b> a three-piece linear certificate.</li>
@@ -137,16 +141,17 @@
     T<sub>b</sub>(&lambda;)/(2 + &lambda;)<sup>n/2</sup> nonincreasing in &lambda;; anchored at the single point
     1 + &radic;5, where the ceiling is checked by interval arithmetic, that gives the ceiling for every larger &lambda;.</li>
   </ul>
-  <p class="note">For 0.1 &le; &lambda; &lt; 1 + &radic;5 this result is computer-assisted (interval arithmetic), not
+  <p class="note">For 0 &lt; &lambda; &lt; 1 + &radic;5 this result is computer-assisted (interval arithmetic), not
   formalized in Lean; for &lambda; &ge; 1 + &radic;5 it is a hand proof from an interval-arithmetic anchor at
-  1 + &radic;5, not formalized in Lean. It is about the growth rate only: it says nothing about the shape of the
-  maximizers for &lambda; &ne; 1. Still open: &lambda; below 0.1, where the rate is known to first order, through
-  the Randi&#263; limit above.</p>
+  1 + &radic;5, not formalized in Lean. At &lambda; = 1 exactly it is also the sharp ceiling of the Lean proof. It
+  is about the growth rate only: it says nothing about the shape of the maximizers for &lambda; &ne; 1. As
+  &lambda; &rarr; 0 the rate is governed to first order by the Randi&#263; limit above, which is why the bottom
+  regime is anchored at A<sub>3</sub>.</p>
 
   <p class="note">What is proved and what is not. The ladder (which block is best among leaves, cherries
   and arms) and the balance cubic are elementary and proved. At &lambda; = 1, no pendant subtree of <i>any</i>
-  shape beats A<sub>5</sub>; that is the sharp ceiling in the Lean proof. For every &lambda; &ge; 0.1 the same
-  ceiling holds: for 0.1 &le; &lambda; &lt; 1 + &radic;5 by the computer-assisted (interval arithmetic) argument
+  shape beats A<sub>5</sub>; that is the sharp ceiling in the Lean proof. For every &lambda; &gt; 0 the same
+  ceiling holds: for 0 &lt; &lambda; &lt; 1 + &radic;5 by the computer-assisted (interval arithmetic) arguments
   above, not formalized in Lean, and for &lambda; &ge; 1 + &radic;5 by a hand proof from an interval-arithmetic
   anchor at 1 + &radic;5, not formalized in Lean. That the maximizers for other &lambda; are spiders of the best
   arm is supported by exact computation and is being prepared for publication; treat it as a conjecture for now.</p>

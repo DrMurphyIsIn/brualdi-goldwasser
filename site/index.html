@@ -177,7 +177,7 @@ footer { border-top: 1px solid var(--line); margin-top: 40px; padding-top: 14px;
   <p>Why five, rather than four or six? Give every matched edge an extra weight &lambda;: as &lambda; grows, the
   best arm climbs 3, 4, 5, 6, &hellip; and runs off to infinity at 1 + &radic;5, where the golden ratio appears.
   Brualdi and Goldwasser's &lambda; = 1 sits on the five-cherry rung. See <a href="#" data-go="ladder">Why five: the ladder</a>.
-  Along the whole ladder, for every &lambda; &ge; 0.1, the best block is now known to set the growth rate of
+  Along the whole ladder, for every &lambda; &gt; 0, the best block is now known to set the growth rate of
   &pi;<sub>&lambda;</sub>: a computer-assisted result (interval arithmetic) up to 1 + &radic;5, extended past it by a
   short hand argument, not formalized in Lean, described on that tab.</p>
 
@@ -350,15 +350,19 @@ footer { border-top: 1px solid var(--line); margin-top: 40px; padding-top: 14px;
     once for &lambda; &gt; 0, at 1 + &radic;5, at height &phi;.</p>
   </div>
 
-  <h2>The ceiling along the ladder: every &lambda; &ge; 0.1</h2>
+  <h2>The ceiling along the ladder: every &lambda; &gt; 0</h2>
   <p>The ladder says which block is best. A second question is whether that block also sets the growth rate
   of &pi;<sub>&lambda;</sub>: whether no pendant subtree of <i>any</i> shape beats the best block per vertex. At
-  &lambda; = 1 that is the sharp ceiling of the Lean proof. It is now proved for every &lambda; &ge; 0.1, with no
+  &lambda; = 1 that is the sharp ceiling of the Lean proof. It is now proved for every &lambda; &gt; 0, with no
   gaps: by computer-assisted interval arithmetic (mpmath interval arithmetic, independently re-implemented in Arb)
-  up to 1 + &radic;5, and by a short hand argument from there on. On that whole range the maximal growth rate of
+  up to 1 + &radic;5, and by a short hand argument from there on. On the whole range the maximal growth rate of
   &pi;<sub>&lambda;</sub> is the best-atom rate f*(&lambda;), so the ladder picture above, which arm is best, is
-  the whole story for the growth rate. The proof runs in five regimes:</p>
+  the whole story for the growth rate. The proof runs in six regimes:</p>
   <ul>
+    <li><b>0 &lt; &lambda; &le; 0.1:</b> a degree-typed induction. The leaf, the cherry and the arms are exact
+    types, and every other branch carries a bound proportional to &lambda;. The interval boxes include &lambda; = 0
+    itself, and the only equality is the three-cherry arm A<sub>3</sub>. Computer-assisted (interval arithmetic,
+    independently re-implemented in Arb), not formalized in Lean.</li>
     <li><b>0.1 &le; &lambda; &le; 0.47:</b> a power shoulder.</li>
     <li><b>0.47 &le; &lambda; &le; 1.6:</b> a quadratic shoulder. This is the regime that contains &lambda; = 1.</li>
     <li><b>1.6 &le; &lambda; &le; 3.22:</b> a three-piece linear certificate.</li>
@@ -370,16 +374,17 @@ footer { border-top: 1px solid var(--line); margin-top: 40px; padding-top: 14px;
     T<sub>b</sub>(&lambda;)/(2 + &lambda;)<sup>n/2</sup> nonincreasing in &lambda;; anchored at the single point
     1 + &radic;5, where the ceiling is checked by interval arithmetic, that gives the ceiling for every larger &lambda;.</li>
   </ul>
-  <p class="note">For 0.1 &le; &lambda; &lt; 1 + &radic;5 this result is computer-assisted (interval arithmetic), not
+  <p class="note">For 0 &lt; &lambda; &lt; 1 + &radic;5 this result is computer-assisted (interval arithmetic), not
   formalized in Lean; for &lambda; &ge; 1 + &radic;5 it is a hand proof from an interval-arithmetic anchor at
-  1 + &radic;5, not formalized in Lean. It is about the growth rate only: it says nothing about the shape of the
-  maximizers for &lambda; &ne; 1. Still open: &lambda; below 0.1, where the rate is known to first order, through
-  the Randi&#263; limit above.</p>
+  1 + &radic;5, not formalized in Lean. At &lambda; = 1 exactly it is also the sharp ceiling of the Lean proof. It
+  is about the growth rate only: it says nothing about the shape of the maximizers for &lambda; &ne; 1. As
+  &lambda; &rarr; 0 the rate is governed to first order by the Randi&#263; limit above, which is why the bottom
+  regime is anchored at A<sub>3</sub>.</p>
 
   <p class="note">What is proved and what is not. The ladder (which block is best among leaves, cherries
   and arms) and the balance cubic are elementary and proved. At &lambda; = 1, no pendant subtree of <i>any</i>
-  shape beats A<sub>5</sub>; that is the sharp ceiling in the Lean proof. For every &lambda; &ge; 0.1 the same
-  ceiling holds: for 0.1 &le; &lambda; &lt; 1 + &radic;5 by the computer-assisted (interval arithmetic) argument
+  shape beats A<sub>5</sub>; that is the sharp ceiling in the Lean proof. For every &lambda; &gt; 0 the same
+  ceiling holds: for 0 &lt; &lambda; &lt; 1 + &radic;5 by the computer-assisted (interval arithmetic) arguments
   above, not formalized in Lean, and for &lambda; &ge; 1 + &radic;5 by a hand proof from an interval-arithmetic
   anchor at 1 + &radic;5, not formalized in Lean. That the maximizers for other &lambda; are spiders of the best
   arm is supported by exact computation and is being prepared for publication; treat it as a conjecture for now.</p>
@@ -519,8 +524,8 @@ certificates/verify.sh --full    # also the independent certified all-tree searc
   <ul>
     <li>Not yet refereed. We welcome review and issues.</li>
     <li>Uniqueness of the maximizer is established computationally, not in Lean.</li>
-    <li>The growth-rate ceiling for the &lambda;-family for every &lambda; &ge; 0.1 (see <a href="#" data-go="ladder">Why five: the ladder</a>)
-    is computer-assisted (interval arithmetic) for 0.1 &le; &lambda; &lt; 1 + &radic;5 and a hand proof from an
+    <li>The growth-rate ceiling for the &lambda;-family for every &lambda; &gt; 0 (see <a href="#" data-go="ladder">Why five: the ladder</a>)
+    is computer-assisted (interval arithmetic) for 0 &lt; &lambda; &lt; 1 + &radic;5 and a hand proof from an
     interval-arithmetic anchor at 1 + &radic;5 for &lambda; &ge; 1 + &radic;5; neither is formalized in Lean. The Lean
     theorem is &lambda; = 1 only.</li>
     <li>The heaviest Lean files need 15&ndash;35 GiB of memory each.</li>
@@ -1230,11 +1235,12 @@ certificates/verify.sh --full    # also the independent certified all-tree searc
       Math.exp(b.v).toFixed(6) + "<br>breakpoints: " + bp.map(function (p) { return "A" + p[0] + "→A" + (p[0] + 1) + " at " + p[1].toFixed(4); }).join(", ") +
       ", … → 1+√5 = " + g.toFixed(4) + "<br>" + ceilingStatus(l);
   }
-  function ceilingStatus(l) {              // the growth-rate ceiling at this λ: which proof regime, or open
+  function ceilingStatus(l) {              // the growth-rate ceiling at this λ: which proof regime (proved for every λ > 0)
     var g = 1 + Math.sqrt(5), how;
-    if (l < 0.1) return "ceiling at this λ: open (below 0.1 the rate is known to first order, via the Randić limit)";
+    if (!(l > 0)) return "ceiling: λ must be positive";   // unreachable from the slider (sliderL floors at 0.01); kept as a guard
     if (l >= g) return "ceiling at this λ: proved (cherry regime, λ ≥ 1+√5: growth rate ½ log(1+λ/2)); hand proof from an interval-arithmetic anchor at 1+√5, not formalized in Lean";
-    if (l <= 0.47) how = "power shoulder, 0.1 ≤ λ ≤ 0.47";
+    if (l <= 0.1) how = "typed induction, 0 < λ ≤ 0.1";
+    else if (l <= 0.47) how = "power shoulder, 0.1 ≤ λ ≤ 0.47";
     else if (l <= 1.6) how = "quadratic shoulder, 0.47 ≤ λ ≤ 1.6";
     else if (l <= 3.22) how = "three-piece linear, 1.6 ≤ λ ≤ 3.22";
     else how = "hand argument for the thin window 3.22 ≤ λ < 1+√5";
