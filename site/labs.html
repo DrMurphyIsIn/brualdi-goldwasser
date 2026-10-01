@@ -138,12 +138,10 @@
     <li><b>&lambda; &ge; 1 + &radic;5:</b> the cherry regime. Here the cherry is the best atom and the growth rate is
     &frac12; log(1 + &lambda;/2). A short hand argument shows that the expected number of unmatched vertices in the
     weighted matching model is at least 2n/(2 + &lambda;) once &lambda; &ge; 2, which makes
-    T<sub>b</sub>(&lambda;)/(2 + &lambda;)<sup>n/2</sup> nonincreasing in &lambda;; anchored at the single point
-    1 + &radic;5, where the ceiling is checked by interval arithmetic, that gives the ceiling for every larger &lambda;.</li>
+    T<sub>b</sub>(&lambda;)/(2 + &lambda;)<sup>n/2</sup> nonincreasing in &lambda;; anchored at the single point 1 + &radic;5, where the ceiling is verified by calculus using the golden-ratio identities, that gives the ceiling for every larger &lambda;.</li>
   </ul>
   <p class="note">For 0 &lt; &lambda; &lt; 1 + &radic;5 this result is computer-assisted (interval arithmetic), not
-  formalized in Lean; for &lambda; &ge; 1 + &radic;5 it is a hand proof from an interval-arithmetic anchor at
-  1 + &radic;5, not formalized in Lean. At &lambda; = 1 exactly it is also the sharp ceiling of the Lean proof. It
+  formalized in Lean; for &lambda; &ge; 1 + &radic;5 it is a hand proof (calculus at 1 + &radic;5 with the golden-ratio identities, then a monotonicity argument), not formalized in Lean. At &lambda; = 1 exactly it is also the sharp ceiling of the Lean proof. It
   is about the growth rate only: it says nothing about the shape of the maximizers for &lambda; &ne; 1. As
   &lambda; &rarr; 0 the rate is governed to first order by the Randi&#263; limit above, which is why the bottom
   regime is anchored at A<sub>3</sub>.</p>

@@ -512,7 +512,7 @@
   function ceilingStatus(l) {              // the growth-rate ceiling at this λ: which proof regime (proved for every λ > 0)
     var g = 1 + Math.sqrt(5), how;
     if (!(l > 0)) return "ceiling: λ must be positive";   // unreachable from the slider (sliderL floors at 0.01); kept as a guard
-    if (l >= g) return "ceiling at this λ: proved (cherry regime, λ ≥ 1+√5: growth rate ½ log(1+λ/2)); hand proof from an interval-arithmetic anchor at 1+√5, not formalized in Lean";
+    if (l >= g) return "ceiling at this λ: proved (cherry regime, λ ≥ 1+√5: growth rate ½ log(1+λ/2)); hand proof (calculus at 1+√5 with the golden-ratio identities, then a monotonicity argument), not formalized in Lean";
     if (l <= 0.1) how = "typed induction, 0 < λ ≤ 0.1";
     else if (l <= 0.47) how = "power shoulder, 0.1 ≤ λ ≤ 0.47";
     else if (l <= 1.6) how = "quadratic shoulder, 0.47 ≤ λ ≤ 1.6";
