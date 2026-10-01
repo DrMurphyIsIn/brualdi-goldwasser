@@ -34,3 +34,9 @@ import LeanCherry
 #print axioms LeanCherry.rho_lam_c_via_witness
 -- Part (B), 0 < λ < 1 + √5, from two external numerical inputs (stated as hypotheses; not proved in Lean).
 #print axioms LeanCherry.part_B_of_inputs
+-- Part (B) on the window 3.22 ≤ λ < 1 + √5, by hand: the window witness and a best arm, and the branch bound.
+#print axioms LeanCherry.window_witness
+#print axioms LeanCherry.window_ceiling
+-- Part (B), 0 < λ < 1 + √5, with the window removed from the inputs (still external below 3.22; not proved in Lean).
+#print axioms LeanCherry.partB_witnessInput_of_low
+#print axioms LeanCherry.part_B_of_inputs_low

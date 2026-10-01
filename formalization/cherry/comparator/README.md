@@ -3,7 +3,8 @@
 [Comparator](https://github.com/leanprover/comparator) is the Lean FRO's tool for checking a proof
 against a separately written statement. Each challenge here restates, importing **only Mathlib**, the
 definitions a headline theorem depends on (the weighted matching sum π_λ with Mathlib degrees, the maximum
-M_n over the trees on `Fin n`, planted branches and the cavity recursion, ρ) and the theorem itself, with
+M_n over the trees on `Fin n`, planted branches and the cavity recursion, ρ, witnesses, the arms and the
+best arm rate f*) and the theorem itself, with
 `sorry`. The solution, `CherrySolution.lean`, is just `import LeanCherry`. For each configuration
 Comparator confirms that the solution's definitions and statements are *identical* to the challenge's,
 that the proofs use only `propext`, `Quot.sound` and `Classical.choice`, and that the exported proofs are
@@ -18,11 +19,12 @@ implementation of the Lean kernel in Rust.
 | `branch` | `ChBr.lean` + `ChBranch.lean` | `Br.Tl_eq_cherry_iff`, `rho_eq`, `rho_isGreatest`, `rho_isLUB` |
 | `oneblock` | `ChOneBlockBr/Tl/Graph.lean` + `ChOneBlock.lean` | `Mn_le_rho`, `Mn_ge_block`, `Mn_tendsto_rho`, `rhoB_eq_cherry`, `rhoB_le`, `rhoSet_bdd`, `Br.Tl_le_pow` |
 | `witness` | `ChOneBlockBr/Tl/Graph.lean` + `ChWitness.lean` | `Witness.mt_main_a`, `Witness.mt_main_b`, `Witness.mt_main_c` (the definition of a witness, and the witness theorem (a)-(c)) |
+| `window` | `ChWitness.lean` + `ChPartB.lean` + `ChWin.lean` | `window_witness`, `window_ceiling` (part (B) on [3.22, 1 + √5)), `part_B_of_inputs_low` (the reduction below 3.22, with its two inputs `PartB_WitnessInputLow` and `PartB_SmallInput` restated) |
 
-Only (a)-(c) of the witness theorem are replayed. Its part (d), the examples (the golden hinge) and
+Of the witness theorem only (a)-(c) are replayed. Its part (d), the examples (the golden hinge) and
 `part_B_of_inputs` are checked by Lean's kernel in the build, but not by this second kernel.
 
-Four negative controls show that the check has teeth. Each changes one thing and must be **rejected**:
+Five negative controls show that the check has teeth. Each changes one thing and must be **rejected**:
 
 | configuration | change | expected |
 |---|---|---|
@@ -30,6 +32,14 @@ Four negative controls show that the check has teeth. Each changes one thing and
 | `neg_rate` | growth rate √(1 + λ/3) instead of √(1 + λ/2) | statement mismatch on `Mn_rate` |
 | `neg_upper` | M_n ≤ (1 + λ)ρ^n instead of ρ^{n−1} (weaker, and true) | statement mismatch on `Mn_le_rho` |
 | `neg_convex` | a witness without the convexity field | definition mismatch on `Witness.mk` |
+| `neg_kappa` | the window witness with slope κ = 2 instead of κ = f*/t, claimed to be a witness on the window | rejected, since no proof exists (`sorryAx` in `CherrySolutionKappa.lean`) |
+
+The `neg_kappa` claim is not just unproved but false, and a sixth configuration, `kappa_refute`, must be
+**accepted**: `CherrySolutionKappa.lean` proves `kap2_not_witness`, that for every λ in the window the
+κ = 2 function is *not* a witness, because its Bellman inequality fails at a root with one non-exempt child,
+at ȳ = y_C. So the slope of the window witness is genuinely constrained. Its challenge, `ChNegKappa.lean`,
+builds on `ChWinArms.lean` and `ChWinConst.lean`, which restate the window constants in two modules, as the
+solution does, so that the auxiliary definitions get the same names on both sides.
 
 Comparator matches constants by name and by term, so the challenges use the solution's names, and the
 branch type sits in its own module so that its auxiliary definitions get the same names on both sides.
@@ -55,9 +65,12 @@ Each run takes one to two minutes and about 6 GB of memory.
 
 ## Result
 
-On 1 October 2026 every positive configuration passed, with "Nanoda kernel accepts the solution", "Lean
-default kernel accepts the solution" and "Your solution is okay!", and every negative control was rejected
-with the expected mismatch. The runs were made locally on an Apple-silicon Mac, **not sandboxed**: the
+On 1 October 2026, after the window files were added, every configuration was re-run. Every positive
+configuration (`headline`, `lambda1`, `graph`, `branch`, `oneblock`, `witness`, `window` and `kappa_refute`)
+passed, with "Nanoda kernel accepts the solution", "Lean default kernel accepts the solution" and "Your
+solution is okay!". Every negative control was rejected as expected: `neg_degree` and `neg_convex` with a
+definition mismatch, `neg_rate` and `neg_upper` with a statement mismatch, and `neg_kappa` with "Illegal axiom
+detected: 'sorryAx'". The runs were made locally on an Apple-silicon Mac, **not sandboxed**: the
 landrun sandbox was replaced by a pass-through shim, as described in `../../comparator/README.md`. Since
 the solution is our own, the guarantee comes from the replay by two kernels, not from the sandbox. These
 runs are not part of CI.

@@ -1,0 +1,13 @@
+{
+  "challenge_module": "ChNegKappa",
+  "solution_module": "CherrySolutionKappa",
+  "theorem_names": [
+    "LeanCherry.kap2_not_witness"
+  ],
+  "permitted_axioms": [
+    "propext",
+    "Quot.sound",
+    "Classical.choice"
+  ],
+  "enable_nanoda": true
+}
