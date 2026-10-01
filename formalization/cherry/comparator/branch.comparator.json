@@ -1,0 +1,16 @@
+{
+  "challenge_module": "ChBranch",
+  "solution_module": "CherrySolution",
+  "theorem_names": [
+    "LeanCherry.Br.Tl_eq_cherry_iff",
+    "LeanCherry.rho_eq",
+    "LeanCherry.rho_isGreatest",
+    "LeanCherry.rho_isLUB"
+  ],
+  "permitted_axioms": [
+    "propext",
+    "Quot.sound",
+    "Classical.choice"
+  ],
+  "enable_nanoda": true
+}

@@ -138,10 +138,9 @@
     <li><b>&lambda; &ge; 1 + &radic;5:</b> the cherry regime. Here the cherry is the best atom and the growth rate is
     &frac12; log(1 + &lambda;/2). A short hand argument shows that the expected number of unmatched vertices in the
     weighted matching model is at least 2n/(2 + &lambda;) once &lambda; &ge; 2, which makes
-    T<sub>b</sub>(&lambda;)/(2 + &lambda;)<sup>n/2</sup> nonincreasing in &lambda;; anchored at the single point 1 + &radic;5, where the ceiling is verified by calculus using the golden-ratio identities, that gives the ceiling for every larger &lambda;.</li>
+    T<sub>b</sub>(&lambda;)/(2 + &lambda;)<sup>n/2</sup> nonincreasing in &lambda;; anchored at the single point 1 + &radic;5, where the ceiling is verified by calculus using the golden-ratio identities, that gives the ceiling for every larger &lambda;. This regime is also kernel-checked in Lean (<a href="https://github.com/DrMurphyIsIn/brualdi-goldwasser/tree/main/formalization/cherry">formalization/cherry</a>): the ceiling with equality only for the cherry, the bounds on the maximum, and the growth rate.</li>
   </ul>
-  <p class="note">For 0 &lt; &lambda; &lt; 1 + &radic;5 this result is computer-assisted (interval arithmetic), not
-  formalized in Lean; for &lambda; &ge; 1 + &radic;5 it is a hand proof (calculus at 1 + &radic;5 with the golden-ratio identities, then a monotonicity argument), not formalized in Lean. At &lambda; = 1 exactly it is also the sharp ceiling of the Lean proof. It
+  <p class="note">For 0 &lt; &lambda; &lt; 1 + &radic;5 this result is computer-assisted (interval arithmetic). Lean checks the witness framework of this proof for every &lambda; &gt; 0 and reduces the range below 1 + &radic;5 to two external inputs (witnesses and a best arm on [0.1, 1 + &radic;5); the branch bound itself and a best arm on (0, 0.1]), which it does not prove, so that range still rests on computer-assisted interval arithmetic. For &lambda; &ge; 1 + &radic;5 it is a hand proof (calculus at 1 + &radic;5 with the golden-ratio identities, then a monotonicity argument), and it is also kernel-checked in Lean (<a href="https://github.com/DrMurphyIsIn/brualdi-goldwasser/tree/main/formalization/cherry">formalization/cherry</a>), by a different route at the anchor. At &lambda; = 1 exactly it is also the sharp ceiling of the Lean proof. For every &lambda; &gt; 0 Lean also checks the one-block formula: with &rho;(&lambda;) the supremum of T<sub>b</sub><sup>1/|b|</sup> over all branches, the maximum lies between T<sub>b</sub><sup>&lfloor;(n&minus;1)/|b|&rfloor;</sup> and (1+&lambda;)&rho;<sup>n&minus;1</sup>, and its n-th root tends to &rho;. Below 1 + &radic;5 the one-block formula alone does not determine &rho;(&lambda;); its value there comes from the computer-assisted inputs. It
   is about the growth rate only: it says nothing about the shape of the maximizers for &lambda; &ne; 1. As
   &lambda; &rarr; 0 the rate is governed to first order by the Randi&#263; limit above, which is why the bottom
   regime is anchored at A<sub>3</sub>.</p>
@@ -150,9 +149,118 @@
   and arms) and the balance cubic are elementary and proved. At &lambda; = 1, no pendant subtree of <i>any</i>
   shape beats A<sub>5</sub>; that is the sharp ceiling in the Lean proof. For every &lambda; &gt; 0 the same
   ceiling holds: for 0 &lt; &lambda; &lt; 1 + &radic;5 by the computer-assisted (interval arithmetic) arguments
-  above, not formalized in Lean, and for &lambda; &ge; 1 + &radic;5 by a hand proof from an interval-arithmetic
-  anchor at 1 + &radic;5, not formalized in Lean. That the maximizers for other &lambda; are spiders of the best
+  above, which Lean reduces to their numerical inputs but does not prove, and for &lambda; &ge; 1 + &radic;5 by a hand proof (calculus at the anchor 1 + &radic;5,
+  then a monotonicity argument) that is also kernel-checked in Lean. That the maximizers for other &lambda; are spiders of the best
   arm is supported by exact computation and is being prepared for publication; treat it as a conjecture for now.</p>
+
+  <h2 id="cherry-regime">The cherry regime, &lambda; &ge; 1 + &radic;5</h2>
+  <p>Past the top of the ladder the cherry is the best block, and the claim is that no pendant subtree of any
+  shape beats it per vertex: every planted branch <i>b</i> has T<sub>b</sub>(&lambda;) &le;
+  (1 + &lambda;/2)<sup>|b|/2</sup>, with equality only for the cherry. Here T<sub>b</sub> is the weight of the branch,
+  computed by the cavity recursion: a leaf has T = 1 and message y = 1; a vertex with children c has
+  d = #children + 1, R = &Sigma; y<sub>c</sub>, T<sub>b</sub> = &prod; T<sub>c</sub> &middot; (d + &lambda;R)/d and
+  y<sub>b</sub> = 1/(d + &lambda;R). The plots below compute it in your browser.</p>
+  <div class="controls">
+    <label>&lambda; <input type="range" id="crL" min="0" max="1000" value="0"></label>
+    <span class="mono" id="crLval"></span>
+    <button class="btn" id="crGold" type="button">&lambda; = 1 + &radic;5</button>
+    <button class="btn" id="crRand" type="button">new random branch</button>
+  </div>
+  <div class="plotwrap">
+    <svg id="crAtomSvg" viewBox="0 0 900 300" role="img" aria-label="per-vertex rate of the arms against the cherry"></svg>
+    <p class="note" style="margin:6px 4px 0">Per-vertex rate of the arms A<sub>j</sub> (j cherries on a hub, 2j+1 vertices),
+    f<sub>j</sub> = log T(A<sub>j</sub>)/(2j+1) with T(A<sub>j</sub>) = c<sup>j</sup>(1 + tj/(j+1)), c = 1 + &lambda;/2,
+    t = &lambda;/(2+&lambda;), minus the cherry's rate &frac12; log(1 + &lambda;/2), for j = 1, &hellip;, 12. Every arm is
+    below zero from 1 + &radic;5 on: the cherry is the unique best block.</p>
+  </div>
+  <div class="plotwrap">
+    <svg id="crSvg" viewBox="0 0 900 340" role="img" aria-label="normalized branch weights against lambda"></svg>
+    <div class="legend" id="crLegend"></div>
+    <p class="note" style="margin:6px 4px 0">For each branch, (1/|b|) log(T<sub>b</sub>(&lambda;)/(1 + &lambda;/2)<sup>|b|/2</sup>),
+    which is (1/|b|) log(T<sub>b</sub>(&lambda;)/(2+&lambda;)<sup>|b|/2</sup>) + &frac12; log 2: the normalized ratio
+    T<sub>b</sub>/(2+&lambda;)<sup>|b|/2</sup>, per vertex and shifted so that the ceiling is the zero line. Every curve is
+    nonincreasing on [2, &infin;), and the cherry's is flat at zero. Below 1 + &radic;5 a branch can still sit above
+    zero (A<sub>5</sub> does at &lambda; = 2); from the anchor on, none can.</p>
+  </div>
+  <div class="readout" id="crReadout"></div>
+  <p class="note">The anchor at &lambda; = 1 + &radic;5, where the ceiling reads T<sub>b</sub> &le; &phi;<sup>|b|</sup>, is
+  proved by one-variable calculus using the golden identities 1 + &lambda;/2 = &phi;<sup>2</sup> and
+  1 + &lambda; = &phi;<sup>3</sup>. The extension to every larger &lambda; is the monotonicity drawn above. For
+  &lambda; &ge; 1 + &radic;5 the ceiling, its equality case, the bounds on M<sub>n</sub>(&lambda;) below and the growth
+  rate are also kernel-checked in Lean (<a href="https://github.com/DrMurphyIsIn/brualdi-goldwasser/tree/main/formalization/cherry">formalization/cherry</a>); the Lean proof of the anchor takes a different route.</p>
+
+  <h2 id="never-attained">The upper bound is never attained</h2>
+  <p>Let M<sub>n</sub>(&lambda;) be the largest &pi;<sub>&lambda;</sub> over trees on <i>n</i> vertices. In the cherry
+  regime the ceiling gives (1 + &lambda;/2)<sup>&lfloor;(n&minus;1)/2&rfloor;</sup> &le; M<sub>n</sub>(&lambda;) &lt;
+  (1 + &lambda;)(1 + &lambda;/2)<sup>(n&minus;1)/2</sup> for every n &ge; 1, and the upper bound is strict: no tree
+  reaches it. The lower bound comes from a center carrying &lfloor;(n&minus;1)/2&rfloor; cherries (and one leaf when
+  n is even). Here M<sub>n</sub> is computed exactly as stated, by running the cavity recursion on every tree with
+  n &le; 12 vertices (987 trees, listed when the page is built); for larger n only the bounds are drawn.</p>
+  <div class="controls">
+    <label>&lambda; <input type="range" id="naL" min="0" max="1000" value="40"></label>
+    <span class="mono" id="naLval"></span>
+    <label>n <input type="range" id="naN" min="2" max="20" value="8"></label>
+    <span class="mono" id="naNval"></span>
+  </div>
+  <div class="plotwrap">
+    <svg id="naSvg" viewBox="0 0 900 320" role="img" aria-label="the maximum against its bounds"></svg>
+    <div class="legend"><span style="color:var(--a5)">upper bound (1+&lambda;)(1+&lambda;/2)<sup>(n&minus;1)/2</sup></span>
+    <span style="color:var(--a4)">lower bound (1+&lambda;/2)<sup>&lfloor;(n&minus;1)/2&rfloor;</sup></span>
+    <span style="color:var(--ink)">M<sub>n</sub>(&lambda;), n &le; 12</span></div>
+    <p class="note" style="margin:6px 4px 0">Logarithmic scale, divided by (1+&lambda;/2)<sup>(n&minus;1)/2</sup> so that the
+    upper bound is the horizontal line at 1 + &lambda;. The maximum stays strictly below it.</p>
+  </div>
+  <div class="plotwrap">
+    <svg id="naRateSvg" viewBox="0 0 900 280" role="img" aria-label="n-th roots converging"></svg>
+    <p class="note" style="margin:6px 4px 0">n-th roots: the bounds, and M<sub>n</sub><sup>1/n</sup> for n &le; 12, squeeze
+    toward &radic;(1 + &lambda;/2) (dashed), so lim M<sub>n</sub><sup>1/n</sup> = &radic;(1 + &lambda;/2).</p>
+  </div>
+  <div class="plotwrap">
+    <svg id="naTreeSvg" viewBox="0 0 900 220" role="img" aria-label="a maximizing tree"></svg>
+  </div>
+  <div class="readout" id="naReadout"></div>
+
+  <h2 id="one-block">The one-block formula, every &lambda; &gt; 0</h2>
+  <p>For every &lambda; &gt; 0 the growth rate of M<sub>n</sub>(&lambda;) is set by single blocks. Let &rho;(&lambda;)
+  be the supremum of T<sub>b</sub><sup>1/|b|</sup> over all finite planted branches b, the leaf included. Then for
+  every branch b and every n &ge; 1</p>
+  <p class="readout">T<sub>b</sub><sup>&lfloor;(n&minus;1)/|b|&rfloor;</sup> &le; M<sub>n</sub>(&lambda;) &le; (1+&lambda;) &rho;(&lambda;)<sup>n&minus;1</sup>,<br>
+  &rho;(&lambda;) &le; 1 + &lambda;, &nbsp; lim M<sub>n</sub><sup>1/n</sup> = &rho;(&lambda;).</p>
+  <p>The lower bound is the tree drawn below: a center carrying k = &lfloor;(n&minus;1)/|b|&rfloor; copies of b and the
+  remaining n&minus;1&minus;k|b| vertices as leaves. Pick a branch and an activity.</p>
+  <div class="controls">
+    <label>&lambda; <input type="range" id="obL" min="1" max="600" value="100"></label>
+    <span class="mono" id="obLval"></span>
+    <label>branch <select id="obB">
+      <option value="leaf">leaf</option><option value="cherry">cherry</option>
+      <option value="2">A2</option><option value="3">A3</option><option value="4">A4</option>
+      <option value="5" selected>A5</option><option value="6">A6</option><option value="7">A7</option><option value="8">A8</option>
+      <option value="path">path on 5 vertices (planted at an end)</option>
+    </select></label>
+    <label>n <input type="range" id="obN" min="2" max="60" value="34"></label>
+    <span class="mono" id="obNval"></span>
+    <button class="btn" id="obOne" type="button">&lambda; = 1</button>
+  </div>
+  <div class="plotwrap">
+    <svg id="obTreeSvg" viewBox="0 0 900 260" role="img" aria-label="center carrying copies of the branch"></svg>
+  </div>
+  <div class="plotwrap">
+    <svg id="obRateSvg" viewBox="0 0 900 300" role="img" aria-label="per-vertex rate of the branch against rho"></svg>
+    <div class="legend"><span style="color:var(--ink)">&rho;(&lambda;): the line at 1</span><span style="color:var(--a5)">T<sub>b</sub><sup>1/|b|</sup>/&rho;(&lambda;) for the chosen branch</span>
+    <span style="color:var(--faint)">cherry &radic;(1+&lambda;/2)/&rho;(&lambda;)</span></div>
+    <p class="note" style="margin:6px 4px 0">Per-vertex rate of the branch divided by &rho;(&lambda;). A branch touches the
+    line at 1 exactly where it is a best block; the cherry does so for every &lambda; &ge; 1 + &radic;5.</p>
+  </div>
+  <div class="readout" id="obReadout"></div>
+  <p class="note">What is checked where. The one-block formula above (the definition of &rho; as a supremum, the two
+  bounds, &rho; &le; 1 + &lambda; and the limit) is kernel-checked in Lean for every &lambda; &gt; 0 (<a href="https://github.com/DrMurphyIsIn/brualdi-goldwasser/tree/main/formalization/cherry">formalization/cherry</a>), and so is
+  &rho;(&lambda;) = &radic;(1 + &lambda;/2) for &lambda; &ge; 1 + &radic;5. Below 1 + &radic;5, that &rho;(&lambda;) =
+  e<sup>f*(&lambda;)</sup>, the best rate among the leaf, the cherry and the arms, is proved by computer-assisted
+  interval arithmetic: Lean derives it from two external inputs (witnesses and a best arm on [0.1, 1 + &radic;5); the
+  branch bound itself and a best arm on (0, 0.1]) but does not prove those inputs. The curve &rho; drawn here uses that value, computed
+  over the cherry and the arms A<sub>j</sub> with j &le; 400 (near 1 + &radic;5 the best arm grows without bound, so
+  the curve is a close lower approximation there). At &lambda; = 1 the arm A<sub>5</sub> attains
+  &rho;(1) = (621/64)<sup>1/11</sup>.</p>
 </section>
 
 <!-- ============================ RACES ============================ -->

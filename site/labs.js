@@ -512,13 +512,13 @@
   function ceilingStatus(l) {              // the growth-rate ceiling at this λ: which proof regime (proved for every λ > 0)
     var g = 1 + Math.sqrt(5), how;
     if (!(l > 0)) return "ceiling: λ must be positive";   // unreachable from the slider (sliderL floors at 0.01); kept as a guard
-    if (l >= g) return "ceiling at this λ: proved (cherry regime, λ ≥ 1+√5: growth rate ½ log(1+λ/2)); hand proof (calculus at 1+√5 with the golden-ratio identities, then a monotonicity argument), not formalized in Lean";
+    if (l >= g) return "ceiling at this λ: proved (cherry regime, λ ≥ 1+√5: growth rate ½ log(1+λ/2)); hand proof (calculus at 1+√5 with the golden-ratio identities, then a monotonicity argument), also kernel-checked in Lean";
     if (l <= 0.1) how = "typed induction, 0 < λ ≤ 0.1";
     else if (l <= 0.47) how = "power shoulder, 0.1 ≤ λ ≤ 0.47";
     else if (l <= 1.6) how = "quadratic shoulder, 0.47 ≤ λ ≤ 1.6";
     else if (l <= 3.22) how = "three-piece linear, 1.6 ≤ λ ≤ 3.22";
     else how = "hand argument for the thin window 3.22 ≤ λ < 1+√5";
-    return "ceiling at this λ: proved (" + how + "); computer-assisted (interval arithmetic), not formalized in Lean" +
+    return "ceiling at this λ: proved (" + how + "); computer-assisted (interval arithmetic); Lean reduces it to these numerical inputs but does not prove them" +
       (Math.abs(l - 1) < 0.0025 ? "; at λ = 1 exactly it is also the sharp ceiling of the Lean proof" : "");
   }
   function goldenRender() {
@@ -552,10 +552,299 @@
     ladderRender(); goldenRender();
   }
 
+  // ================================================================= THE λ-FAMILY: CHERRY REGIME, NEVER ATTAINED, ONE BLOCK
+  // LAMBDA-CORE:BEGIN   (pure functions, no DOM; scripts/check_lambda_labs.py runs this block in node)
+  // A planted branch is the array of its children (each a branch); the leaf is [].
+  // LTREES:BEGIN
+  // every unlabeled tree on n vertices, n = 1..12, as base-36 parent arrays (scripts/gen_lambda_lab_data.py)
+  var LTREES = [
+    "",
+    "0",
+    "00",
+    "000,001",
+    "0000,0001,0012",
+    "00000,00001,00011,00012,00112,00123",
+    "000000,000001,000011,000012,000112,000123,000124,001112,001122,001223,001234",
+    "0000000,0000001,0000011,0000012,0000111,0000112,0000123,0000125,0001112,0001122,0001123,0001124,0001224,0001234,0001245,0011112,0011122,0011223,0011235,0012223,0012233,0012334,0012345",
+    "00000000,00000001,00000011,00000012,00000111,00000112,00000123,00000126,00001112,00001122,00001123,00001125,00001225,00001234,00001235,00001255,00001256,00011112,00011122,00011123,00011223,00011224,00011234,00011246,00012224,00012234,00012244,00012344,00012345,00012445,00012456,00111112,00111122,00111222,00111236,00112223,00112235,00112335,00112345,00122223,00122233,00122334,00122346,00123334,00123344,00123445,00123456",
+    "000000000,000000001,000000011,000000012,000000111,000000112,000000123,000000127,000001111,000001112,000001122,000001123,000001126,000001226,000001234,000001236,000001266,000001267,000011112,000011122,000011123,000011125,000011223,000011225,000011234,000011235,000011257,000012225,000012235,000012255,000012345,000012355,000012356,000012556,000012567,000111112,000111122,000111123,000111222,000111223,000111224,000111234,000111247,000112224,000112233,000112234,000112244,000112245,000112246,000112345,000112346,000112446,000112456,000112467,000122224,000122234,000122244,000122334,000122344,000122445,000122457,000123345,000123445,000123456,000123457,000124445,000124455,000124556,000124567,001111112,001111122,001111222,001111237,001112223,001112236,001112336,001112346,001122223,001122233,001122234,001122335,001122345,001122357,001123335,001123345,001123355,001123556,001123567,001222223,001222233,001222333,001222334,001222347,001223334,001223345,001223346,001223446,001223456,001233334,001233344,001233445,001233457,001234445,001234455,001234556,001234567",
+    "0000000000,0000000001,0000000011,0000000012,0000000111,0000000112,0000000123,0000000128,0000001111,0000001112,0000001122,0000001123,0000001127,0000001227,0000001234,0000001237,0000001277,0000001278,0000011112,0000011122,0000011123,0000011126,0000011223,0000011226,0000011234,0000011236,0000011266,0000011267,0000011268,0000012226,0000012236,0000012266,0000012345,0000012346,0000012366,0000012367,0000012666,0000012667,0000012678,0000111112,0000111122,0000111123,0000111222,0000111223,0000111225,0000111234,0000111235,0000111258,0000112225,0000112233,0000112234,0000112235,0000112255,0000112256,0000112257,0000112345,0000112355,0000112356,0000112357,0000112557,0000112567,0000112578,0000122225,0000122235,0000122255,0000122335,0000122345,0000122355,0000122555,0000122556,0000122568,0000123356,0000123455,0000123456,0000123555,0000123556,0000123567,0000123568,0000125556,0000125566,0000125567,0000125667,0000125677,0000125678,0001111112,0001111122,0001111123,0001111222,0001111223,0001111248,0001112223,0001112224,0001112233,0001112234,0001112247,0001112347,0001112447,0001112457,0001122224,0001122234,0001122244,0001122245,0001122334,0001122344,0001122345,0001122346,0001122446,0001122456,0001122468,0001123346,0001123446,0001123456,0001123467,0001123468,0001124446,0001124456,0001124466,0001124667,0001124678,0001222224,0001222234,0001222244,0001222334,0001222344,0001222444,0001222445,0001222458,0001223344,0001223444,0001223445,0001223458,0001224445,0001224456,0001224457,0001224557,0001224567,0001224577,0001233345,0001233445,0001233458,0001234445,0001234455,0001234456,0001234457,0001234557,0001234567,0001234577,0001234578,0001244445,0001244455,0001244556,0001244568,0001245556,0001245566,0001245667,0001245678,0011111112,0011111122,0011111222,0011111238,0011112222,0011112237,0011112337,0011112347,0011122223,0011122236,0011122336,0011122346,0011123336,0011123346,0011123366,0011123456,0011123678,0011222223,0011222233,0011222234,0011222335,0011222345,0011222358,0011223335,0011223345,0011223355,0011223356,0011223456,0011223557,0011223567,0011223578,0011233335,0011233345,0011233355,0011233445,0011233455,0011233568,0011234568,0011235556,0011235667,0012222223,0012222233,0012222333,0012222334,0012222348,0012223334,0012223345,0012223347,0012223447,0012223457,0012223477,0012233334,0012233344,0012233345,0012233446,0012233456,0012233468,0012234446,0012234456,0012234466,0012234566,0012234667,0012234678,0012333334,0012333344,0012333444,0012333458,0012334445,0012334457,0012334557,0012334567,0012344445,0012344455,0012344556,0012344568,0012345556,0012345566,0012345667,0012345678",
+    "00000000000,00000000001,00000000011,00000000012,00000000111,00000000112,00000000123,00000000129,00000001111,00000001112,00000001122,00000001123,00000001128,00000001228,00000001234,00000001238,00000001288,00000001289,00000011111,00000011112,00000011122,00000011123,00000011127,00000011223,00000011227,00000011234,00000011237,00000011277,00000011278,00000011279,00000012227,00000012237,00000012277,00000012345,00000012347,00000012377,00000012378,00000012777,00000012778,00000012789,00000111112,00000111122,00000111123,00000111126,00000111222,00000111223,00000111226,00000111234,00000111236,00000111269,00000112226,00000112233,00000112234,00000112236,00000112266,00000112267,00000112268,00000112345,00000112346,00000112366,00000112367,00000112368,00000112668,00000112678,00000112689,00000122226,00000122236,00000122266,00000122336,00000122346,00000122366,00000122666,00000122667,00000122679,00000123367,00000123456,00000123466,00000123467,00000123666,00000123667,00000123678,00000123679,00000126667,00000126677,00000126678,00000126778,00000126788,00000126789,00001111112,00001111122,00001111123,00001111222,00001111223,00001111225,00001111234,00001111235,00001111259,00001112223,00001112225,00001112233,00001112234,00001112235,00001112255,00001112256,00001112258,00001112345,00001112356,00001112358,00001112558,00001112568,00001112589,00001122225,00001122235,00001122255,00001122256,00001122334,00001122335,00001122345,00001122355,00001122356,00001122357,00001122557,00001122567,00001122579,00001123357,00001123455,00001123456,00001123457,00001123557,00001123567,00001123578,00001123579,00001125557,00001125567,00001125577,00001125778,00001125789,00001222225,00001222235,00001222255,00001222335,00001222345,00001222355,00001222555,00001222556,00001222569,00001223345,00001223355,00001223455,00001223555,00001223556,00001223569,00001225556,00001225567,00001225568,00001225668,00001225678,00001225688,00001233356,00001233456,00001233556,00001233569,00001234555,00001234556,00001234567,00001234569,00001235556,00001235566,00001235567,00001235568,00001235668,00001235678,00001235688,00001235689,00001255556,00001255566,00001255667,00001255679,00001256667,00001256677,00001256778,00001256789,00011111112,00011111122,00011111123,00011111222,00011111223,00011111249,00011112222,00011112223,00011112224,00011112233,00011112234,00011112248,00011112348,00011112448,00011112458,00011122224,00011122233,00011122234,00011122244,00011122245,00011122247,00011122334,00011122344,00011122345,00011122347,00011122447,00011122457,00011122479,00011123347,00011123447,00011123457,00011123478,00011123479,00011124447,00011124457,00011124477,00011124567,00011124778,00011124789,00011222224,00011222234,00011222244,00011222245,00011222334,00011222344,00011222345,00011222444,00011222445,00011222446,00011222456,00011222469,00011223344,00011223345,00011223346,00011223445,00011223446,00011223456,00011223468,00011223469,00011224446,00011224456,00011224466,00011224467,00011224468,00011224567,00011224568,00011224668,00011224678,00011224689,00011233346,00011233446,00011233456,00011233469,00011234446,00011234456,00011234466,00011234467,00011234567,00011234568,00011234668,00011234678,00011234689,00011244446,00011244456,00011244466,00011244556,00011244566,00011244667,00011244679,00011245667,00011245679,00011246667,00011246677,00011246778,00011246789,00012222224,00012222234,00012222244,00012222334,00012222344,00012222444,00012222445,00012222459,00012223334,00012223344,00012223444,00012223445,00012223459,00012224445,00012224456,00012224458,00012224558,00012224568,00012224588,00012233444,00012233445,00012233459,00012234445,00012234456,00012234457,00012234458,00012234558,00012234568,00012234578,00012234588,00012244445,00012244455,00012244456,00012244557,00012244567,00012244579,00012245557,00012245567,00012245577,00012245677,00012245778,00012245789,00012333345,00012333445,00012333459,00012334445,00012334455,00012334458,00012334558,00012334588,00012334589,00012344445,00012344455,00012344456,00012344556,00012344557,00012344567,00012344579,00012345557,00012345567,00012345577,00012345677,00012345678,00012345778,00012345789,00012444445,00012444455,00012444555,00012444556,00012444569,00012445556,00012445567,00012445568,00012445668,00012445678,00012455556,00012455566,00012455667,00012455679,00012456667,00012456677,00012456778,00012456789,00111111112,00111111122,00111111222,00111111239,00111112222,00111112238,00111112338,00111112348,00111122223,00111122237,00111122337,00111122347,00111123337,00111123347,00111123377,00111123457,00111123789,00111222223,00111222233,00111222234,00111222336,00111222346,00111222369,00111223336,00111223346,00111223366,00111223367,00111223456,00111223467,00111223668,00111223678,00111223689,00111233336,00111233346,00111233366,00111233446,00111233456,00111233466,00111233679,00111234679,00111236667,00111236778,00112222223,00112222233,00112222234,00112222333,00112222334,00112222335,00112222345,00112222359,00112223335,00112223345,00112223356,00112223358,00112223458,00112223558,00112223568,00112233335,00112233345,00112233355,00112233356,00112233445,00112233455,00112233456,00112233557,00112233567,00112233579,00112234557,00112234567,00112234579,00112235557,00112235567,00112235577,00112235778,00112235789,00112333335,00112333345,00112333355,00112333445,00112333455,00112333555,00112333569,00112334455,00112334569,00112335556,00112335568,00112335668,00112335678,00112344569,00112345556,00112345668,00112345678,00112355556,00112355566,00112355667,00112355679,00112356667,00112356677,00112356778,00112356789,00122222223,00122222233,00122222333,00122222334,00122222349,00122223333,00122223334,00122223345,00122223348,00122223448,00122223458,00122223488,00122233334,00122233344,00122233345,00122233347,00122233447,00122233456,00122233457,00122233479,00122234447,00122234457,00122234477,00122234567,00122234577,00122234778,00122234789,00122333334,00122333344,00122333345,00122333445,00122333446,00122333456,00122333469,00122334446,00122334456,00122334466,00122334467,00122334567,00122334568,00122334668,00122334678,00122334689,00122344446,00122344456,00122344466,00122344556,00122344566,00122344667,00122344679,00122345667,00122345679,00122346667,00122346778,00123333334,00123333344,00123333444,00123333459,00123334445,00123334458,00123334558,00123334568,00123344445,00123344455,00123344456,00123344557,00123344567,00123344579,00123345557,00123345567,00123345577,00123345778,00123345789,00123444445,00123444455,00123444555,00123444556,00123444569,00123445556,00123445567,00123445568,00123445668,00123445678,00123455556,00123455566,00123455667,00123455679,00123456667,00123456677,00123456778,00123456789"
+  ];
+  // LTREES:END
+  var LCH = 1 + Math.sqrt(5), PHI = (1 + Math.sqrt(5)) / 2;
+  function brTY(b, l) {                    // cavity recursion: [T_b, y_b], d = #children + 1
+    var P = 1, R = 0;
+    for (var i = 0; i < b.length; i++) { var c = brTY(b[i], l); P *= c[0]; R += c[1]; }
+    var d = b.length + 1;
+    return [P * (d + l * R) / d, 1 / (d + l * R)];
+  }
+  function brT(b, l) { return brTY(b, l)[0]; }
+  function brSize(b) { var s = 1; for (var i = 0; i < b.length; i++) s += brSize(b[i]); return s; }
+  function wholePi(b, l) {                 // pi_lambda of the whole tree rooted at b (root degree k = #children)
+    if (!b.length) return 1;
+    var P = 1, R = 0;
+    for (var i = 0; i < b.length; i++) { var c = brTY(b[i], l); P *= c[0]; R += c[1]; }
+    return P * (b.length + l * R) / b.length;
+  }
+  function parToBr(par) {                  // parent array (par[0] = -1) -> branch rooted at vertex 0
+    var ch = par.map(function () { return []; });
+    for (var i = par.length - 1; i >= 1; i--) ch[par[i]].unshift(ch[i]);
+    return ch[0];
+  }
+  function decodeTree(s) { var p = [-1]; for (var i = 0; i < s.length; i++) p.push(parseInt(s[i], 36)); return p; }
+  function treesOf(n) { return n >= 1 && n <= LTREES.length ? LTREES[n - 1].split(",").map(decodeTree) : null; }
+  function maxPi(n, l) {                   // M_n(lambda) for n <= 12, and a maximizer
+    var ts = treesOf(n); if (!ts) return null;
+    var best = -1, arg = null;
+    ts.forEach(function (p) { var v = wholePi(parToBr(p), l); if (v > best) { best = v; arg = p; } });
+    return { v: best, par: arg };
+  }
+  var BR_CHERRY = [[]];
+  function brArm(j) { var a = []; for (var i = 0; i < j; i++) a.push([[]]); return a; }
+  function brPath(m) { var b = []; for (var i = 1; i < m; i++) b = [b]; return b; }
+  function atomLogRate(l) {                // f*(lambda): best log-rate over leaf, cherry and arms A_j, j <= 400
+    var c = 1 + l / 2, t = l / (2 + l), best = 0.5 * Math.log(c), arg = -1;
+    for (var j = 1; j <= 400; j++) {
+      var v = (j * Math.log(c) + Math.log(1 + t * j / (j + 1))) / (2 * j + 1);
+      if (v > best + 1e-15) { best = v; arg = j; }
+    }
+    return { v: Math.max(best, 0), j: arg };
+  }
+  function blockWitness(b, n) {            // center + k copies of b + r leaves, n vertices
+    var s = brSize(b), k = Math.floor((n - 1) / s), r = n - 1 - k * s, w = [];
+    for (var i = 0; i < k; i++) w.push(b);
+    for (var q = 0; q < r; q++) w.push([]);
+    return { tree: w, k: k, r: r };
+  }
+  // LAMBDA-CORE:END
+
+  function lplot(svg, o) {                  // axes on a 900-wide viewBox; returns coordinate maps
+    var W = 900, H = +svg.getAttribute("viewBox").split(" ")[3], L = o.left || 70, R = 16, T = 14, B = 40;
+    var X = function (x) { return L + (x - o.x0) / (o.x1 - o.x0) * (W - L - R); };
+    var Y = function (v) { return T + (o.y1 - Math.max(o.y0, Math.min(o.y1, v))) / (o.y1 - o.y0) * (H - T - B); };
+    o.yt.forEach(function (v) {
+      el("line", { x1: L, x2: W - R, y1: Y(v), y2: Y(v), stroke: v === o.zero ? "var(--ink)" : "var(--line)", "stroke-width": v === o.zero ? 1.2 : 1 }, svg);
+      el("text", { x: L - 6, y: Y(v) + 5, "text-anchor": "end", "font-size": 14, fill: "var(--muted)" }, svg, o.yf ? o.yf(v) : String(v));
+    });
+    o.xt.forEach(function (x) { el("text", { x: X(x), y: H - 16, "text-anchor": "middle", "font-size": 14, fill: "var(--muted)" }, svg, o.xf ? o.xf(x) : String(x)); });
+    if (o.xl) el("text", { x: W - R, y: H - 1, "text-anchor": "end", "font-size": 14, fill: "var(--muted)" }, svg, o.xl);
+    return { X: X, Y: Y, W: W, H: H, L: L, R: R, T: T, B: B };
+  }
+  function curve(svg, A, f, x0, x1, col, w, dash, lo, hi) {
+    var seg = [], N = 360, flush = function () {
+      if (seg.length > 1) { var a = { points: seg.join(" "), fill: "none", stroke: col, "stroke-width": w }; if (dash) a["stroke-dasharray"] = dash; el("polyline", a, svg); }
+      seg = [];
+    };
+    for (var i = 0; i <= N; i++) {
+      var x = x0 + i / N * (x1 - x0), v = f(x);
+      if (!isFinite(v) || v < lo || v > hi) { flush(); continue; }
+      seg.push(A.X(x).toFixed(1) + "," + A.Y(v).toFixed(1));
+    }
+    flush();
+  }
+  function vmark(svg, A, x, label, col) {
+    el("line", { x1: A.X(x), x2: A.X(x), y1: A.T, y2: A.H - A.B, stroke: col || "var(--faint)", "stroke-dasharray": col ? null : "3 3", "stroke-width": col ? 1.5 : 1 }, svg);
+    if (label) el("text", { x: A.X(x) + 5, y: A.T + 14, "font-size": 14, fill: "var(--muted)" }, svg, label);
+  }
+  function drawBrTree(svg, b, opts) {        // tidy top-down drawing of a rooted tree (b = children of the root)
+    clear(svg);
+    var W = 900, H = +svg.getAttribute("viewBox").split(" ")[3], nodes = [], edges = [], leafX = 0, maxD = 0;
+    (function place(t, d, col) {
+      var me = { d: d, col: col }; nodes.push(me); maxD = Math.max(maxD, d);
+      if (!t.length) { me.x = leafX++; return me; }
+      var xs = t.map(function (c, i) { var ch = place(c, d + 1, d === 0 && opts.colorOf ? opts.colorOf(i) : col); edges.push([me, ch]); return ch.x; });
+      me.x = (xs[0] + xs[xs.length - 1]) / 2; return me;
+    })(b, 0, "var(--ink)");
+    var sx = (W - 40) / Math.max(1, leafX - 1), sy = (H - 40) / Math.max(1, maxD);
+    var X = function (v) { return leafX === 1 ? W / 2 : 20 + v.x * sx; }, Y = function (v) { return 20 + v.d * Math.min(sy, 70); };
+    edges.forEach(function (e) { el("line", { x1: X(e[0]), y1: Y(e[0]), x2: X(e[1]), y2: Y(e[1]), stroke: e[1].col, "stroke-width": 1.6 }, svg); });
+    var r = Math.max(2.5, Math.min(7, sx / 3));
+    nodes.forEach(function (v) { el("circle", { cx: X(v), cy: Y(v), r: v.d === 0 ? r + 2 : r, fill: v.d === 0 ? "var(--accent)" : "var(--surface)", stroke: v.col, "stroke-width": 1.5 }, svg); });
+    if (opts.caption) el("text", { x: W - 10, y: H - 6, "text-anchor": "end", "font-size": 14, fill: "var(--muted)" }, svg, opts.caption);
+  }
+  function fmtNum(v) { return Math.abs(v) >= 1e6 || (Math.abs(v) < 1e-3 && v !== 0) ? v.toExponential(5) : v.toPrecision(8); }
+
+  // ---------------------------------------------------------------- cherry regime
+  var CRMAX = 20, CRSEED = 7, CRRAND = null;
+  function seeded(seed) { var s = seed >>> 0; return function () { s = (s * 1664525 + 1013904223) >>> 0; return s / 4294967296; }; }
+  function randomBranch(seed) {
+    var rnd = seeded(seed), m = 7 + Math.floor(rnd() * 3), par = [-1];
+    for (var i = 1; i < m; i++) par.push(Math.floor(rnd() * i));
+    return parToBr(par);
+  }
+  function crBranches() {
+    if (!CRRAND) CRRAND = randomBranch(CRSEED);
+    return [
+      { name: "cherry", b: BR_CHERRY, col: "var(--ink)", w: 3 },
+      { name: "path P3 (planted at an end)", b: brPath(3), col: "var(--a4)", w: 1.8 },
+      { name: "star K1,3 (planted at the center)", b: [[], [], []], col: "var(--a6)", w: 1.8 },
+      { name: "A2", b: brArm(2), col: "var(--other)", w: 1.8 },
+      { name: "A5", b: brArm(5), col: "var(--a5)", w: 2.2 },
+      { name: "random, " + brSize(CRRAND) + " vertices", b: CRRAND, col: "var(--cool)", w: 1.6, dash: "6 4" }
+    ];
+  }
+  function crL() { return LCH + (+document.getElementById("crL").value / 1000) * (CRMAX - LCH); }
+  function normRate(b, l) { return Math.log(brT(b, l)) / brSize(b) - 0.5 * Math.log(1 + l / 2); }
+  function crRender() {
+    var l = crL(), x0 = 2, x1 = CRMAX;
+    document.getElementById("crLval").textContent = "λ = " + l.toFixed(3);
+    // arms against the cherry
+    var svg = document.getElementById("crAtomSvg"); clear(svg);
+    var lo = -0.03, hi = 0.004;
+    var A = lplot(svg, { x0: x0, x1: x1, y0: lo, y1: hi, yt: [-0.03, -0.02, -0.01, 0], zero: 0, yf: function (v) { return v.toFixed(2); }, xt: [2, 4, 6, 8, 10, 12, 14, 16, 18, 20], xl: "λ" });
+    vmark(svg, A, LCH, "1+√5");
+    var cr = function (x) { return 0.5 * Math.log(1 + x / 2); };
+    for (var j = 1; j <= 12; j++) (function (j) {
+      var col = j === 5 ? "var(--a5)" : j === 4 ? "var(--a4)" : j === 6 ? "var(--a6)" : "var(--other)";
+      curve(svg, A, function (x) { var c = 1 + x / 2, t = x / (2 + x); return (j * Math.log(c) + Math.log(1 + t * j / (j + 1))) / (2 * j + 1) - cr(x); }, x0, x1, col, j === 5 ? 2 : 1.1, null, lo, hi);
+      var fj = function (x) { var c = 1 + x / 2, t = x / (2 + x); return (j * Math.log(c) + Math.log(1 + t * j / (j + 1))) / (2 * j + 1) - cr(x); };
+      if (j === 3 || j === 4 || j === 5 || j === 8 || j === 12) {        // label where the curve leaves the plot, or at the right edge
+        var xe = x1;
+        if (fj(x1) < lo) { var a = LCH, b = x1; for (var it = 0; it < 50; it++) { var m = (a + b) / 2; if (fj(m) < lo) b = m; else a = m; } xe = a; }
+        el("text", { x: A.X(xe) + (xe < x1 ? 4 : -4), y: A.Y(fj(xe)) - 5, "text-anchor": xe < x1 ? "start" : "end", "font-size": 13, fill: col }, svg, "A" + j);
+      }
+    })(j);
+    el("text", { x: A.X(x1) - 4, y: A.Y(0) - 6, "text-anchor": "end", "font-size": 13, fill: "var(--ink)" }, svg, "cherry");
+    vmark(svg, A, l, null, "var(--accent)");
+    // normalized branch weights
+    svg = document.getElementById("crSvg"); clear(svg);
+    lo = -0.25; hi = 0.012;
+    A = lplot(svg, { x0: x0, x1: x1, y0: lo, y1: hi, yt: [-0.25, -0.2, -0.15, -0.1, -0.05, 0], zero: 0, yf: function (v) { return v.toFixed(2); }, xt: [2, 4, 6, 8, 10, 12, 14, 16, 18, 20], xl: "λ" });
+    el("rect", { x: A.X(2), y: A.T, width: A.X(LCH) - A.X(2), height: A.H - A.T - A.B, fill: "var(--sunk)", opacity: 0.6 }, svg);
+    vmark(svg, A, LCH, null);
+    el("text", { x: A.X(LCH) + 6, y: A.Y(-0.22), "font-size": 14, fill: "var(--muted)" }, svg, "anchor 1+√5: T_b ≤ φ^|b|");
+    var BRS = crBranches(), leg = document.getElementById("crLegend"); leg.innerHTML = "";
+    BRS.forEach(function (o) {
+      curve(svg, A, function (x) { return normRate(o.b, x); }, x0, x1, o.col, o.w, o.dash, lo, hi);
+      var sp = document.createElement("span"); sp.style.color = o.col; sp.textContent = o.name; leg.appendChild(sp);
+    });
+    vmark(svg, A, l, null, "var(--accent)");
+    // readout
+    var best = -1, bv = -1e9;
+    for (var k = 1; k <= 400; k++) { var c = 1 + l / 2, t = l / (2 + l), v = (k * Math.log(c) + Math.log(1 + t * k / (k + 1))) / (2 * k + 1); if (v > bv) { bv = v; best = k; } }
+    var atAnchor = Math.abs(l - LCH) < 1e-9;
+    var lines = ["at λ = " + l.toFixed(4) + ": cherry rate ½ log(1+λ/2) = " + cr(l).toFixed(6) + "; closest arm (j ≤ 400) A" + best + " rate " + bv.toFixed(6) + " (below by " + (cr(l) - bv).toExponential(2) + ")"];
+    BRS.forEach(function (o) {
+      var s = brSize(o.b), T = brT(o.b, l), U = atAnchor ? Math.pow(PHI, s) : Math.pow(1 + l / 2, s / 2);
+      lines.push(o.name + ": |b| = " + s + ", T_b = " + fmtNum(T) + (atAnchor ? " ≤ φ^|b| = " : " ≤ (1+λ/2)^(|b|/2) = ") + fmtNum(U) + ", ratio " + (T / U).toFixed(6));
+    });
+    document.getElementById("crReadout").innerHTML = lines.join("<br>");
+  }
+
+  // ---------------------------------------------------------------- never attained
+  var NAMAX = 20;
+  function naL() { return LCH + (+document.getElementById("naL").value / 1000) * (NAMAX - LCH); }
+  function naRender() {
+    var l = naL(), n0 = +document.getElementById("naN").value, c = 1 + l / 2;
+    document.getElementById("naLval").textContent = "λ = " + l.toFixed(3);
+    document.getElementById("naNval").textContent = "n = " + n0;
+    var up = function (n) { return (1 + l) * Math.pow(c, (n - 1) / 2); }, low = function (n) { return Math.pow(c, Math.floor((n - 1) / 2)); };
+    var M = []; for (var n = 1; n <= 12; n++) M[n] = maxPi(n, l);
+    // normalized log plot
+    var svg = document.getElementById("naSvg"); clear(svg);
+    var norm = function (v, n) { return Math.log(v / Math.pow(c, (n - 1) / 2)); };
+    var y1 = Math.log(1 + l) + 0.25, y0 = -0.5 * Math.log(c) - 0.25;
+    var yt = [], ytv = [0.25, 0.5, 1, 2, 4, 8, 16, 32];
+    ytv.forEach(function (v) { if (Math.log(v) >= y0 && Math.log(v) <= y1) yt.push(Math.log(v)); });
+    var A = lplot(svg, { x0: 0.5, x1: 20.5, y0: y0, y1: y1, yt: yt, yf: function (v) { return String(+Math.exp(v).toPrecision(3)); }, xt: [1, 4, 8, 12, 16, 20], xl: "n" });
+    el("line", { x1: A.X(0.5), x2: A.X(20.5), y1: A.Y(Math.log(1 + l)), y2: A.Y(Math.log(1 + l)), stroke: "var(--a5)", "stroke-width": 2 }, svg);
+    el("text", { x: A.X(20.5) - 4, y: A.Y(Math.log(1 + l)) - 6, "text-anchor": "end", "font-size": 13, fill: "var(--a5)" }, svg, "upper bound: 1 + λ");
+    vmark(svg, A, n0, null, "var(--accent)");
+    for (n = 1; n <= 20; n++) {
+      el("circle", { cx: A.X(n), cy: A.Y(norm(low(n), n)), r: 4, fill: "none", stroke: "var(--a4)", "stroke-width": 1.6 }, svg);
+      if (n <= 12) el("circle", { cx: A.X(n), cy: A.Y(norm(M[n].v, n)), r: 5, fill: "var(--ink)" }, svg);
+    }
+    // n-th roots
+    svg = document.getElementById("naRateSvg"); clear(svg);
+    var rho = Math.sqrt(c), NN = 120;
+    y0 = rho * 0.8; y1 = rho * 1.3;
+    var B = lplot(svg, { x0: 1, x1: NN, y0: y0, y1: y1, yt: [rho * 0.8, rho * 0.9, rho, rho * 1.1, rho * 1.2, rho * 1.3], yf: function (v) { return v.toFixed(3); }, xt: [1, 20, 40, 60, 80, 100, 120], xl: "n" });
+    [[up, "var(--a5)"], [low, "var(--a4)"]].forEach(function (f) {   // integer n only
+      var pts = []; for (var k = 1; k <= NN; k++) { var v = Math.pow(f[0](k), 1 / k); if (v >= y0 && v <= y1) pts.push(B.X(k).toFixed(1) + "," + B.Y(v).toFixed(1)); }
+      el("polyline", { points: pts.join(" "), fill: "none", stroke: f[1], "stroke-width": 1.8 }, svg);
+    });
+    el("line", { x1: B.X(1), x2: B.X(NN), y1: B.Y(rho), y2: B.Y(rho), stroke: "var(--ink)", "stroke-dasharray": "6 4" }, svg);
+    el("text", { x: B.X(NN) - 4, y: B.Y(rho) - 6, "text-anchor": "end", "font-size": 13, fill: "var(--ink)" }, svg, "√(1+λ/2) = " + rho.toFixed(4));
+    for (n = 1; n <= 12; n++) el("circle", { cx: B.X(n), cy: B.Y(Math.pow(M[n].v, 1 / n)), r: 3.5, fill: "var(--ink)" }, svg);
+    // readout + a maximizer
+    var lines = ["n = " + n0 + ", λ = " + l.toFixed(4) + ": lower (1+λ/2)^⌊(n−1)/2⌋ = " + fmtNum(low(n0)) + ", upper (1+λ)(1+λ/2)^((n−1)/2) = " + fmtNum(up(n0))];
+    var tsvg = document.getElementById("naTreeSvg");
+    if (n0 <= 12) {
+      var m = M[n0];
+      lines.push("M_n = " + fmtNum(m.v) + " over " + treesOf(n0).length + " trees; M_n / upper = " + (m.v / up(n0)).toFixed(6) + " < 1; M_n / lower = " + (m.v / low(n0)).toFixed(6) + " ≥ 1");
+      drawBrTree(tsvg, parToBr(m.par), { caption: "a maximizer on " + n0 + " vertices at this λ (drawn from vertex 0)" });
+    } else {
+      lines.push("n > 12: the bounds only (M_n is drawn for n ≤ 12)");
+      drawBrTree(tsvg, blockWitness(BR_CHERRY, n0).tree, { caption: "the lower-bound tree: a center with ⌊(n−1)/2⌋ cherries" + (n0 % 2 === 0 ? " and a leaf" : "") });
+    }
+    document.getElementById("naReadout").innerHTML = lines.join("<br>");
+  }
+
+  // ---------------------------------------------------------------- one block
+  var OBMAX = 6;
+  function obL() { return +document.getElementById("obL").value / 600 * OBMAX; }
+  function obBranch() {
+    var v = document.getElementById("obB").value;
+    if (v === "leaf") return { b: [], name: "the leaf" };
+    if (v === "cherry") return { b: BR_CHERRY, name: "the cherry" };
+    if (v === "path") return { b: brPath(5), name: "the path on 5 vertices" };
+    return { b: brArm(+v), name: "the arm A" + v };
+  }
+  function obRender() {
+    var l = obL(), n = +document.getElementById("obN").value, B = obBranch(), s = brSize(B.b);
+    document.getElementById("obLval").textContent = "λ = " + l.toFixed(3);
+    document.getElementById("obNval").textContent = "n = " + n;
+    var wit = blockWitness(B.b, n);
+    drawBrTree(document.getElementById("obTreeSvg"), wit.tree, {
+      colorOf: function (i) { return i < wit.k ? "var(--a5)" : "var(--other)"; },
+      caption: "center + " + wit.k + " × " + B.name.replace(/^the /, "") + " + " + wit.r + " leaves = " + n + " vertices"
+    });
+    // per-vertex rate plot
+    var svg = document.getElementById("obRateSvg"); clear(svg);
+    var y0 = 0.96, y1 = 1.003, rhoF = function (x) { return x >= LCH ? Math.sqrt(1 + x / 2) : Math.exp(atomLogRate(x).v); };
+    var A = lplot(svg, { x0: 0, x1: OBMAX, y0: y0, y1: y1, yt: [0.96, 0.97, 0.98, 0.99, 1], zero: 1, yf: function (v) { return v.toFixed(2); }, xt: [0, 1, 2, 3, 4, 5, 6], xl: "λ", left: 64 });
+    vmark(svg, A, LCH, "1+√5");
+    curve(svg, A, function (x) { return Math.sqrt(1 + x / 2) / rhoF(x); }, 0.01, OBMAX, "var(--faint)", 1.4, "5 4", y0, y1);
+    curve(svg, A, function (x) { return Math.pow(brT(B.b, x), 1 / s) / rhoF(x); }, 0.01, OBMAX, "var(--a5)", 2.2, null, y0, y1);
+    el("circle", { cx: A.X(1), cy: A.Y(1), r: 5, fill: "none", stroke: "var(--accent)", "stroke-width": 2 }, svg);
+    el("text", { x: A.X(1) + 8, y: A.Y(1) + 34, "font-size": 13, fill: "var(--ink)" }, svg, "λ = 1: A5 attains ρ(1) = (621/64)^(1/11)");
+    vmark(svg, A, l, null, "var(--accent)");
+    // readout
+    var T = brT(B.b, l), rate = Math.pow(T, 1 / s), at = atomLogRate(l), rho = Math.exp(at.v);
+    var exact = l >= LCH;
+    if (exact) rho = Math.sqrt(1 + l / 2);
+    var low = Math.pow(T, wit.k), wv = wholePi(wit.tree, l), up = (1 + l) * Math.pow(rho, n - 1);
+    var lines = [B.name + ": |b| = " + s + ", T_b(λ) = " + fmtNum(T) + ", per vertex T_b^(1/|b|) = " + rate.toFixed(6),
+      "ρ(λ) = " + rho.toFixed(6) + (exact ? " = √(1+λ/2), the cherry (kernel-checked for λ ≥ 1+√5)" :
+        " = e^f*, best block " + (at.j < 0 ? "the cherry" : "A" + at.j) + " (computer-assisted; in Lean only reduced to its numerical inputs; arms j ≤ 400)") +
+        (rate > rho - 1e-12 ? "  — this branch attains ρ" : "  — this branch is below ρ"),
+      "k = ⌊(n−1)/|b|⌋ = " + wit.k + ", lower bound T_b^k = " + fmtNum(low) + " ≤ π_λ(drawn tree) = " + fmtNum(wv)];
+    if (n <= 12) lines.push("M_n(λ) = " + fmtNum(maxPi(n, l).v) + " (exact, all " + treesOf(n).length + " trees)");
+    lines.push("upper bound (1+λ) ρ^(n−1) = " + fmtNum(up) + "; ρ ≤ 1 + λ = " + (1 + l).toFixed(4));
+    if (Math.abs(l - 1) < 1e-9 && document.getElementById("obB").value === "5") lines.push("at λ = 1, T(A5) = 621/64 = " + T.toFixed(9) + ", so A5 attains ρ(1) = (621/64)^(1/11) = " + rate.toFixed(9));
+    document.getElementById("obReadout").innerHTML = lines.join("<br>");
+  }
+  function initLambdaLabs() {
+    var cr = document.getElementById("crL");
+    cr.addEventListener("input", crRender);
+    document.getElementById("crGold").addEventListener("click", function () { cr.value = 0; crRender(); });
+    document.getElementById("crRand").addEventListener("click", function () { CRSEED = Math.floor(Math.random() * 1e9); CRRAND = null; crRender(); });
+    crRender();
+    document.getElementById("naL").addEventListener("input", naRender);
+    document.getElementById("naN").addEventListener("input", naRender);
+    naRender();
+    var ol = document.getElementById("obL");
+    ["obL", "obN"].forEach(function (id) { document.getElementById(id).addEventListener("input", obRender); });
+    document.getElementById("obB").addEventListener("change", obRender);
+    document.getElementById("obOne").addEventListener("click", function () { ol.value = 100; obRender(); });
+    obRender();
+  }
+
   var inited = {};
   function start(p) {
     if (inited[p]) return;
-    if (p === "treelab") initTreeLab(); else if (p === "spiderlab") initSpiderLab(); else if (p === "races") initRaces(); else if (p === "ladder") initLadder(); else return;
+    if (p === "treelab") initTreeLab(); else if (p === "spiderlab") initSpiderLab(); else if (p === "races") initRaces(); else if (p === "ladder") { initLadder(); initLambdaLabs(); } else return;
     inited[p] = true;
   }
   document.addEventListener("bg-show", function (e) { start(e.detail); });

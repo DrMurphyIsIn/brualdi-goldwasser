@@ -439,6 +439,53 @@ _SPECIAL_KINDS = (
     # shared subtrees once), the pi-face rate corollary, and the log/sqrt face.  Finite
     # arithmetic facts about real constants; nothing about RH.
     "enclosure_tree",
+    # mobius_tangent_cell (2026-09-29, from unpublished work communicated by J. L. Goldwasser):
+    # "linear + concave logs + one Mobius term <= 0" on a rational interval, by tangent-line
+    # cells whose convex majorant is checked at the two cell endpoints (bisection generator, one
+    # theorem per cell, union by a le_or_lt chain).  Elementary one-variable inequalities;
+    # nothing about RH.
+    "mobius_tangent_cell",
+    # concave_pooled_induction (2026-09-29): a bound on a branching (tree) recursion via a
+    # concave one-scalar witness checked at the pooled mean for m = 1..M plus a one-variable
+    # tail for every m > M.  Method credit: concave-witness induction, from unpublished work
+    # communicated by Professor John L. Goldwasser.  Dogfood: the classical matching message.
+    # Nothing about BG or RH.
+    "concave_pooled_induction",
+    # affine_hull_dominance (2026-09-30): the exact maximum over all trees on n vertices of a
+    # positive multilinear tree recursion (vector states), by convex-hull pruning with explicit
+    # convex-combination domination witnesses checked by decide; one generic exchange induction.
+    # Dogfood: the Randic-weighted matching sum.  Nothing about any open problem.
+    "affine_hull_dominance",
+    # gap_budget_multiplicity (2026-09-29): pruning a multiset optimisation by a tangent-price
+    # gap budget (caps, exclusions, a decided knapsack) with the budget from a separable or
+    # c * log concave model and enclosure_tree bounds on the gaps.  Tangent-gap pricing pattern
+    # from unpublished work communicated by J. L. Goldwasser; dogfood is the classical max-product
+    # partition.  Elementary real inequalities; nothing about RH.
+    "gap_budget_multiplicity",
+    # single_crossing_ladder (2026-09-30): consecutive members of a parametric family of
+    # log-sums cross exactly once (derivative numerator with one certified sign change,
+    # rational bracket values from enclosure_tree log atoms), the breakpoints increase, and
+    # the best-member ladder follows over the window.  Dogfood: the arm ladder of the
+    # matching sum.  Elementary one-variable facts; nothing about RH.
+    "single_crossing_ladder",
+    # factored_endpoint_enclosure (2026-10-01): 0 <= F on closed boxes touching a singular
+    # endpoint l = s, from a polynomial lower bound Q <= D F (log atoms by Taylor with signed
+    # remainder), the exact factorization Q = (l - s)^k H and H >= 0 per box (Bernstein).
+    # Dogfood: classical log / rational / Pade bounds near 0 and a synthetic two-variable F.
+    # Elementary real inequalities; nothing about RH.
+    "factored_endpoint_enclosure",
+    # typed_cavity_induction (2026-10-01): a finite type table (degree groups x message-sum
+    # bins, per-type bounds and message intervals) is an inductive invariant of a branching
+    # recursion over every finite rooted tree; enumeration over child-type multisets, a
+    # tangent band and an analytic tail.  Dogfood: the Balister-Bollobas-Gerke half-tree
+    # recursion for R_{-1} (published beta_3, beta_4).  Elementary; nothing about RH.
+    "typed_cavity_induction",
+    # anchored_monotone_extension (2026-10-01): a parametric recursion on finite rooted trees is
+    # differentiable with an explicit log-derivative recursion (derivative prelude), a two-row
+    # inductive invariant with finitely many polynomial checks gives lam D_b <= n_b c(lam) on
+    # [lam0, oo), so T_b / N(lam, n_b) is antitone and an anchor bounds the half-line.
+    # Dogfood: the hard-core recursion and a synthetic matching-type sum recursion.
+    "anchored_monotone_extension",
     # zero_sum_majorant (2026-09-22, SHAPES_AUDIT_48H section 2 rank 2 = audit C shape A merged
     # with audit B N5): a zero-supported family is summable through a finite ordinate window
     # plus the local-count tail m(rho) C/(1 + |gamma_rho|^2) (the RvMBridgeXi.zeroBoundAt atom).
@@ -710,6 +757,14 @@ _SPECIAL_DISPATCH = {
     "interval_gram_inertia":
         ("emit_interval_gram_inertia", "certify_interval_gram_inertia_point",
          "IntervalGramInertiaEmitter"),
+    # concave_pooled_induction (tree recursion bound by a concave pooled-mean witness).
+    "concave_pooled_induction":
+        ("emit_concave_pooled_induction", "certify_concave_pooled_induction_point",
+         "ConcavePooledInductionEmitter"),
+    # affine_hull_dominance (exact tree maxima by convex-hull pruning of vector states).
+    "affine_hull_dominance":
+        ("emit_affine_hull_dominance", "certify_affine_hull_dominance_point",
+         "AffineHullDominanceEmitter"),
     # E8 Weil pairing enclosure (onto the WeilExplicit vocabulary of RH_limit_explicit_formula).
     "weil_form_enclosure":
         ("emit_weil_form_enclosure", "certify_weil_form_enclosure_point",
@@ -725,6 +780,30 @@ _SPECIAL_DISPATCH = {
     # pi-face rate corollary; the log/sqrt face).
     "enclosure_tree":
         ("emit_enclosure_tree", "certify_enclosure_tree_point", "EnclosureTreeEmitter"),
+    # mobius_tangent_cell (tangent-line cells with a Mobius term, convex majorant at endpoints).
+    "mobius_tangent_cell":
+        ("emit_mobius_tangent_cell", "certify_mobius_tangent_cell_point",
+         "MobiusTangentCellEmitter"),
+    # gap_budget_multiplicity (tangent-price gap budget: caps, exclusions, knapsack).
+    "gap_budget_multiplicity":
+        ("emit_gap_budget_multiplicity", "certify_gap_budget_multiplicity_point",
+         "GapBudgetMultiplicityEmitter"),
+    # single_crossing_ladder (single crossing + increasing breakpoints + best-member ladder).
+    "single_crossing_ladder":
+        ("emit_single_crossing_ladder", "certify_single_crossing_ladder_point",
+         "SingleCrossingLadderEmitter"),
+    # factored_endpoint_enclosure (factorization + box sign through the endpoint).
+    "factored_endpoint_enclosure":
+        ("emit_factored_endpoint_enclosure", "certify_factored_endpoint_enclosure_point",
+         "FactoredEndpointEnclosureEmitter"),
+    # typed_cavity_induction (a type table as an inductive invariant over all trees).
+    "typed_cavity_induction":
+        ("emit_typed_cavity_induction", "certify_typed_cavity_induction_point",
+         "TypedCavityInductionEmitter"),
+    # anchored_monotone_extension (derivative prelude + two-row invariant + anchored extension).
+    "anchored_monotone_extension":
+        ("emit_anchored_monotone_extension", "certify_anchored_monotone_extension_point",
+         "AnchoredMonotoneExtensionEmitter"),
     # zero_sum_majorant (the strip certificate composed with the RvMBridgeXi.zeroBoundAt atom of
     # the rvm_bridge island; the tail_envelope face is Mathlib-only).
     "zero_sum_majorant":

@@ -1,0 +1,17 @@
+name = "LeanCherry"
+defaultTargets = ["LeanCherry"]
+
+[[require]]
+name = "mathlib"
+scope = "leanprover-community"
+rev = "v4.32.0"
+
+[[lean_lib]]
+name = "LeanCherry"
+
+# The Comparator challenges (statements only, importing only Mathlib) and the solution; see comparator/README.md.
+[[lean_lib]]
+name = "CherryComparator"
+srcDir = "comparator"
+roots = ["ChHeadline", "ChLambda1", "ChBr", "ChBranch", "ChGraph", "ChOneBlockBr", "ChOneBlockTl", "ChOneBlockGraph",
+         "ChOneBlock", "ChWitness", "ChNegDegree", "ChNegRate", "ChNegUpper", "ChNegConvex", "CherrySolution"]

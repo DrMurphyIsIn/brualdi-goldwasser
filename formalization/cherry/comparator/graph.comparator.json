@@ -1,0 +1,16 @@
+{
+  "challenge_module": "ChGraph",
+  "solution_module": "CherrySolution",
+  "theorem_names": [
+    "LeanCherry.pi_lam_lt_tree",
+    "LeanCherry.Mn_le",
+    "LeanCherry.Mn_ge",
+    "LeanCherry.Mn_rate"
+  ],
+  "permitted_axioms": [
+    "propext",
+    "Quot.sound",
+    "Classical.choice"
+  ],
+  "enable_nanoda": true
+}

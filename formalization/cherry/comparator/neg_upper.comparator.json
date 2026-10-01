@@ -1,0 +1,19 @@
+{
+  "challenge_module": "ChNegUpper",
+  "solution_module": "CherrySolution",
+  "theorem_names": [
+    "LeanCherry.Mn_le_rho",
+    "LeanCherry.Mn_ge_block",
+    "LeanCherry.Mn_tendsto_rho",
+    "LeanCherry.rhoB_eq_cherry",
+    "LeanCherry.rhoB_le",
+    "LeanCherry.rhoSet_bdd",
+    "LeanCherry.Br.Tl_le_pow"
+  ],
+  "permitted_axioms": [
+    "propext",
+    "Quot.sound",
+    "Classical.choice"
+  ],
+  "enable_nanoda": true
+}

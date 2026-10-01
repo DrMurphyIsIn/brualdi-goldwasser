@@ -71,6 +71,54 @@ The proof splits by size:
 | 150–491 | refined per-vertex *rate cells* show the maximizer is a spider; an exhaustive kernel sweep of the spider family finds the best one |
 | ≥ 492 | the same reduction to spiders, then exchange arguments and 223 polynomial certificates identify the rule above |
 
+## Beyond λ = 1: the cherry regime, also in Lean
+
+Brualdi and Goldwasser's ratio is the case λ = 1 of a family. Give every matched edge an extra weight λ,
+so that π_λ(T) = Σ over matchings M of ∏ over edges uv of M of λ/(deg u · deg v), and ask which building
+block wins per vertex. As λ grows the best block climbs a ladder of arms, A₃, A₄, A₅, A₆, …, which runs
+off to infinity at λ = 1 + √5, where the golden ratio appears; from there on the plain cherry is the best
+block. λ = 1 sits on the five-cherry rung, which is the deeper reason the answer above is five. The
+[project page](https://drmurphyisin.github.io/brualdi-goldwasser/#ladder) lets you slide λ and watch it.
+
+That the best block also sets the growth rate of the maximum of π_λ is proved for every λ > 0: by
+computer-assisted interval arithmetic below 1 + √5, and by hand from 1 + √5 on (one-variable calculus at
+the anchor λ = 1 + √5, using the golden identities 1 + λ/2 = φ² and 1 + λ = φ³, then a monotonicity
+argument). The λ = 1 case is the sharp ceiling of the main Lean proof.
+
+The cherry regime is now **also kernel-checked in Lean**, in a separate small project,
+[`formalization/cherry/`](formalization/cherry/README.md) (about 5,400 lines, a few minutes to build). For
+every λ ≥ 1 + √5 it proves, with only the three standard axioms:
+
+- for every finite tree T on n ≥ 1 vertices, π_λ(T) < (1 + λ)(1 + λ/2)^((n−1)/2), stated on Mathlib's
+  `SimpleGraph` and `IsTree`; the bound is never attained;
+- for every pendant branch b, T_b(λ) ≤ (1 + λ/2)^(|b|/2), with equality only for the cherry;
+- (1 + λ/2)^⌊(n−1)/2⌋ ≤ M_n(λ), where M_n(λ) is the maximum of π_λ over trees on n vertices;
+- ρ(λ) = √(1 + λ/2) and lim M_n(λ)^(1/n) = √(1 + λ/2).
+
+For every λ > 0 it also proves the *one-block formula*: with ρ(λ) the supremum of T_b^(1/|b|) over all
+branches, T_b^⌊(n−1)/|b|⌋ ≤ M_n(λ) ≤ (1 + λ)ρ(λ)^(n−1) for every branch b, and lim M_n(λ)^(1/n) = ρ(λ). And at
+λ = 1 it proves π_1(T) = per L(T)/∏ deg for every tree on at least two vertices, tying the family back to
+the original ratio.
+
+Below 1 + √5 it formalizes the *framework* of the computer-assisted proof, not the proof. For every λ > 0 it
+proves the witness theorem: a convex *witness* that satisfies a Bellman inequality bounds every branch,
+bounds M_n(λ) and ρ(λ), and, when it is tight, gives ρ(λ) exactly (parts (a)-(c); part (d), on the tight
+branches, is formalized except one step, from a corner of the witness to a strict supporting line, which is
+taken as a hypothesis). The golden hinge at 1 + √5 is proved to be such a witness, giving ρ(1 + √5) = φ
+again. Part (B), the range 0 < λ < 1 + √5, is then **reduced** in Lean to two external inputs: for λ in
+[0.1, 1 + √5), the existence of a witness and of a best arm; for λ in (0, 0.1], the branch bound itself and a
+best arm. From those inputs Lean derives the ceiling, ρ(λ) = e^{f*(λ)} and the bounds on M_n(λ). The inputs
+themselves are not proved in Lean: **part (B) still rests on computer-assisted interval arithmetic.** The
+equality clause of part (B), the explicit witnesses below 1 + √5 and the typed induction near 0 are not
+formalized.
+
+The formal proof of the anchor also takes a different route from the hand proof. This project was produced
+with AI assistance and independently audited five times, by AI-run audits, before publication; its
+Comparator replay (both kernels, run locally and not sandboxed) is described in
+[`formalization/cherry/comparator/`](formalization/cherry/comparator/README.md); for the witness framework
+it covers (a)-(c) of the witness theorem only. None of this changes the
+λ = 1 theorem or its checks above.
+
 ## Certificates and Telperion
 
 Large parts of the proof are *certificates*: tables of exact rational or integer data, plus Lean
@@ -217,6 +265,8 @@ default) before everything else.
 - `lean` (self-hosted, pushes to `main` and manual runs only) builds the whole formalization and checks
   that all 20 headline theorems, and the statement in `Statement.lean`, use only the standard axioms. It runs on the maintainer's machine because
   GitHub-hosted runners don't have enough memory for the heaviest files. Pull requests never trigger it.
+- `lean-cherry` (self-hosted, pushes to `main` that touch `formalization/cherry/`, and manual runs) builds the
+  cherry-regime project and checks that its 21 headline theorems use only the standard axioms.
 - `pages` publishes `site/` and the paper.
 
 ## Status
@@ -229,6 +279,8 @@ scrutiny. We welcome review, questions and issues.
 
 ```
 formalization/   Lean 4 project: the import closure of bg_maximizer_all (+ the sharp rate ceiling)
+formalization/cherry/  a second, small Lean 4 project: the λ-family's cherry regime λ >= 1+√5, the one-block formula,
+                 the witness framework, and part (B) reduced to its computer-assisted inputs
 certificates/    generators and frozen Telperion records for every certificate family
 telperion/       vendored Telperion engine (BSL 1.1); telperion/README.md describes it on its own terms
 paper/           the paper (paper.tex, gen_table.py builds its appendix from the Lean table)
