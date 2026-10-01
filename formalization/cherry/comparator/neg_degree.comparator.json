@@ -1,0 +1,13 @@
+{
+  "challenge_module": "ChNegDegree",
+  "solution_module": "CherrySolution",
+  "theorem_names": [
+    "LeanCherry.pi_lam_le_tree"
+  ],
+  "permitted_axioms": [
+    "propext",
+    "Quot.sound",
+    "Classical.choice"
+  ],
+  "enable_nanoda": true
+}

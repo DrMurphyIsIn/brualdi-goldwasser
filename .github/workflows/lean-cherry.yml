@@ -1,0 +1,55 @@
+# Kernel check of the cherry-regime formalization (formalization/cherry). Like `lean`, it runs ONLY on the
+# maintainer's self-hosted runner, ONLY for pushes to main and manual dispatch, and never for pull requests:
+# code from forks never runs on the self-hosted machine. This project is small (about 4 minutes, under 6 GB),
+# so it runs only when its own files change.
+name: lean-cherry
+
+on:
+  push:
+    branches: [main]
+    paths: [formalization/cherry/**, .github/workflows/lean-cherry.yml]
+  workflow_dispatch:
+
+concurrency:
+  group: lean-cherry-main
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+jobs:
+  lean-cherry:
+    if: github.repository == 'DrMurphyIsIn/brualdi-goldwasser' && github.ref == 'refs/heads/main'
+    runs-on: [self-hosted, macOS, ARM64, bg-lean]
+    timeout-minutes: 120
+    defaults:
+      run:
+        working-directory: formalization/cherry
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          clean: false          # keep .lake between runs; lake rebuilds only what changed
+      - name: Seed .lake on first run
+        run: |
+          if [ ! -d .lake ] && [ -d "$HOME/bg-lake-seed" ]; then cp -cR "$HOME/bg-lake-seed" .lake; echo seeded; fi
+      - name: Toolchain
+        run: |
+          export PATH="$HOME/.elan/bin:$PATH"
+          elan show
+      - name: Mathlib cache
+        run: |
+          export PATH="$HOME/.elan/bin:$PATH"
+          lake exe cache get
+      - name: Build
+        run: |
+          export PATH="$HOME/.elan/bin:$PATH"
+          lake build
+      # A `sorry` would show up as sorryAx and `native_decide` as Lean.ofReduceBool, so this check covers both.
+      - name: Axioms of every headline theorem
+        run: |
+          export PATH="$HOME/.elan/bin:$PATH"
+          lake env lean AxiomGuard.lean | tee axioms.txt
+          if grep "depends on axioms" axioms.txt | grep -v "\[propext, Classical.choice, Quot.sound\]"; then
+            echo "non-standard axiom found"; exit 1
+          fi
+          test "$(grep -c 'depends on axioms' axioms.txt)" -eq 13

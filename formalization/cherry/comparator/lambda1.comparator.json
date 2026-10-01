@@ -1,0 +1,13 @@
+{
+  "challenge_module": "ChLambda1",
+  "solution_module": "CherrySolution",
+  "theorem_names": [
+    "LeanCherry.pi_one_eq_permanent_tree"
+  ],
+  "permitted_axioms": [
+    "propext",
+    "Quot.sound",
+    "Classical.choice"
+  ],
+  "enable_nanoda": true
+}
