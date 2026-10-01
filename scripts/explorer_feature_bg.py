@@ -12,6 +12,7 @@ Every replacement must match exactly once, so a changed upstream page fails loud
 patched silently. Always patch a fresh build; the script is not idempotent.
 """
 import json
+import re
 import sys
 from pathlib import Path
 
@@ -117,8 +118,35 @@ BG_PANEL = f"""<!-- ============================================================
     <p>One balance condition decides the whole ladder: a long arm's hub vertex must buy more, H(&lambda;) = 2(1+&lambda;)/(2+&lambda;), than the same vertex would earn in a cherry, &zeta;(&lambda;) = &radic;((2+&lambda;)/2). The balance point is a single cubic,</p>
     <pre>8(1+&lambda;)^2 = (2+&lambda;)^3   &lt;=&gt;   (x-2)(x^2-6x+4) = 0,  x = 2+&lambda;,</pre>
     <p>with roots &lambda; = 0, the bottom of the ladder, where the problem becomes the Randi&#263; index, and &lambda; = 1 + &radic;5, the top, where hub factor and cherry rate both equal the golden ratio &phi;. Explore it interactively on the project page: <a href="{SITE}#ladder">Why five: the ladder</a>.</p>
-    <p><strong>The ceiling along the ladder.</strong> That the best block also sets the growth rate of &pi;<sub>&lambda;</sub>, so that no pendant subtree of any shape beats it per vertex, is now proved for every &lambda; &gt; 0, with no gaps: by computer-assisted interval arithmetic (mpmath interval arithmetic, independently re-implemented in Arb) up to 1 + &radic;5, and by a short hand argument from there on. On the whole range the maximal growth rate is the best-atom rate f*(&lambda;), so the ladder is the whole story for the growth rate. The proof runs in six regimes: a degree-typed induction on (0, 0.1], in which the leaf, the cherry and the arms are exact types and every other branch carries a bound proportional to &lambda; (the interval boxes include &lambda; = 0 itself, and the only equality is the three-cherry arm A<sub>3</sub>); a power shoulder on [0.1, 0.47]; a quadratic shoulder on [0.47, 1.6]; a three-piece linear certificate on [1.6, 3.22]; a hand argument for the thin window [3.22, 1 + &radic;5) where the best arm runs off to infinity (with about 15/(1 + &radic;5 &minus; &lambda;) cherries; that constant is observed, not proved); and the cherry regime &lambda; &ge; 1 + &radic;5, where the cherry is the best atom and the growth rate is &frac12; log(1 + &lambda;/2). In the cherry regime a short hand argument shows that the expected number of unmatched vertices in the weighted matching model is at least 2n/(2 + &lambda;) once &lambda; &ge; 2, which makes T<sub>b</sub>(&lambda;)/(2 + &lambda;)<sup>n/2</sup> nonincreasing in &lambda;; anchored at the single point 1 + &radic;5, where the ceiling is verified by calculus using the golden-ratio identities, that gives the ceiling for every larger &lambda;. As &lambda; &rarr; 0 the rate is governed to first order by the Randi&#263; limit, which is why the bottom regime is anchored at A<sub>3</sub>.</p>
-    <p class="note">The ladder among leaves, cherries and arms, and the cubic, are proved. That the best block also sets the growth rate of &pi;<sub>&lambda;</sub> is proved at &lambda; = 1 in Lean (the sharp ceiling) and, for every &lambda; &gt; 0, by the argument above: computer-assisted (interval arithmetic) for 0 &lt; &lambda; &lt; 1 + &radic;5, and a hand proof (calculus at 1 + &radic;5 with the golden-ratio identities, then a monotonicity argument) for &lambda; &ge; 1 + &radic;5, neither formalized in Lean. That result concerns the growth rate only, not the shape of the maximizers for &lambda; &ne; 1.</p>
+    <p><strong>The ceiling along the ladder.</strong> That the best block also sets the growth rate of &pi;<sub>&lambda;</sub>, so that no pendant subtree of any shape beats it per vertex, is now proved for every &lambda; &gt; 0, with no gaps: by computer-assisted interval arithmetic (mpmath interval arithmetic, independently re-implemented in Arb) up to 1 + &radic;5, and by a short hand argument from there on. On the whole range the maximal growth rate is the best-atom rate f*(&lambda;), so the ladder is the whole story for the growth rate. The proof runs in six regimes: a degree-typed induction on (0, 0.1], in which the leaf, the cherry and the arms are exact types and every other branch carries a bound proportional to &lambda; (the interval boxes include &lambda; = 0 itself, and the only equality is the three-cherry arm A<sub>3</sub>); a power shoulder on [0.1, 0.47]; a quadratic shoulder on [0.47, 1.6]; a three-piece linear certificate on [1.6, 3.22]; a hand argument for the thin window [3.22, 1 + &radic;5) where the best arm runs off to infinity (with about 15/(1 + &radic;5 &minus; &lambda;) cherries; that constant is observed, not proved); and the cherry regime &lambda; &ge; 1 + &radic;5, where the cherry is the best atom and the growth rate is &frac12; log(1 + &lambda;/2). In the cherry regime a short hand argument shows that the expected number of unmatched vertices in the weighted matching model is at least 2n/(2 + &lambda;) once &lambda; &ge; 2, which makes T<sub>b</sub>(&lambda;)/(2 + &lambda;)<sup>n/2</sup> nonincreasing in &lambda;; anchored at the single point 1 + &radic;5, where the ceiling is verified by calculus using the golden-ratio identities, that gives the ceiling for every larger &lambda;. The cherry regime is also kernel-checked in Lean (<a href="{REPO}/tree/main/formalization/cherry">formalization/cherry</a>): the ceiling with equality only for the cherry, the bounds on the maximum, &rho;(&lambda;) = &radic;(1 + &lambda;/2) and the growth rate; for every &lambda; &gt; 0 it also checks the one-block formula, that the supremum &rho;(&lambda;) of T<sub>b</sub><sup>1/|b|</sup> over all branches is the growth rate, without determining &rho;(&lambda;) below 1 + &radic;5. As &lambda; &rarr; 0 the rate is governed to first order by the Randi&#263; limit, which is why the bottom regime is anchored at A<sub>3</sub>.</p>
+    <p class="note">The ladder among leaves, cherries and arms, and the cubic, are proved. That the best block also sets the growth rate of &pi;<sub>&lambda;</sub> is proved at &lambda; = 1 in Lean (the sharp ceiling) and, for every &lambda; &gt; 0, by the argument above: computer-assisted (interval arithmetic) for 0 &lt; &lambda; &lt; 1 + &radic;5, and a hand proof (calculus at 1 + &radic;5 with the golden-ratio identities, then a monotonicity argument) for &lambda; &ge; 1 + &radic;5. The range &lambda; &ge; 1 + &radic;5 is also kernel-checked in Lean; the range below it is not, apart from the one-block formula, which Lean checks for every &lambda; &gt; 0. That result concerns the growth rate only, not the shape of the maximizers for &lambda; &ne; 1.</p>
+  </div></div>
+
+  <div class="step"><div class="letter">&#9679;</div><div class="body">
+    <h3>The &lambda;-family: the cherry regime and the one-block formula</h3>
+    <p>For &lambda; &ge; 1 + &radic;5 the cherry is the best block, and every planted branch <code>b</code> obeys the ceiling <code>T_b(&lambda;) &le; (1 + &lambda;/2)^(|b|/2)</code>, with equality only for the cherry. Here <code>T_b</code> is the branch weight from the cavity recursion: a leaf has <code>T = y = 1</code>; a vertex with children has <code>d = #children + 1</code>, <code>R = sum of the children's y</code>, <code>T_b = prod T_c (d + &lambda;R)/d</code> and <code>y_b = 1/(d + &lambda;R)</code>. The first chart shows <code>(1/|b|) log(T_b/(1 + &lambda;/2)^(|b|/2))</code>, the normalized ratio <code>T_b/(2+&lambda;)^(|b|/2)</code> per vertex and shifted so that the ceiling is the zero line: each curve is nonincreasing from &lambda; = 2 on, the cherry's is flat, and from the anchor at 1 + &radic;5 (where the ceiling reads <code>T_b &le; &phi;^|b|</code>) none is above zero. The anchor is proved by one-variable calculus with the golden identities <code>1 + &lambda;/2 = &phi;^2</code>, <code>1 + &lambda; = &phi;^3</code>; the rest of the regime follows by that monotonicity.</p>
+    <div class="plotwrap">
+      <div class="controls">
+        <label>&lambda; <input type="range" id="bg-cr-l" min="0" max="1000" step="1" value="40"> <span class="mono" id="bg-cr-l-val"></span></label>
+        <label>n <input type="range" id="bg-na-n" min="2" max="20" step="1" value="8"> <span class="mono" id="bg-na-n-val"></span></label>
+      </div>
+      <canvas id="bg-cr-canvas" width="1000" height="300"></canvas>
+      <div class="legend"><span><span class="sw" style="background:var(--proved)"></span>cherry</span><span><span class="sw" style="background:var(--cool)"></span>path P3</span><span><span class="sw" style="background:var(--open)"></span>star K1,3</span><span><span class="sw" style="background:var(--draft)"></span>A2</span><span><span class="sw" style="background:var(--accent)"></span>A5</span><span><span class="sw" style="background:var(--deprecated)"></span>a random 8-vertex branch</span></div>
+      <canvas id="bg-na-canvas" width="1000" height="260"></canvas>
+      <div class="legend"><span><span class="sw" style="background:var(--accent)"></span>upper bound (1+&lambda;)(1+&lambda;/2)^((n-1)/2)</span><span><span class="sw" style="background:var(--cool)"></span>lower bound (1+&lambda;/2)^floor((n-1)/2)</span><span><span class="sw" style="background:var(--ink)"></span>M_n(&lambda;), every tree with n &le; 12</span></div>
+      <div class="readout" id="bg-cr-readout"></div>
+    </div>
+    <p>The second chart divides by <code>(1 + &lambda;/2)^((n-1)/2)</code> on a log scale: the maximum <code>M_n(&lambda;)</code> (computed here over all 987 trees with at most 12 vertices) always lies strictly below the upper bound, which is never attained, and above the lower bound from a center carrying cherries.</p>
+    <p><strong>The one-block formula, every &lambda; &gt; 0.</strong> With <code>&rho;(&lambda;) = sup over all planted branches b of T_b^(1/|b|)</code>, every branch gives <code>T_b^floor((n-1)/|b|) &le; M_n(&lambda;) &le; (1+&lambda;) &rho;(&lambda;)^(n-1)</code> (the lower bound from a center carrying copies of <code>b</code>), and <code>lim M_n^(1/n) = &rho;(&lambda;)</code>. The chart shows a branch's per-vertex rate divided by &rho;; it touches 1 where the branch is a best block. At &lambda; = 1 the arm A<sub>5</sub> attains <code>&rho;(1) = (621/64)^(1/11)</code>.</p>
+    <div class="plotwrap">
+      <div class="controls">
+        <label>&lambda; <input type="range" id="bg-ob-l" min="1" max="600" step="1" value="100"> <span class="mono" id="bg-ob-l-val"></span></label>
+        <label>branch <select id="bg-ob-b"><option value="leaf">leaf</option><option value="cherry">cherry</option><option value="2">A2</option><option value="3">A3</option><option value="4">A4</option><option value="5" selected>A5</option><option value="6">A6</option><option value="7">A7</option><option value="8">A8</option><option value="path">path on 5 vertices</option></select></label>
+      </div>
+      <canvas id="bg-ob-canvas" width="1000" height="260"></canvas>
+      <div class="readout" id="bg-ob-readout"></div>
+    </div>
+    <p class="note">Kernel-checked in Lean (<a href="{REPO}/tree/main/formalization/cherry">formalization/cherry</a>): for &lambda; &ge; 1 + &radic;5, the ceiling with its equality case, the strict upper bound for every tree, the lower bound, &rho;(&lambda;) = &radic;(1 + &lambda;/2) and <code>lim M_n^(1/n) = &radic;(1 + &lambda;/2)</code>; for every &lambda; &gt; 0, the one-block formula. Not formalized: the value <code>&rho;(&lambda;) = e^(f*(&lambda;))</code> below 1 + &radic;5, which is the computer-assisted part (interval arithmetic). The &rho; drawn below 1 + &radic;5 is that value, computed over the cherry and the arms A<sub>j</sub>, j &le; 400. Larger, interactive versions are on the project page: <a href="{SITE}#ladder">Why five: the ladder</a>.</p>
   </div></div>
 
   <div class="step"><div class="letter">c</div><div class="body">
@@ -265,7 +293,78 @@ BG_JS = """
     drawers.bg = function () { drawRates(); drawRatio(); };
   })();
 """
-sub("  // ================================================================== REGISTRY", BG_JS + "\n  // ================================================================== REGISTRY")
+# The pure functions of the project page's lambda-family labs (cavity recursion, every tree on n <= 12
+# vertices), reused verbatim so that the two pages compute the same numbers.
+LAMBDA_CORE = re.search(r"// LAMBDA-CORE:BEGIN.*?\n(.*?)  // LAMBDA-CORE:END", (Path(__file__).resolve().parent.parent / "site/labs.js").read_text(), re.S).group(1)
+LAMBDA_JS = """
+  // ================================================================== BRUALDI-GOLDWASSER: THE LAMBDA-FAMILY
+  (function bgLambda() {
+/*LAMBDA_CORE*/
+    function clipRect(cv, A) { var c = cv.ctx; c.save(); c.beginPath(); c.rect(A.ml, A.mt, cv.W - A.ml - A.mr, cv.H - A.mt - A.mb); c.clip(); }
+    function fcurve(ctx, A, f, x0, x1, col, w, dash) {
+      var pts = []; for (var i = 0; i <= 300; i++) { var x = x0 + i / 300 * (x1 - x0); pts.push([A.X(x), A.Y(f(x))]); }
+      ctx.setLineDash(dash || []); polyline(ctx, pts, col, w); ctx.setLineDash([]);
+    }
+    function vline(cv, A, x, col, dash) { var c = cv.ctx; c.setLineDash(dash || []); polyline(c, [[A.X(x), A.mt], [A.X(x), cv.H - A.mb]], col, 1.2); c.setLineDash([]); }
+    var lIn = document.getElementById("bg-cr-l"), nIn = document.getElementById("bg-na-n");
+    var oIn = document.getElementById("bg-ob-l"), bSel = document.getElementById("bg-ob-b");
+    var RAND = parToBr([-1, 0, 0, 1, 1, 2, 3, 3]);
+    function crL() { return LCH + (+lIn.value / 1000) * (20 - LCH); }
+    function drawCherry() {
+      var l = crL(), n0 = +nIn.value, c = 1 + l / 2;
+      document.getElementById("bg-cr-l-val").textContent = l.toFixed(3);
+      document.getElementById("bg-na-n-val").textContent = n0;
+      var cv = setupCanvas("bg-cr-canvas"), lo = -0.25, hi = 0.012;
+      var A = axes(cv, 2, 20, lo, hi, { xlabel: "lambda", ylabel: "per vertex, shifted", yfmt: function (v) { return Math.abs(v) < 1e-9 ? "0" : v.toFixed(2); } });
+      clipRect(cv, A);
+      var brs = [[BR_CHERRY, "--proved", 3], [brPath(3), "--cool", 1.6], [[[], [], []], "--open", 1.6], [brArm(2), "--draft", 1.6], [brArm(5), "--accent", 2], [RAND, "--deprecated", 1.6]];
+      brs.forEach(function (b) { var s = brSize(b[0]); fcurve(cv.ctx, A, function (x) { return Math.log(brT(b[0], x)) / s - 0.5 * Math.log(1 + x / 2); }, 2, 20, cssVar(b[1]), b[2]); });
+      vline(cv, A, LCH, cssVar("--muted"), [3, 3]); vline(cv, A, l, cssVar("--accent"));
+      cv.ctx.restore();
+      // never attained
+      var cv2 = setupCanvas("bg-na-canvas");
+      var up = function (n) { return (1 + l) * Math.pow(c, (n - 1) / 2); }, low = function (n) { return Math.pow(c, Math.floor((n - 1) / 2)); };
+      var nz = function (v, n) { return Math.log(v / Math.pow(c, (n - 1) / 2)); };
+      var y0 = -0.5 * Math.log(c) - 0.2, y1 = Math.log(1 + l) + 0.2;
+      var B = axes(cv2, 0.5, 20.5, y0, y1, { xlabel: "n", ylabel: "log scale", xticks: [1, 4, 8, 12, 16, 20], yticks: [0.5, 1, 2, 4, 8, 16].map(Math.log), yfmt: function (v) { return String(+Math.exp(v).toPrecision(2)); } });
+      var ctx = cv2.ctx; clipRect(cv2, B);
+      polyline(ctx, [[B.X(0.5), B.Y(Math.log(1 + l))], [B.X(20.5), B.Y(Math.log(1 + l))]], cssVar("--accent"), 2);
+      vline(cv2, B, n0, cssVar("--accent"), [3, 3]);
+      var Mn0 = null;
+      for (var n = 1; n <= 20; n++) {
+        ctx.strokeStyle = cssVar("--cool"); ctx.lineWidth = 1.5; ctx.beginPath(); ctx.arc(B.X(n), B.Y(nz(low(n), n)), 4, 0, 2 * Math.PI); ctx.stroke();
+        if (n <= 12) { var m = maxPi(n, l).v; if (n === n0) Mn0 = m; ctx.fillStyle = cssVar("--ink"); ctx.beginPath(); ctx.arc(B.X(n), B.Y(nz(m, n)), 4.5, 0, 2 * Math.PI); ctx.fill(); }
+      }
+      ctx.restore();
+      document.getElementById("bg-cr-readout").textContent = "lambda = " + l.toFixed(4) + ", n = " + n0 + ": lower " + sci(low(n0)) +
+        (Mn0 === null ? " (M_n drawn for n <= 12 only)" : " <= M_n = " + sci(Mn0)) + " < upper " + sci(up(n0)) +
+        (Mn0 === null ? "" : "   (M_n / upper = " + (Mn0 / up(n0)).toFixed(4) + ")") + ";  A5: T_b / (1+lambda/2)^(|b|/2) = " + (brT(brArm(5), l) / Math.pow(c, 5.5)).toFixed(5);
+    }
+    function drawBlock() {
+      var l = +oIn.value / 100, v = bSel.value;
+      var b = v === "leaf" ? [] : v === "cherry" ? BR_CHERRY : v === "path" ? brPath(5) : brArm(+v), s = brSize(b);
+      document.getElementById("bg-ob-l-val").textContent = l.toFixed(2);
+      var rhoF = function (x) { return x >= LCH ? Math.sqrt(1 + x / 2) : Math.exp(atomLogRate(x).v); };
+      var cv = setupCanvas("bg-ob-canvas");
+      var A = axes(cv, 0, 6, 0.96, 1.003, { xlabel: "lambda", ylabel: "rate / rho", yticks: [0.96, 0.97, 0.98, 0.99, 1], yfmt: function (y) { return y.toFixed(2); } });
+      clipRect(cv, A);
+      polyline(cv.ctx, [[A.X(0), A.Y(1)], [A.X(6), A.Y(1)]], cssVar("--ink"), 1.5);
+      fcurve(cv.ctx, A, function (x) { return Math.sqrt(1 + x / 2) / rhoF(x); }, 0.01, 6, cssVar("--muted"), 1.2, [5, 4]);
+      fcurve(cv.ctx, A, function (x) { return Math.pow(brT(b, x), 1 / s) / rhoF(x); }, 0.01, 6, cssVar("--accent"), 2.2);
+      vline(cv, A, LCH, cssVar("--muted"), [3, 3]); vline(cv, A, l, cssVar("--cool"));
+      cv.ctx.restore();
+      var T = brT(b, l), rho = rhoF(l);
+      document.getElementById("bg-ob-readout").textContent = "lambda = " + l.toFixed(2) + ": T_b = " + sci(T) + ", |b| = " + s + ", T_b^(1/|b|) = " + Math.pow(T, 1 / s).toFixed(6) +
+        ", rho = " + rho.toFixed(6) + (l >= LCH ? " = sqrt(1+lambda/2) (kernel-checked)" : " = e^f* (computer-assisted, not formalized)") +
+        ";  n = 34: T_b^floor(33/|b|) = " + sci(Math.pow(T, Math.floor(33 / s))) + " <= M_34 <= (1+lambda) rho^33 = " + sci((1 + l) * Math.pow(rho, 33));
+    }
+    lIn.addEventListener("input", drawCherry); nIn.addEventListener("input", drawCherry);
+    oIn.addEventListener("input", drawBlock); bSel.addEventListener("change", drawBlock);
+    var prev = drawers.bg;
+    drawers.bg = function () { prev(); drawCherry(); drawBlock(); };
+  })();
+""".replace("/*LAMBDA_CORE*/", LAMBDA_CORE)
+sub("  // ================================================================== REGISTRY", BG_JS + LAMBDA_JS + "\n  // ================================================================== REGISTRY")
 sub('  var ZEROS = PLOTS.zeros.ordinates;', '  var BGDATA = JSON.parse(document.getElementById("bg-data").textContent);\n  var ZEROS = PLOTS.zeros.ordinates;')
 sub('<script id="plot-data" type="application/json">', f'<script id="bg-data" type="application/json">{BGDATA}</script>\n<script id="plot-data" type="application/json">')
 
