@@ -8,9 +8,9 @@ state their own scope.
 
 CREDIT
 ------
-Method: concave-witness induction, from unpublished work communicated to us by Professor John L.
-Goldwasser.  This module packages the METHOD generically.  Nothing of that work's
-Laplacian-ratio instance is formalized here, and none of its data is used.
+Method: concave-witness induction, from unpublished work communicated by Professor John L.
+Goldwasser.  This module packages the METHOD generically; only the generic shape is taken, and
+no data from that work is used.
 
 THE SETTING
 -----------
@@ -68,9 +68,8 @@ THE CERTIFICATE (every obligation the Lean theorem consumes)
       Without a tail (`tail=False`) the conclusion is stated for trees whose nodes all have at
       most `M` children (`PTree.AllDeg (fun m => m <= M)`); nothing is claimed beyond `M`.
 
-This tail is NOT the node-condition tail of the original method (which uses `U = 0` near the
-small messages that large `m` produces); it is a sufficient condition of our own that reduces
-every `m >= M + 1` to one one-variable check.  Either is sound; this one is what is certified.
+This tail is a sufficient condition of our own that reduces every `m >= M + 1` to one
+one-variable check; it is what is certified.
 
 THE LEAN (self-contained; only `import Mathlib`)
 ------------------------------------------------
@@ -931,8 +930,8 @@ def _facts(pc: PolyCert) -> str:
 
 _GENERIC = r"""/-! ## Generic concave pooled induction (emitted once per file)
 
-Method: concave-witness induction, from unpublished work communicated by Professor
-John L. Goldwasser.
+Method: concave-witness induction,
+from unpublished work communicated by Professor John L. Goldwasser.
 conjecture1_proved = False. -/
 
 namespace ConcavePooled

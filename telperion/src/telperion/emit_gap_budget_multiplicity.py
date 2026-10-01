@@ -6,8 +6,8 @@ Brualdi-Goldwasser Laplacian-ratio problem: it certifies finite pruning conseque
 elementary inequality per instance.  Downstream consumers state their own scope.
 
 Acknowledgement.  The tangent-gap pricing pattern is from unpublished work communicated by
-Professor John L. Goldwasser.  Nothing from that work (text or data) is reproduced here; the
-dogfood is a classical instance.
+Professor John L. Goldwasser.  Only the generic pattern is taken; nothing from that work (text
+or data) is reproduced here; the dogfood is a classical instance.
 
 THE SETTING
 -----------

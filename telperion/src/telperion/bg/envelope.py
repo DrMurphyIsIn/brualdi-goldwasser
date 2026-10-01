@@ -19,13 +19,12 @@ attain their per-message maxima on subtrees that cannot coexist as siblings).
 CORRECTION (2026-09-29): SINGLE-VARIABLE ENVELOPES ARE *NOT* RULED OUT.  This module used to conclude, from
 the failure of `h*`, that "a LARGER h only worsens the product" and hence that NO single-variable envelope
 is inductive.  That step is invalid: a larger `h` also raises the right-hand side `h(mu_v)`, and the
-tight envelope is not the only candidate.  An explicit counterexample to the old claim is the concave
-piecewise-linear witness `U` of "The maximum Laplacian ratio of a tree for all n >= 303: concave witnesses
-and one-variable certificates" (draft, 28 Sep 2026; communicated by J. L. Goldwasser), Theorem 4.1: in this
+tight envelope is not the only candidate.  An explicit counterexample to the old claim is a concave
+piecewise-linear witness `U` (from unpublished work communicated by Professor John L. Goldwasser): in this
 module's convention `h = exp(11 U)` (leaf `h(1) = 64/621`, `h(1/3) = 486/529`, `h(3/23) = 1`), and
 `(64/621) a^11 prod_c h(mu_c) <= h(mu_v)` holds for EVERY child count, by Jensen at the mean message (U
 concave).  Checked numerically for all child counts <= 3000 and on 52,369 real branches (no violation;
-equality only at the leaf->cherry and cherry^5->A_5 ties); the draft certifies it in exact arithmetic.
+equality only at the leaf->cherry and cherry^5->A_5 ties).
 So `mu_envelope_not_inductive` below certifies only that `h*` itself is not a supersolution.  It is not a
 no-go for the per-message class, and it is not PROOF_STATUS dead-end #1.  `conjecture1_proved = False`.
 """
@@ -150,7 +149,7 @@ class EnvelopeCertificate:
             f"h*(mu_c) > h*(mu_v), overshooting by up to {float(worst):.0f}x, because prod_c h*(mu_c) is not "
             "jointly realizable. This does NOT rule out single-variable envelopes (an earlier version of this "
             "finding claimed it did; RETRACTED 2026-09-29): a larger h also raises h(mu_v), and the concave "
-            "witness h = exp(11U) of the concave-witness draft (communicated by J. L. Goldwasser) IS "
+            "witness h = exp(11U) (from unpublished work communicated by J. L. Goldwasser) IS "
             "inductive. conjecture1_proved = False."
         )
 

@@ -448,7 +448,8 @@ _SPECIAL_KINDS = (
     # concave_pooled_induction (2026-09-29): a bound on a branching (tree) recursion via a
     # concave one-scalar witness checked at the pooled mean for m = 1..M plus a one-variable
     # tail for every m > M.  Method credit: concave-witness induction, from unpublished work
-    # communicated by Professor John L. Goldwasser.  Dogfood: the classical matching message.  Nothing about BG or RH.
+    # communicated by Professor John L. Goldwasser.  Dogfood: the classical matching message.
+    # Nothing about BG or RH.
     "concave_pooled_induction",
     # affine_hull_dominance (2026-09-30): the exact maximum over all trees on n vertices of a
     # positive multilinear tree recursion (vector states), by convex-hull pruning with explicit

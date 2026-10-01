@@ -22,7 +22,7 @@ fit (a log with a negative coefficient, a non-affine log argument, a rational pa
 not "affine + one simple pole").
 
 THE METHOD, per cell [p, q] with a rational tangent point t
-------------------------------------------------------------------------------------
+-----------------------------------------------------------
 * each log is concave, so with u_i = alpha_i + beta_i t and any rational H_i >= log u_i,
       kappa_i log(alpha_i + beta_i x) <= kappa_i (H_i + (alpha_i + beta_i x - u_i) / u_i)
   (Mathlib: `Real.log_le_sub_one_of_pos` at y/u, plus `Real.log_div`);

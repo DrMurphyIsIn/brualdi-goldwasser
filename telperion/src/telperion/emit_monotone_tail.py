@@ -79,7 +79,7 @@ line through nodes ``i`` and ``i+1``: the minimum lies below every segment line,
 satisfies every ``U`` hypothesis.
 
 The node-condition pattern is distilled from unpublished work communicated by
-Prof. John L. Goldwasser; only the generic shape is used.
+Professor John L. Goldwasser; only the generic shape is used.
 conjecture1_proved = False.
 """
 from __future__ import annotations
