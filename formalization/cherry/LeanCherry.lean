@@ -27,3 +27,7 @@ import LeanCherry.Rho
 import LeanCherry.Witness
 import LeanCherry.WitnessExamples
 import LeanCherry.PartB
+import LeanCherry.WinArms
+import LeanCherry.WinConst
+import LeanCherry.WinC2
+import LeanCherry.WinBell
