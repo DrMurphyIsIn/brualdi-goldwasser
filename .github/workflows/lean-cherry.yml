@@ -21,7 +21,7 @@ jobs:
   lean-cherry:
     if: github.repository == 'DrMurphyIsIn/brualdi-goldwasser' && github.ref == 'refs/heads/main'
     runs-on: [self-hosted, macOS, ARM64, bg-lean]
-    timeout-minutes: 120
+    timeout-minutes: 240
     defaults:
       run:
         working-directory: formalization/cherry
