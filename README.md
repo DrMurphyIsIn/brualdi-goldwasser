@@ -86,7 +86,7 @@ the anchor λ = 1 + √5, using the golden identities 1 + λ/2 = φ² and 1 + λ
 argument). The λ = 1 case is the sharp ceiling of the main Lean proof.
 
 The cherry regime is now **also kernel-checked in Lean**, in a separate small project,
-[`formalization/cherry/`](formalization/cherry/README.md) (about 6,800 lines, a few minutes to build). For
+[`formalization/cherry/`](formalization/cherry/README.md) (about 9,200 lines, a few minutes to build). For
 every λ ≥ 1 + √5 it proves, with only the three standard axioms:
 
 - for every finite tree T on n ≥ 1 vertices, π_λ(T) < (1 + λ)(1 + λ/2)^((n−1)/2), stated on Mathlib's
@@ -112,19 +112,28 @@ the thin window [3.22, 1 + √5) it is now **proved in Lean, by hand**: the expl
 window argument is proved to be a witness for (λ, f*(λ)), and some arm is proved to attain f*(λ). The
 interval checks of the computer-assisted version are replaced by monotonicity, tangent and chord arguments,
 and the only numerical input is e^0.4796 ≤ 1.6155, from Mathlib's `Real.exp_bound'`. This is the inequality
-of part (B) without its equality clause; strictness is not formalized. The lower end 3.22 is forced by the
-Lean constants, not by the argument. Below 3.22, part (B) is still **reduced** in Lean to external inputs:
-for λ in [0.1, 3.22), the existence of a witness and of a best arm; for λ in (0, 0.1], the branch bound
-itself and a best arm. From those inputs Lean derives the ceiling, ρ(λ) = e^{f*(λ)} and the bounds on M_n(λ)
-for every 0 < λ < 1 + √5. The inputs themselves are not proved in Lean: **below 3.22, part (B) still rests on
-computer-assisted interval arithmetic.** The equality clause of part (B), the explicit witnesses on
-[0.1, 3.22) and the typed induction near 0 are not formalized.
+of part (B) without its equality clause; strictness is not formalized.
+
+On [2, 3.22) the same witness is now also **proved in Lean**, but not by hand: by a computation checked by
+the kernel. The range is split into 45 closed λ-boxes, on each of which every quantity of the argument is
+enclosed between exact rationals by proved monotone bounds, and the resulting 2,078 rational inequalities
+are checked by the kernel. The root types with many children (k = 0 and m ≥ 8, or m ≥ 5 below 2.35) are
+handled by hand. So part (B), without its equality clause, is proved in Lean on all of [2, 1 + √5). The floor
+at 2 comes from the proof route, not from the witness, which shows no violation numerically down to 1.5.
+
+Below 2, part (B) is still **reduced** in Lean to external inputs: for λ in [0.1, 2), the existence of a
+witness and of a best arm; for λ in (0, 0.1], the branch bound itself and a best arm. From those inputs Lean
+derives the ceiling, ρ(λ) = e^{f*(λ)} and the bounds on M_n(λ) for every 0 < λ < 1 + √5. The inputs
+themselves are not proved in Lean: **below 2, part (B) still rests on computer-assisted interval
+arithmetic.** The equality clause of part (B), the explicit witnesses on [0.1, 2) and the typed induction
+near 0 are not formalized.
 
 The formal proof of the anchor also takes a different route from the hand proof. This project was produced
-with AI assistance and independently audited six times, by AI-run audits, before publication; its
+with AI assistance and independently audited seven times, by AI-run audits, before publication; its
 Comparator replay (both kernels, run locally and not sandboxed) is described in
 [`formalization/cherry/comparator/`](formalization/cherry/comparator/README.md); for the witness framework
-it covers (a)-(c) of the witness theorem, the window statements and the reduction below 3.22. None of this changes the
+it covers (a)-(c) of the witness theorem, the window statements, the extension to [2, 1 + √5) and the
+reductions below 3.22 and below 2. None of this changes the
 λ = 1 theorem or its checks above.
 
 ## Certificates and Telperion
@@ -274,7 +283,7 @@ default) before everything else.
   that all 20 headline theorems, and the statement in `Statement.lean`, use only the standard axioms. It runs on the maintainer's machine because
   GitHub-hosted runners don't have enough memory for the heaviest files. Pull requests never trigger it.
 - `lean-cherry` (self-hosted, pushes to `main` that touch `formalization/cherry/`, and manual runs) builds the
-  cherry-regime project and checks that its 25 headline theorems use only the standard axioms.
+  cherry-regime project and checks that its 31 headline theorems use only the standard axioms.
 - `pages` publishes `site/` and the paper.
 
 ## Status
@@ -288,7 +297,7 @@ scrutiny. We welcome review, questions and issues.
 ```
 formalization/   Lean 4 project: the import closure of bg_maximizer_all (+ the sharp rate ceiling)
 formalization/cherry/  a second, small Lean 4 project: the λ-family's cherry regime λ >= 1+√5, the one-block formula,
-                 the witness framework, part (B) proved on the window [3.22, 1+√5) and reduced below it
+                 the witness framework, part (B) proved on [2, 1+√5) and reduced below 2
 certificates/    generators and frozen Telperion records for every certificate family
 telperion/       vendored Telperion engine (BSL 1.1); telperion/README.md describes it on its own terms
 paper/           the paper (paper.tex, gen_table.py builds its appendix from the Lean table)

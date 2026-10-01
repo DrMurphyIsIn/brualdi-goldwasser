@@ -1,0 +1,15 @@
+{
+  "challenge_module": "ChWin2",
+  "solution_module": "CherrySolution",
+  "theorem_names": [
+    "LeanCherry.window_witness_ext2",
+    "LeanCherry.window_witness_full2",
+    "LeanCherry.part_B_of_inputs_lower2"
+  ],
+  "permitted_axioms": [
+    "propext",
+    "Quot.sound",
+    "Classical.choice"
+  ],
+  "enable_nanoda": true
+}

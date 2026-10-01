@@ -60,12 +60,15 @@ definitions of `UTree`, `usize`, `Aobj`, `realize`, `aGraph`), `BGSpiderRule.lea
 It formalizes the cherry regime λ ≥ 1 + √5 of the λ-family (the branch ceiling with equality only for the
 cherry, the strict upper bound for every tree, the lower bound, ρ(λ) = √(1 + λ/2) and the growth rate), the
 one-block formula for every λ > 0, the witness framework (the witness theorem (a)-(c), and (d) up to one
-step taken as a hypothesis), part (B) *proved* on the window [3.22, 1 + √5) by hand (`WinBell.lean`; the
-inequality only, its equality clause is not formalized) and *reduced* below 3.22 to two computer-assisted
-inputs that Lean does not prove (`PartB.lean`, `WinBell.lean`), and the λ = 1 link to per L/∏ deg. Its own
+step taken as a hypothesis), part (B) *proved* on [2, 1 + √5) (the inequality only, its equality clause is
+not formalized): by hand on the window [3.22, 1 + √5) (`WinBell.lean`), and on [2, 3.22) by 45 exact-rational
+box checks, 2,078 inequalities checked by the kernel, with the root types with many children handled by hand
+(the `WinExt*` files, ending in `WinExt2Main.lean`). Below 2 part (B) is *reduced* to two computer-assisted
+inputs that Lean does not prove (`PartB.lean`, `WinExt2Main.lean`). It also proves the λ = 1 link to
+per L/∏ deg. Its own
 [README](cherry/README.md) states exactly what is and is not proved; read `TreeBridge.lean` (the
 definition `piL`), `Growth.lean` (`Mn`), `Rho.lean` (`rhoSet`, `rhoB`), `Witness.lean` (`Witness`),
-`PartB.lean` (f* and the inputs) and the end of `WinBell.lean` (the window theorems and the reduced input) to
-check the statements. It is
+`PartB.lean` (f* and the inputs), the end of `WinBell.lean` (the window theorems) and `WinExt2Main.lean` (the
+theorems on [2, 1 + √5) and the reduced input) to check the statements. It is
 small and builds in a few minutes; its comments are clean of the history described above.
 

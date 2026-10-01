@@ -516,7 +516,8 @@
     if (l <= 0.1) how = "typed induction, 0 < λ ≤ 0.1";
     else if (l <= 0.47) how = "power shoulder, 0.1 ≤ λ ≤ 0.47";
     else if (l <= 1.6) how = "quadratic shoulder, 0.47 ≤ λ ≤ 1.6";
-    else if (l <= 3.22) how = "three-piece linear, 1.6 ≤ λ ≤ 3.22";
+    else if (l < 2) how = "three-piece linear, 1.6 ≤ λ ≤ 3.22";
+    else if (l < 3.22) return "ceiling at this λ: proved (three-piece linear, 1.6 ≤ λ ≤ 3.22; computer-assisted, interval arithmetic); also proved in Lean, not by hand: the window witness is verified by 45 exact-rational box checks (2,078 inequalities) checked by the kernel (the inequality; its equality clause is not formalized)";
     else return "ceiling at this λ: proved (hand argument for the thin window 3.22 ≤ λ < 1+√5); also proved in Lean, by hand (the inequality; its equality clause is not formalized)";
     return "ceiling at this λ: proved (" + how + "); computer-assisted (interval arithmetic); Lean reduces it to these numerical inputs but does not prove them" +
       (Math.abs(l - 1) < 0.0025 ? "; at λ = 1 exactly it is also the sharp ceiling of the Lean proof" : "");
@@ -817,7 +818,7 @@
     var low = Math.pow(T, wit.k), wv = wholePi(wit.tree, l), up = (1 + l) * Math.pow(rho, n - 1);
     var lines = [B.name + ": |b| = " + s + ", T_b(λ) = " + fmtNum(T) + ", per vertex T_b^(1/|b|) = " + rate.toFixed(6),
       "ρ(λ) = " + rho.toFixed(6) + (exact ? " = √(1+λ/2), the cherry (kernel-checked for λ ≥ 1+√5)" :
-        " = e^f*, best block " + (at.j < 0 ? "the cherry" : "A" + at.j) + (l >= 3.22 ? " (proved in Lean by hand on the window 3.22 ≤ λ < 1+√5; arms j ≤ 400)" : " (computer-assisted; in Lean only reduced to its numerical inputs; arms j ≤ 400)")) +
+        " = e^f*, best block " + (at.j < 0 ? "the cherry" : "A" + at.j) + (l >= 3.22 ? " (proved in Lean by hand on the window 3.22 ≤ λ < 1+√5; arms j ≤ 400)" : l >= 2 ? " (proved in Lean on 2 ≤ λ < 3.22 by kernel-checked exact-rational box checks; arms j ≤ 400)" : " (computer-assisted; in Lean only reduced to its numerical inputs; arms j ≤ 400)")) +
         (rate > rho - 1e-12 ? "  — this branch attains ρ" : "  — this branch is below ρ"),
       "k = ⌊(n−1)/|b|⌋ = " + wit.k + ", lower bound T_b^k = " + fmtNum(low) + " ≤ π_λ(drawn tree) = " + fmtNum(wv)];
     if (n <= 12) lines.push("M_n(λ) = " + fmtNum(maxPi(n, l).v) + " (exact, all " + treesOf(n).length + " trees)");
