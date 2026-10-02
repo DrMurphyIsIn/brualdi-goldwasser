@@ -282,7 +282,7 @@ default) before everything else.
   that all 20 headline theorems, and the statement in `Statement.lean`, use only the standard axioms. It runs on the maintainer's machine because
   GitHub-hosted runners don't have enough memory for the heaviest files. Pull requests never trigger it.
 - `lean-cherry` (self-hosted, pushes to `main` that touch `formalization/cherry/`, and manual runs) builds the
-  cherry-regime project and checks that its 31 headline theorems use only the standard axioms.
+  cherry-regime project and checks that every headline theorem listed in its `AxiomGuard.lean` uses only the standard axioms.
 - `pages` publishes `site/` and the paper.
 
 ## Status

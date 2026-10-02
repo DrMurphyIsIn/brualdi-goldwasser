@@ -49,7 +49,12 @@ jobs:
         run: |
           export PATH="$HOME/.elan/bin:$PATH"
           lake env lean AxiomGuard.lean | tee axioms.txt
-          if grep "depends on axioms" axioms.txt | grep -v "\[propext, Classical.choice, Quot.sound\]"; then
-            echo "non-standard axiom found"; exit 1
-          fi
-          test "$(grep -c 'depends on axioms' axioms.txt)" -eq 31
+          # every headline may use only (a subset of) the three standard axioms
+          bad=$(grep "depends on axioms" axioms.txt | sed 's/.*\[\(.*\)\].*/\1/' | tr ',' '\n' | tr -d ' ' \
+                | grep -v -x -e propext -e Classical.choice -e Quot.sound || true)
+          if [ -n "$bad" ]; then echo "non-standard axiom found: $bad"; exit 1; fi
+          # one result per headline listed in AxiomGuard.lean (no headline may silently drop out)
+          expected=$(grep -c '^#print axioms' AxiomGuard.lean)
+          got=$(grep -c -e 'depends on axioms' -e 'does not depend on any axioms' axioms.txt)
+          echo "axiom reports: $got of $expected"
+          test "$got" -eq "$expected"
