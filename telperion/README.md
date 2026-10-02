@@ -388,8 +388,7 @@ versions pinned by the project it is used in; here, Lean 4 v4.32.0 and Mathlib v
 This directory is a vendored snapshot (version 0.1.6, engine source synced 2026-10-01) of the complete engine source,
 including every emitter, taken from the separate repository where Telperion is developed. It differs from
 the development version only in a handful of comments and docstrings, which were reworded to remove
-references to unrelated private projects and to keep the acknowledgements of unpublished work to a credit
-line; no code or mathematics was changed. The tests, examples and documents below were synced on
+references to unrelated private projects; no code or mathematics was changed. The tests, examples and documents below were synced on
 2026-09-27 and do not yet include the tests of the newest emitters.
 
 Alongside the source it carries most of the development repository's supporting material:

@@ -20,7 +20,7 @@ CORRECTION (2026-09-29): SINGLE-VARIABLE ENVELOPES ARE *NOT* RULED OUT.  This mo
 the failure of `h*`, that "a LARGER h only worsens the product" and hence that NO single-variable envelope
 is inductive.  That step is invalid: a larger `h` also raises the right-hand side `h(mu_v)`, and the
 tight envelope is not the only candidate.  An explicit counterexample to the old claim is a concave
-piecewise-linear witness `U` (from unpublished work communicated privately): in this
+piecewise-linear witness `U`: in this
 module's convention `h = exp(11 U)` (leaf `h(1) = 64/621`, `h(1/3) = 486/529`, `h(3/23) = 1`), and
 `(64/621) a^11 prod_c h(mu_c) <= h(mu_v)` holds for EVERY child count, by Jensen at the mean message (U
 concave).  Checked numerically for all child counts <= 3000 and on 52,369 real branches (no violation;
@@ -149,7 +149,7 @@ class EnvelopeCertificate:
             f"h*(mu_c) > h*(mu_v), overshooting by up to {float(worst):.0f}x, because prod_c h*(mu_c) is not "
             "jointly realizable. This does NOT rule out single-variable envelopes (an earlier version of this "
             "finding claimed it did; RETRACTED 2026-09-29): a larger h also raises h(mu_v), and the concave "
-            "witness h = exp(11U) (from unpublished work communicated privately) IS "
+            "witness h = exp(11U) IS "
             "inductive. conjecture1_proved = False."
         )
 
