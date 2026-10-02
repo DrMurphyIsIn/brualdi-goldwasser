@@ -50,3 +50,30 @@ import LeanCherry
 #print axioms LeanCherry.window_witness_ext2
 #print axioms LeanCherry.window_witness_full2
 #print axioms LeanCherry.part_B_of_inputs_lower2
+-- Part (B) on all of 0 < λ < 1 + √5, with no external input: the kinked witness W2 on (0, 3/20] and the witness W*
+-- on [3/20, 1 + √5) for every λ, a best arm, both former inputs, and the branch bound, ρ = e^{f*} and the bound on M_n.
+#print axioms LeanCherry.part_B_full
+#print axioms LeanCherry.partB_witness_all
+#print axioms LeanCherry.partB_witnessInput
+#print axioms LeanCherry.partB_smallInput
+-- f* = f_3 on (0, 3/20], by a direct comparison of the arms.
+#print axioms LeanCherry.fstar_eq_f3
+-- The scalar certificates of part (B), as real inequalities over their whole intervals (exact-rational rows over
+-- monotone enclosures, and Bernstein identities), and the (S6) hand step on [λ_D2, 2].
+#print axioms LeanCherry.PBC.cert_C1
+#print axioms LeanCherry.PBC.cert_C2
+#print axioms LeanCherry.PBC.cert_C3
+#print axioms LeanCherry.PBC.cert_C4
+#print axioms LeanCherry.PBC.cert_C5
+#print axioms LeanCherry.PBC.cert_C6
+#print axioms LeanCherry.PBC.cert_C7
+#print axioms LeanCherry.PBC.cert_C8
+#print axioms LeanCherry.PBC.cert_C10
+#print axioms LeanCherry.PBC.cert_Dmax
+#print axioms LeanCherry.PBC.cert_S6_mid
+#print axioms LeanCherry.PBC.cert_S6_full
+#print axioms LeanCherry.PBC.mono_g
+-- Auxiliary, not used by part_B_full: C9 (G3(3/43) < 0) and the monotonicity of r and of L_q, kept for the record.
+#print axioms LeanCherry.PBC.cert_C9
+#print axioms LeanCherry.PBC.mono_r
+#print axioms LeanCherry.PBC.mono_Lq

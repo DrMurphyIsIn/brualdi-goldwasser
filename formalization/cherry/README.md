@@ -17,11 +17,10 @@ anchor to every larger λ.
 
 This directory is a second, separate Lean 4 project that checks the cherry regime λ ≥ 1 + √5 with the Lean
 kernel, together with a general "one-block formula" that holds for every λ > 0, and the witness framework
-that organizes the computer-assisted part below 1 + √5. On [2, 1 + √5), just below the cherry regime, that
-part is now **proved** in Lean: by hand on the thin window [3.22, 1 + √5), and by a computation checked by the
-kernel (45 exact-rational boxes) on [2, 3.22). Below 2 it is **not** proved in Lean: Lean reduces it to
-explicitly stated numerical inputs, which remain computer-assisted. The project does not
-touch, and is not needed by, the λ = 1 theorem in `../`.
+that organizes the part below 1 + √5. That part, part (B) of the uniform ceiling without its equality
+clause, is now **proved** in Lean for every 0 < λ < 1 + √5, with no external input (`part_B_full`), by a
+two-witness argument whose scalar conditions are all proved in Lean. The equality clause is not formalized.
+The project does not touch, and is not needed by, the λ = 1 theorem in `../`.
 
 ## What is proved
 
@@ -74,7 +73,9 @@ cherry (`hinge_witness`), and the witness theorem re-derives from it T_b ≤ φ^
 
 Part (B) is the statement that, for 0 < λ < 1 + √5, every planted branch b satisfies
 log T_b ≤ |b| f*(λ), where f*(λ) is the best arm rate, sup over j ≥ 1 of log T(A_j)/(2j + 1), and A_j is a
-root carrying j cherries. Lean proves it in three pieces.
+root carrying j cherries. Lean proves it, without its equality clause, for every 0 < λ < 1 + √5 and with no
+external input (`part_B_full`, described last below). It was first proved on the window [3.22, 1 + √5) and then
+on [2, 1 + √5); those two steps remain in the project.
 
 **Part (B) on the window [3.22, 1 + √5): proved, by hand.** For every λ in [3.22, 1 + √5), `window_witness`
 proves that the explicit three-piece function h = max(0, s_1(y − y†), ε + κ(y − y_C)) is a witness for
@@ -108,23 +109,39 @@ best arm on all of [2, 1 + √5).
 
 The floor at 2 comes from the proof route, not from the witness. The box method stops at λ = 2, where one
 case split of the argument (for m = 2 children) changes sign, and in box form it would also stop near 1.87,
-at the condition for m = 4. Numerically, the witness shows no violation of its Bellman inequality down to
-λ = 1.5, but that is not proved.
+at the condition for m = 4. Numerically, this witness shows no violation of its Bellman inequality down to
+λ = 1.5, but the box method does not prove that. Below 2, part (B) is proved by the two-witness argument
+described next.
 
-**Part (B) below 2: reduced, not proved.** Lean proves (`part_B_of_inputs_lower2`, through
-`part_B_of_inputs`) that two external inputs imply, for every 0 < λ < 1 + √5, the branch bound
-log T_b ≤ |b| f*(λ), ρ(λ) = e^{f*(λ)}, and the two-sided bound on M_n(λ) with a best arm as b*. The inputs are
-hypotheses of that theorem, stated in `WinExt2Main.lean` and `PartB.lean`, and Lean does not prove them:
+**Part (B) on all of 0 < λ < 1 + √5: proved, with no external input.** `part_B_full` proves, for every
+0 < λ < 1 + √5 and with no hypotheses, the branch bound log T_b ≤ |b| f*(λ) for every planted branch, where
+f*(λ) = sup_{j ≥ 1} f_j(λ) is attained by some arm, ρ(λ) = e^{f*(λ)}, and
+e^{f*|A_j|⌊(n−1)/|A_j|⌋} ≤ M_n(λ) ≤ (1 + λ)e^{(n−1)f*(λ)} for a best arm A_j and every n ≥ 1. It is
+`part_B_of_inputs` applied to its two former inputs, both now theorems: `partB_witnessInput` (a witness for
+(λ, f*(λ)) and a best arm on [0.1, 1 + √5)) and `partB_smallInput` (the branch bound and a best arm on
+(0, 0.1]). Both come from `partB_witness_all`, which gives a witness and a best arm for every 0 < λ < 1 + √5:
 
-- for every λ in [0.1, 2), a witness for (λ, f*(λ)) exists, and some arm attains f*
-  (`PartB_WitnessInputLower2`);
-- for every λ in (0, 0.1], the branch bound log T_b ≤ |b| f*(λ) itself holds, and some arm attains f*
-  (`PartB_SmallInput`).
+- on [3/20, 1 + √5), the leaf-exempt piecewise-linear witness W*: flat up to y†, a ramp to ε at y_C, then
+  slope κ = λ/(3 + 2t), with t = λ/(2 + λ) (`PBWstar.lean`);
+- on (0, 3/20], the witness W2, with one more kink at y(A_2), where h(y(A_2)) = (4/5) g(A_2) (`PBW2.lean`).
+  On this range f* = f_3, that is, the arm with three cherries is a best arm (`fstar_eq_f3`).
 
-Both inputs are what the computer-assisted interval arithmetic supplies. So below 2 part (B) still rests on
-that arithmetic; what Lean adds is that nothing else is needed. (`part_B_of_inputs`, `part_B_of_inputs_low`
-and `part_B_of_inputs_lower` are earlier forms of the reduction, whose witness inputs also covered
-[2, 1 + √5), [2, 3.22) and [2, 2.35) respectively.)
+No cell cover is used. The Bellman inequalities are reduced by hand, uniformly in λ, to finitely many scalar
+conditions (`PBStruct.lean`, `PBFlat.lean`), and each scalar condition is a Lean theorem over its whole
+interval (`PBCerts.lean`, `PBCertsFix.lean`). Each condition is proved either by kernel-checked exact-rational
+rows over proved monotone enclosures of a few one-variable functions (`PBAtoms.lean`, `PBRows*.lean`: 59
+rows), or, for polynomials of degree at most 6, by exact Bernstein identities. Like the rest of part (B) in
+this project, this is the inequality without its equality clause.
+
+The Lean proof follows the two-witness argument, but four steps take valid routes that differ from the text.
+- f* = f_3 on (0, 3/20] is proved by comparing the arms directly (`PBGap.lean`), in place of the crossing
+  lemma for the arm ladder.
+- For (S6), the needed monotonicity in the rate uses only f* ≥ f_3 (`psi_mono`).
+- (S5) is proved at the true rate, with no pointwise monotonicity in the rate.
+- (S3) uses the bound ε ≤ D/6.
+
+The earlier forms of the reduction (`part_B_of_inputs`, `part_B_of_inputs_low`, `part_B_of_inputs_lower`,
+`part_B_of_inputs_lower2`) remain in the project, but are no longer needed.
 
 **At λ = 1:** π_1(T) = per L(T) / ∏_v deg v for every tree on at least two vertices, with Mathlib's
 `Matrix.permanent` and L = D − A (`pi_one_eq_permanent_tree`). This ties the family back to Brualdi and
@@ -139,11 +156,8 @@ M_n(λ) is defined as the maximum of π_λ over all trees on the vertex set {0, 
 
 ## What is not formalized
 
-- **Part (B) below 2.** Its two inputs above, that is, the explicit witnesses on [0.1, 2) with their
-  Bellman inequalities, the existence of a best arm there, and the typed induction on (0, 0.1], are
-  computer-assisted and not in Lean.
 - The equality clause of part (B) (equality exactly for a best arm), everywhere, including the strict
-  inequalities of the window argument and of the box computation.
+  inequalities of the window argument, of the box computation and of the two-witness argument.
 - In the witness theorem (d), the step from a corner of h to a strict supporting line, which is a
   hypothesis.
 - The strictness clauses of the monomer-density inequality and of the monotonicity.
@@ -157,14 +171,14 @@ M_n(λ) is defined as the maximum of π_λ over all trees on the vertex set {0, 
 cd formalization/cherry
 lake exe cache get              # Mathlib's prebuilt files (same pins as ../)
 lake build                      # about 4-5 minutes on an Apple M3 Ultra, about 6 GB of memory
-lake env lean AxiomGuard.lean   # the axioms of the 31 headline theorems
+lake env lean AxiomGuard.lean   # the axioms of the 52 headline theorems
 ```
 
 The toolchain is Lean 4 v4.32.0 and Mathlib v4.32.0 (commit `81a5d257`), the same pins as `../`. If you
 have already built `../`, you can reuse its Mathlib with `cp -c -R ../.lake/packages .lake/packages` (an
-APFS clone on macOS) before `lake build`. Unlike `../`, this project is small: 42 files and about 9,200
-lines. Its only generated certificate data are the two box files, `WinExtBoxes.lean` and `WinExt2Boxes.lean`
-(see "Generated files" below).
+APFS clone on macOS) before `lake build`. Unlike `../`, this project is small: 58 files and about 13,400
+lines. Its generated certificate data are the two box files, `WinExtBoxes.lean` and `WinExt2Boxes.lean`, and
+the part (B) certificate rows, `PBRows*.lean` (see "Generated files" below).
 
 The `lean-cherry` workflow (`.github/workflows/lean-cherry.yml`, self-hosted, pushes to `main` that touch this
 directory) builds it and checks the axiom guard.
@@ -178,8 +192,9 @@ solution (`import LeanCherry`) proves exactly those statements and that both Lea
 accept the proofs. For the witness framework, (a)-(c) of the witness theorem were replayed this way, and so
 were the window statements (`window_witness`, `window_ceiling`), the reduction below 3.22
 (`part_B_of_inputs_low`), the extension to [2, 1 + √5) (`window_witness_ext2`, `window_witness_full2`) and the
-reduction below 2 (`part_B_of_inputs_lower2`); (d), the examples, `part_B_of_inputs` and the intermediate step
-down to 2.35 were not. Its README has the details and
+reduction below 2 (`part_B_of_inputs_lower2`), and part (B) on all of 0 < λ < 1 + √5 (`part_B_full`,
+`partB_witness_all`, `partB_witnessInput`, `partB_smallInput`, `fstar_eq_f3`); (d), the examples,
+`part_B_of_inputs` and the intermediate step down to 2.35 were not. Its README has the details and
 the results; the runs were local and not sandboxed.
 
 ## Files
@@ -211,9 +226,17 @@ the results; the runs were local and not sandboxed.
 | `WinExt2Core.lean`, `WinExt2Assemble.lean` | the same with the k = 0, m ≥ 5 types by hand (`WFacts2`, `BoxOK2`) |
 | `WinExt2Boxes.lean` | generated: the 8 boxes covering [2, 2.35] and their certificates |
 | `WinExt2Main.lean` | `window_witness_ext2`, `window_witness_full2`, and part (B) from the inputs below 2 |
+| `PBBasic.lean` | part (B): elementary log bounds, the convex-tangent lemma, the slope κ, and enclosures of ε on all of (0, 1 + √5) |
+| `PBAtoms.lean`, `PBRowsCore.lean` | proved monotone enclosures of the one-variable functions behind the certificates |
+| `PBRowsC1.lean`, `PBRowsC3.lean`, `PBRowsC7.lean`, `PBRowsC8.lean`, `PBRowsC10.lean` | generated: the certificate rows |
+| `PBCerts.lean`, `PBCertsFix.lean` | every scalar condition as a theorem over its whole interval, and the (S6) step on [λ_D2, 2] |
+| `PBStruct.lean`, `PBFlat.lean` | the reduction of the Bellman inequalities to the scalar conditions, by hand |
+| `PBWstar.lean`, `PBW2.lean` | the witnesses W* on [3/20, 1 + √5) and W2 on (0, 3/20] |
+| `PBGap.lean` | f* = f_3 on (0, 3/20], by a direct comparison of the arms |
+| `PBMain.lean` | `partB_witness_all`, the two former inputs, and `part_B_full` |
 | `Lambda1.lean`, `R3Copy.lean` | the λ = 1 link to per L/∏ deg |
 | `Whole.lean`, `AddLeaf.lean`, `Graph.lean`, `MatchSum.lean`, `Extra.lean` | plumbing |
-| `AxiomGuard.lean` | `#print axioms` for the 31 headline theorems |
+| `AxiomGuard.lean` | `#print axioms` for the 52 headline theorems |
 | `scripts/` | the generators of `WinExt2Core.lean`, `WinExt2Assemble.lean` and the two box files |
 
 `R3Copy.lean` is a verbatim copy of the λ = 1 permanent/matching development of `../R3Cert`, renamed into
@@ -234,10 +257,16 @@ no trust: the kernel checks every inequality, and the coverage of the range.
 `hydl9` (a lower bound 1/9 on y†), which the new field `hydl6` (1/6) implies. Both are checked for every box.
 This is cosmetic, and they were left in place so that the code is exactly the code that was audited.
 
+The part (B) certificate rows (`PBRowsC1.lean`, `PBRowsC3.lean`, `PBRowsC7.lean`, `PBRowsC8.lean`,
+`PBRowsC10.lean`) were also written by a script, from the exact rational endpoints and enclosure values of
+each row. That script is not included. The rows need no trust either: each is a kernel-checked rational
+inequality, and the covering of each interval by its rows is proved in `PBCerts.lean`. Three certificates in
+`AxiomGuard.lean`, `cert_C9`, `mono_r` and `mono_Lq`, are auxiliary: `part_B_full` does not use them.
+
 ## Provenance
 
 The formalization was produced with AI assistance (Claude, Anthropic) under the author's direction, like
-the rest of this repository. Before publication it was independently audited seven times, each audit by a
+the rest of this repository. Before publication it was independently audited several times, each audit by a
 separate AI-run session that rebuilt the project from scratch, checked axioms and definitions, compared the
 statements with the mathematics, checked small cases by brute force, and replayed the headline theorems
 with Comparator against its own transcriptions. Those audits are AI checks, not human review; the Lean

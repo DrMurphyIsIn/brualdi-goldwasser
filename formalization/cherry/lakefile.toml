@@ -15,5 +15,5 @@ name = "CherryComparator"
 srcDir = "comparator"
 roots = ["ChHeadline", "ChLambda1", "ChBr", "ChBranch", "ChGraph", "ChOneBlockBr", "ChOneBlockTl", "ChOneBlockGraph",
          "ChOneBlock", "ChWitness", "ChPartB", "ChWinArms", "ChWinConst", "ChWin", "ChNegDegree", "ChNegRate",
-         "ChNegUpper", "ChNegConvex", "ChNegKappa", "ChWin2", "ChNegWinLow", "ChNegInputRange", "CherrySolution",
-         "CherrySolutionKappa"]
+         "ChNegUpper", "ChNegConvex", "ChNegKappa", "ChWin2", "ChNegWinLow", "ChNegInputRange",
+         "ChPartBFull", "ChNegPartBRange", "ChNegCross", "CherrySolution", "CherrySolutionKappa"]
