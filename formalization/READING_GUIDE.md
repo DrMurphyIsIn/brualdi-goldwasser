@@ -60,12 +60,13 @@ definitions of `UTree`, `usize`, `Aobj`, `realize`, `aGraph`), `BGSpiderRule.lea
 It formalizes the cherry regime λ ≥ 1 + √5 of the λ-family (the branch ceiling with equality only for the
 cherry, the strict upper bound for every tree, the lower bound, ρ(λ) = √(1 + λ/2) and the growth rate), the
 one-block formula for every λ > 0, the witness framework (the witness theorem (a)-(c), and (d) up to one
-step taken as a hypothesis), and part (B) *proved* on all of 0 < λ < 1 + √5 with no external input
-(`part_B_full`, in `PBMain.lean`; the inequality and its consequences only, its equality clause is not
-formalized). The proof uses two piecewise-linear witnesses, W2 on (0, 3/20] (`PBW2.lean`) and W* on
+step taken as a hypothesis), and part (B) *proved* on all of 0 < λ < 1 + √5 with its equality clause and
+no external input (`part_B_full_eq` and `part_B_equality`, in `PBEqMain.lean`; the inequality and its
+consequences alone are `part_B_full`, in `PBMain.lean`). The proof uses two piecewise-linear witnesses, W2 on (0, 3/20] (`PBW2.lean`) and W* on
 [3/20, 1 + √5) (`PBWstar.lean`); its scalar conditions are proved in the `PBAtoms`, `PBRows*`, `PBCerts` and
 `PBCertsFix` files, as exact-rational interval checks over proved monotone enclosures and Bernstein
-polynomials of degree at most 6. The earlier window results, by hand on [3.22, 1 + √5) (`WinBell.lean`) and by
+polynomials of degree at most 6; the equality clause, by strict forms of the Bellman steps, is in the
+`PBEq*` files. The earlier window results, by hand on [3.22, 1 + √5) (`WinBell.lean`) and by
 45 exact-rational box checks on [2, 3.22) (the `WinExt*` files), remain in the project. It also proves the
 λ = 1 link to per L/∏ deg. Its own
 [README](cherry/README.md) states exactly what is and is not proved; read `TreeBridge.lean` (the

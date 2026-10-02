@@ -22,12 +22,13 @@ implementation of the Lean kernel in Rust.
 | `window` | `ChWitness.lean` + `ChPartB.lean` + `ChWin.lean` | `window_witness`, `window_ceiling` (part (B) on [3.22, 1 + √5)), `part_B_of_inputs_low` (the reduction below 3.22, with its two inputs `PartB_WitnessInputLow` and `PartB_SmallInput` restated) |
 | `window2` | `ChWitness.lean` + `ChPartB.lean` + `ChWin2.lean` | `window_witness_ext2`, `window_witness_full2` (part (B) on [2, 2.35) and on [2, 1 + √5)), `part_B_of_inputs_lower2` (the reduction below 2, with its input `PartB_WitnessInputLower2` restated) |
 | `partB` | `ChWitness.lean` + `ChPartB.lean` + `ChPartBFull.lean` | `part_B_full` (part (B), without its equality clause, for every 0 < λ < 1 + √5, with no hypotheses), `partB_witness_all` (a witness and a best arm for every 0 < λ < 1 + √5), `partB_witnessInput` and `partB_smallInput` (the two former inputs, `PartB_WitnessInput` and `PartB_SmallInput`, as theorems), `fstar_eq_f3` (f* = f_3 on (0, 3/20]) |
+| `partB_eq` | `ChWitness.lean` + `ChPartB.lean` + `ChPartBEq.lean` | `part_B_equality` (the equality clause of part (B): log T_b = \|b\| f* if and only if b = A_j with j ≥ 1 and f_j = f*, for every 0 < λ < 1 + √5), `part_B_full_eq` (the branch bound, the equality clause, ρ = e^{f*} and the bounds on M_n with a best arm A_j) |
 
 Of the witness theorem only (a)-(c) are replayed. Its part (d), the examples (the golden hinge) and
 `part_B_of_inputs` are checked by Lean's kernel in the build, but not by this second kernel, and so is the
 intermediate step down to 2.35 (`window_witness_ext`, `window_witness_full`, `part_B_of_inputs_lower`).
 
-Nine negative controls show that the check has teeth. Each changes one thing and must be **rejected**:
+Twelve negative controls show that the check has teeth. Each changes one thing and must be **rejected**:
 
 | configuration | change | expected |
 |---|---|---|
@@ -40,6 +41,9 @@ Nine negative controls show that the check has teeth. Each changes one thing and
 | `neg_input_range` | the input `PartB_WitnessInputLower2` stated on [1/10, 2.1) instead of [1/10, 2) | definition mismatch on `PartB_WitnessInputLower2` |
 | `neg_partB_range` | `part_B_full` claimed for 0 ≤ λ instead of 0 < λ | statement mismatch on `part_B_full` |
 | `neg_cross` | f* = f_3 claimed on (0, 1/2] instead of (0, 3/20]; this is false, since A_4 beats A_3 from about λ = 0.44 | statement mismatch on `fstar_eq_f3` |
+| `neg_eq_all` | equality claimed for every arm A_j, j ≥ 1, without f_j = f*; this is false, since at λ = 1 the best arm is A_5 and f_1 falls short of f* by about 0.020 | statement mismatch on `part_B_equality` |
+| `neg_eq_cherry` | equality claimed exactly at the cherry; this is false, since at λ = 1 the cherry falls short of the bound by about 0.0077, and the best arm A_5 attains it | statement mismatch on `part_B_equality` |
+| `neg_fulleq_weak` | `part_B_full_eq` with the bounds on M_n stated for some arm, without f_j = f* (weaker, and true) | statement mismatch on `part_B_full_eq` |
 
 The `neg_kappa` claim is not just unproved but false, and a sixth configuration, `kappa_refute`, must be
 **accepted**: `CherrySolutionKappa.lean` proves `kap2_not_witness`, that for every λ in the window the
@@ -89,3 +93,9 @@ and passed in the same way, with "Nanoda kernel accepts the solution", "Lean def
 solution" and "Your solution is okay!". Its two controls were rejected: `neg_partB_range` with a statement
 mismatch on `part_B_full`, and `neg_cross` with a statement mismatch on `fstar_eq_f3`. These runs were made
 the same way, locally and not sandboxed.
+
+On 2 October 2026, after the equality clause of part (B) was added, the new configuration `partB_eq` was run
+and passed in the same way, with "Nanoda kernel accepts the solution", "Lean default kernel accepts the
+solution" and "Your solution is okay!", and `partB` was run again and still passed. The three new controls were
+rejected: `neg_eq_all` and `neg_eq_cherry` with a statement mismatch on `part_B_equality`, and `neg_fulleq_weak`
+with a statement mismatch on `part_B_full_eq`. These runs were also made locally and not sandboxed.

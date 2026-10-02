@@ -77,3 +77,11 @@ import LeanCherry
 #print axioms LeanCherry.PBC.cert_C9
 #print axioms LeanCherry.PBC.mono_r
 #print axioms LeanCherry.PBC.mono_Lq
+-- Part (B), the equality clause, 0 < λ < 1 + √5: log T(b) = |b| f* exactly at the best arms.
+#print axioms LeanCherry.part_B_equality
+#print axioms LeanCherry.part_B_full_eq
+#print axioms LeanCherry.eq_clause_of
+#print axioms LeanCherry.PB.eq_config
+#print axioms LeanCherry.PB.fArm2_lt_fArm3
+#print axioms LeanCherry.PB.S6_lt
+#print axioms LeanCherry.W2Facts.hg2_lt
