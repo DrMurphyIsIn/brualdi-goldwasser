@@ -34,7 +34,7 @@ LP-INFEASIBLE with worst-case slack `t* ~ -5.2`, and concluded that no single-va
 the induction.  THAT WAS WRONG.  The LP in `docs/sibling_coupling_convex_lp.py` imposed the second
 differences with the wrong sign, so it searched CONCAVE `phi`; with the sign fixed it is feasible (grid
 optimum `t* ~ +0.009`; the exact optimum is 0, tight at the two ties).  An explicit feasible `phi` is
-`phi = -11 U` with `U` a concave piecewise-linear witness (from unpublished work communicated privately): `G >= 0` for every j (checked numerically for j <= 3000), with equality
+`phi = -11 U` with `U` a concave piecewise-linear witness: `G >= 0` for every j (checked numerically for j <= 3000), with equality
 only at (j,S) = (1,1) and (5,5/3).  So a single-variable
 convex invariant DOES close the ceiling induction; the coupling is NOT irreducibly joint for that bound.
 
@@ -142,8 +142,8 @@ class SiblingCouplingCertificate:
             "tie. The siblings couple ONLY through the symmetric mode S = sum mu_c (a_v = 1 + S/(j+1) depends "
             "on children only via (S,j)) -- the Lewis-Riesenfeld mean-field / orthogonal-decoupling setting. "
             "A DECOUPLED invariant x >= phi(mu) with CONVEX phi DOES close the ceiling induction (Jensen at "
-            "the mean message): phi = -11U with U a concave witness from unpublished work "
-            "communicated privately. The former single-variable NO-GO (convex-phi LP slack -5.2) "
+            "the mean message): phi = -11U with U a concave witness. "
+            "The former single-variable NO-GO (convex-phi LP slack -5.2) "
             "is RETRACTED: that LP had a sign error and searched concave phi. "
             "conjecture1_proved = False."
         )
