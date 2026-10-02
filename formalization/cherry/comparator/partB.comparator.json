@@ -1,0 +1,17 @@
+{
+  "challenge_module": "ChPartBFull",
+  "solution_module": "CherrySolution",
+  "theorem_names": [
+    "LeanCherry.fstar_eq_f3",
+    "LeanCherry.partB_witness_all",
+    "LeanCherry.partB_witnessInput",
+    "LeanCherry.partB_smallInput",
+    "LeanCherry.part_B_full"
+  ],
+  "permitted_axioms": [
+    "propext",
+    "Quot.sound",
+    "Classical.choice"
+  ],
+  "enable_nanoda": true
+}

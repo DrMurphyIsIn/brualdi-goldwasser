@@ -1,0 +1,13 @@
+{
+  "challenge_module": "ChNegCross",
+  "solution_module": "CherrySolution",
+  "theorem_names": [
+    "LeanCherry.fstar_eq_f3"
+  ],
+  "permitted_axioms": [
+    "propext",
+    "Quot.sound",
+    "Classical.choice"
+  ],
+  "enable_nanoda": true
+}

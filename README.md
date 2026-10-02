@@ -100,40 +100,38 @@ branches, T_b^⌊(n−1)/|b|⌋ ≤ M_n(λ) ≤ (1 + λ)ρ(λ)^(n−1) for every
 λ = 1 it proves π_1(T) = per L(T)/∏ deg for every tree on at least two vertices, tying the family back to
 the original ratio.
 
-Below 1 + √5 it formalizes the *framework* of the computer-assisted proof, not the proof. For every λ > 0 it
-proves the witness theorem: a convex *witness* that satisfies a Bellman inequality bounds every branch,
+Below 1 + √5 it formalizes the *framework* of the witness method and, for part (B), a complete proof (below). For every
+λ > 0 it proves the witness theorem: a convex *witness* that satisfies a Bellman inequality bounds every branch,
 bounds M_n(λ) and ρ(λ), and, when it is tight, gives ρ(λ) exactly (parts (a)-(c); part (d), on the tight
 branches, is formalized except one step, from a corner of the witness to a strict supporting line, which is
 taken as a hypothesis). The golden hinge at 1 + √5 is proved to be such a witness, giving ρ(1 + √5) = φ
 again.
 
-Part (B) is the branch bound log T_b ≤ |b| f*(λ) for 0 < λ < 1 + √5, where f*(λ) is the best arm rate. On
-the thin window [3.22, 1 + √5) it is now **proved in Lean, by hand**: the explicit three-piece witness of the
-window argument is proved to be a witness for (λ, f*(λ)), and some arm is proved to attain f*(λ). The
-interval checks of the computer-assisted version are replaced by monotonicity, tangent and chord arguments,
-and the only numerical input is e^0.4796 ≤ 1.6155, from Mathlib's `Real.exp_bound'`. This is the inequality
-of part (B) without its equality clause; strictness is not formalized.
+Part (B) is the branch bound log T_b ≤ |b| f*(λ) for 0 < λ < 1 + √5, where f*(λ) is the best arm rate. It
+is now **proved in Lean on all of 0 < λ < 1 + √5, with no external input** (`part_B_full`): every planted
+branch b satisfies log T_b ≤ |b| f*(λ), f*(λ) is attained by some arm A_j, ρ(λ) = e^{f*(λ)}, and
+e^{f*(λ) |A_j| ⌊(n−1)/|A_j|⌋} ≤ M_n(λ) ≤ (1 + λ) e^{(n−1) f*(λ)} for every n ≥ 1. This is part (B)
+without its equality clause; the equality clause, and strictness, are not formalized.
 
-On [2, 3.22) the same witness is now also **proved in Lean**, but not by hand: by a computation checked by
-the kernel. The range is split into 45 closed λ-boxes, on each of which every quantity of the argument is
-enclosed between exact rationals by proved monotone bounds, and the resulting 2,078 rational inequalities
-are checked by the kernel. The root types with many children (k = 0 and m ≥ 8, or m ≥ 5 below 2.35) are
-handled by hand. So part (B), without its equality clause, is proved in Lean on all of [2, 1 + √5). The floor
-at 2 comes from the proof route, not from the witness, which shows no violation numerically down to 1.5.
+The proof uses two piecewise-linear witnesses and no cell cover: W2 on (0, 3/20] and W* on [3/20, 1 + √5).
+Each is proved to be a witness for (λ, f*(λ)) uniformly in λ, by hand reductions of the Bellman inequality
+to a short list of scalar conditions. Every scalar condition is proved in Lean: the tabulated ones as
+kernel-checked exact-rational interval checks over proved monotone enclosures of a few one-variable atoms
+(such as -log(1-t)/t and (e^s - 1)/s), and the rest as polynomials of degree at most 6 with positive
+Bernstein coefficients. Three steps follow a route slightly different from the text, each by hand:
+f* = f_3 on (0, 3/20] by a direct comparison of the arms; the monotonicity in the rate used for (S6), which
+needs only f* ≥ f_3; and (S5) at the true rate.
 
-Below 2, part (B) is still **reduced** in Lean to external inputs: for λ in [0.1, 2), the existence of a
-witness and of a best arm; for λ in (0, 0.1], the branch bound itself and a best arm. From those inputs Lean
-derives the ceiling, ρ(λ) = e^{f*(λ)} and the bounds on M_n(λ) for every 0 < λ < 1 + √5. The inputs
-themselves are not proved in Lean: **below 2, part (B) still rests on computer-assisted interval
-arithmetic.** The equality clause of part (B), the explicit witnesses on [0.1, 2) and the typed induction
-near 0 are not formalized.
+This supersedes the earlier partial results, which remain in the project: the thin window [3.22, 1 + √5) by
+hand (`window_witness`, with the single numerical input e^0.4796 ≤ 1.6155), and [2, 3.22) by 45
+exact-rational λ-boxes (`window_witness_full2`), with part (B) then reduced below 2 to external inputs.
 
 The formal proof of the anchor also takes a different route from the hand proof. This project was produced
-with AI assistance and independently audited seven times, by AI-run audits, before publication; its
+with AI assistance and independently audited, by AI-run audits, before publication; its
 Comparator replay (both kernels, run locally and not sandboxed) is described in
 [`formalization/cherry/comparator/`](formalization/cherry/comparator/README.md); for the witness framework
-it covers (a)-(c) of the witness theorem, the window statements, the extension to [2, 1 + √5) and the
-reductions below 3.22 and below 2. None of this changes the
+it covers (a)-(c) of the witness theorem, the window statements, the extension to [2, 1 + √5) and
+part (B) on all of 0 < λ < 1 + √5. None of this changes the
 λ = 1 theorem or its checks above.
 
 ## Certificates and Telperion
@@ -297,7 +295,7 @@ scrutiny. We welcome review, questions and issues.
 ```
 formalization/   Lean 4 project: the import closure of bg_maximizer_all (+ the sharp rate ceiling)
 formalization/cherry/  a second, small Lean 4 project: the λ-family's cherry regime λ >= 1+√5, the one-block formula,
-                 the witness framework, part (B) proved on [2, 1+√5) and reduced below 2
+                 the witness framework, part (B) proved on all of 0 < λ < 1+√5
 certificates/    generators and frozen Telperion records for every certificate family
 telperion/       vendored Telperion engine (BSL 1.1); telperion/README.md describes it on its own terms
 paper/           the paper (paper.tex, gen_table.py builds its appendix from the Lean table)

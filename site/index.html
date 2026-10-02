@@ -182,12 +182,11 @@ footer { border-top: 1px solid var(--line); margin-top: 40px; padding-top: 14px;
   short hand argument described on that tab. That cherry regime, &lambda; &ge; 1 + &radic;5, is now also
   kernel-checked in Lean (<a href="https://github.com/DrMurphyIsIn/brualdi-goldwasser/tree/main/formalization/cherry">formalization/cherry</a>): the ceiling with equality only for the cherry, a strict upper bound for every tree,
   the lower bound, and the growth rate &radic;(1 + &lambda;/2). For every &lambda; &gt; 0 Lean also checks the
-  one-block formula, that the best branch sets the growth rate, and the witness framework of the
-  computer-assisted proof. On [2, 1 + &radic;5) it now proves the result (the inequality, not its equality
-  clause): by hand on the thin window [3.22, 1 + &radic;5), with no numerical input beyond
-  e<sup>0.4796</sup> &le; 1.6155, and on [2, 3.22) not by hand but by 45 exact-rational box checks (2,078 inequalities, checked by the kernel), with the root types with many children (k = 0, m &ge; 8, or m &ge; 5 below 2.35) handled by hand. Below 2 it
-  reduces the result to two external inputs (witnesses and a best arm on [0.1, 2); the branch bound itself and a
-  best arm on (0, 0.1]) that it does not prove: that range still rests on computer-assisted interval arithmetic.</p>
+  one-block formula, that the best branch sets the growth rate, and the witness framework. Below
+  1 + &radic;5 it now proves the result itself (the inequality and its consequences, not its equality clause) on
+  all of 0 &lt; &lambda; &lt; 1 + &radic;5, with no external input: two piecewise-linear witnesses, one on
+  (0, 3/20] and one on [3/20, 1 + &radic;5), whose scalar conditions are all proved in Lean, as exact-rational
+  interval checks over proved monotone enclosures and Bernstein polynomials of degree at most 6.</p>
 
   <div class="plotwrap">
     <svg id="ratioSvg" viewBox="0 0 900 300" role="img" aria-label="pi divided by rho^(n-1) for the maximizer"></svg>
@@ -370,7 +369,8 @@ footer { border-top: 1px solid var(--line); margin-top: 40px; padding-top: 14px;
     <li><b>0 &lt; &lambda; &le; 0.1:</b> a degree-typed induction. The leaf, the cherry and the arms are exact
     types, and every other branch carries a bound proportional to &lambda;. The interval boxes include &lambda; = 0
     itself, and the only equality is the three-cherry arm A<sub>3</sub>. Computer-assisted (interval arithmetic,
-    independently re-implemented in Arb), not formalized in Lean.</li>
+    independently re-implemented in Arb). This typed induction is not formalized in Lean; the ceiling on this
+    range is, by a different route (see the note below).</li>
     <li><b>0.1 &le; &lambda; &le; 0.47:</b> a power shoulder.</li>
     <li><b>0.47 &le; &lambda; &le; 1.6:</b> a quadratic shoulder. This is the regime that contains &lambda; = 1.</li>
     <li><b>1.6 &le; &lambda; &le; 3.22:</b> a three-piece linear certificate. On [2, 3.22) the ceiling is also
@@ -387,7 +387,7 @@ footer { border-top: 1px solid var(--line); margin-top: 40px; padding-top: 14px;
     weighted matching model is at least 2n/(2 + &lambda;) once &lambda; &ge; 2, which makes
     T<sub>b</sub>(&lambda;)/(2 + &lambda;)<sup>n/2</sup> nonincreasing in &lambda;; anchored at the single point 1 + &radic;5, where the ceiling is verified by calculus using the golden-ratio identities, that gives the ceiling for every larger &lambda;. This regime is also kernel-checked in Lean (<a href="https://github.com/DrMurphyIsIn/brualdi-goldwasser/tree/main/formalization/cherry">formalization/cherry</a>): the ceiling with equality only for the cherry, the bounds on the maximum, and the growth rate.</li>
   </ul>
-  <p class="note">For 0 &lt; &lambda; &lt; 1 + &radic;5 this result is computer-assisted (interval arithmetic). Lean checks the witness framework of this proof for every &lambda; &gt; 0, proves the window [3.22, 1 + &radic;5) by hand and [2, 3.22) by kernel-checked exact-rational box checks (the inequality, not its equality clause), and reduces the range below 2 to two external inputs (witnesses and a best arm on [0.1, 2); the branch bound itself and a best arm on (0, 0.1]), which it does not prove, so that range still rests on computer-assisted interval arithmetic. For &lambda; &ge; 1 + &radic;5 it is a hand proof (calculus at 1 + &radic;5 with the golden-ratio identities, then a monotonicity argument), and it is also kernel-checked in Lean (<a href="https://github.com/DrMurphyIsIn/brualdi-goldwasser/tree/main/formalization/cherry">formalization/cherry</a>), by a different route at the anchor. At &lambda; = 1 exactly it is also the sharp ceiling of the Lean proof. For every &lambda; &gt; 0 Lean also checks the one-block formula: with &rho;(&lambda;) the supremum of T<sub>b</sub><sup>1/|b|</sup> over all branches, the maximum lies between T<sub>b</sub><sup>&lfloor;(n&minus;1)/|b|&rfloor;</sup> and (1+&lambda;)&rho;<sup>n&minus;1</sup>, and its n-th root tends to &rho;. Below 1 + &radic;5 the one-block formula alone does not determine &rho;(&lambda;); its value there comes from the Lean proof on [2, 1 + &radic;5) and, below 2, from the computer-assisted inputs. It
+  <p class="note">For 0 &lt; &lambda; &lt; 1 + &radic;5 this result is computer-assisted (interval arithmetic). Lean checks the witness framework of this proof for every &lambda; &gt; 0, and now proves the ceiling and its consequences (not its equality clause) on all of 0 &lt; &lambda; &lt; 1 + &radic;5 with no external input (<code>part_B_full</code>), by a shorter route than the regimes above: two piecewise-linear witnesses, on (0, 3/20] and on [3/20, 1 + &radic;5), whose scalar conditions are all proved in Lean, as exact-rational interval checks over proved monotone enclosures and Bernstein polynomials of degree at most 6. The earlier Lean proofs of the window [3.22, 1 + &radic;5) by hand and of [2, 3.22) by box checks remain in the project. For &lambda; &ge; 1 + &radic;5 it is a hand proof (calculus at 1 + &radic;5 with the golden-ratio identities, then a monotonicity argument), and it is also kernel-checked in Lean (<a href="https://github.com/DrMurphyIsIn/brualdi-goldwasser/tree/main/formalization/cherry">formalization/cherry</a>), by a different route at the anchor. At &lambda; = 1 exactly it is also the sharp ceiling of the Lean proof. For every &lambda; &gt; 0 Lean also checks the one-block formula: with &rho;(&lambda;) the supremum of T<sub>b</sub><sup>1/|b|</sup> over all branches, the maximum lies between T<sub>b</sub><sup>&lfloor;(n&minus;1)/|b|&rfloor;</sup> and (1+&lambda;)&rho;<sup>n&minus;1</sup>, and its n-th root tends to &rho;. Below 1 + &radic;5 the one-block formula alone does not determine &rho;(&lambda;); its value there, e<sup>f*(&lambda;)</sup>, comes from the Lean proof of the ceiling on 0 &lt; &lambda; &lt; 1 + &radic;5. It
   is about the growth rate only: it says nothing about the shape of the maximizers for &lambda; &ne; 1. As
   &lambda; &rarr; 0 the rate is governed to first order by the Randi&#263; limit above, which is why the bottom
   regime is anchored at A<sub>3</sub>.</p>
@@ -396,7 +396,7 @@ footer { border-top: 1px solid var(--line); margin-top: 40px; padding-top: 14px;
   and arms) and the balance cubic are elementary and proved. At &lambda; = 1, no pendant subtree of <i>any</i>
   shape beats A<sub>5</sub>; that is the sharp ceiling in the Lean proof. For every &lambda; &gt; 0 the same
   ceiling holds: for 0 &lt; &lambda; &lt; 1 + &radic;5 by the computer-assisted (interval arithmetic) arguments
-  above, which Lean proves on [2, 1 + &radic;5) (by hand on the window [3.22, 1 + &radic;5), by kernel-checked box checks on [2, 3.22)) and below 2 reduces to their numerical inputs but does not prove, and for &lambda; &ge; 1 + &radic;5 by a hand proof (calculus at the anchor 1 + &radic;5,
+  above, and in Lean on all of that range (the inequality, not its equality clause, by two piecewise-linear witnesses), and for &lambda; &ge; 1 + &radic;5 by a hand proof (calculus at the anchor 1 + &radic;5,
   then a monotonicity argument) that is also kernel-checked in Lean. That the maximizers for other &lambda; are spiders of the best
   arm is supported by exact computation and is being prepared for publication; treat it as a conjecture for now.</p>
 
@@ -502,11 +502,8 @@ footer { border-top: 1px solid var(--line); margin-top: 40px; padding-top: 14px;
   <p class="note">What is checked where. The one-block formula above (the definition of &rho; as a supremum, the two
   bounds, &rho; &le; 1 + &lambda; and the limit) is kernel-checked in Lean for every &lambda; &gt; 0 (<a href="https://github.com/DrMurphyIsIn/brualdi-goldwasser/tree/main/formalization/cherry">formalization/cherry</a>), and so is
   &rho;(&lambda;) = &radic;(1 + &lambda;/2) for &lambda; &ge; 1 + &radic;5. Below 1 + &radic;5, that &rho;(&lambda;) =
-  e<sup>f*(&lambda;)</sup>, the best rate among the leaf, the cherry and the arms, is proved in Lean on [2, 1 + &radic;5)
-  (by hand on the window [3.22, 1 + &radic;5), by kernel-checked exact-rational box checks on [2, 3.22)), and below 2
-  by computer-assisted interval arithmetic: there Lean derives it from two
-  external inputs (witnesses and a best arm on [0.1, 2); the branch bound itself and a best arm on (0, 0.1]) but
-  does not prove those inputs. The curve &rho; drawn here uses that value, computed
+  e<sup>f*(&lambda;)</sup>, the best rate among the leaf, the cherry and the arms, is proved in Lean on all of
+  0 &lt; &lambda; &lt; 1 + &radic;5, with no external input. The curve &rho; drawn here uses that value, computed
   over the cherry and the arms A<sub>j</sub> with j &le; 400 (near 1 + &radic;5 the best arm grows without bound, so
   the curve is a close lower approximation there). At &lambda; = 1 the arm A<sub>5</sub> attains
   &rho;(1) = (621/64)<sup>1/11</sup>.</p>
@@ -651,18 +648,15 @@ certificates/verify.sh --full    # also the independent certified all-tree searc
     The cherry regime &lambda; &ge; 1 + &radic;5 is also kernel-checked in a separate Lean project (<a href="https://github.com/DrMurphyIsIn/brualdi-goldwasser/tree/main/formalization/cherry">formalization/cherry</a>: the
     branch ceiling with its equality case, the bounds on the maximum, &rho;(&lambda;) and the growth rate), together with
     the one-block formula and the witness framework for every &lambda; &gt; 0 (the witness theorem (a)&ndash;(c), and (d)
-    up to one step taken as a hypothesis). On the window [3.22, 1 + &radic;5) the ceiling is <i>proved</i> in Lean, by
-    hand: the explicit window witness is a witness and some arm attains f*, and the only numerical input is
-    e<sup>0.4796</sup> &le; 1.6155, from Mathlib's <code>Real.exp_bound'</code>. This is the inequality without its
-    equality clause; strictness is not formalized. On [2, 3.22) the ceiling is also <i>proved</i> in Lean,
-    not by hand but by 45 exact-rational box checks (2,078 inequalities, checked by the kernel), with the root types with many children (k = 0, m &ge; 8, or m &ge; 5 below 2.35) handled by hand; the floor 2 comes from the proof route, not from the witness, which numerically shows no
-    violation down to 1.5. Below 2
-    Lean only <i>reduces</i> the ceiling to two external inputs, witnesses and a best arm on [0.1, 2) and the branch
-    bound itself and a best arm on (0, 0.1], which it does not prove; that range still rests on computer-assisted
-    interval arithmetic, and the equality clause, the explicit witnesses on [0.1, 2) and the typed induction are
-    not formalized. That project was audited seven times by independent AI-run audits and replayed by Comparator with
-    nanoda (for the witness framework, (a)&ndash;(c) only, and the statements on [2, 1 + &radic;5) and the reductions;
-    run locally, not sandboxed). The Lean theorem about the maximizer itself is &lambda; = 1 only.</li>
+    up to one step taken as a hypothesis). Below 1 + &radic;5 the ceiling is now <i>proved</i> in Lean on all of
+    0 &lt; &lambda; &lt; 1 + &radic;5 with no external input (<code>part_B_full</code>): two piecewise-linear
+    witnesses, on (0, 3/20] and on [3/20, 1 + &radic;5), are witnesses and some arm attains f*, and every scalar
+    condition is proved in Lean (exact-rational interval checks over proved monotone enclosures, and Bernstein
+    polynomials of degree at most 6). This is the inequality and its consequences without its equality clause;
+    the equality clause and strictness are not formalized. The earlier window results, by hand on [3.22, 1 + &radic;5)
+    and by 45 exact-rational box checks on [2, 3.22), remain in the project. That project was audited by independent
+    AI-run audits and replayed by Comparator with nanoda (for the witness framework, (a)&ndash;(c) only, the window
+    statements and part (B) on 0 &lt; &lambda; &lt; 1 + &radic;5; run locally, not sandboxed). The Lean theorem about the maximizer itself is &lambda; = 1 only.</li>
     <li>The heaviest Lean files need 15&ndash;35 GiB of memory each.</li>
     <li>Developed with extensive assistance from an AI system (Claude, by Anthropic), under the author's
     direction; correctness rests on the Lean kernel.</li>
@@ -1377,10 +1371,9 @@ certificates/verify.sh --full    # also the independent certified all-tree searc
     if (l <= 0.1) how = "typed induction, 0 < λ ≤ 0.1";
     else if (l <= 0.47) how = "power shoulder, 0.1 ≤ λ ≤ 0.47";
     else if (l <= 1.6) how = "quadratic shoulder, 0.47 ≤ λ ≤ 1.6";
-    else if (l < 2) how = "three-piece linear, 1.6 ≤ λ ≤ 3.22";
-    else if (l < 3.22) return "ceiling at this λ: proved (three-piece linear, 1.6 ≤ λ ≤ 3.22; computer-assisted, interval arithmetic); also proved in Lean, not by hand: the window witness is verified by 45 exact-rational box checks (2,078 inequalities) checked by the kernel (the inequality; its equality clause is not formalized)";
-    else return "ceiling at this λ: proved (hand argument for the thin window 3.22 ≤ λ < 1+√5); also proved in Lean, by hand (the inequality; its equality clause is not formalized)";
-    return "ceiling at this λ: proved (" + how + "); computer-assisted (interval arithmetic); Lean reduces it to these numerical inputs but does not prove them" +
+    else if (l < 3.22) how = "three-piece linear, 1.6 ≤ λ ≤ 3.22";
+    else return "ceiling at this λ: proved (hand argument for the thin window 3.22 ≤ λ < 1+√5); also proved in Lean with no external input (part_B_full: two piecewise-linear witnesses; the inequality, its equality clause is not formalized)";
+    return "ceiling at this λ: proved (" + how + "; computer-assisted, interval arithmetic); also proved in Lean with no external input (part_B_full: two piecewise-linear witnesses; the inequality, its equality clause is not formalized)" +
       (Math.abs(l - 1) < 0.0025 ? "; at λ = 1 exactly it is also the sharp ceiling of the Lean proof" : "");
   }
   function goldenRender() {
@@ -1679,7 +1672,7 @@ certificates/verify.sh --full    # also the independent certified all-tree searc
     var low = Math.pow(T, wit.k), wv = wholePi(wit.tree, l), up = (1 + l) * Math.pow(rho, n - 1);
     var lines = [B.name + ": |b| = " + s + ", T_b(λ) = " + fmtNum(T) + ", per vertex T_b^(1/|b|) = " + rate.toFixed(6),
       "ρ(λ) = " + rho.toFixed(6) + (exact ? " = √(1+λ/2), the cherry (kernel-checked for λ ≥ 1+√5)" :
-        " = e^f*, best block " + (at.j < 0 ? "the cherry" : "A" + at.j) + (l >= 3.22 ? " (proved in Lean by hand on the window 3.22 ≤ λ < 1+√5; arms j ≤ 400)" : l >= 2 ? " (proved in Lean on 2 ≤ λ < 3.22 by kernel-checked exact-rational box checks; arms j ≤ 400)" : " (computer-assisted; in Lean only reduced to its numerical inputs; arms j ≤ 400)")) +
+        " = e^f*, best block " + (at.j < 0 ? "the cherry" : "A" + at.j) + " (proved in Lean for 0 < λ < 1+√5; arms j ≤ 400)") +
         (rate > rho - 1e-12 ? "  — this branch attains ρ" : "  — this branch is below ρ"),
       "k = ⌊(n−1)/|b|⌋ = " + wit.k + ", lower bound T_b^k = " + fmtNum(low) + " ≤ π_λ(drawn tree) = " + fmtNum(wv)];
     if (n <= 12) lines.push("M_n(λ) = " + fmtNum(maxPi(n, l).v) + " (exact, all " + treesOf(n).length + " trees)");
