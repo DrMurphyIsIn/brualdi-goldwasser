@@ -17,9 +17,9 @@ anchor to every larger λ.
 
 This directory is a second, separate Lean 4 project that checks the cherry regime λ ≥ 1 + √5 with the Lean
 kernel, together with a general "one-block formula" that holds for every λ > 0, and the witness framework
-that organizes the part below 1 + √5. That part, part (B) of the uniform ceiling without its equality
-clause, is now **proved** in Lean for every 0 < λ < 1 + √5, with no external input (`part_B_full`), by a
-two-witness argument whose scalar conditions are all proved in Lean. The equality clause is not formalized.
+that organizes the part below 1 + √5. That part, part (B) of the uniform ceiling with its equality
+clause, is now **proved** in Lean for every 0 < λ < 1 + √5, with no external input (`part_B_full`,
+`part_B_equality`), by a two-witness argument whose scalar conditions are all proved in Lean.
 The project does not touch, and is not needed by, the λ = 1 theorem in `../`.
 
 ## What is proved
@@ -73,8 +73,8 @@ cherry (`hinge_witness`), and the witness theorem re-derives from it T_b ≤ φ^
 
 Part (B) is the statement that, for 0 < λ < 1 + √5, every planted branch b satisfies
 log T_b ≤ |b| f*(λ), where f*(λ) is the best arm rate, sup over j ≥ 1 of log T(A_j)/(2j + 1), and A_j is a
-root carrying j cherries. Lean proves it, without its equality clause, for every 0 < λ < 1 + √5 and with no
-external input (`part_B_full`, described last below). It was first proved on the window [3.22, 1 + √5) and then
+root carrying j cherries, with equality exactly when b is a best arm. Lean proves it, with its equality clause,
+for every 0 < λ < 1 + √5 and with no external input (`part_B_full` and `part_B_equality`, described last below). It was first proved on the window [3.22, 1 + √5) and then
 on [2, 1 + √5); those two steps remain in the project.
 
 **Part (B) on the window [3.22, 1 + √5): proved, by hand.** For every λ in [3.22, 1 + √5), `window_witness`
@@ -130,8 +130,18 @@ No cell cover is used. The Bellman inequalities are reduced by hand, uniformly i
 conditions (`PBStruct.lean`, `PBFlat.lean`), and each scalar condition is a Lean theorem over its whole
 interval (`PBCerts.lean`, `PBCertsFix.lean`). Each condition is proved either by kernel-checked exact-rational
 rows over proved monotone enclosures of a few one-variable functions (`PBAtoms.lean`, `PBRows*.lean`: 59
-rows), or, for polynomials of degree at most 6, by exact Bernstein identities. Like the rest of part (B) in
-this project, this is the inequality without its equality clause.
+rows), or, for polynomials of degree at most 6, by exact Bernstein identities.
+
+**The equality clause of part (B): proved.** For every 0 < λ < 1 + √5 and every planted branch b,
+log T_b = |b| f*(λ) if and only if b = A_j for some j ≥ 1 with f_j(λ) = f*(λ), that is, exactly when b is a best
+arm (`part_B_equality`). If several arms tie, each of them is an equality case. `part_B_full_eq` collects the
+branch bound, the equality clause, ρ(λ) = e^{f*(λ)} and the bounds on M_n(λ), now stated with an arm A_j that
+is a best arm (f_j = f*). The proof uses strict forms of the Bellman steps for both witnesses (`PBEqSteps.lean`,
+`PBEqSteps2.lean`, `PBEqFlat.lean`, `PBEqS6.lean`, `PBEqMain.lean`), with three small differences from the text:
+the step with one non-exempt child is strict for every ȳ, so no statement about A_1 is needed; g(A_2) > 0 is
+proved directly from f_2 < f_3, which reduces to a polynomial with positive coefficients; and the corner of the
+witness at y_C is used through an explicit strict supporting line, so the corner step of the witness theorem (d)
+below is not needed.
 
 The Lean proof follows the two-witness argument, but four steps take valid routes that differ from the text.
 - f* = f_3 on (0, 3/20] is proved by comparing the arms directly (`PBGap.lean`), in place of the crossing
@@ -156,10 +166,10 @@ M_n(λ) is defined as the maximum of π_λ over all trees on the vertex set {0, 
 
 ## What is not formalized
 
-- The equality clause of part (B) (equality exactly for a best arm), everywhere, including the strict
-  inequalities of the window argument, of the box computation and of the two-witness argument.
+- The strict forms of the earlier window argument and of the box computation on [2, 3.22). They are not
+  needed: the equality clause of part (B) is proved through the two-witness argument.
 - In the witness theorem (d), the step from a corner of h to a strict supporting line, which is a
-  hypothesis.
+  hypothesis. The equality clause of part (B) does not use it.
 - The strictness clauses of the monomer-density inequality and of the monotonicity.
 - The formal proofs do not always follow the hand proofs. Most visibly, the anchor at 1 + √5 is proved in
   Lean by a pooled induction with a concave hinge (`Main.lean`, `Step.lean`, `Zero.lean`), not by the
@@ -176,7 +186,7 @@ lake env lean AxiomGuard.lean   # the axioms of the 52 headline theorems
 
 The toolchain is Lean 4 v4.32.0 and Mathlib v4.32.0 (commit `81a5d257`), the same pins as `../`. If you
 have already built `../`, you can reuse its Mathlib with `cp -c -R ../.lake/packages .lake/packages` (an
-APFS clone on macOS) before `lake build`. Unlike `../`, this project is small: 58 files and about 13,400
+APFS clone on macOS) before `lake build`. Unlike `../`, this project is small: 63 files and about 14,600
 lines. Its generated certificate data are the two box files, `WinExtBoxes.lean` and `WinExt2Boxes.lean`, and
 the part (B) certificate rows, `PBRows*.lean` (see "Generated files" below).
 
@@ -234,6 +244,8 @@ the results; the runs were local and not sandboxed.
 | `PBWstar.lean`, `PBW2.lean` | the witnesses W* on [3/20, 1 + √5) and W2 on (0, 3/20] |
 | `PBGap.lean` | f* = f_3 on (0, 3/20], by a direct comparison of the arms |
 | `PBMain.lean` | `partB_witness_all`, the two former inputs, and `part_B_full` |
+| `PBEqSteps.lean`, `PBEqSteps2.lean`, `PBEqFlat.lean`, `PBEqS6.lean` | part (B), equality clause: strict forms of the Bellman steps for both witnesses, and the strict (S6) |
+| `PBEqMain.lean` | the equality configurations, `part_B_equality` and `part_B_full_eq` |
 | `Lambda1.lean`, `R3Copy.lean` | the λ = 1 link to per L/∏ deg |
 | `Whole.lean`, `AddLeaf.lean`, `Graph.lean`, `MatchSum.lean`, `Extra.lean` | plumbing |
 | `AxiomGuard.lean` | `#print axioms` for the 52 headline theorems |

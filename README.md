@@ -108,10 +108,11 @@ taken as a hypothesis). The golden hinge at 1 + √5 is proved to be such a witn
 again.
 
 Part (B) is the branch bound log T_b ≤ |b| f*(λ) for 0 < λ < 1 + √5, where f*(λ) is the best arm rate. It
-is now **proved in Lean on all of 0 < λ < 1 + √5, with no external input** (`part_B_full`): every planted
-branch b satisfies log T_b ≤ |b| f*(λ), f*(λ) is attained by some arm A_j, ρ(λ) = e^{f*(λ)}, and
-e^{f*(λ) |A_j| ⌊(n−1)/|A_j|⌋} ≤ M_n(λ) ≤ (1 + λ) e^{(n−1) f*(λ)} for every n ≥ 1. This is part (B)
-without its equality clause; the equality clause, and strictness, are not formalized.
+is now **proved in Lean on all of 0 < λ < 1 + √5, with its equality clause and no external input**
+(`part_B_full_eq`): every planted branch b satisfies log T_b ≤ |b| f*(λ), with equality exactly when b is a
+best arm, that is b = A_j for some j ≥ 1 with f_j(λ) = f*(λ) (`part_B_equality`); ρ(λ) = e^{f*(λ)}; and
+e^{f*(λ) |A_j| ⌊(n−1)/|A_j|⌋} ≤ M_n(λ) ≤ (1 + λ) e^{(n−1) f*(λ)} for every n ≥ 1, for a best arm A_j. The
+inequality alone, with its consequences, is `part_B_full`.
 
 The proof uses two piecewise-linear witnesses and no cell cover: W2 on (0, 3/20] and W* on [3/20, 1 + √5).
 Each is proved to be a witness for (λ, f*(λ)) uniformly in λ, by hand reductions of the Bellman inequality

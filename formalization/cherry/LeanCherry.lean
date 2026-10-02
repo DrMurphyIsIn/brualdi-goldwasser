@@ -49,3 +49,8 @@ import LeanCherry.PBWstar
 import LeanCherry.PBW2
 import LeanCherry.PBGap
 import LeanCherry.PBMain
+import LeanCherry.PBEqSteps
+import LeanCherry.PBEqSteps2
+import LeanCherry.PBEqFlat
+import LeanCherry.PBEqS6
+import LeanCherry.PBEqMain

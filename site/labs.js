@@ -517,8 +517,8 @@
     else if (l <= 0.47) how = "power shoulder, 0.1 ≤ λ ≤ 0.47";
     else if (l <= 1.6) how = "quadratic shoulder, 0.47 ≤ λ ≤ 1.6";
     else if (l < 3.22) how = "three-piece linear, 1.6 ≤ λ ≤ 3.22";
-    else return "ceiling at this λ: proved (hand argument for the thin window 3.22 ≤ λ < 1+√5); also proved in Lean with no external input (part_B_full: two piecewise-linear witnesses; the inequality, its equality clause is not formalized)";
-    return "ceiling at this λ: proved (" + how + "; computer-assisted, interval arithmetic); also proved in Lean with no external input (part_B_full: two piecewise-linear witnesses; the inequality, its equality clause is not formalized)" +
+    else return "ceiling at this λ: proved (hand argument for the thin window 3.22 ≤ λ < 1+√5); also proved in Lean with no external input (part_B_full_eq: two piecewise-linear witnesses; the inequality and its equality clause)";
+    return "ceiling at this λ: proved (" + how + "; computer-assisted, interval arithmetic); also proved in Lean with no external input (part_B_full_eq: two piecewise-linear witnesses; the inequality and its equality clause)" +
       (Math.abs(l - 1) < 0.0025 ? "; at λ = 1 exactly it is also the sharp ceiling of the Lean proof" : "");
   }
   function goldenRender() {
