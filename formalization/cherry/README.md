@@ -266,7 +266,7 @@ inequality, and the covering of each interval by its rows is proved in `PBCerts.
 ## Provenance
 
 The formalization was produced with AI assistance (Claude, Anthropic) under the author's direction, like
-the rest of this repository. Before publication it was independently audited eight times, each audit by a
+the rest of this repository. Before publication it was independently audited, by AI-run audits, each by a
 separate AI-run session that rebuilt the project from scratch, checked axioms and definitions, compared the
 statements with the mathematics, checked small cases by brute force, and replayed the headline theorems
 with Comparator against its own transcriptions. Those audits are AI checks, not human review; the Lean
