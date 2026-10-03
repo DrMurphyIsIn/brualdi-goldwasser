@@ -128,7 +128,7 @@ hand (`window_witness`, with the single numerical input e^0.4796 ≤ 1.6155), an
 exact-rational λ-boxes (`window_witness_full2`), with part (B) then reduced below 2 to external inputs.
 
 The formal proof of the anchor also takes a different route from the hand proof. This project was produced
-with AI assistance and independently audited, by AI-run audits, before publication; its
+with AI assistance and audited before publication in separate AI-run sessions (checks, not human review); its
 Comparator replay (both kernels, run locally and not sandboxed) is described in
 [`formalization/cherry/comparator/`](formalization/cherry/comparator/README.md); for the witness framework
 it covers (a)-(c) of the witness theorem, the window statements, the extension to [2, 1 + √5) and
