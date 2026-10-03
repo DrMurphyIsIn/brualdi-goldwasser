@@ -17,3 +17,16 @@ globs = ["R3Cert.+"]
 name = "BGComparator"
 srcDir = "comparator"
 roots = ["BGChallenge", "BGSolution"]
+
+# Uniqueness of the maximizer, every n >= 4 (n = 21: exactly two trees), up to isomorphism; not a default target,
+# built by its own workflow (bg-unique.yml).
+[[lean_lib]]
+name = "BGUnique"
+globs = ["BGUnique.+"]
+
+# The Comparator challenge for uniqueness (statement only, Mathlib vocabulary), its solution, and three negative
+# controls; see comparator/README.md. Not a default target.
+[[lean_lib]]
+name = "BGUniqueComparator"
+srcDir = "comparator"
+roots = ["BGUniqueChallenge", "BGUniqueSolution", "BGUniqueNegAt21", "BGUniqueNegOneClass21", "BGUniqueNegEveryTree"]

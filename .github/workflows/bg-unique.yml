@@ -1,0 +1,83 @@
+# Kernel check of the uniqueness of the maximizer (formalization/BGUnique). Like `lean`, it runs ONLY on the
+# maintainer's self-hosted runner, ONLY for pushes to main and manual dispatch, and never for pull requests:
+# code from forks never runs on the self-hosted machine. It runs only when its own files or their inputs change. The strict
+# kernel sweeps (353 modules, `decide +kernel`, 6-13 GB each) are built one module at a time.
+name: bg-unique
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - formalization/BGUnique/**
+      - formalization/R3Cert/**
+      - formalization/lakefile.toml
+      - formalization/lake-manifest.json
+      - formalization/lean-toolchain
+      - formalization/build.sh
+      - formalization/comparator/BGUnique*
+      - formalization/comparator/unique.comparator.json
+      - formalization/comparator/neg_unique_*
+      - .github/workflows/bg-unique.yml
+  workflow_dispatch:
+
+concurrency:
+  group: bg-unique-main
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+jobs:
+  bg-unique:
+    if: github.repository == 'DrMurphyIsIn/brualdi-goldwasser' && github.ref == 'refs/heads/main'
+    runs-on: [self-hosted, macOS, ARM64, bg-lean]
+    timeout-minutes: 600
+    defaults:
+      run:
+        working-directory: formalization
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          clean: false          # keep .lake between runs; lake rebuilds only what changed
+      - name: Seed .lake on first run
+        run: |
+          if [ ! -d .lake ] && [ -d "$HOME/bg-lake-seed" ]; then cp -cR "$HOME/bg-lake-seed" .lake; echo seeded; fi
+      - name: Toolchain
+        run: |
+          export PATH="$HOME/.elan/bin:$PATH"
+          elan show
+      - name: Mathlib cache
+        run: |
+          export PATH="$HOME/.elan/bin:$PATH"
+          lake exe cache get
+      - name: Build R3Cert (heavy certificates in batches)
+        run: |
+          export PATH="$HOME/.elan/bin:$PATH"
+          ./build.sh 2
+      - name: Build the kernel sweeps, one module at a time
+        run: |
+          export PATH="$HOME/.elan/bin:$PATH"
+          for k in $(seq 0 10); do lake build BGUnique.SmallSweep.C_$k; done
+          for n in $(seq 150 491); do lake build BGUnique.Sweep.S_$n; done
+      - name: Build BGUnique
+        run: |
+          export PATH="$HOME/.elan/bin:$PATH"
+          lake build BGUnique
+      - name: Build the uniqueness Comparator challenge, solution and controls
+        run: |
+          export PATH="$HOME/.elan/bin:$PATH"
+          lake build BGUniqueComparator
+      # A `sorry` would show up as sorryAx and `native_decide` as Lean.ofReduceBool, so this check covers both.
+      - name: Axioms of every headline theorem
+        run: |
+          export PATH="$HOME/.elan/bin:$PATH"
+          lake env lean BGUnique/AxiomGuard.lean | tee axioms_unique.txt
+          # every headline may use only (a subset of) the three standard axioms
+          bad=$(grep "depends on axioms" axioms_unique.txt | sed 's/.*\[\(.*\)\].*/\1/' | tr ',' '\n' | tr -d ' ' \
+                | grep -v -x -e propext -e Classical.choice -e Quot.sound || true)
+          if [ -n "$bad" ]; then echo "non-standard axiom found: $bad"; exit 1; fi
+          # one result per headline listed in BGUnique/AxiomGuard.lean (no headline may silently drop out)
+          expected=$(grep -c '^#print axioms' BGUnique/AxiomGuard.lean)
+          got=$(grep -c -e 'depends on axioms' -e 'does not depend on any axioms' axioms_unique.txt)
+          echo "axiom reports: $got of $expected"
+          test "$got" -eq "$expected"

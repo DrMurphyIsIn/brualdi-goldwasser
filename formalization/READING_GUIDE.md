@@ -54,6 +54,38 @@ definitions of `UTree`, `usize`, `Aobj`, `realize`, `aGraph`), `BGSpiderRule.lea
 - There is no `native_decide` anywhere: every computation is evaluated by the kernel (`decide +kernel`).
   A `sorry` or `native_decide` would show up in `AxiomGuard.lean` as `sorryAx` or `Lean.ofReduceBool`.
 
+## Uniqueness of the maximizer (`BGUnique/`)
+
+`BGUnique/` proves that the maximizer is unique up to isomorphism for every n ≥ 4 except n = 21, where
+exactly two non-isomorphic trees attain the maximum: T(3,3,3), which is `bgMax 21`, and the subdivided star
+S(21,10), a centre with ten legs of length 2 (`S21`). In Mathlib's vocabulary on the hypothesis side (`BGUnique/Mathlib.lean`, `bg_maximizers_mathlib`): a finite
+tree G (`SimpleGraph`, `IsTree`) on n ≥ 4 vertices maximizes per (G.lapMatrix ℝ) / ∏ deg among all finite
+trees on n vertices if and only if G is isomorphic (`≃g`) to the realization of `bgMax n`, or n = 21 and G is
+isomorphic to the realization of `S21`; the realizations are proved to be trees on n vertices
+(`real_isTree`, `card_verts_realize`). `bg_maximizer_unique_mathlib` is the case n ≠ 21, and
+`bg_maximizers_21_mathlib` shows that at n = 21 both trees attain the maximum and are not isomorphic, so
+there are exactly two isomorphism classes.
+
+The proof works first in the spider family and then lifts to all trees. For n ≥ 492 the winner is strictly
+better than every other spider by a chain of strict exchanges (`SpiderUnique.lean`); for 7 ≤ n ≤ 491 a
+strict form of the spider table is checked by the kernel, one module per n for 150 ≤ n ≤ 491 (`Sweep/`) and
+in chunks of 13 for 7 ≤ n ≤ 149 (`SmallSweep/`; `StrictTable*.lean`), with the few sizes where two spider lists describe the same tree proved to be
+rerootings of each other (`SmallTies.lean`); for n ≤ 6 every rooted tree is enumerated (`TinyUnique.lean`).
+`AllUnique.lean` states the result up to rerooting (`bg_maximizers_exact`). `RerootIsoGraph.lean` and
+`RerootIsoComplete.lean` prove that rerooting together with reordering children is exactly isomorphism of the
+unrooted trees (`rerootRel_iff_uiso`), and `RerootIsoBridge*.lean` prove that the address graph used there is
+a tree with the right number of vertices and is isomorphic to the realized graph behind `pi_utree`
+(`G_iso_aGraph`), which gives the statement on per(L)/∏ deg (`bg_maximizers_exact_aGraph`).
+
+`BGUnique/` is a separate library, not a default target: build it with `lake build BGUnique` after
+`./build.sh`. The 353 kernel sweep modules take 6-13 GB each and are best built one at a time (the
+`bg-unique` workflow does this, and `BGUnique/run_sweep.sh` does it for 150 ≤ n ≤ 491).
+`BGUnique/gen_sweep.py` regenerates the sweep modules and their aggregators, `gen_strict.py` and
+`gen_combos.py` the strict certificates, and `sweep_check.py` is an exact dry run of the strict sweep in
+Python. `BGUnique/AxiomGuard.lean` prints the axioms of every headline theorem (only propext,
+Classical.choice and Quot.sound, or a subset), and `comparator/BGUniqueChallenge.lean` restates the result
+using Mathlib alone for Comparator (see `comparator/README.md`).
+
 ## The cherry regime (`cherry/`)
 
 `cherry/` is a separate Lean project, not imported by anything here and not needed for the λ = 1 theorem.
