@@ -1,0 +1,119 @@
+### python3 verify_bellman.py
+lam=0.12820 j*=    3 min margin (excl. equalities) = 2.646e-07 at (k,m,yb)=(0, 2, 0.46988065031482)  best-arm margin at yC = 7.5e-19
+lam=0.13000 j*=    3 min margin (excl. equalities) = 5.160e-06 at (k,m,yb)=(0, 3, 0.4696464309539693)  best-arm margin at yC = 1.5e-19
+lam=0.18087 j*=    3 min margin (excl. equalities) = 4.652e-06 at (k,m,yb)=(0, 3, 0.45863909272848563)  best-arm margin at yC = 3.8e-19
+lam=0.20000 j*=    3 min margin (excl. equalities) = 4.380e-06 at (k,m,yb)=(0, 3, 0.4546364242828552)  best-arm margin at yC = 7.8e-19
+lam=0.23355 j*=    3 min margin (excl. equalities) = 6.163e-06 at (k,m,yb)=(0, 3, 0.44763175450300197)  best-arm margin at yC = 3.5e-18
+lam=0.28622 j*=    3 min margin (excl. equalities) = 9.990e-06 at (k,m,yb)=(0, 3, 0.43729152768512336)  best-arm margin at yC = 1.9e-18
+lam=0.33889 j*=    3 min margin (excl. equalities) = 5.200e-06 at (k,m,yb)=(0, 3, 0.42761841227484987)  best-arm margin at yC = 2.8e-18
+lam=0.39156 j*=    3 min margin (excl. equalities) = 1.297e-05 at (k,m,yb)=(0, 3, 0.4182788525683789)  best-arm margin at yC = 1.1e-18
+lam=0.43050 j*=    3 min margin (excl. equalities) = 1.454e-08 at (k,m,yb)=(0, 4, 0.41143797572515944)  best-arm margin at yC = 1.1e-18
+lam=0.43060 j*=    4 min margin (excl. equalities) = 5.973e-07 at (k,m,yb)=(0, 3, 0.41142104830083104)  best-arm margin at yC = 3.9e-18
+lam=0.44424 j*=    4 min margin (excl. equalities) = 1.649e-05 at (k,m,yb)=(0, 6000, 0.24729793437253664)  best-arm margin at yC = 5.5e-18
+lam=0.49691 j*=    4 min margin (excl. equalities) = 1.811e-05 at (k,m,yb)=(0, 6000, 0.2453539474517456)  best-arm margin at yC = 6.8e-18
+lam=0.54958 j*=    4 min margin (excl. equalities) = 1.064e-05 at (k,m,yb)=(0, 4, 0.39226150767178114)  best-arm margin at yC = 5.3e-18
+lam=0.60226 j*=    4 min margin (excl. equalities) = 4.235e-06 at (k,m,yb)=(0, 4, 0.3842561707805203)  best-arm margin at yC = 2.4e-18
+lam=0.65493 j*=    4 min margin (excl. equalities) = 1.377e-05 at (k,m,yb)=(0, 4, 0.376584389593062)  best-arm margin at yC = 8.8e-18
+lam=0.70760 j*=    4 min margin (excl. equalities) = 1.760e-05 at (k,m,yb)=(0, 4, 0.36924616410940625)  best-arm margin at yC = 8.0e-18
+lam=0.76027 j*=    4 min margin (excl. equalities) = 9.624e-06 at (k,m,yb)=(0, 4, 0.362241494329553)  best-arm margin at yC = 1.2e-17
+lam=0.81295 j*=    4 min margin (excl. equalities) = 2.671e-05 at (k,m,yb)=(0, 6000, 0.2348162060729461)  best-arm margin at yC = 6.0e-19
+lam=0.86562 j*=    4 min margin (excl. equalities) = 1.807e-05 at (k,m,yb)=(0, 4, 0.3488992661774516)  best-arm margin at yC = 9.6e-19
+lam=0.87250 j*=    5 min margin (excl. equalities) = 1.665e-07 at (k,m,yb)=(0, 4, 0.34812880765883375)  best-arm margin at yC = 2.8e-18
+lam=0.91829 j*=    5 min margin (excl. equalities) = 2.578e-05 at (k,m,yb)=(0, 5, 0.34256170780520345)  best-arm margin at yC = 2.6e-17
+lam=0.97097 j*=    5 min margin (excl. equalities) = 8.776e-06 at (k,m,yb)=(0, 5, 0.3365577051367578)  best-arm margin at yC = 3.2e-18
+lam=1.00000 j*=    5 min margin (excl. equalities) = 3.110e-05 at (k,m,yb)=(0, 6000, 0.2294736877697814)  best-arm margin at yC = 5.2e-18
+lam=1.02364 j*=    5 min margin (excl. equalities) = 3.163e-05 at (k,m,yb)=(0, 6000, 0.22883897090363464)  best-arm margin at yC = 1.1e-17
+lam=1.07631 j*=    5 min margin (excl. equalities) = 3.277e-05 at (k,m,yb)=(0, 6000, 0.22744843548170837)  best-arm margin at yC = 1.6e-19
+lam=1.12898 j*=    5 min margin (excl. equalities) = 1.599e-05 at (k,m,yb)=(0, 5, 0.3195463642428285)  best-arm margin at yC = 4.1e-19
+lam=1.18166 j*=    5 min margin (excl. equalities) = 3.409e-05 at (k,m,yb)=(0, 5, 0.314209472981988)  best-arm margin at yC = 8.5e-18
+lam=1.19240 j*=    6 min margin (excl. equalities) = 2.540e-08 at (k,m,yb)=(0, 5, 0.31324395439168023)  best-arm margin at yC = 4.8e-18
+lam=1.23433 j*=    6 min margin (excl. equalities) = 2.703e-05 at (k,m,yb)=(0, 6, 0.30920613742494996)  best-arm margin at yC = 9.3e-18
+lam=1.28700 j*=    6 min margin (excl. equalities) = 9.472e-06 at (k,m,yb)=(0, 6, 0.30420280186791193)  best-arm margin at yC = 6.9e-18
+lam=1.33968 j*=    6 min margin (excl. equalities) = 3.807e-05 at (k,m,yb)=(0, 6000, 0.2210390907940573)  best-arm margin at yC = 2.3e-17
+lam=1.39235 j*=    6 min margin (excl. equalities) = 3.906e-05 at (k,m,yb)=(0, 6000, 0.2198514829539103)  best-arm margin at yC = 1.8e-17
+lam=1.43560 j*=    7 min margin (excl. equalities) = 6.551e-08 at (k,m,yb)=(0, 6, 0.2910699732215625)  best-arm margin at yC = 1.3e-17
+lam=1.44502 j*=    7 min margin (excl. equalities) = 3.174e-05 at (k,m,yb)=(0, 7, 0.2901934623082055)  best-arm margin at yC = 2.3e-17
+lam=1.49769 j*=    7 min margin (excl. equalities) = 1.941e-05 at (k,m,yb)=(0, 7, 0.2858572381587725)  best-arm margin at yC = 7.8e-19
+lam=1.55037 j*=    7 min margin (excl. equalities) = 4.187e-05 at (k,m,yb)=(0, 6000, 0.21647723741975383)  best-arm margin at yC = 2.9e-17
+lam=1.60304 j*=    7 min margin (excl. equalities) = 1.232e-05 at (k,m,yb)=(0, 7, 0.27751834556370913)  best-arm margin at yC = 7.0e-18
+lam=1.65571 j*=    8 min margin (excl. equalities) = 1.348e-05 at (k,m,yb)=(0, 8, 0.27351567711807867)  best-arm margin at yC = 5.5e-17
+lam=1.70839 j*=    8 min margin (excl. equalities) = 4.451e-05 at (k,m,yb)=(0, 6000, 0.21333246143424306)  best-arm margin at yC = 5.6e-17
+lam=1.76106 j*=    8 min margin (excl. equalities) = 2.082e-05 at (k,m,yb)=(0, 8, 0.2658438959306204)  best-arm margin at yC = 4.9e-17
+lam=1.81373 j*=    9 min margin (excl. equalities) = 1.849e-05 at (k,m,yb)=(0, 9, 0.2621747831887925)  best-arm margin at yC = 1.2e-17
+lam=1.86641 j*=    9 min margin (excl. equalities) = 4.699e-05 at (k,m,yb)=(0, 6000, 0.2103942751992343)  best-arm margin at yC = 5.6e-18
+lam=1.91908 j*=   10 min margin (excl. equalities) = 2.960e-05 at (k,m,yb)=(0, 10, 0.25517011340893925)  best-arm margin at yC = 2.1e-17
+lam=1.97175 j*=   10 min margin (excl. equalities) = 4.856e-05 at (k,m,yb)=(0, 6000, 0.20853943530748648)  best-arm margin at yC = 2.4e-17
+lam=2.00000 j*=   10 min margin (excl. equalities) = 4.897e-05 at (k,m,yb)=(0, 6000, 0.2080542603111109)  best-arm margin at yC = -3.3e-51
+lam=2.02442 j*=   11 min margin (excl. equalities) = 3.919e-05 at (k,m,yb)=(0, 10, 0.2484830112165231)  best-arm margin at yC = 6.3e-18
+lam=2.07710 j*=   11 min margin (excl. equalities) = 5.007e-05 at (k,m,yb)=(0, 6000, 0.2067600571958914)  best-arm margin at yC = 7.5e-17
+lam=2.12977 j*=   12 min margin (excl. equalities) = 5.080e-05 at (k,m,yb)=(0, 6000, 0.20589714215635546)  best-arm margin at yC = 1.2e-17
+lam=2.18244 j*=   12 min margin (excl. equalities) = 1.057e-05 at (k,m,yb)=(0, 13, 0.23909488241313684)  best-arm margin at yC = 9.5e-17
+lam=2.23512 j*=   13 min margin (excl. equalities) = 5.223e-05 at (k,m,yb)=(0, 6000, 0.2042221085281604)  best-arm margin at yC = 6.0e-17
+lam=2.28779 j*=   14 min margin (excl. equalities) = 4.459e-05 at (k,m,yb)=(0, 14, 0.23315543695797197)  best-arm margin at yC = 2.4e-17
+lam=2.34046 j*=   15 min margin (excl. equalities) = 5.360e-05 at (k,m,yb)=(0, 6000, 0.20261085772518436)  best-arm margin at yC = 4.9e-17
+lam=2.39313 j*=   16 min margin (excl. equalities) = 5.427e-05 at (k,m,yb)=(0, 6000, 0.2018277217097244)  best-arm margin at yC = 8.1e-17
+lam=2.44581 j*=   17 min margin (excl. equalities) = 2.902e-05 at (k,m,yb)=(0, 18, 0.22493088998405242)  best-arm margin at yC = 7.5e-17
+lam=2.49848 j*=   19 min margin (excl. equalities) = 1.237e-05 at (k,m,yb)=(0, 18, 0.22229730931336808)  best-arm margin at yC = 2.2e-19
+lam=2.55115 j*=   20 min margin (excl. equalities) = 2.244e-05 at (k,m,yb)=(0, 21, 0.21972468496973294)  best-arm margin at yC = 2.5e-17
+lam=2.60383 j*=   22 min margin (excl. equalities) = 2.659e-05 at (k,m,yb)=(0, 23, 0.21721045303584188)  best-arm margin at yC = 1.6e-17
+lam=2.65650 j*=   24 min margin (excl. equalities) = 1.242e-05 at (k,m,yb)=(0, 25, 0.2147535702781059)  best-arm margin at yC = 3.3e-16
+lam=2.70917 j*=   27 min margin (excl. equalities) = 1.202e-05 at (k,m,yb)=(0, 26, 0.212351645831431)  best-arm margin at yC = 8.2e-18
+lam=2.76184 j*=   30 min margin (excl. equalities) = 1.135e-05 at (k,m,yb)=(0, 31, 0.21000285603884217)  best-arm margin at yC = 5.9e-16
+lam=2.81452 j*=   34 min margin (excl. equalities) = 8.028e-06 at (k,m,yb)=(0, 35, 0.20770502563080018)  best-arm margin at yC = 2.3e-16
+lam=2.86719 j*=   39 min margin (excl. equalities) = 3.842e-06 at (k,m,yb)=(0, 40, 0.2054573583525607)  best-arm margin at yC = 1.1e-17
+lam=2.91986 j*=   46 min margin (excl. equalities) = 3.512e-06 at (k,m,yb)=(0, 47, 0.20325781627932502)  best-arm margin at yC = 9.1e-18
+lam=2.97254 j*=   56 min margin (excl. equalities) = 3.836e-07 at (k,m,yb)=(0, 55, 0.2011044657257659)  best-arm margin at yC = 5.5e-18
+lam=3.00000 j*=   62 min margin (excl. equalities) = 6.510e-07 at (k,m,yb)=(0, 63, 0.2)  best-arm margin at yC = 4.7e-16
+lam=3.02521 j*=   70 min margin (excl. equalities) = 9.769e-07 at (k,m,yb)=(0, 69, 0.198996658846098)  best-arm margin at yC = 7.0e-16
+lam=3.07788 j*=   94 min margin (excl. equalities) = 3.472e-07 at (k,m,yb)=(0, 93, 0.19693257816254026)  best-arm margin at yC = 1.8e-17
+lam=3.13055 j*=  142 min margin (excl. equalities) = 5.549e-08 at (k,m,yb)=(0, 141, 0.1949108770014911)  best-arm margin at yC = 2.6e-15
+lam=3.18323 j*=  285 min margin (excl. equalities) = 1.344e-08 at (k,m,yb)=(0, 284, 0.19292989120683435)  best-arm margin at yC = 8.5e-19
+lam=3.22000 j*=  941 min margin (excl. equalities) = 1.917e-10 at (k,m,yb)=(0, 942, 0.19157088122605362)  best-arm margin at yC = 1.4e-17
+lam=3.23000 j*= 2496 min margin (excl. equalities) = 9.312e-12 at (k,m,yb)=(0, 2495, 0.19120458891013384)  best-arm margin at yC = 5.8e-18
+lam=3.23590 j*=90197 min margin (excl. equalities) = 5.547e-05 at (k,m,yb)=(0, 6000, 0.19098913271834833)  best arm beyond MMAX
+violations: 0
+
+### python3 verify_bellman_w2.py
+[W2] lam=0.00050 j*=3 min margin (excl. equalities) = 1.562e-08 at (0, 3, 0.5)  best-arm margin = 4.6e-21
+[W2] lam=0.00200 j*=3 min margin (excl. equalities) = 6.502e-08 at (0, 3, 0.4993328885923949)  best-arm margin = 3.6e-20
+[W2] lam=0.00500 j*=3 min margin (excl. equalities) = 8.542e-08 at (0, 3, 0.4986657771847898)  best-arm margin = 2.8e-20
+[W2] lam=0.01000 j*=3 min margin (excl. equalities) = 3.588e-07 at (0, 3, 0.49733155436957965)  best-arm margin = 1.7e-19
+[W2] lam=0.02000 j*=3 min margin (excl. equalities) = 2.154e-07 at (0, 3, 0.4949966644429619)  best-arm margin = 1.8e-20
+[W2] lam=0.04000 j*=3 min margin (excl. equalities) = 1.297e-06 at (0, 3, 0.49032688458972645)  best-arm margin = 1.8e-19
+[W2] lam=0.06000 j*=3 min margin (excl. equalities) = 1.536e-06 at (0, 3, 0.48532354903268843)  best-arm margin = 8.8e-20
+[W2] lam=0.08000 j*=3 min margin (excl. equalities) = 2.189e-06 at (0, 3, 0.4806537691794529)  best-arm margin = 8.0e-19
+[W2] lam=0.10000 j*=3 min margin (excl. equalities) = 3.114e-06 at (0, 3, 0.47631754503002)  best-arm margin = 6.2e-19
+[W2] lam=0.11000 j*=3 min margin (excl. equalities) = 1.319e-06 at (0, 3, 0.4739826551034022)  best-arm margin = 2.3e-19
+[W2] lam=0.12000 j*=3 min margin (excl. equalities) = 1.566e-06 at (0, 3, 0.4716477651767845)  best-arm margin = 1.6e-18
+[W2] lam=0.12820 j*=3 min margin (excl. equalities) = 3.105e-06 at (0, 3, 0.4699799866577718)  best-arm margin = 6.6e-19
+[W2] lam=0.13500 j*=3 min margin (excl. equalities) = 2.596e-06 at (0, 3, 0.4683122081387591)  best-arm margin = 7.4e-19
+[W2] lam=0.14000 j*=3 min margin (excl. equalities) = 7.432e-07 at (0, 3, 0.4673115410273515)  best-arm margin = 2.7e-20
+[W2] lam=0.14500 j*=3 min margin (excl. equalities) = 3.891e-06 at (0, 3, 0.46631087391594395)  best-arm margin = 9.3e-19
+[W2] lam=0.15000 j*=3 min margin (excl. equalities) = 5.781e-06 at (0, 3, 0.4649766511007338)  best-arm margin = 3.2e-19
+violations: 0
+
+### python3 run_brute.py 20
+j*=   3 |A_j*|=   7  N=20 lam=0.128200 branches=20247374 max(logT-|b|F)=+1.388e-17 [size 7, y=0.23919]  min(g-h)=+2.646e-07 [size 5, y=0.32046] bestarm_in_range=1
+j*=   3 |A_j*|=   7  N=20 lam=0.150000 branches=20247374 max(logT-|b|F)=-6.939e-18 [size 7, y=0.23757]  min(g-h)=+9.196e-05 [size 5, y=0.31852] bestarm_in_range=1
+j*=   3 |A_j*|=   7  N=20 lam=0.250000 branches=20247374 max(logT-|b|F)=-3.469e-17 [size 7, y=0.23077]  min(g-h)=+7.859e-04 [size 5, y=0.31034] bestarm_in_range=1
+j*=   3 |A_j*|=   7  N=20 lam=0.430500 branches=20247374 max(logT-|b|F)=+2.776e-17 [size 7, y=0.22068]  min(g-h)=+1.454e-08 [size 9, y=0.17518] bestarm_in_range=1
+j*=   4 |A_j*|=   9  N=20 lam=0.500000 branches=20247374 max(logT-|b|F)=+1.665e-16 [size 9, y=0.17241]  min(g-h)=+4.696e-04 [size 7, y=0.21739] bestarm_in_range=1
+j*=   4 |A_j*|=   9  N=20 lam=0.750000 branches=20247374 max(logT-|b|F)=-1.388e-16 [size 9, y=0.16418]  min(g-h)=+1.039e-03 [size 11, y=0.13580] bestarm_in_range=1
+j*=   5 |A_j*|=  11  N=20 lam=0.872500 branches=20247374 max(logT-|b|F)=-5.551e-17 [size 11, y=0.13300]  min(g-h)=+1.665e-07 [size 9, y=0.16090] bestarm_in_range=1
+j*=   5 |A_j*|=  11  N=20 lam=1.000000 branches=20247374 max(logT-|b|F)=+3.053e-16 [size 11, y=0.13043]  min(g-h)=+1.026e-03 [size 9, y=0.15789] bestarm_in_range=1
+j*=   6 |A_j*|=  13  N=20 lam=1.250000 branches=20247374 max(logT-|b|F)=+1.388e-16 [size 13, y=0.10744]  min(g-h)=+4.221e-04 [size 11, y=0.12621] bestarm_in_range=1
+j*=   7 |A_j*|=  15  N=20 lam=1.500000 branches=20247374 max(logT-|b|F)=-7.216e-16 [size 15, y=0.09091]  min(g-h)=+4.286e-04 [size 13, y=0.10448] bestarm_in_range=1
+j*=   8 |A_j*|=  17  N=20 lam=1.750000 branches=20247374 max(logT-|b|F)=+5.551e-16 [size 17, y=0.07853]  min(g-h)=+1.882e-04 [size 19, y=0.07042] bestarm_in_range=1
+j*=  10 |A_j*|=  21  N=20 lam=1.990000 branches=20247374 max(logT-|b|F)=-4.018e-04 [size 19, y=0.06902]  min(g-h)=+4.018e-04 [size 19, y=0.06902] bestarm_in_range=0
+j*=  19 |A_j*|=  39  N=20 lam=2.500000 branches=20247374 max(logT-|b|F)=-9.410e-04 [size 2, y=0.22222]  min(g-h)=+8.939e-03 [size 19, y=0.06667] bestarm_in_range=0
+j*=  62 |A_j*|= 125  N=20 lam=3.000000 branches=20247374 max(logT-|b|F)=-9.421e-05 [size 2, y=0.20000]  min(g-h)=+2.726e-02 [size 19, y=0.06494] bestarm_in_range=0
+j*= 941 |A_j*|=1883  N=20 lam=3.220000 branches=20247374 max(logT-|b|F)=-4.299e-07 [size 2, y=0.19157]  min(g-h)=+3.809e-02 [size 19, y=0.06430] bestarm_in_range=0
+
+### python3 run_brute_w2.py 20
+[W2] j*=3 N=20 lam=0.001000 branches=20247374 max(logT-|b|F)=+3.253e-19 [size 7, y=0.24991]  min(g-h)=+1.195e-06 [size 5, y=0.33322] bestarm_in_range=1
+[W2] j*=3 N=20 lam=0.010000 branches=20247374 max(logT-|b|F)=+8.674e-19 [size 7, y=0.24907]  min(g-h)=+1.231e-05 [size 5, y=0.33223] bestarm_in_range=1
+[W2] j*=3 N=20 lam=0.030000 branches=20247374 max(logT-|b|F)=+0.000e+00 [size 7, y=0.24726]  min(g-h)=+3.927e-05 [size 5, y=0.33008] bestarm_in_range=1
+[W2] j*=3 N=20 lam=0.060000 branches=20247374 max(logT-|b|F)=+0.000e+00 [size 7, y=0.24466]  min(g-h)=+8.533e-05 [size 5, y=0.32698] bestarm_in_range=1
+[W2] j*=3 N=20 lam=0.100000 branches=20247374 max(logT-|b|F)=+2.082e-17 [size 7, y=0.24138]  min(g-h)=+1.565e-04 [size 5, y=0.32308] bestarm_in_range=1
+[W2] j*=3 N=20 lam=0.128200 branches=20247374 max(logT-|b|F)=+1.388e-17 [size 7, y=0.23919]  min(g-h)=+2.130e-04 [size 5, y=0.32046] bestarm_in_range=1
+[W2] j*=3 N=20 lam=0.150000 branches=20247374 max(logT-|b|F)=-6.939e-18 [size 7, y=0.23757]  min(g-h)=+2.599e-04 [size 5, y=0.31852] bestarm_in_range=1

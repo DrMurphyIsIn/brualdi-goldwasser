@@ -1,0 +1,59 @@
+### python3 polychecks.py
+S2: A3 message in the flat part                deg(P)= 13 ord_0= 1 min_sample=+8.126e+03  sturm=True flint=True -> OK
+S3: s1 <= lam y4 (1 - kappa y4)                deg(P)=  9 ord_0= 0 min_sample=+8.713e+02  sturm=True flint=True -> OK
+S3 aux: 1 - kappa y4 > 0                       deg(P)=  3 ord_0= 0 min_sample=+1.085e+01  sturm=True flint=True -> OK
+S4 aux: rhohat > 0                             deg(P)=  3 ord_0= 0 min_sample=+1.620e-01  sturm=True flint=True -> OK
+S4 aux: rhohat <= 1/2                          deg(P)=  2 ord_0= 1 min_sample=+2.500e-01  sturm=True flint=True -> OK
+S4 aux: g increasing on [0,1/2]                deg(P)=  4 ord_0= 0 min_sample=+2.048e+03  sturm=True flint=True -> OK
+S4: u^2(u-eps) <= eps E (E-1)  [t = 1 - s^2]   deg(P)= 51 ord_0= 0 min_sample=+2.152e-01  sturm=True flint=True -> OK
+e^{3Dmax} = 1.290266201959863360367293668980881062435 <= 1.291: True
+e^{6Dmax} = 32768/19683 = 32768/19683 <= 1.291^2 = 1666681/1000000 True
+S5: Phi(D1) lower bound > 0                    deg(P)=  2 ord_0= 0 min_sample=+8.000e+00  sturm=True flint=True -> OK
+S5: interior-minimum case                      deg(P)=  3 ord_0= 0 min_sample=+1.600e+02  sturm=True flint=True -> OK
+root of lam^3+4lam^2-12lam-16: [-5.6272130, -1.0586332, 2.6858462]
+m=1 monotonicity: 2 - t - 2t^2 - t^3 > 0       deg(P)=  3 ord_0= 0 min_sample=+3.817e-01  sturm=True flint=True -> OK
+S6 (lam >= 2): -D(2) >= kappa (y2 - yC)        deg(P)=  6 ord_0= 0 min_sample=+4.444e-01  sturm=True flint=True -> OK
+t_D2 = (sqrt7-2)/2 = 0.322875655532  lam_D2 = 0.953667249362
+ALL POLYNOMIAL CHECKS PASSED
+
+### python3 s6_hand.py
+D(3) > 0 (lower bound positive)                deg(P)=  7 ord_0= 0 min_sample=+1.312e-02  sturm=True flint=True -> OK
+u_3 upper bound > 0                            deg(P)= 24 ord_0= 0 min_sample=+2.675e-02  sturm=True flint=True -> OK
+(S6) on lam in [641/5000, 0.9538]              deg(P)= 77 ord_0= 0 min_sample=+1.830e-06  sturm=True flint=True -> OK
+   t=0.0602: lower bound +1.830e-06
+   t=0.1916: lower bound +2.506e-02
+   t=0.3229: lower bound +9.094e-02
+RESULT: PROVED (Taylor order 5)
+
+### python3 w2_poly.py
+G_3(t_K) <= -0.0065183678167694235 -> lam_K < lam_3: True
+aux: eps - h2 > 0                              deg(P)=  5 ord_0= 1 min_sample=+4.588e-02  sturm=True flint=True -> OK
+aux: t - kappa > 0 (y2 < yC)                   deg(P)=  2 ord_0= 1 min_sample=+3.152e-01  sturm=True flint=True -> OK
+aux: F > 0                                     deg(P)=  5 ord_0= 1 min_sample=+5.357e-01  sturm=True flint=True -> OK
+aux: F <= 1/2 (exp remainder)                  deg(P)=  6 ord_0= 0 min_sample=+4.617e-01  sturm=True flint=True -> OK
+aux: g(A2) > 0                                 deg(P)=  5 ord_0= 1 min_sample=+1.190e-02  sturm=True flint=True -> OK
+T1: ydag < y(A2)                               deg(P)= 37 ord_0= 1 min_sample=+1.255e-01  sturm=True flint=True -> OK
+T2: sa <= sb                                   deg(P)= 42 ord_0= 2 min_sample=+1.061e-03  sturm=True flint=True -> OK
+T4: sb <= lam y4 (1 - kappa y4)                deg(P)= 19 ord_0= 1 min_sample=+4.762e-03  sturm=True flint=True -> OK
+T5: M_a <= 14                                  deg(P)= 37 ord_0= 1 min_sample=+1.190e-02  sturm=True flint=True -> OK
+T6: Ndag(m), m <= 13                           deg(P)= 35 ord_0= 1 min_sample=+4.104e-01  sturm=True flint=True -> OK
+T7: N2(m=5)                                    deg(P)=  7 ord_0= 1 min_sample=+2.778e-02  sturm=True flint=True -> OK
+T7: N2(m=6)                                    deg(P)=  7 ord_0= 1 min_sample=+2.143e-02  sturm=True flint=True -> OK
+T7: N2(m=7)                                    deg(P)=  7 ord_0= 1 min_sample=+1.905e-02  sturm=True flint=True -> OK
+T7: N2(m=8)                                    deg(P)=  7 ord_0= 1 min_sample=+1.931e-02  sturm=True flint=True -> OK
+T7: N2(m=9)                                    deg(P)=  7 ord_0= 1 min_sample=+2.143e-02  sturm=True flint=True -> OK
+T7: N2(m=10)                                   deg(P)=  7 ord_0= 1 min_sample=+2.489e-02  sturm=True flint=True -> OK
+T7: N2(m=11)                                   deg(P)=  7 ord_0= 1 min_sample=+2.937e-02  sturm=True flint=True -> OK
+T7: N2(m=12)                                   deg(P)=  7 ord_0= 1 min_sample=+3.462e-02  sturm=True flint=True -> OK
+T7: N2(m=13)                                   deg(P)=  7 ord_0= 1 min_sample=+4.048e-02  sturm=True flint=True -> OK
+T8: NC(m=5)                                    deg(P)=  5 ord_0= 1 min_sample=+1.927e-02  sturm=True flint=True -> OK
+T8: NC(m=6)                                    deg(P)=  5 ord_0= 1 min_sample=+5.624e-02  sturm=True flint=True -> OK
+T8: NC(m=7)                                    deg(P)=  5 ord_0= 1 min_sample=+9.917e-02  sturm=True flint=True -> OK
+T8: NC(m=8)                                    deg(P)=  5 ord_0= 1 min_sample=+1.461e-01  sturm=True flint=True -> OK
+T8: NC(m=9)                                    deg(P)=  5 ord_0= 1 min_sample=+1.957e-01  sturm=True flint=True -> OK
+T8: NC(m=10)                                   deg(P)=  5 ord_0= 1 min_sample=+2.474e-01  sturm=True flint=True -> OK
+T8: NC(m=11)                                   deg(P)=  5 ord_0= 1 min_sample=+3.006e-01  sturm=True flint=True -> OK
+T8: NC(m=12)                                   deg(P)=  5 ord_0= 1 min_sample=+3.550e-01  sturm=True flint=True -> OK
+T8: NC(m=13)                                   deg(P)=  5 ord_0= 1 min_sample=+4.103e-01  sturm=True flint=True -> OK
+RESULT: ALL CERTIFIED (Taylor order 5, lam_K = 3/20, theta2 = 4/5)
+

@@ -1,0 +1,85 @@
+# Output of the run made for this directory (2026-10-04; Python 3.9.6, mpmath 1.3.0, python-flint 0.6.0,
+# sympy 1.14.0, numpy 1.23.5, scipy 1.13.1; macOS, Apple silicon, one thread per run).
+# Each block: command, wall time and peak memory (from /usr/bin/time -l), then the program's output.
+
+===== python3 certify_L5.py 100   [4.73 s, 15 MB]
+m=  1: certified with 2723 boxes, max sup Phi = -1.410e-05  (1s)
+m=  2: certified with 369 boxes, max sup Phi = -7.989e-04  (1s)
+m=  3: certified with 217 boxes, max sup Phi = -7.918e-04  (1s)
+m=  4: certified with 160 boxes, max sup Phi = -2.150e-03  (1s)
+m=  5: certified with 145 boxes, max sup Phi = -3.347e-04  (1s)
+m= 20: certified with 149 boxes, max sup Phi = -2.788e-05  (1s)
+m= 40: certified with 171 boxes, max sup Phi = -3.600e-05  (2s)
+m= 60: certified with 183 boxes, max sup Phi = -6.727e-05  (3s)
+m= 80: certified with 200 boxes, max sup Phi = -1.737e-04  (4s)
+m=100: certified with 209 boxes, max sup Phi = -2.478e-05  (5s)
+ALL m in 1..101 certified on lam in [3.236067977, 100.0], yb in [0, 1/2]: 20564 boxes, 5s
+
+===== python3 certify_large.py 100 300 1.1   [23.75 s, 71 MB]
+  [100.000, 110.000] ok (0.4194, 103, 2)  (689 boxes, 1s)
+  [110.000, 121.000] ok (0.4185, 114, 2)  (759 boxes, 2s)
+  [121.000, 133.100] ok (0.4169, 125, 2)  (829 boxes, 4s)
+  [133.100, 146.410] ok (0.4146, 137, 2)  (904 boxes, 5s)
+  [146.410, 161.051] ok (0.4116, 150, 2)  (986 boxes, 7s)
+  [161.051, 177.156] ok (0.4079, 165, 2)  (1086 boxes, 8s)
+  [177.156, 194.872] ok (0.4034, 181, 2)  (1186 boxes, 10s)
+  [194.872, 214.359] ok (0.3979, 198, 2)  (1297 boxes, 12s)
+  [214.359, 235.795] ok (0.3915, 218, 2)  (1433 boxes, 15s)
+  [235.795, 259.374] ok (0.3845, 239, 2)  (1570 boxes, 17s)
+  [259.374, 285.312] ok (0.3767, 263, 2)  (1735 boxes, 20s)
+  [285.312, 300.000] ok (0.3795, 289, 2)  (1862 boxes, 23s)
+THEOREM D: lam in [100.0, 300.0] CERTIFIED; 14336 boxes; 23s
+
+===== python3 certify_large.py 300 700 1.1   [51.04 s, 72 MB]
+  [300.000, 330.000] ok (0.3635, 303, 2)  (2023 boxes, 3s)
+  [330.000, 363.000] ok (0.354, 333, 2)  (2247 boxes, 7s)
+  [363.000, 399.300] ok (0.3438, 367, 2)  (2652 boxes, 11s)
+  [399.300, 439.230] ok (0.333, 403, 2)  (3022 boxes, 16s)
+  [439.230, 483.153] ok (0.3215, 443, 2)  (3409 boxes, 22s)
+  [483.153, 531.468] ok (0.3091, 487, 2)  (3782 boxes, 28s)
+  [531.468, 584.615] ok (0.2958, 535, 2)  (4154 boxes, 35s)
+  [584.615, 643.077] ok (0.2819, 588, 2)  (4575 boxes, 42s)
+  [643.077, 700.000] ok (0.2704, 647, 2)  (5007 boxes, 51s)
+THEOREM D: lam in [300.0, 700.0] CERTIFIED; 30871 boxes; 51s
+
+===== python3 certify_large.py 700 1300 1.1   [246.87 s, 73 MB]
+  [700.000, 770.000] ok (0.2538, 703, 2)  (5471 boxes, 9s)
+  [770.000, 847.000] ok (0.2381, 774, 2)  (6099 boxes, 19s)
+  [847.000, 931.700] ok (0.2217, 851, 2)  (6699 boxes, 31s)
+  [931.700, 954.167] ok (split sub-box) (0.2271, 935, 2)  (7139 boxes)
+  [954.167, 977.175] ok (split sub-box) (0.2228, 958, 2)  (7320 boxes)
+  [977.175, 1000.739] ok (split sub-box) (0.2186, 981, 2)  (7490 boxes)
+  [1000.739, 1024.870] ok (split sub-box) (0.2142, 1004, 2)  (7674 boxes)
+  [1024.870, 1049.583] ok (split sub-box) (0.2099, 1028, 2)  (7853 boxes)
+  [1049.583, 1074.893] ok (split sub-box) (0.2055, 1053, 2)  (8047 boxes)
+  [1074.893, 1100.812] ok (split sub-box) (0.2011, 1078, 2)  (8242 boxes)
+  [1100.812, 1127.357] ok (split sub-box) (0.1966, 1104, 2)  (8443 boxes)
+  [1127.357, 1154.542] ok (split sub-box) (0.1921, 1131, 2)  (8640 boxes)
+  [1154.542, 1182.382] ok (split sub-box) (0.1876, 1158, 2)  (8850 boxes)
+  [1182.382, 1210.894] ok (split sub-box) (0.183, 1186, 2)  (9064 boxes)
+  [1210.894, 1240.093] ok (split sub-box) (0.1784, 1214, 2)  (9288 boxes)
+  [1240.093, 1300.000] ok (0.1662, 1244, 2)  (9607 boxes, 247s)
+THEOREM D: lam in [700.0, 1300.0] CERTIFIED; 147625 boxes; 247s
+
+===== python3 certify_large.py 1300 2000 1.1   [539.27 s, 73 MB]
+  [1300.000, 1331.348] ok (split sub-box) (0.1645, 1303, 2)  (9968 boxes)
+  [1331.348, 1363.452] ok (split sub-box) (0.1598, 1335, 2)  (10216 boxes)
+  [1363.452, 1396.329] ok (split sub-box) (0.155, 1367, 2)  (10471 boxes)
+  [1396.329, 1430.000] ok (split sub-box) (0.1502, 1400, 2)  (10722 boxes)
+  [1430.000, 1464.483] ok (split sub-box) (0.1453, 1434, 2)  (10986 boxes)
+  [1464.483, 1499.797] ok (split sub-box) (0.1405, 1468, 2)  (11259 boxes)
+  [1499.797, 1535.962] ok (split sub-box) (0.1356, 1503, 2)  (11534 boxes)
+  [1535.962, 1573.000] ok (split sub-box) (0.1306, 1539, 2)  (11816 boxes)
+  [1573.000, 1610.931] ok (split sub-box) (0.1256, 1577, 2)  (12119 boxes)
+  [1610.931, 1649.776] ok (split sub-box) (0.1206, 1614, 2)  (12428 boxes)
+  [1649.776, 1689.559] ok (split sub-box) (0.1156, 1653, 2)  (12749 boxes)
+  [1689.559, 1730.300] ok (split sub-box) (0.1105, 1693, 2)  (13097 boxes)
+  [1730.300, 1772.024] ok (split sub-box) (0.1054, 1734, 2)  (13479 boxes)
+  [1772.024, 1814.754] ok (split sub-box) (0.1003, 1776, 2)  (13943 boxes)
+  [1814.754, 1858.514] ok (split sub-box) (0.0951, 1818, 2)  (14821 boxes)
+  [1858.514, 1903.330] ok (split sub-box) (0.0899, 1862, 2)  (16074 boxes)
+  [1903.330, 1927.050] ok (split sub-box) (0.0886, 1907, 2)  (16397 boxes)
+  [1927.050, 1951.066] ok (split sub-box) (0.0858, 1931, 2)  (16609 boxes)
+  [1951.066, 1975.382] ok (split sub-box) (0.0831, 1955, 2)  (16809 boxes)
+  [1975.382, 2000.000] ok (split sub-box) (0.0804, 1979, 2)  (17019 boxes)
+THEOREM D: lam in [1300.0, 2000.0] CERTIFIED; 323230 boxes; 538s

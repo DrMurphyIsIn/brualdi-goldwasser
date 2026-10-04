@@ -1,0 +1,29 @@
+# Output of the run made for this directory (2026-10-04; Python 3.9.6, mpmath 1.3.0, python-flint 0.6.0,
+# sympy 1.14.0, numpy 1.23.5, scipy 1.13.1; macOS, Apple silicon, one thread per run).
+# Each block: command, wall time and peak memory (from /usr/bin/time -l), then the program's output.
+
+===== python3 lamc_hand_check.py 16   [2.80 s, 98 MB]
+(1) exact identities: all 7 verified
+(2) rigorous constants (arb):
+   region A, m >= 2: lam/phi^3 - kap: [-0.014685066 +/- 2.35e-10] +/- [1.13e-15 +/- 3.60e-18]  < 0
+   region B: kap - 2: [-1.2213829 +/- 1.13e-8] +/- [7.53e-16 +/- 1.67e-19]  < 0
+   k = 2: 1 + 2lam/3 - phi^3: [-1.0786893 +/- 2.59e-8] +/- [2.89e-15 +/- 4.21e-18]  < 0
+   m = 2 kink, log argument (2phi+1)/(3phi) - 1: [-0.12732200 +/- 3.76e-9] +/- [6.65e-16 +/- 7.04e-20]  < 0
+   m = 2 value log(phi^2/3) + log(phi)(phi^-2 - (2phi)^-1): [-0.10108471 +/- 9.99e-10] +/- [6.49e-16 +/- 5.63e-20]  < 0
+   m = 1: critical point s* = [3.1184605 +/- 4.39e-8], t* = [0.34562332 +/- 4.41e-9] (in (y_ch, 1/2)); the smaller root [1.03771 +/- 3.30e-6] < phi^2
+   m = 1 maximum value: [-0.056447806 +/- 3.72e-10] +/- [4.98e-15 +/- 3.33e-18]  < 0
+   max_{j <= 2000} (r_j - L)  [all j: h_j - L <= -b/(j+1) < 0, see proof]: [-4.7714517e-8 +/- 2.27e-16] +/- [5.46e-16 +/- 2.67e-19]  < 0
+(3) brute force 2 <= n <= 16: 376463 non-leaf branches; max (l - U(y)) = +0.000e+00 (must be <= 0); l = 0 exactly for: [((),)]
+
+===== python3 lemma_M_check.py   [1.95 s, 12 MB]
+group inequality violations: 0  min slack: 0.0
+Lemma M violations (n <= 12, lam in {2, lam_c, 10, 1e3, 1e5}): 0
+
+===== python3 monotone_ratio.py   [32.84 s, 53 MB]
+lam=100: max over branches (n<=16) of elasticity - n/2 = +0.0000e+00 (n=2)
+lam=300: max over branches (n<=16) of elasticity - n/2 = +0.0000e+00 (n=2)
+lam=1000: max over branches (n<=16) of elasticity - n/2 = +0.0000e+00 (n=2)
+lam=2000: max over branches (n<=16) of elasticity - n/2 = +0.0000e+00 (n=2)
+lam=10000: max over branches (n<=16) of elasticity - n/2 = +0.0000e+00 (n=2)
+lam=100000: max over branches (n<=16) of elasticity - n/2 = +0.0000e+00 (n=2)
+lam=1e+07: max over branches (n<=16) of elasticity - n/2 = +0.0000e+00 (n=2)

@@ -1,0 +1,14 @@
+converged after 3 iterations
+d= 1: V*=-0.267857  (-15/56)  best child degree = None
+d= 2: V*=-0.035714  (-1/28)  best child degree = 1
+d= 3: V*=-0.005952  (-1/168)  best child degree = 2
+d= 4: V*=+0.000000  (0)  best child degree = 2
+d= 5: V*=-0.010714  (-3/280)  best child degree = 2
+d= 6: V*=-0.019841  (-5/252)  best child degree = 3
+d= 7: V*=-0.017857  (-1/56)  best child degree = 3
+d= 8: V*=-0.017857  (-1/56)  best child degree = 3
+d= 9: V*=-0.019180  (-29/1512)  best child degree = 3
+d=10: V*=-0.021429  (-3/140)  best child degree = 3
+d=11: V*=-0.024351  (-15/616)  best child degree = 3
+d=12: V*=-0.027778  (-1/36)  best child degree = 3
+sup_d V*(d) over d <= 40 = 0.0 at d = 4

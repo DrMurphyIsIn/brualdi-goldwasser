@@ -1,0 +1,50 @@
+B. non-atom gap: lower bounds by child count c of the lowest non-atom vertex
+   c=2: min over configs >= 0.037242  (at L)
+   c=3: min over configs >= 0.031043  (at A3)
+   c=4: min over configs >= 0.020761  (at A3)
+   c=5: min over configs >= 0.016202  (at A4)
+   c=6: min over configs >= 0.014273  (at A4)
+   c=7: min over configs >= 0.014709  (at A4)
+   c=8: min over configs >= 0.016737  (at A4)
+   c=9: min over configs >= 0.019886  (at A4)
+   c=1: min over configs >= 0.017444  (at A_j (Phi_1(3/7)))
+   c=10: min over configs >= 0.017838  (at any)
+   c=11: min over configs >= 0.022008  (at any)
+   c=12: min over configs >= 0.025662  (at any)
+   c=>=13: min over configs >= 0.018608  (at any (Q(13)))
+   DELTA0 = 0.014273  >= 0.01426   [true inf over searched branches: 0.014465 at [C^5,A4]]
+C. atom L: g - mu0 (x - q) >= 1.745e-01
+C. atom C: g - mu0 (x - q) >= 2.286e-04
+C. atom 1: g - mu0 (x - q) >= 4.915e-02
+C. atom 2: g - mu0 (x - q) >= 1.609e-02
+C. atom 3: g - mu0 (x - q) >= 4.000e-03
+C. atom 4: g - mu0 (x - q) >= 1.428e-05
+C. DELTA0 - mu0^2/(4 kappa) >= 0.012446  vs 10/960 = 0.010417;  l(A4) >= -0.0010264 >= -1/960
+   benchmark spider (N>=90): Phi >= log(26/23) - 10/960 >= 0.112186; non-spider with a vertex of degree>=24: Phi <= 0.110157
+D. rate lemma: per cap C, eta_C and verification of Phi^H_c >= 0 on [0,c] for all c<=C
+   cap C= 1: eta = 0.0011164 (2791/2500000)  verified=True
+   cap C= 2: eta = 0.0011164 (2791/2500000)  verified=True
+   cap C= 3: eta = 0.0011164 (2791/2500000)  verified=True
+   cap C= 4: eta = 0.0011164 (2791/2500000)  verified=True
+   cap C= 5: eta = 0.0011164 (2791/2500000)  verified=True
+   cap C= 6: eta = 0.0009387 (9387/10000000)  verified=True
+   cap C= 7: eta = 0.0008366 (4183/5000000)  verified=True
+   cap C= 8: eta = 0.0007507 (7507/10000000)  verified=True
+   cap C= 9: eta = 0.0006804 (1701/2500000)  verified=True
+   cap C=10: eta = 0.0006220 (311/500000)  verified=True
+   cap C=11: eta = 0.0005728 (179/312500)  verified=True
+   cap C=12: eta = 0.0005309 (5309/10000000)  verified=True
+   cap C=13: eta = 0.0004946 (2473/5000000)  verified=True
+   cap C=14: eta = 0.0004630 (463/1000000)  verified=True
+   cap C=15: eta = 0.0004352 (34/78125)  verified=True
+   cap C=16: eta = 0.0004106 (2053/5000000)  verified=True
+   cap C=17: eta = 0.0003886 (1943/5000000)  verified=True
+   cap C=18: eta = 0.0003688 (461/1250000)  verified=True
+   cap C=19: eta = 0.0003510 (351/1000000)  verified=True
+   cap C=20: eta = 0.0003348 (837/2500000)  verified=True
+   cap C=21: eta = 0.0003200 (1/3125)  verified=True
+   cap C=22: eta = 0.0003065 (613/2000000)  verified=True
+E. Psi_k^eta upper bounds: {2: 0.29989, 3: 0.27126, 4: 0.26578, 5: 0.26031, 6: 0.25484, 7: 0.24772, 8: 0.24276, 9: 0.23873, 10: 0.23543, 11: 0.23268, 12: 0.23036, 13: 0.22837, 14: 0.22664, 15: 0.22513, 16: 0.2238, 17: 0.22263, 18: 0.22157, 19: 0.22061, 20: 0.21976, 21: 0.21898, 22: 0.21826, 23: 0.21761}
+G. thresholds n0(k) (every tree of max degree k with n >= n0(k) vertices has Phi < Phi(best spider)):
+   k=2:151, k=3:117, k=4:110, k=5:101, k=6:92, k=7:110, k=8:123, k=9:139, k=10:152, k=11:168, k=12:181, k=13:194, k=14:208, k=15:221, k=16:233, k=17:245, k=18:257, k=19:270, k=20:281, k=21:292, k=22:305, k=23:316
+   => for n >= 316: every maximizer has max degree >= 24, hence (C, n-1>=90) is a spider centred at it.
