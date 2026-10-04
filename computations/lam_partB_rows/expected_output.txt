@@ -1,0 +1,75 @@
+### python3 lowdeg_tables.py
+C1 (S2): A3 message flat           rows= 10  min lower bound=[0.013444862083757932802615476707162058, 0.013444862083757932802615476707162058]  breaks=['213/2000', '87/400', '159/500', '803/2000', '117/250', '13/25', '1121/2000', '74/125', '1233/2000', '6181/10000']
+C2 (S3): left derivative m<=4      rows= 24  min lower bound=[0.0056600435093622934930371623799018876, 0.0056600435093622934930371623799018876]  breaks=['79/1000', '269/2000', '353/2000', '419/2000', '237/1000', '521/2000', '281/1000', '599/2000', '317/1000', '667/2000', '349/1000', '729/2000', '19/50', '791/2000', '823/2000', '857/2000', '893/2000', '233/500', '39/80', '1023/2000', '539/1000', '571/1000', '1217/2000', '6181/10000']
+C3 (S4): threshold                 rows= 13  min lower bound=[0.064961863700079472556291526469954223, 0.064961863700079472556291526469954223]  breaks=['241/2000', '47/250', '117/500', '539/2000', '599/2000', '131/400', '71/200', '48/125', '833/2000', '911/2000', '507/1000', '1163/2000', '6181/10000']
+C7 (S6), W*, lam in [3/20, 0.954]  rows= 17  min lower bound=[0.00054670579716019427416501516087936932, 0.00054670579716019427416501516087936932]  breaks=['1543/21500', '6387/86000', '1329/17200', '6989/86000', '461/5375', '1973/21500', '4247/43000', '2317/21500', '5107/43000', '91/688', '6397/43000', '14557/86000', '16707/86000', '19373/86000', '22641/86000', '13363/43000', '3229/10000']
+C8 (S6), lam >= 2                  rows=  1  min lower bound=[0.062015342390808697995504793495104973, 0.062015342390808697995504793495104973]  breaks=['6181/10000']
+C10 T1                             rows=  2  min lower bound=[0.11435373042816593903302462503292881, 0.11435373042816593903302462503292881]  breaks=['3/86', '3/43']
+C10 T2                             rows=  3  min lower bound=[0.018835597585568894853126151996986211, 0.018835597585568894853126151996986211]  breaks=['3/86', '9/172', '3/43']
+C10 T3a                            rows=  2  min lower bound=[0.045880989929335794371496786021421234, 0.045880989929335794371496786021421234]  breaks=['3/86', '3/43']
+C10 T4                             rows=  3  min lower bound=[0.0087960493940726093703641420536844435, 0.0087960493940726093703641420536844435]  breaks=['3/172', '3/86', '3/43']
+C10 T5                             rows=  3  min lower bound=[0.7533295816572470801363333410513669, 0.7533295816572470801363333410513669]  breaks=['3/172', '3/86', '3/43']
+C10 T6                             rows=  2  min lower bound=[0.057488512603657489466554274385307164, 0.057488512603657489466554274385307164]  breaks=['3/86', '3/43']
+C10 T7                             rows=  3  min lower bound=[0.012851010379424702714650678487127451, 0.012851010379424702714650678487127451]  breaks=['3/172', '3/86', '3/43']
+C10 T8                             rows=  2  min lower bound=[0.011237697058828768529349064111742869, 0.011237697058828768529349064111742869]  breaks=['3/86', '3/43']
+C10 T8b                            rows=  2  min lower bound=[0.033004661983180765224911327309390202, 0.033004661983180765224911327309390202]  breaks=['3/86', '3/43']
+ALL ROWS CERTIFIED
+wrote lowdeg_atoms.out with 67 breakpoints
+
+### python3 bernstein.py
+C2' (S3) degree 6 [-55/2, -649/8, -329/16, 1587/16, 155/8, -105/2, 15]
+   piece 0 6181/10000 min Bernstein coeff 0.8117808436249697
+C5 cubic [('0', '32361/10000', 160.0)]
+C6 cubic [('0', '6181/10000', 0.381661152259)]
+C4 [('0', '32361/10000', 8.0)]
+
+### python3 polychecks.py
+S2: A3 message in the flat part                deg(P)= 13 ord_0= 1 min_sample=+8.126e+03  sturm=True flint=True -> OK
+S3: s1 <= lam y4 (1 - kappa y4)                deg(P)=  9 ord_0= 0 min_sample=+8.713e+02  sturm=True flint=True -> OK
+S3 aux: 1 - kappa y4 > 0                       deg(P)=  3 ord_0= 0 min_sample=+1.085e+01  sturm=True flint=True -> OK
+S4 aux: rhohat > 0                             deg(P)=  3 ord_0= 0 min_sample=+1.620e-01  sturm=True flint=True -> OK
+S4 aux: rhohat <= 1/2                          deg(P)=  2 ord_0= 1 min_sample=+2.500e-01  sturm=True flint=True -> OK
+S4 aux: g increasing on [0,1/2]                deg(P)=  4 ord_0= 0 min_sample=+2.048e+03  sturm=True flint=True -> OK
+S4: u^2(u-eps) <= eps E (E-1)  [t = 1 - s^2]   deg(P)= 51 ord_0= 0 min_sample=+2.152e-01  sturm=True flint=True -> OK
+e^{3Dmax} = 1.290266201959863360367293668980881062435 <= 1.291: True
+e^{6Dmax} = 32768/19683 = 32768/19683 <= 1.291^2 = 1666681/1000000 True
+S5: Phi(D1) lower bound > 0                    deg(P)=  2 ord_0= 0 min_sample=+8.000e+00  sturm=True flint=True -> OK
+S5: interior-minimum case                      deg(P)=  3 ord_0= 0 min_sample=+1.600e+02  sturm=True flint=True -> OK
+root of lam^3+4lam^2-12lam-16: [-5.6272130, -1.0586332, 2.6858462]
+m=1 monotonicity: 2 - t - 2t^2 - t^3 > 0       deg(P)=  3 ord_0= 0 min_sample=+3.817e-01  sturm=True flint=True -> OK
+S6 (lam >= 2): -D(2) >= kappa (y2 - yC)        deg(P)=  6 ord_0= 0 min_sample=+4.444e-01  sturm=True flint=True -> OK
+t_D2 = (sqrt7-2)/2 = 0.322875655532  lam_D2 = 0.953667249362
+ALL POLYNOMIAL CHECKS PASSED
+
+### python3 w2_poly.py
+G_3(t_K) <= -0.0065183678167694235 -> lam_K < lam_3: True
+aux: eps - h2 > 0                              deg(P)=  5 ord_0= 1 min_sample=+4.588e-02  sturm=True flint=True -> OK
+aux: t - kappa > 0 (y2 < yC)                   deg(P)=  2 ord_0= 1 min_sample=+3.152e-01  sturm=True flint=True -> OK
+aux: F > 0                                     deg(P)=  5 ord_0= 1 min_sample=+5.357e-01  sturm=True flint=True -> OK
+aux: F <= 1/2 (exp remainder)                  deg(P)=  6 ord_0= 0 min_sample=+4.617e-01  sturm=True flint=True -> OK
+aux: g(A2) > 0                                 deg(P)=  5 ord_0= 1 min_sample=+1.190e-02  sturm=True flint=True -> OK
+T1: ydag < y(A2)                               deg(P)= 37 ord_0= 1 min_sample=+1.255e-01  sturm=True flint=True -> OK
+T2: sa <= sb                                   deg(P)= 42 ord_0= 2 min_sample=+1.061e-03  sturm=True flint=True -> OK
+T4: sb <= lam y4 (1 - kappa y4)                deg(P)= 19 ord_0= 1 min_sample=+4.762e-03  sturm=True flint=True -> OK
+T5: M_a <= 14                                  deg(P)= 37 ord_0= 1 min_sample=+1.190e-02  sturm=True flint=True -> OK
+T6: Ndag(m), m <= 13                           deg(P)= 35 ord_0= 1 min_sample=+4.104e-01  sturm=True flint=True -> OK
+T7: N2(m=5)                                    deg(P)=  7 ord_0= 1 min_sample=+2.778e-02  sturm=True flint=True -> OK
+T7: N2(m=6)                                    deg(P)=  7 ord_0= 1 min_sample=+2.143e-02  sturm=True flint=True -> OK
+T7: N2(m=7)                                    deg(P)=  7 ord_0= 1 min_sample=+1.905e-02  sturm=True flint=True -> OK
+T7: N2(m=8)                                    deg(P)=  7 ord_0= 1 min_sample=+1.931e-02  sturm=True flint=True -> OK
+T7: N2(m=9)                                    deg(P)=  7 ord_0= 1 min_sample=+2.143e-02  sturm=True flint=True -> OK
+T7: N2(m=10)                                   deg(P)=  7 ord_0= 1 min_sample=+2.489e-02  sturm=True flint=True -> OK
+T7: N2(m=11)                                   deg(P)=  7 ord_0= 1 min_sample=+2.937e-02  sturm=True flint=True -> OK
+T7: N2(m=12)                                   deg(P)=  7 ord_0= 1 min_sample=+3.462e-02  sturm=True flint=True -> OK
+T7: N2(m=13)                                   deg(P)=  7 ord_0= 1 min_sample=+4.048e-02  sturm=True flint=True -> OK
+T8: NC(m=5)                                    deg(P)=  5 ord_0= 1 min_sample=+1.927e-02  sturm=True flint=True -> OK
+T8: NC(m=6)                                    deg(P)=  5 ord_0= 1 min_sample=+5.624e-02  sturm=True flint=True -> OK
+T8: NC(m=7)                                    deg(P)=  5 ord_0= 1 min_sample=+9.917e-02  sturm=True flint=True -> OK
+T8: NC(m=8)                                    deg(P)=  5 ord_0= 1 min_sample=+1.461e-01  sturm=True flint=True -> OK
+T8: NC(m=9)                                    deg(P)=  5 ord_0= 1 min_sample=+1.957e-01  sturm=True flint=True -> OK
+T8: NC(m=10)                                   deg(P)=  5 ord_0= 1 min_sample=+2.474e-01  sturm=True flint=True -> OK
+T8: NC(m=11)                                   deg(P)=  5 ord_0= 1 min_sample=+3.006e-01  sturm=True flint=True -> OK
+T8: NC(m=12)                                   deg(P)=  5 ord_0= 1 min_sample=+3.550e-01  sturm=True flint=True -> OK
+T8: NC(m=13)                                   deg(P)=  5 ord_0= 1 min_sample=+4.103e-01  sturm=True flint=True -> OK
+RESULT: ALL CERTIFIED (Taylor order 5, lam_K = 3/20, theta2 = 4/5)
+

@@ -1,0 +1,10 @@
+k=2: largest roots <= [8.65], size term 8.00, N1=10 valid=True; failures n=4..4 (1), equals [3k-2, n0]: True; undecided: []; min rel margin for n>n0: 2.562e-02 at n=6
+k=3: largest roots <= [38.12, 253.29], size term 13.66, N1=255 valid=True; failures n=7..24 (18), equals [3k-2, n0]: True; undecided: []; min rel margin for n>n0: 1.029e-04 at n=27
+k=4: largest roots <= [96.71, 319.71], size term 18.93, N1=322 valid=True; failures n=10..32 (23), equals [3k-2, n0]: True; undecided: []; min rel margin for n>n0: 2.460e-04 at n=33
+k=5: largest roots <= [192.4, 461.97], size term 24.00, N1=464 valid=True; failures n=13..60 (48), equals [3k-2, n0]: True; undecided: []; min rel margin for n>n0: 3.489e-04 at n=61
+k=6: largest roots <= [333.19, 653.04], size term 28.94, N1=655 valid=True; failures n=16..99 (84), equals [3k-2, n0]: True; undecided: []; min rel margin for n>n0: 6.856e-05 at n=100
+k=7: largest roots <= [527.18, 891.96], size term 33.80, N1=894 valid=True; failures n=19..149 (131), equals [3k-2, n0]: True; undecided: []; min rel margin for n>n0: 1.208e-05 at n=150
+k=8: largest roots <= [782.62, 1180.84], size term 38.58, N1=1184 valid=True; failures n=22..211 (190), equals [3k-2, n0]: True; undecided: []; min rel margin for n>n0: 6.172e-06 at n=212
+k=9: largest roots <= [1107.93, 1522.52], size term 43.31, N1=1526 valid=True; failures n=25..289 (265), equals [3k-2, n0]: True; undecided: []; min rel margin for n>n0: 1.032e-05 at n=290
+k=10: largest roots <= [1511.7, 1920.1], size term 48.00, N1=1924 valid=True; failures n=28..380 (353), equals [3k-2, n0]: True; undecided: []; min rel margin for n>n0: 6.679e-06 at n=381
+ALL OK

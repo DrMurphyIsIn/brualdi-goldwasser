@@ -1,0 +1,4 @@
+[A] connector-star formula = exact M(n,k) on 1421 pairs (2<=k<=8, 3k-2<=n<=215); exceptions [(7, 3), (10, 3)]
+[B] M(7,3) = 9/2 (connector-star 35/8), M(10,3) = 50/9 (connector-star 265/48)
+[C] all 1656 values M(n,k), k<=8, n<=215, agree with the independent implementation
+LEMMA nu-small-cv: OK

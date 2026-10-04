@@ -1,0 +1,86 @@
+### python3 explicit_small.py
+Delta=3: rules 14, failures 0, min generic slack 1.009e-04 at ['B0', 'B0'] -> B0
+Delta=4: rules 34, failures 0, min generic slack 3.136e-05 at ['K', 'B0', 'B0'] -> B0
+### python3 cert34.py
+Delta=3: F=[0.19688282739441575200060121435452283644582564030915955363535850891, 0.19688282739441575200060121435452283644582564030915955363535850891] eta=[0.27698396494843349029138429251519435884046611162865731815000223084, 0.27698396494843349029138429251519435884046611162865731815000223084] thL=-0.0476 thC=-0.1000 thI=[-0.08129999999999999726885135942211491055786609649658203125, -0.08129999999999999726885135942211491055786609649658203125]
+  spine    CJ->J    slack in [-1.099e-60, 1.128e-60]
+  spine    CC->J    slack in [-9.918e-61, 1.147e-60]
+  identity L->C     slack in [-8.751e-61, 7.195e-61]
+  generic  JJ->J    slack in [1.009e-04, 1.009e-04]
+  generic  C->I     slack in [1.588e-04, 1.588e-04]
+  generic  I->I     slack in [3.753e-03, 3.753e-03]
+  generic  J->I     slack in [5.302e-03, 5.302e-03]
+  generic  IJ->J    slack in [1.767e-02, 1.767e-02]
+  spine    CI->J    slack in [1.871e-02, 1.871e-02]
+  generic  II->J    slack in [3.770e-02, 3.770e-02]
+  generic  LJ->J    slack in [4.735e-02, 4.735e-02]
+  spine    LC->J    slack in [5.239e-02, 5.239e-02]
+  generic  LI->J    slack in [7.351e-02, 7.351e-02]
+  generic  LL->J    slack in [1.259e-01, 1.259e-01]
+  counts: 14 {'identity': 1, 'generic': 9, 'spine': 4}  generic all >0: True  spine/identity >= 0 (up to 1e-50): True
+Delta=4: F=[0.20162497234030836690190469275222999490533783022323662285162407757, 0.20162497234030836690190469275222999490533783022323662285162407757] eta=[0.20525770195463609522047034238610766845356853084886615631682808261, 0.20525770195463609522047034238610766845356853084886615631682808261] thL=0.0149 thC=-0.0684 thI=[-0.039100000000000002808864252301646047271788120269775390625, -0.039100000000000002808864252301646047271788120269775390625]
+  spine    CCC->J   slack in [-1.400e-60, 1.342e-60]
+  spine    CCJ->J   slack in [-1.390e-60, 1.361e-60]
+  identity L->C     slack in [-6.612e-61, 5.056e-61]
+  generic  CJJ->J   slack in [3.136e-05, 3.136e-05]
+  generic  C->I     slack in [4.777e-05, 4.777e-05]
+  generic  JJJ->J   slack in [9.443e-05, 9.443e-05]
+  generic  I->I     slack in [3.446e-03, 3.446e-03]
+  generic  J->I     slack in [5.947e-03, 5.947e-03]
+  generic  CC->J    slack in [1.045e-02, 1.045e-02]
+  generic  CJ->J    slack in [1.238e-02, 1.238e-02]
+  generic  JJ->J    slack in [1.437e-02, 1.437e-02]
+  generic  CIJ->J   slack in [2.835e-02, 2.835e-02]
+  generic  IJJ->J   slack in [2.841e-02, 2.841e-02]
+  spine    CCI->J   slack in [2.930e-02, 2.930e-02]
+  generic  CI->J    slack in [3.118e-02, 3.118e-02]
+  generic  IJ->J    slack in [3.286e-02, 3.286e-02]
+  generic  II->J    slack in [5.302e-02, 5.302e-02]
+  generic  LC->J    slack in [5.543e-02, 5.543e-02]
+  generic  LJ->J    slack in [5.625e-02, 5.625e-02]
+  generic  IIJ->J   slack in [5.737e-02, 5.737e-02]
+  generic  CII->J   slack in [5.875e-02, 5.875e-02]
+  generic  LJJ->J   slack in [7.585e-02, 7.585e-02]
+  generic  LCJ->J   slack in [7.902e-02, 7.902e-02]
+  generic  LI->J    slack in [8.106e-02, 8.106e-02]
+  spine    LCC->J   slack in [8.333e-02, 8.333e-02]
+  generic  III->J   slack in [8.836e-02, 8.836e-02]
+  generic  LIJ->J   slack in [1.094e-01, 1.094e-01]
+  generic  LCI->J   slack in [1.141e-01, 1.141e-01]
+  generic  LL->J    slack in [1.222e-01, 1.222e-01]
+  generic  LII->J   slack in [1.449e-01, 1.449e-01]
+  generic  LLJ->J   slack in [1.719e-01, 1.719e-01]
+  generic  LLC->J   slack in [1.796e-01, 1.796e-01]
+  generic  LLI->J   slack in [2.115e-01, 2.115e-01]
+  generic  LLL->J   slack in [2.864e-01, 2.864e-01]
+  counts: 34 {'identity': 1, 'generic': 29, 'spine': 4}  generic all >0: True  spine/identity >= 0 (up to 1e-50): True
+### python3 verify.py 5 4
+Delta=5 K=4  rho_D=1.225843433776677  b=0.162277660168  types=10 rules=1116  LP min generic slack s*=3.702e-04
+  rules by kind: {'identity': 1, 'generic': 1104, 'chain': 11}
+  identity sanity (should enclose 0): [('K', '-6.5e-77..4.7e-77'), ('chain x=0', '-1.2e-76..9.7e-77'), ('chain x=1/2', '-1.2e-76..1.1e-76')]
+  worst generic slack lower bound: 3.700771e-04 at ['K', 'K', 'B1', 'B1'] -> B1
+  RESULT: VERIFIED
+### python3 verify.py 6 4
+Delta=6 K=4  rho_D=1.226928897893965  b=0.133918083664  types=11 rules=4843  LP min generic slack s*=6.007e-04
+  rules by kind: {'identity': 2, 'generic': 4831, 'chain': 10}
+  identity sanity (should enclose 0): [('K', '-4.3e-77..6.0e-77'), ('C5', '-2.5e-76..2.6e-76'), ('chain x=0', '-1.4e-76..1.2e-76'), ('chain x=1/2', '-1.6e-76..1.2e-76')]
+  worst generic slack lower bound: 6.005673e-04 at ['K', 'K', 'K', 'B0', 'B0'] -> B0
+  RESULT: VERIFIED
+### python3 verify.py 7 4
+Delta=7 K=4  rho_D=1.227408452658697  b=0.113888021375  types=11 rules=13115  LP min generic slack s*=1.612e-04
+  rules by kind: {'identity': 2, 'generic': 13102, 'chain': 11}
+  identity sanity (should enclose 0): [('K', '-8.2e-77..7.8e-77'), ('C5', '-2.5e-76..2.7e-76'), ('chain x=0', '-1.7e-76..1.6e-76'), ('chain x=1/2', '-2.0e-76..1.7e-76')]
+  worst generic slack lower bound: 1.611488e-04 at ['K', 'K', 'K', 'K', 'B0', 'B0'] -> B0
+  RESULT: VERIFIED
+### python3 indep_check.py
+tex-hand Delta=3 rules=14 (chain fallbacks 2) fails=0 worst generic lower bound=(0.00010088466669959865, 'B+B->B')
+    min slack over non-spine-shaped multisets: 1.0088e-04
+tex-hand Delta=4 rules=34 (chain fallbacks 2) fails=0 worst generic lower bound=(3.135699289368059e-05, 'K+B+B->B')
+    min slack over non-spine-shaped multisets: 3.1357e-05
+cert Delta=5 rules=1116 (chain fallbacks 2) fails=0 worst generic lower bound=(1.0100037193017462e-07, 'K+K+K+K->B0')
+    min slack over non-spine-shaped multisets: 3.7008e-04
+cert Delta=6 rules=4505 (chain fallbacks 1) fails=0 worst generic lower bound=(1.0100077617456135e-07, 'K+K+K+K+C5->B0')
+    min slack over non-spine-shaped multisets: 6.0057e-04
+cert Delta=7 rules=12753 (chain fallbacks 1) fails=0 worst generic lower bound=(1.0100004310026676e-07, 'K+K+K+K+K+C5->B0')
+    min slack over non-spine-shaped multisets: 1.6115e-04
+TOTAL FAILS 0

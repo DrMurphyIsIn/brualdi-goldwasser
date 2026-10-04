@@ -1,0 +1,15 @@
+DELTA=0.006  gT=-0.009  max g = -0.00586 at e=4; g_2..g_8 = [-0.04757, -0.01181, -0.00586, -0.00829, -0.01384, -0.01186, -0.01186]
+lam in [0.0, 0.02] (0 means the open end):  CERTIFIED; 40 boxes; 48s
+DELTA=0.006  gT=-0.009  max g = -0.00586 at e=4; g_2..g_8 = [-0.04757, -0.01181, -0.00586, -0.00829, -0.01384, -0.01186, -0.01186]
+lam in [0.02, 0.04] (0 means the open end):  CERTIFIED; 40 boxes; 49s
+DELTA=0.006  gT=-0.009  max g = -0.00586 at e=4; g_2..g_8 = [-0.04757, -0.01181, -0.00586, -0.00829, -0.01384, -0.01186, -0.01186]
+lam in [0.04, 0.06] (0 means the open end):  CERTIFIED; 40 boxes; 49s
+DELTA=0.006  gT=-0.009  max g = -0.00586 at e=4; g_2..g_8 = [-0.04757, -0.01181, -0.00586, -0.00829, -0.01384, -0.01186, -0.01186]
+lam in [0.06, 0.08] (0 means the open end):  CERTIFIED; 40 boxes; 48s
+DELTA=0.006  gT=-0.009  max g = -0.00586 at e=4; g_2..g_8 = [-0.04757, -0.01181, -0.00586, -0.00829, -0.01384, -0.01186, -0.01186]
+lam in [0.08, 0.1] (0 means the open end):  CERTIFIED; 40 boxes; 49s
+max over boxes and spiders e != 4 of the unclipped l(S_e)/lam upper bound: -0.005726369300602676 at (3, 0.0)
+lam=0.001: 53272 branches; max over GEN of (l/lam - g_e) = -0.00600  (must be < 0)
+lam=0.02: 53272 branches; max over GEN of (l/lam - g_e) = -0.00603  (must be < 0)
+lam=0.05: 53272 branches; max over GEN of (l/lam - g_e) = -0.00608  (must be < 0)
+lam=0.1: 53272 branches; max over GEN of (l/lam - g_e) = -0.00612  (must be < 0)

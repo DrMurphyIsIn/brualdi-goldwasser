@@ -1,0 +1,33 @@
+===== python3 dp.py 491 results_dp_491.txt
+DP time 145.9s total 148.0s
+max |H_m| = 12  max |B[s][c]| = 24
+n with >1 maximizer: [21]
+n>=4 with a non-spider maximizer: []
+table mismatches: []  (table covers 488 values of n <= NMAX)
+===== python3 test_hull.py
+hull routines agree with the definition of K on 20000 random sets
+===== python3 brute.py 18 results_dp_491.txt
+n=2 trees=1 M=2 #max=1 dp=OK
+n=3 trees=1 M=2 #max=1 dp=OK
+n=4 trees=2 M=5/2 #max=1 dp=OK
+n=5 trees=3 M=3 #max=1 dp=OK
+n=6 trees=6 M=29/8 #max=1 dp=OK
+n=7 trees=11 M=9/2 #max=1 dp=OK
+n=8 trees=23 M=43/8 #max=1 dp=OK
+n=9 trees=47 M=27/4 #max=1 dp=OK
+n=10 trees=106 M=65/8 #max=1 dp=OK
+n=11 trees=235 M=81/8 #max=1 dp=OK
+n=12 trees=551 M=783/64 #max=1 dp=OK
+n=13 trees=1301 M=243/16 #max=1 dp=OK
+n=14 trees=3159 M=9477/512 #max=1 dp=OK
+n=15 trees=7741 M=729/32 #max=1 dp=OK
+n=16 trees=19320 M=35721/1280 #max=1 dp=OK
+n=17 trees=48629 M=2187/64 #max=1 dp=OK
+n=18 trees=123867 M=26973/640 #max=1 dp=OK
+ALL OK
+===== python3 dp_check.py 400 results_check_400.txt
+DP time 1521.7s
+max |H_t| = 12
+n with >1 maximizer: [21]
+n>=4 with a non-spider maximizer: []
+table mismatches: []
