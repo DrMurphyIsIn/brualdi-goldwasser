@@ -1,0 +1,60 @@
+[1] theta_L, theta_C (and theta_A5) from their definitions, Arb 300 bits
+     Delta=3: F = 0.196882827394, eta = 0.276983964948, theta_L = -0.047618192763, theta_C = -0.100010641145
+PASS Delta=3: printed theta_L = -0.0476, theta_C = -0.1000 are the 4-decimal roundings
+     Delta=4: F = 0.201624972340, eta = 0.205257701955, theta_L = 0.014931567719, theta_C = -0.068395368126
+PASS Delta=4: printed theta_L = 0.0149, theta_C = -0.0684 are the 4-decimal roundings
+     Delta=5: F = 0.203629124446, eta = 0.162277660168, theta_L = 0.053247544329, theta_C = -0.050887117045
+     Delta=6: F = 0.204514216123, eta = 0.133918083664, theta_L = 0.078835250055, theta_C = -0.040108392836, theta_A5 = -0.040108392836
+PASS Delta=6: theta_A5 = g(A5) - log(1 + 3 eta/23) equals F + 5 theta_C - B_5(1/3,...,1/3) (identity rule C^5 -> A5 exact)
+     Delta=7: F = 0.204904997587, eta = 0.113888021375, theta_L = 0.097048380545, theta_C = -0.032914937294, theta_A5 = -0.033238730174
+PASS Delta=7: theta_A5 = g(A5) - log(1 + 3 eta/23) equals F + 5 theta_C - B_5(1/3,...,1/3) (identity rule C^5 -> A5 exact)
+[2] theta_I: the printed values and the values in the programs
+PASS explicit_small.py uses theta_I = -813/10000 (Delta=3), -391/10000 (Delta=4) exactly
+PASS indep_check.py uses theta_I = Fraction('-0.0813'), Fraction('-0.0391') exactly
+PASS cert34.py uses the doubles nearest to -0.0813, -0.0391 (they differ from the decimals by 2.73e-18, -2.81e-18)
+[3] exact theta of the interval types, Delta = 5, 6, 7 (from the certificates)
+     Delta=5
+       L   {1}  theta = (defined by logarithms) 0.0532475443
+       C   {1/3}  theta = (defined by logarithms) -0.0508871170
+       B0  [1/9, 14/87]  theta = -27975543973/549755813888 = -0.0508872180
+       B1  [14/87, 55/261]  theta = -27975543973/549755813888 = -0.0508872180
+       B2  [55/261, 68/261]  theta = -39462139399/1099511627776 = -0.0358906067
+       B3  [68/261, 9/29]  theta = -40826752329/1099511627776 = -0.0371317149
+       A0  [2/5, 159/380]  theta = -7269216303/1099511627776 = -0.0066113137
+       A1  [159/380, 83/190]  theta = -17959882201/1099511627776 = -0.0163344177
+       A2  [83/190, 173/380]  theta = 1720728667/549755813888 = 0.0031299872
+       A3  [173/380, 9/19]  theta = 16477611691/1099511627776 = 0.0149863005
+     Delta=6
+       L   {1}  theta = (defined by logarithms) 0.0788352501
+       C   {1/3}  theta = (defined by logarithms) -0.0401083928
+       A5  {3/23}  theta = (defined by logarithms) -0.0401083928
+       B0  [1/11, 113/770]  theta = -22049877673/549755813888 = -0.0401084938
+       B1  [113/770, 78/385]  theta = -21521038419/549755813888 = -0.0391465408
+       B2  [78/385, 199/770]  theta = -26968315/1073741824 = -0.0251162006
+       B3  [199/770, 11/35]  theta = -14020175581/549755813888 = -0.0255025508
+       A0  [2/5, 193/460]  theta = 3645886753/549755813888 = 0.0066318294
+       A1  [193/460, 101/230]  theta = -681914609/274877906944 = -0.0024807909
+       A2  [101/230, 211/460]  theta = 9582506645/549755813888 = 0.0174304780
+       A3  [211/460, 11/23]  theta = 39608147259/1099511627776 = 0.0360234001
+     Delta=7
+       L   {1}  theta = (defined by logarithms) 0.0970483805
+       C   {1/3}  theta = (defined by logarithms) -0.0329149373
+       A5  {3/23}  theta = (defined by logarithms) -0.0332387302
+       B0  [1/13, 73/533]  theta = -36546481369/1099511627776 = -0.0332388312
+       B1  [73/533, 105/533]  theta = -35281272929/1099511627776 = -0.0320881308
+       B2  [105/533, 137/533]  theta = -15331210287/549755813888 = -0.0278873091
+       B3  [137/533, 13/41]  theta = -19598827929/1099511627776 = -0.0178250302
+       A0  [2/5, 227/540]  theta = 2232343817/137438953472 = 0.0162424390
+       A1  [227/540, 119/270]  theta = 8007167483/1099511627776 = 0.0072824764
+       A2  [119/270, 83/180]  theta = 29965309731/1099511627776 = 0.0272532904
+       A3  [83/180, 13/27]  theta = 3460677303/68719476736 = 0.0503594827
+[4] independent rule enumeration and exact coverage of the parent ranges
+PASS Delta=3: partitions exact and contiguous; every parent range in its window and covered exactly by its targets; 14 rules (paper: 14)
+PASS Delta=4: partitions exact and contiguous; every parent range in its window and covered exactly by its targets; 34 rules (paper: 34)
+PASS Delta=5: partitions exact and contiguous; every parent range in its window and covered exactly by its targets; 1116 rules (paper: 1116)
+PASS Delta=6: partitions exact and contiguous; every parent range in its window and covered exactly by its targets; 4505 rules (paper: 4505)
+PASS Delta=6: the branch L L C C has message 3/23 and an interval type (B0), not A5
+PASS Delta=7: partitions exact and contiguous; every parent range in its window and covered exactly by its targets; 12753 rules (paper: 12753)
+PASS Delta=7: the branch L L C C has message 3/23 and an interval type (B0), not A5
+==============================================================================
+ALL CHECKS PASSED

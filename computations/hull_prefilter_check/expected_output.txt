@@ -1,0 +1,14 @@
+===== python3 test_certify.py
+positive control: 42357 discarded non-Ext points in 3000 random sets, 42357 certified (1627 of them by the exact test)
+negative control: 2643 sets with one Ext point wrongly discarded, 2643 caught
+TEST PASSED
+===== python3 recheck_bg.py 491
+bg_hull_dp prefilter re-check, n <= 491 (163 s)
+  candidates 355891085, discarded by the prefilter 355203177: certified by the float test 355203177, by the exact test 0, NOT certified 0
+  exact M_n equal to results_dp_491.txt for 2 <= n <= 491: True
+RESULT: every discarded candidate is outside Ext of its class
+===== python3 recheck_nu.py 215 8
+nu_hull_search prefilter re-check, n <= 215, KMAX = 8 (1104 s)
+  candidates 2463178108, discarded by the prefilter 2457099678: certified by the float test 2457099678, by the exact test 0, NOT certified 0
+  exact M(n, k) equal to dpk215_8.txt on all 1854 pairs computed: True
+RESULT: every discarded candidate is outside Ext of its class

@@ -1,0 +1,31 @@
+[1] the rule computed from the case list and from the candidates X_s, Y_s agrees for 4 <= n <= 5000
+[2] table parsed: 488 entries, n = 4..491, every entry has n vertices
+[3] for every 4 <= n <= 491 the exact value of the table spider equals the exact M_n of the hull computation
+[4] rule = table for every 424 <= n <= 491: True
+    rule != table at n = 423: True   (rule: A6^2 A5^36; table: A5^31 A4^9)
+    failures for n >= 300 (16): [300, 302, 311, 313, 322, 324, 333, 335, 346, 357, 368, 379, 390, 401, 412, 423]
+    last failure: n = 423
+    = {300, 311, 322, 333} u {n = 5 mod 11, 302 <= n <= 423} (rem:bgx-race): True
+    failures for 4 <= n <= 299: 240 of 296 sizes
+    last table maximizer with a cherry at the center: n = 333 (C A5^30)
+    table at n = 311: C A5^28
+    detail for n >= 300:
+      n=300  rule: A6 A5^26         table: C A5^27
+      n=302  rule: A6^2 A5^25       table: A5^20 A4^9
+      n=311  rule: A6 A5^27         table: C A5^28
+      n=313  rule: A6^2 A5^26       table: A5^21 A4^9
+      n=322  rule: A6 A5^28         table: C A5^29
+      n=324  rule: A6^2 A5^27       table: A5^22 A4^9
+      n=333  rule: A6 A5^29         table: C A5^30
+      n=335  rule: A6^2 A5^28       table: A5^23 A4^9
+      n=346  rule: A6^2 A5^29       table: A5^24 A4^9
+      n=357  rule: A6^2 A5^30       table: A5^25 A4^9
+      n=368  rule: A6^2 A5^31       table: A5^26 A4^9
+      n=379  rule: A6^2 A5^32       table: A5^27 A4^9
+      n=390  rule: A6^2 A5^33       table: A5^28 A4^9
+      n=401  rule: A6^2 A5^34       table: A5^29 A4^9
+      n=412  rule: A6^2 A5^35       table: A5^30 A4^9
+      n=423  rule: A6^2 A5^36       table: A5^31 A4^9
+[5] at every failure the rule spider exists and is strictly worse than M_n, or does not exist: True
+    sizes where the rule names no spider (negative number of A_5): [4, 5, 6, 7, 8, 9, 11, 13, 15, 16, 17, 18, 20, 22, 24, 26, 29, 31, 33, 35, 40, 42, 44, 51, 53, 62]
+ALL CHECKS PASSED

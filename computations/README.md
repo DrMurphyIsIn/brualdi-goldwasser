@@ -72,3 +72,17 @@ are re-checked by `recheck_recorded.py` in under a minute.
 ## License
 
 Apache License 2.0, like the rest of the mathematics in this repository (see `LICENSE` and `LICENSING.md`).
+
+## Additional checks (inputs of hand proofs and prefilter re-checks)
+
+Several of these read files of existing folders through `../<folder>/`, so run them from inside `computations/`.
+
+| paper item | label | folder | role | re-run |
+|---|---|---|---|---|
+| Rule of the best spider against the appendix table, 424 <= n <= 491 | `thm:bg-main`, `rem:bgx-race` | [bg_rule_vs_table/](bg_rule_vs_table/) | proof | PASS |
+| Atom values and margins; g(A_4) < 1/960 | `tab:bg-atoms`, `prop:bg-high` | [bg_atom_margins/](bg_atom_margins/) | proof | PASS |
+| One-sided derivatives and local argument at the exact zeros of the rate lemma | `lem:bg-rate` | [bg_rate_zeros/](bg_rate_zeros/) | proof | PASS |
+| Exchange polynomials of the local-structure lemma | `lem:bg-moves`, `tab:bg-M7` | [bg_M7_table/](bg_M7_table/) | proof | PASS |
+| Re-check of the floating-point prefilters of the two hull searches | `thm:bg-small`, `lem:nu-small-cv` | [hull_prefilter_check/](hull_prefilter_check/) | proof | PASS |
+| Constants of the anchor at 1 + sqrt 5 | `prop:lam-anchor` | [lam_anchor_enclosures/](lam_anchor_enclosures/) | proof | PASS |
+| Exact theta, rule enumeration and coverage, bounded degree | `lem:deg-cert34`, `lem:deg-cert567` | [deg_theta_exact/](deg_theta_exact/) | proof | PASS |
