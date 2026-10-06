@@ -1,0 +1,25 @@
+table rows parsed: 488 (n = 4..491)
+rule != table for 4 <= n <= 299: 240 of 296 sizes
+rule != table for n >= 300:
+  n = 300: rule A5^26 A6, table A5^27 C
+  n = 302: rule A5^25 A6^2, table A4^9 A5^20
+  n = 311: rule A5^27 A6, table A5^28 C
+  n = 313: rule A5^26 A6^2, table A4^9 A5^21
+  n = 322: rule A5^28 A6, table A5^29 C
+  n = 324: rule A5^27 A6^2, table A4^9 A5^22
+  n = 333: rule A5^29 A6, table A5^30 C
+  n = 335: rule A5^28 A6^2, table A4^9 A5^23
+  n = 346: rule A5^29 A6^2, table A4^9 A5^24
+  n = 357: rule A5^30 A6^2, table A4^9 A5^25
+  n = 368: rule A5^31 A6^2, table A4^9 A5^26
+  n = 379: rule A5^32 A6^2, table A4^9 A5^27
+  n = 390: rule A5^33 A6^2, table A4^9 A5^28
+  n = 401: rule A5^34 A6^2, table A4^9 A5^29
+  n = 412: rule A5^35 A6^2, table A4^9 A5^30
+  n = 423: rule A5^36 A6^2, table A4^9 A5^31
+failures for n >= 300: 16 sizes [300, 302, 311, 313, 322, 324, 333, 335, 346, 357, 368, 379, 390, 401, 412, 423]
+matches the paper's list of 16 sizes: True
+rule == table for every 424 <= n <= 456: True
+rule == table for every 424 <= n <= 491: True
+n = 423 is a failure: True
+ALL CHECKS PASSED

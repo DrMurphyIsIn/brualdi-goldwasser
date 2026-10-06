@@ -1,0 +1,32 @@
+cap (3/10 - gamma)/(3/2) in [0.001121073580, 0.001121073580]
+
+[control 2] Lemma lem:bg-rate at (c, S) = (1, 1), cap K = 1
+   unperturbed eta = 2791/2500000 = 0.0011164:  Phi~_1'(1) in [-7.7893e-06, -7.7893e-06]
+      (a) convexity condition: PASS
+      (b) bb_min_ge0 local step on [1 - 2^-14, 1]: derivative <= -6.4330e-06: PASS
+      (c) rate_zeros [C] on [1 - 1e-4, 1], mpmath.iv (256 bits): max derivative <= -7.7546e-06: PASS
+      (c) rate_zeros [C] on [1 - 1e-4, 1], python-flint arb (300 bits): max derivative <= -7.7546e-06: PASS
+   near cap    eta = 1121/1000000 = 0.0011210:  Phi~_1'(1) in [-1.2263e-07, -1.2263e-07]
+      (a) convexity condition: PASS
+      (b) bb_min_ge0 local step on [1 - 2^-14, 1]: derivative <= 1.2337e-06: FAIL  (single box, not used here)
+      (c) rate_zeros [C] on [1 - 1e-4, 1], mpmath.iv (256 bits): max derivative <= -8.7912e-08: PASS
+      (c) rate_zeros [C] on [1 - 1e-4, 1], python-flint arb (300 bits): max derivative <= -8.7910e-08: PASS
+   perturbed   eta = 2803/2500000 = 0.0011212:  Phi~_1'(1) in [2.1070e-07, 2.1070e-07]
+      (a) convexity condition: PASS
+      (b) bb_min_ge0 local step on [1 - 2^-14, 1]: derivative <= 1.5671e-06: FAIL
+      (c) rate_zeros [C] on [1 - 1e-4, 1], mpmath.iv (256 bits): max derivative <= 2.4542e-07: FAIL
+      (c) rate_zeros [C] on [1 - 1e-4, 1], python-flint arb (300 bits): max derivative <= 2.4542e-07: FAIL
+   unperturbed (d) full branch-and-bound on [0, 1]: certified (164893 evaluations, 22.9 s)
+   perturbed   (d) full branch-and-bound on [0, 1]: NOT certified within the same number of evaluations (164893 evaluations, 22.9 s)
+   unperturbed (e) Phi~_1(1 - 1e-6) in [7.8337e-12, 7.8337e-12]
+   perturbed   (e) Phi~_1(1 - 1e-6) in [-1.6625e-13, -1.6625e-13]: refuted (enclosure below 0)
+
+   unperturbed eta = 0.0011164: check PASS (expected PASS)
+   near cap    eta = 0.0011210: convexity and local step (c) PASS (expected PASS)
+   perturbed   eta = 0.0011212: check FAIL (expected FAIL); local steps fail: True; refuted: True
+
+runtime 45.8 s
+ALL NEGATIVE CONTROLS BEHAVED AS EXPECTED
+real 46.08
+user 45.91
+sys 0.14

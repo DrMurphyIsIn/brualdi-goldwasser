@@ -1,0 +1,26 @@
+prop:bg-gap, lower bounds by child count c (section B of bg_rate/certify.py):
+   c=2: in [0.0372421, 0.0372421]  (at L)
+   c=3: in [0.0310433, 0.0310433]  (at A3)
+   c=4: in [0.0207608, 0.0207608]  (at A3)
+   c=5: in [0.0162025, 0.0162025]  (at A4)
+   c=6: in [0.0142734, 0.0142734]  (at A4)
+   c=7: in [0.0147093, 0.0147093]  (at A4)
+   c=8: in [0.0167370, 0.0167370]  (at A4)
+   c=9: in [0.0198864, 0.0198864]  (at A4)
+   c=1: in [0.0174439, 0.0174439]  (at A_j (Phi_1(3/7)))
+   c=10: in [0.0178382, 0.0178387]  (at any)
+   c=11: in [0.0220076, 0.0220081]  (at any)
+   c=12: in [0.0256618, 0.0256623]  (at any)
+   c=>=13: in [0.0186081, 0.0186081]  (at any (Q(13)))
+   minimum: c=6, a=A4, enclosure [0.014273396, 0.014273396]
+
+[control 1] Proposition prop:bg-gap: delta_0 accepted iff every lower bound >= delta_0
+   unperturbed delta_0 = 0.01426: PASS (expected PASS)
+   perturbed   delta_0 = 0.01430: FAIL (expected FAIL)  failing rows: c=6 (A4): 0.014273 < 0.0143
+   the enclosure at c=6, a=A4 lies below 0.0143: True
+
+runtime 3.8 s
+ALL NEGATIVE CONTROLS BEHAVED AS EXPECTED
+real 3.86
+user 3.84
+sys 0.02
