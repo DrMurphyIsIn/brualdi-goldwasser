@@ -1,0 +1,20 @@
+[control 5] Lemma lem:bgx-counts: xi from the table (PASS expected) and xi = Xi + 1/1000 (FAIL expected)
+   exchange      Xi          xi (table)  xi<=Xi signs  row     | xi=Xi+1e-3  xi<=Xi signs  row
+   11A1->3A5     1.937833    1937/1000 True   True   PASS    | 1.938833    False  True   FAIL
+   11A2->5A5     1.264441      158/125 True   True   PASS    | 1.265441    False  True   FAIL
+   11A3->7A5     1.074879      537/500 True   True   PASS    | 1.075879    False  True   FAIL
+   11A7->15A5    1.051944    1051/1000 True   True   PASS    | 1.052944    False  True   FAIL
+   11A8->17A5    1.100829        11/10 True   True   PASS    | 1.101829    False  True   FAIL
+   11A9->19A5    1.161206    1161/1000 True   True   PASS    | 1.162206    False  True   FAIL
+   11A10->21A5   1.231987    1231/1000 True   True   PASS    | 1.232987    False  True   FAIL
+   11A11->23A5   1.312732      164/125 True   True   PASS    | 1.313732    False  True   FAIL
+   11A12->25A5   1.403406    1403/1000 True   True   PASS    | 1.404406    False  True   FAIL
+   11A6->13A5    1.016808    1271/1250 True   True   PASS    | 1.017808    False  True   FAIL
+   11A4->9A5     1.011355  10113/10000 True   True   PASS    | 1.012355    False  True   FAIL
+   9P->2A4       1.069630    1069/1000 True   True   PASS    | 1.070630    False  True   FAIL
+
+runtime 0.1 s
+ALL NEGATIVE CONTROLS BEHAVED AS EXPECTED
+real 0.76
+user 0.34
+sys 0.07

@@ -1,0 +1,12 @@
+[control 4] Lemma lem:bg-compare(i): V_k(n) - eta_{k-1}(n-1) < Lambda_sp(n)
+   k = 9 (eta = 7507/10000000, gamma shape ('hub', (6, 3, 0, 1))), 300 s:
+      unperturbed: all n in [108, 315]: PASS (expected PASS); at n = 108: 0.1458492 < 0.1468007; smallest margin 4.293e-05 at n = 109
+      perturbed:   n = 107: 0.1465999 < 0.1456280 is False: FAIL (expected FAIL; margin -9.719e-04)
+      largest failing n = 107 (so n-bar(k) = 108)
+   k = 10 (eta = 1701/2500000, gamma shape ('hub', (6, 3, 0, 1))), 330 s:
+      unperturbed: all n in [108, 315]: PASS (expected PASS); at n = 108: 0.1454936 < 0.1468007; smallest margin 3.282e-04 at n = 109
+      perturbed:   n = 107: 0.1461740 < 0.1456280 is False: FAIL (expected FAIL; margin -5.460e-04)
+      largest failing n = 107 (so n-bar(k) = 108)
+
+runtime 630.3 s
+ALL NEGATIVE CONTROLS BEHAVED AS EXPECTED

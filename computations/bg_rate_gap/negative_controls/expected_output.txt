@@ -1,0 +1,30 @@
+[control 3] Lemma lem:bg-Gamma: tabulated Gamma_K (PASS expected) and Gamma_K + 1e-5 (FAIL expected)
+   k   K  shape      enclosure at the minimizing shape   table G    unpert.  G+1e-5 pert.  refuted
+   2   1  A1         [0.039104007, 0.039104007]  0.039104   PASS     FAIL          True
+   3   2  A1         [0.039104007, 0.039104007]  0.039104   PASS     FAIL          True
+   4   3  C2A3       [0.026563232, 0.026563232]  0.026563   PASS     FAIL          True
+   5   4  C3A4       [0.015081530, 0.015081530]  0.015081   PASS     FAIL          True
+   6   5  C4A4       [0.008500536, 0.008500536]  0.008500   PASS     FAIL          True
+   7   6  C5A4       [0.006729615, 0.006729615]  0.006729   PASS     FAIL          True
+   8   7  C6A4       [0.006839383, 0.006839383]  0.006839   PASS     FAIL          True
+   9   8  C6A4       [0.007662396, 0.007662396]  0.007662   PASS     FAIL          True
+  10   9  C6A4       [0.008335944, 0.008335944]  0.008335   PASS     FAIL          True
+  11  10  C6A4       [0.008895477, 0.008895477]  0.008895   PASS     FAIL          True
+  12  11  C6A4       [0.009366865, 0.009366865]  0.009366   PASS     FAIL          True
+  13  12  C6A4       [0.009768311, 0.009768311]  0.009768   PASS     FAIL          True
+  14  13  C6A4       [0.010116103, 0.010116103]  0.010116   PASS     FAIL          True
+  15  14  C6A4       [0.010418864, 0.010418864]  0.010418   PASS     FAIL          True
+  16  15  C6A4       [0.010685217, 0.010685217]  0.010685   PASS     FAIL          True
+  17  16  C6A4       [0.010920911, 0.010920911]  0.010920   PASS     FAIL          True
+  18  17  C6A4       [0.011131694, 0.011131694]  0.011131   PASS     FAIL          True
+  19  18  C6A4       [0.011321399, 0.011321399]  0.011321   PASS     FAIL          True
+  20  19  C6A4       [0.011491942, 0.011491942]  0.011491   PASS     FAIL          True
+  21  20  C6A4       [0.011647155, 0.011647155]  0.011647   PASS     FAIL          True
+  22  21  C6A4       [0.011788954, 0.011788954]  0.011788   PASS     FAIL          True
+  23  22  C6A4       [0.011918299, 0.011918299]  0.011918   PASS     FAIL          True
+
+runtime 32.4 s
+ALL NEGATIVE CONTROLS BEHAVED AS EXPECTED
+real 32.49
+user 32.36
+sys 0.12
