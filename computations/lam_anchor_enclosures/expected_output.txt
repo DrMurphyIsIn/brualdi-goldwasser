@@ -1,0 +1,77 @@
+[A] exact identities (sympy)
+PASS lambda_c = 2 phi, 1 + lambda_c/2 = phi^2, 1 + lambda_c = phi^3, 2 phi + 1 = phi^3
+PASS y_C = 1/(2 phi^2), lambda_c y_C = t = 1/phi, 1 + lambda_c y_C = phi, 1/2 - y_C = 1/(2 phi)
+PASS 2 phi^-2 = 3 - sqrt5
+PASS h(1/2) = kappa (1/2 - y_C) = f*/2
+PASS f_cherry = (1/2) log(phi^2) = log phi and cherry deficit 2 log phi - log phi^2 = 0
+PASS m = 1: y_v(y_C) = phi^-2 and y_v(1/2) = 1/(2+phi)
+PASS 1 + lambda_c m y_C/(m+1) = (m phi + 1)/(m+1) and y_v(y_C) = 1/(m phi + 1)
+PASS m phi + 1 > 2 phi^2 for m >= 3 (as (m - 2) phi > 1)
+     kink of y_v = y_C at ybar_m = (1 + lambda_c - m)/(lambda_c m): m=1: 1.000000, m=2: 0.345492, m=3: 0.127322, m=4: 0.018237, m=5: -0.047214, m=6: -0.090847, m=7: -0.122015, m=8: -0.145390
+PASS B_{0,1} on [y_C, 1/2] = log phi + kappa (D-2)/lambda_c - log(D/2) - kappa/D, D = 2 + lambda_c ybar
+PASS d^2 B_{0,1}/dD^2 = (D - 2 kappa)/D^3
+PASS B_{0,1}'(ybar) = kappa - lambda_c y_v + kappa lambda_c y_v^2 = lambda_c (kappa y_v^2 - y_v + kappa/lambda_c)
+==============================================================================
+[B] backend: mpmath.iv (256 bits)
+PASS log phi in [0.48121, 0.48122]  [0.4812118251, 0.4812118251]
+PASS kappa = phi log phi in [0.77861, 0.77862]  [0.7786170887, 0.7786170887]
+PASS 2 phi^-2 in [0.76393, 0.76394]  [0.7639320225, 0.7639320225]
+PASS 3 - sqrt5 in [0.76393, 0.76394]  [0.7639320225, 0.7639320225]
+PASS h(1) = kappa (1 - y_C) > 0.62  0.629914
+PASS f* = log phi < 0.49
+PASS k = 2: log(phi^3/(1 + (2/3) lambda_c)) in [0.29389, 0.29390]  [0.2938933325, 0.2938933325]
+PASS kappa < 2 (and kappa < 1, used for D >= 2 > 2 kappa)
+PASS kappa - 2 phi^-2 > 0.0146  [0.0146850662, 0.0146850662]
+PASS from the printed enclosures: 0.77861 - 0.76394 > 0.0146
+PASS kinks y_v = y_C: m = 2 in (y_C, 1/2), m = 3, 4 in (0, y_C), m = 1 above 1/2, m = 5..8 negative; and for all m >= 5 negative since m > 1 + lambda_c  1 + lambda_c in [4.2360679775, 4.2360679775]
+PASS log(3 phi^-2) in [0.13618, 0.13619]  [0.1361886385, 0.1361886385]
+PASS kappa (phi^-3 - phi^-2/2) in [0.03510, 0.03511]  [0.0351039295, 0.0351039295]
+PASS m = 2 minimum log(3 phi^-2) - kappa(phi^-3 - phi^-2/2) in [0.10107, 0.10109]  [0.1010847090, 0.1010847090]
+PASS m = 2 minimum from the general formula at the kink in [0.10107, 0.10109]  [0.1010847090, 0.1010847090]
+PASS m = 2: 1/(2 phi + 1) = phi^-3 > y_C (hinge active)
+PASS y_- in [0.32067, 0.32068]  [0.3206710446, 0.3206710446]
+PASS y_+ in [0.96365, 0.96366]  [0.9636573043, 0.9636573043]
+PASS 1/(2 + phi) in [0.27639, 0.27640]  [0.2763932023, 0.2763932023]
+PASS phi^-2 in [0.38196, 0.38197]  [0.3819660113, 0.3819660113]
+PASS 1/(2+phi) < y_- < phi^-2 < y_+
+PASS ybar* = (1/y_- - 2)/lambda_c in [0.34562, 0.34563]  [0.3456233156, 0.3456233156]
+PASS p = 216/625: p > y_C and y_v(p) > y_C (both hinges active)
+PASS B_{0,1}(216/625) in [0.056447, 0.056448]  [0.0564478058, 0.0564478058]
+PASS B_{0,1}'(216/625) in [-0.000013, 0]  [-0.0000125699, -0.0000125699]
+PASS p - y_C < 0.155 and 1/2 - p < 0.155  p - y_C <= 0.154617, 1/2 - p = 0.154400
+PASS tangent bound 0.056447 - 0.155 * 1.3e-5 > 0.05644  0.056444985
+PASS tangent bound from the enclosures > 0.05644  0.056445857
+PASS [C] (mpmath.iv (256 bits)) branch-and-bound: B_{0,1} > 0.05644 on [0, 1/2]
+==============================================================================
+[B] backend: python-flint arb (300 bits)
+PASS log phi in [0.48121, 0.48122]  [0.4812118251, 0.4812118251]
+PASS kappa = phi log phi in [0.77861, 0.77862]  [0.7786170887, 0.7786170887]
+PASS 2 phi^-2 in [0.76393, 0.76394]  [0.7639320225, 0.7639320225]
+PASS 3 - sqrt5 in [0.76393, 0.76394]  [0.7639320225, 0.7639320225]
+PASS h(1) = kappa (1 - y_C) > 0.62  0.629914
+PASS f* = log phi < 0.49
+PASS k = 2: log(phi^3/(1 + (2/3) lambda_c)) in [0.29389, 0.29390]  [0.2938933325, 0.2938933325]
+PASS kappa < 2 (and kappa < 1, used for D >= 2 > 2 kappa)
+PASS kappa - 2 phi^-2 > 0.0146  [0.0146850662, 0.0146850662]
+PASS from the printed enclosures: 0.77861 - 0.76394 > 0.0146
+PASS kinks y_v = y_C: m = 2 in (y_C, 1/2), m = 3, 4 in (0, y_C), m = 1 above 1/2, m = 5..8 negative; and for all m >= 5 negative since m > 1 + lambda_c  1 + lambda_c in [4.2360679775, 4.2360679775]
+PASS log(3 phi^-2) in [0.13618, 0.13619]  [0.1361886385, 0.1361886385]
+PASS kappa (phi^-3 - phi^-2/2) in [0.03510, 0.03511]  [0.0351039295, 0.0351039295]
+PASS m = 2 minimum log(3 phi^-2) - kappa(phi^-3 - phi^-2/2) in [0.10107, 0.10109]  [0.1010847090, 0.1010847090]
+PASS m = 2 minimum from the general formula at the kink in [0.10107, 0.10109]  [0.1010847090, 0.1010847090]
+PASS m = 2: 1/(2 phi + 1) = phi^-3 > y_C (hinge active)
+PASS y_- in [0.32067, 0.32068]  [0.3206710446, 0.3206710446]
+PASS y_+ in [0.96365, 0.96366]  [0.9636573043, 0.9636573043]
+PASS 1/(2 + phi) in [0.27639, 0.27640]  [0.2763932023, 0.2763932023]
+PASS phi^-2 in [0.38196, 0.38197]  [0.3819660113, 0.3819660113]
+PASS 1/(2+phi) < y_- < phi^-2 < y_+
+PASS ybar* = (1/y_- - 2)/lambda_c in [0.34562, 0.34563]  [0.3456233156, 0.3456233156]
+PASS p = 216/625: p > y_C and y_v(p) > y_C (both hinges active)
+PASS B_{0,1}(216/625) in [0.056447, 0.056448]  [0.0564478058, 0.0564478058]
+PASS B_{0,1}'(216/625) in [-0.000013, 0]  [-0.0000125699, -0.0000125699]
+PASS p - y_C < 0.155 and 1/2 - p < 0.155  p - y_C <= 0.154617, 1/2 - p = 0.154400
+PASS tangent bound 0.056447 - 0.155 * 1.3e-5 > 0.05644  0.056444985
+PASS tangent bound from the enclosures > 0.05644  0.056445857
+PASS [C] (python-flint arb (300 bits)) branch-and-bound: B_{0,1} > 0.05644 on [0, 1/2]
+==============================================================================
+ALL CHECKS PASSED

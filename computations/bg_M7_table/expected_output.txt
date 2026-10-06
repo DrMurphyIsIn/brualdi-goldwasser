@@ -1,0 +1,33 @@
+[A] table tab:bg-M7 (15 rows)
+PASS (ii)  {P4, C} -> {C^3}               E affine in R0 (deg 1), deg 2 in D0; factor c = 1/16; columns > 0 for D0 >= 1  col2(1+t) = 9*t**2 + 38*t + 8; real roots of col2: [-3.0, 0.7777777777777778]
+PASS (iii) {P4, P4} -> {C^4}              E affine in R0 (deg 1), deg 2 in D0; factor c = 1/64; columns > 0 for D0 >= 1  col2(1+t) = 105*t**2 + 545*t + 316; real roots of col2: [-3.5254549124509302, 0.3349787219747398]
+PASS {[A2], C} -> {A1, A2}                E affine in R0 (deg 1), deg 2 in D0; factor c = 1/8; columns > 0 for D0 >= 1  col2(1+t) = 3*t**2 + 13*t + 12; real roots of col2: [-2.0, -0.3333333333333333]
+PASS {[A3], C} -> {A1, A3}                E affine in R0 (deg 1), deg 2 in D0; factor c = 27/64; columns > 0 for D0 >= 1  col2(1+t) = 3*t**2 + 13*t + 12; real roots of col2: [-2.0, -0.3333333333333333]
+PASS {[A4], C} -> {C, A2, A2}             E affine in R0 (deg 1), deg 2 in D0; factor c = 1/320; columns > 0 for D0 >= 1  col2(1+t) = 927*t**2 + 3638*t + 600; real roots of col2: [-2.7519788414665376, 0.8274912470760307]
+PASS {[A1], [A1]} -> N11 = C^4            E affine in R0 (deg 1), deg 2 in D0; factor c = 1/64; columns > 0 for D0 >= 1  col2(1+t) = 105*t**2 + 545*t + 316; real roots of col2: [-3.5254549124509302, 0.3349787219747398]
+PASS {[A2], [A1]} -> N21 = C^5            E affine in R0 (deg 1), deg 2 in D0; factor c = 1/64; columns > 0 for D0 >= 1  col2(1+t) = 183*t**2 + 1024*t + 528; real roots of col2: [-4.020991762163268, 0.42536334686272204]
+PASS {[A2], [A2]} -> N22 = C^6            E affine in R0 (deg 1), deg 2 in D0; factor c = 1/16; columns > 0 for D0 >= 1  col2(1+t) = 78*t**2 + 479*t + 260; real roots of col2: [-4.539260609899226, 0.3982349688735848]
+PASS {[A3], [A1]} -> N31 = C^6            E affine in R0 (deg 1), deg 2 in D0; factor c = 27/512; columns > 0 for D0 >= 1  col2(1+t) = 87*t**2 + 517*t + 220; real roots of col2: [-4.481179966251556, 0.5386512306193719]
+PASS {[A4], [A1]} -> N41 = C^7            E affine in R0 (deg 1), deg 2 in D0; factor c = 27/1280; columns > 0 for D0 >= 1  col2(1+t) = 339*t**2 + 2126*t + 712; real roots of col2: [-4.9163904220616335, 0.6450039913831674]
+PASS {[A3], [A2]} -> N32 = {L, A6}        E affine in R0 (deg 1), deg 2 in D0; factor c = 27/3584; columns > 0 for D0 >= 1  col2(1+t) = 57*t**2 + 1199*t + 3084; real roots of col2: [-17.035087719298247, -2.0]
+PASS {[A3], [A3]} -> N33 = {L, C, A6}     E affine in R0 (deg 1), deg 2 in D0; factor c = 729/28672; columns > 0 for D0 >= 1  col2(1+t) = 51*t**2 + 432*t + 144; real roots of col2: [-7.122990974554895, 0.6524027392607779]
+PASS {[A4], [A2]} -> N42 = {L, C, A6}     E affine in R0 (deg 1), deg 2 in D0; factor c = 27/8960; columns > 0 for D0 >= 1  col2(1+t) = 345*t**2 + 3106*t + 424; real roots of col2: [-7.864253427672341, 0.8613548769477031]
+PASS {[A4], [A3]} -> N43 = {L, C, A7}     E affine in R0 (deg 1), deg 2 in D0; factor c = 729/10240; columns > 0 for D0 >= 1  col2(1+t) = 42*t**2 + 317*t + 196; real roots of col2: [-5.868154633090128, 0.320535585471081]
+PASS {[A4], [A4]} -> N44 = {L, C, A8}     E affine in R0 (deg 1), deg 2 in D0; factor c = 243/25600; columns > 0 for D0 >= 1  col2(1+t) = 621*t**2 + 4442*t + 3432; real roots of col2: [-5.271801635798259, 0.1188225697757147]
+[B] displayed polynomials and positive factors of the proof of lem:bg-moves
+PASS stalk values T(P4) = 17/8, y(P4) = 7/17, T(P5) = 41/16, y(P5) = 17/41
+PASS (M1) {L, L} -> {C}: E = (1/2)(D0^2 + D0 R0 + 4 R0)
+PASS (M2) {L, C} -> {A1}: E = (1/4)(D0(D0-2) + R0(D0+8))
+PASS (M5) {P5} -> {A2}: E = (1/16)(D0+1)(3D0+3R0-2)
+PASS (M6) {A_j} -> {C, A_{j-1}}, D0 = 1, j = 5..12: E = (3/2)^j/(9 j (j+1)) * display
+PASS (M6) display at R0 = 1/2, j = 5 + J equals 2J^2 + (25/2)J + 15/2
+PASS (M7)(i) {P4, A_i} -> {C, A_{i+1}}, i = 0..10: E = (3/2)^i/(24(i+1)(i+2)) * display
+PASS (M7)(v) {[A_j], L} -> {C, A_j}, j = 1..4: E = (3/2)^(j-1) j/(j+1) * (D0+2)(D0+R0)
+PASS (M7)(iv) {[A_j], A_i} -> {C, A_{i+j}}, j = 2, 3, 4, symbolic i: E = (3/2)^(i+j) j/(18(i+1)(j+1)(i+j+1)) * display
+PASS (M4) balance {A_i, A_j} -> {A_{i-1}, A_{j+1}}, 2 <= i <= 8, 0 <= j <= i-2: E = (3/2)^(i+j)/(9 i (i+1)(j+1)(j+2)) * display
+[C] (M3): the bilinear expression and its eight corner values
+PASS 2(m+1) E = displayed expression
+PASS (M3) m = 1: corner values as displayed, nonnegative coefficients, constant terms [6, 9, 3, 9/2]
+PASS (M3) m >= 2: corner values as displayed, nonnegative coefficients, constant terms [13, 29/2, 11/2, 1]
+==============================================================================
+ALL CHECKS PASSED
