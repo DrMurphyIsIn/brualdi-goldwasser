@@ -30,3 +30,5 @@ PASS (2026-10-04); see `../bg_spider_comparison/README.md`. The certified bounds
 Gamma_{k-1} of table `tab:bg-rate` and its shapes ([A_1] for k = 2, 3; [C^2 A_3], [C^3 A_4], [C^4 A_4],
 [C^5 A_4] for k = 4..7; [C^6 A_4] for k >= 8); the paper rounds the printed values down in the last digit
 where needed (for example 0.0150816 -> 0.015081).
+
+The second program (ball arithmetic, 200 bits) is in `../bg_spider_comparison/second_implementation/`; see `second_implementation/README.md`.

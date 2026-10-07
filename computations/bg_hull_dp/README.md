@@ -60,5 +60,5 @@ quoted in Remark `rem:bgx-programs`. `results_dp_491.txt` is byte-identical to t
 M_n and maximizer counts, only spiders, two maximizers only at n = 21, and 397/397 table matches
 (n <= 400); its `results_check_400.txt` is identical to the earlier run.
 
-The third, independent implementation mentioned in Remark `rem:bgx-programs` (3) (pure rational, about two
-hours) is not included here.
+The third implementation mentioned in Remark `rem:bgx-programs` (3) (pure rational, about two hours) and a
+second exhaustive search are in `third_implementation/`.

@@ -68,3 +68,5 @@ Python 3.9+, mpmath (tested 1.3.0), sympy (tested 1.14.0); python-flint (tested 
 
 The rows are also proved in Lean 4 (kernel-checked exact-rational interval checks over proved monotone atom
 enclosures), so the correctness of these scripts is not needed for the formal proof.
+
+A second implementation of the 63 rows and the exact checks is in `second_implementation/`; negative controls are in `negative_controls/`.
