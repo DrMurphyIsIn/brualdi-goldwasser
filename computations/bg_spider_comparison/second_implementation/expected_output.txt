@@ -1,0 +1,73 @@
+== python3 ind_gamma.py
+1 gamma>=0.039104 ('stalk', 1) | deg-respecting 0.039104 ('stalk', 1) | tail beats min from j=21 ok=True | 2nd 0.055911 ('stalk', 2)
+2 gamma>=0.039104 ('stalk', 1) | deg-respecting 0.039104 ('stalk', 1) | tail beats min from j=21 ok=True | 2nd 0.043569 ('hub', (1, 1, 1, 0))
+3 gamma>=0.026563 ('hub', (2, 2, 0, 1)) | deg-respecting 0.026563 ('hub', (2, 2, 0, 1)) | tail beats min from j=19 ok=True | 2nd 0.026563 ('hub', (2, 3, 1, 0))
+4 gamma>=0.015082 ('hub', (3, 3, 0, 1)) | deg-respecting 0.015082 ('hub', (3, 3, 0, 1)) | tail beats min from j=17 ok=True | 2nd 0.015082 ('hub', (3, 4, 1, 0))
+5 gamma>=0.008501 ('hub', (4, 3, 0, 1)) | deg-respecting 0.008501 ('hub', (4, 3, 0, 1)) | tail beats min from j=15 ok=True | 2nd 0.008501 ('hub', (4, 4, 1, 0))
+6 gamma>=0.006730 ('hub', (5, 3, 0, 1)) | deg-respecting 0.006730 ('hub', (5, 3, 0, 1)) | tail beats min from j=15 ok=True | 2nd 0.006730 ('hub', (5, 4, 1, 0))
+7 gamma>=0.006839 ('hub', (6, 3, 0, 1)) | deg-respecting 0.006839 ('hub', (6, 3, 0, 1)) | tail beats min from j=14 ok=True | 2nd 0.006839 ('hub', (6, 4, 1, 0))
+8 gamma>=0.007662 ('hub', (6, 3, 0, 1)) | deg-respecting 0.007662 ('hub', (6, 3, 0, 1)) | tail beats min from j=14 ok=True | 2nd 0.007662 ('hub', (6, 4, 1, 0))
+9 gamma>=0.008336 ('hub', (6, 3, 0, 1)) | deg-respecting 0.008336 ('hub', (6, 3, 0, 1)) | tail beats min from j=14 ok=True | 2nd 0.008336 ('hub', (6, 4, 1, 0))
+10 gamma>=0.008895 ('hub', (6, 3, 0, 1)) | deg-respecting 0.008895 ('hub', (6, 3, 0, 1)) | tail beats min from j=14 ok=True | 2nd 0.008895 ('hub', (6, 4, 1, 0))
+11 gamma>=0.009367 ('hub', (6, 3, 0, 1)) | deg-respecting 0.009367 ('hub', (6, 3, 0, 1)) | tail beats min from j=14 ok=True | 2nd 0.009367 ('hub', (6, 4, 1, 0))
+12 gamma>=0.009768 ('hub', (6, 3, 0, 1)) | deg-respecting 0.009768 ('hub', (6, 3, 0, 1)) | tail beats min from j=14 ok=True | 2nd 0.009768 ('hub', (6, 4, 1, 0))
+13 gamma>=0.010116 ('hub', (6, 3, 0, 1)) | deg-respecting 0.010116 ('hub', (6, 3, 0, 1)) | tail beats min from j=14 ok=True | 2nd 0.010116 ('hub', (6, 4, 1, 0))
+14 gamma>=0.010419 ('hub', (6, 3, 0, 1)) | deg-respecting 0.010419 ('hub', (6, 3, 0, 1)) | tail beats min from j=14 ok=True | 2nd 0.010419 ('hub', (6, 4, 1, 0))
+15 gamma>=0.010685 ('hub', (6, 3, 0, 1)) | deg-respecting 0.010685 ('hub', (6, 3, 0, 1)) | tail beats min from j=14 ok=True | 2nd 0.010685 ('hub', (6, 4, 1, 0))
+16 gamma>=0.010921 ('hub', (6, 3, 0, 1)) | deg-respecting 0.010921 ('hub', (6, 3, 0, 1)) | tail beats min from j=14 ok=True | 2nd 0.010921 ('hub', (6, 4, 1, 0))
+17 gamma>=0.011132 ('hub', (6, 3, 0, 1)) | deg-respecting 0.011132 ('hub', (6, 3, 0, 1)) | tail beats min from j=14 ok=True | 2nd 0.011132 ('hub', (6, 4, 1, 0))
+18 gamma>=0.011321 ('hub', (6, 3, 0, 1)) | deg-respecting 0.011321 ('hub', (6, 3, 0, 1)) | tail beats min from j=14 ok=True | 2nd 0.011321 ('hub', (6, 4, 1, 0))
+19 gamma>=0.011492 ('hub', (6, 3, 0, 1)) | deg-respecting 0.011492 ('hub', (6, 3, 0, 1)) | tail beats min from j=14 ok=True | 2nd 0.011492 ('hub', (6, 4, 1, 0))
+20 gamma>=0.011647 ('hub', (6, 3, 0, 1)) | deg-respecting 0.011647 ('hub', (6, 3, 0, 1)) | tail beats min from j=14 ok=True | 2nd 0.011647 ('hub', (6, 4, 1, 0))
+21 gamma>=0.011789 ('hub', (6, 3, 0, 1)) | deg-respecting 0.011789 ('hub', (6, 3, 0, 1)) | tail beats min from j=14 ok=True | 2nd 0.011789 ('hub', (6, 4, 1, 0))
+22 gamma>=0.011918 ('hub', (6, 3, 0, 1)) | deg-respecting 0.011918 ('hub', (6, 3, 0, 1)) | tail beats min from j=14 ok=True | 2nd 0.011918 ('hub', (6, 4, 1, 0))
+== python3 ind_psi.py
+2 Psi<=0.2998814
+3 Psi<=0.2712587
+4 Psi<=0.2657843
+5 Psi<=0.2603098
+6 Psi<=0.2548369
+7 Psi<=0.2477145
+8 Psi<=0.2427587
+9 Psi<=0.2387278
+10 Psi<=0.2354292
+11 Psi<=0.2326798
+12 Psi<=0.2303544
+13 Psi<=0.2283698
+14 Psi<=0.2266405
+15 Psi<=0.2251328
+16 Psi<=0.2238028
+17 Psi<=0.2226268
+18 Psi<=0.2215702
+19 Psi<=0.2206135
+20 Psi<=0.2197600
+21 Psi<=0.2189775
+22 Psi<=0.2182575
+23 Psi<=0.2176060
+== python3 ind_spider.py
+done (0.14680065667906833, (5, 4, 1, 8), '23253646069190820200234759613/5044031582654955520') (0.12084776694206041, (0, 4, 8, 22), '382775221477105227363885657306863783515123741230971050877900355713742854996405827479/22835963083295358096932575511191922182123945984000000000')
+== python3 ind_root.py 2 4
+2 gamma>=0.039104 paper n0=101 Vmax=0.26078 margin(n>=108)=4.94e-03 #bad=92 | deg n0=101 #bad=92
+3 gamma>=0.039104 paper n0=7 Vmax=0.23215 margin(n>=108)=3.36e-02 #bad=0 | deg n0=7 #bad=0
+4 gamma>=0.026563 paper n0=59 Vmax=0.23922 margin(n>=108)=2.65e-02 #bad=26 | deg n0=59 #bad=26
+== python3 ind_root.py 5 15
+5 gamma>=0.015082 paper n0=77 Vmax=0.24523 margin(n>=108)=2.05e-02 #bad=55 | deg n0=77 #bad=55
+6 gamma>=0.008501 paper n0=77 Vmax=0.24634 margin(n>=108)=1.94e-02 #bad=56 | deg n0=77 #bad=56
+7 gamma>=0.006730 paper n0=97 Vmax=0.24029 margin(n>=108)=6.24e-03 #bad=74 | deg n0=97 #bad=74
+8 gamma>=0.006839 paper n0=101 Vmax=0.23306 margin(n>=108)=2.44e-03 #bad=76 | deg n0=101 #bad=76
+9 gamma>=0.007662 paper n0=106 Vmax=0.22505 margin(n>=108)=1.17e-03 #bad=68 | deg n0=106 #bad=68
+10 gamma>=0.008336 paper n0=101 Vmax=0.21716 margin(n>=108)=1.47e-03 #bad=52 | deg n0=101 #bad=52
+11 gamma>=0.008895 paper n0=90 Vmax=0.20934 margin(n>=108)=2.98e-03 #bad=12 | deg n0=90 #bad=12
+12 gamma>=0.009367 paper n0=7 Vmax=0.20159 margin(n>=108)=5.41e-03 #bad=0 | deg n0=7 #bad=0
+13 gamma>=0.009768 paper n0=7 Vmax=0.19557 margin(n>=108)=6.91e-03 #bad=0 | deg n0=7 #bad=0
+14 gamma>=0.010116 paper n0=7 Vmax=0.19196 margin(n>=108)=6.71e-03 #bad=0 | deg n0=7 #bad=0
+15 gamma>=0.010419 paper n0=7 Vmax=0.19053 margin(n>=108)=6.40e-03 #bad=0 | deg n0=7 #bad=0
+== python3 ind_root.py 16 23
+16 gamma>=0.010685 paper n0=7 Vmax=0.19023 margin(n>=108)=6.84e-03 #bad=0 | deg n0=7 #bad=0
+17 gamma>=0.010921 paper n0=7 Vmax=0.18998 margin(n>=108)=7.37e-03 #bad=0 | deg n0=7 #bad=0
+18 gamma>=0.011132 paper n0=7 Vmax=0.18976 margin(n>=108)=7.66e-03 #bad=0 | deg n0=7 #bad=0
+19 gamma>=0.011321 paper n0=7 Vmax=0.18957 margin(n>=108)=7.91e-03 #bad=0 | deg n0=7 #bad=0
+20 gamma>=0.011492 paper n0=7 Vmax=0.18942 margin(n>=108)=8.25e-03 #bad=0 | deg n0=7 #bad=0
+21 gamma>=0.011647 paper n0=7 Vmax=0.18928 margin(n>=108)=8.56e-03 #bad=0 | deg n0=7 #bad=0
+22 gamma>=0.011789 paper n0=7 Vmax=0.18915 margin(n>=108)=8.84e-03 #bad=0 | deg n0=7 #bad=0
+23 gamma>=0.011918 paper n0=7 Vmax=0.18905 margin(n>=108)=8.78e-03 #bad=0 | deg n0=7 #bad=0

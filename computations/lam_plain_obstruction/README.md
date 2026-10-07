@@ -32,3 +32,5 @@ near `lambda = 3.966`, `mu(79/20) in [1.740, 1.741] e-7`).
 ## Dependencies
 
 Python 3.9+, `mpmath`.
+
+A second cover in ball arithmetic (19,776 cells; it checks the conclusion of the theorem, not the ten pairs) is in `second_implementation/`.

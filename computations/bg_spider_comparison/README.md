@@ -63,3 +63,4 @@ PASS (2026-10-04): the `n0` column equals n-bar(k) of table `tab:bg-rate` for ev
 (the paper rounds down in the last digit, e.g. 0.0150816 -> 0.015081). The rates `eta` are those certified
 by `../bg_rate/certify.py`.
 
+A second program (ball arithmetic, 200 bits) for the rate gaps, Psi_k and the size-root bound is in `second_implementation/`.
