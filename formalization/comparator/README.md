@@ -29,10 +29,16 @@ lake env comparator comparator/bg.comparator.json
 
 ## Result
 
-On 27 September 2026 the check passed at commit `295d0ac` (the Lean sources have not changed since):
-Comparator reported "Nanoda kernel accepts the solution", "Lean default kernel accepts the solution" and
-"Your solution is okay!". The run took 5.1 hours and peaked at 63 GB of memory on an Apple-silicon Mac,
-with the pass-through shim described below in place of the landrun sandbox. It has not yet been run in CI.
+On 8 October 2026 the check passed at commit `a77678d` (the Lean sources of this repository after the
+spider-table checks were split into small per-n kernel declarations): Comparator reported "Nanoda kernel
+accepts the solution", "Lean default kernel accepts the solution" and "Your solution is okay!". The run took
+2.7 hours (9842 s) and peaked at 56 GB of memory on an Apple-silicon Mac (no swapping), with the pass-through
+shim described below in place of the landrun sandbox. It has not yet been run in CI.
+
+An earlier run passed in the same way on 27 September 2026 at commit `295d0ac` (5.1 hours, 63 GB peak),
+whose `R3Cert` sources are those of releases v1.2.0 through v1.4.2. If the Lean sources change again, these
+results refer to the proof terms of the commits named here; Lean's kernel checks every later commit in the
+ordinary build (`./build.sh`, and `AxiomGuard.lean` for the axioms).
 
 ## The sandbox
 
