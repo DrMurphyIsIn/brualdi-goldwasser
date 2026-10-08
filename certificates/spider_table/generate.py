@@ -4,7 +4,7 @@ Pipeline (every step exact):
   1. bg_spider_opt.py search 4 491   -- exhaustive exact maximization over the spider family;
   2. bg_spider_table_sweep.py 491     -- canonical balanced form of each maximizer + the exact sweep
                                          (every balanced configuration and every <=2-child one);
-  3. gen_spider_table_lean.py         -- the Lean data, 89 kernel-checked chunks, and the assembly.
+  3. gen_spider_table_lean.py         -- the Lean data, 46 kernel-checked chunk modules (small per-n declarations), and the assembly.
 Usage: python3 generate.py [--freeze]
 """
 import sys

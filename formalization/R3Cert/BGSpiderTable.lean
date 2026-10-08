@@ -6,8 +6,10 @@
   size s+1).  Its value has an exact integer closed form (`F_canon_eq`).  `checkBal n` compares every
   canonical configuration on n vertices, and `checkSmall n` every configuration with <= 2 children,
   against the table maximizer `tab n`, by cross-multiplied natural-number inequalities.  The checks are
-  evaluated by the kernel (`decide +kernel`) in the generated chunk files BGSpiderTableChunk*.lean.
-  This file proves the soundness lemmas: `spider_opt_of_check`.
+  evaluated by the kernel (`decide +kernel`) in the generated chunk files BGSpiderTableChunk*.lean,
+  split into small declarations (`balRow` blocks, `checkSmallFast`) to bound kernel memory.
+  This file proves the soundness lemmas: `spider_opt_of_check`, `checkBal_eq_balRow`,
+  `checkSmall_of_fast`.
   Kernel-checked, no `sorry`.
 -/
 import Mathlib
@@ -321,6 +323,77 @@ theorem spider_opt_of_check (n : ℕ) (hn : 2 ≤ n) (t : List Child) (T : ℕ �
   · have hne : x ≠ [] := by
       intro h; rw [h] at hx; simp [nv] at hx; omega
     exact small_le n T hT hcs x hx (by omega) hne
+
+/-! ### Kernel-cheap pieces of the per-`n` check
+
+`checkBal n T` and `checkSmall n T` are evaluated by the kernel once per `n` (generated files
+`BGSpiderTableChunk_*.lean`).  Checked in one declaration, they cost the kernel about 3-4 GB each at
+`n = 491` (its reduction cache grows with the ~n²/4 balanced and ~(n+2)² small cases).  The pieces below
+split the work into small declarations, and the lemmas show the pieces imply the original checks, so
+`checkN` and everything downstream is unchanged.
+
+* `balRow n T C` is the `C`-th row of `checkBal`; rows are checked in blocks `List.range' lo len`.
+* `checkSmallFast n T` replaces the double loop of `checkSmall` over all `(n+2)²` child pairs by a loop
+  over the first child `c` only: the second child must cost `n - 1 - c.cost`, so it is a cherry or the
+  single arm `Child.arm ((n - 1 - c.cost - 1) / 2)` (`partners`).  Linear in `n`. -/
+
+/-- Row `C` of `checkBal`: every balanced configuration with `C` cherries. -/
+def balRow (n : ℕ) (T : ℕ × ℕ) (C : ℕ) : Bool :=
+  (List.range (n - 1 - 2 * C + 1)).all fun m =>
+    if 3 ≤ C + m ∧ (n - 1 - 2 * C - m) % 2 = 0 then
+      if m = 0 then leND (fnum C 0 0 0, fden C 0 0 0) T
+      else
+        let p := balOf n C m
+        leND (fnum C p.1 p.2.1 p.2.2, fden C p.1 p.2.1 p.2.2) T
+    else true
+
+theorem checkBal_eq_balRow (n : ℕ) (T : ℕ × ℕ) :
+    checkBal n T = (List.range' 0 ((n - 1) / 2 + 1)).all (balRow n T) := by
+  rw [← List.range_eq_range']; rfl
+
+/-- Two adjacent blocks glue.  The index arithmetic is passed as equations (`by decide`), so the
+    elaborator never has to unfold `List.range'` to match numerals. -/
+theorem all_range'_append {f : ℕ → Bool} {s m k t len : ℕ} (ht : s + m = t) (hl : m + k = len)
+    (h1 : (List.range' s m).all f = true) (h2 : (List.range' t k).all f = true) :
+    (List.range' s len).all f = true := by
+  subst ht hl
+  rw [← List.range'_append_1, List.all_append, h1, h2]; rfl
+
+/-- Extend a block by one point. -/
+theorem all_range'_snoc {f : ℕ → Bool} {s m t len : ℕ} (ht : s + m = t) (hl : m + 1 = len)
+    (h1 : (List.range' s m).all f = true) (h2 : f t = true) : (List.range' s len).all f = true :=
+  all_range'_append ht hl h1 (by simp [List.range'_one, h2])
+
+/-- A one-point block. -/
+theorem all_range'_one {f : ℕ → Bool} {s : ℕ} (h : f s = true) : (List.range' s 1).all f = true := by
+  simp [List.range'_one, h]
+
+/-- The children that cost exactly `k` lie in this list. -/
+def partners (k : ℕ) : List Child := [Child.cherry, Child.arm ((k - 1) / 2)]
+
+theorem mem_partners {d : Child} {k : ℕ} (h : d.cost = k) : d ∈ partners k := by
+  cases d with
+  | cherry => simp [partners]
+  | arm j =>
+    simp only [Child.cost] at h
+    simp only [partners, List.mem_cons, Child.arm.injEq, reduceCtorEq, false_or]
+    left; omega
+
+/-- `checkSmall` with the inner loop restricted to `partners`; linear in `n`. -/
+def checkSmallFast (n : ℕ) (T : ℕ × ℕ) : Bool :=
+  (kids n).all (fun c => if c.cost = n - 1 then leND (f1 c) T else true) &&
+  (kids n).all fun c => (partners (n - 1 - c.cost)).all fun d =>
+    if c.cost + d.cost = n - 1 then leND (f2 c d) T else true
+
+theorem checkSmall_of_fast (n : ℕ) (T : ℕ × ℕ) (h : checkSmallFast n T = true) :
+    checkSmall n T = true := by
+  simp only [checkSmallFast, checkSmall, Bool.and_eq_true, List.all_eq_true] at h ⊢
+  obtain ⟨h1, h2⟩ := h
+  refine ⟨h1, fun c hc d _ => ?_⟩
+  by_cases hcd : c.cost + d.cost = n - 1
+  · have := h2 c hc d (mem_partners (by omega))
+    rwa [if_pos hcd] at this ⊢
+  · rw [if_neg hcd]
 
 end BGSpiderTable
 end R3Cert
