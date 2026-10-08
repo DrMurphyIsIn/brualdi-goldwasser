@@ -5,7 +5,7 @@
       "name": "Murphy, Peter W."
     }
   ],
-  "description": "Lean 4 formalization, certificate generators and paper answering a question of Brualdi and Goldwasser (1984): for every n >= 4 the tree maximizing per L(T)/prod deg(v) is an explicit spider of cherry arms, and the maximum grows exactly like ((621/64)^(1/11))^n. Kernel-checked in Lean 4 with Mathlib; standard axioms only. The maximum and the maximizer were independently re-checked by a second kernel (nanoda, via the Lean FRO's Comparator). v1.3.0 adds: the maximizer is unique up to isomorphism for every n >= 4 except n = 21, where exactly T(3,3,3) and S(21,10) are maximal (formalization/BGUnique, checked by Lean's kernel; Comparator confirms the challenge statement); and, for the weighted family pi_lambda, part (B) of the uniform theorem with its equality clause for every 0 < lambda < 1+sqrt(5) (formalization/cherry). v1.4.1 completes computations/ with the second and third implementations and the negative controls cited in the paper's Appendix C. v1.4.0 added computations/: the programs behind every computer-verified step of the accompanying paper and its supplement, each with a README and expected output, second implementations where available, and negative controls. Not yet refereed. Licensing: mathematics, Lean code and certificates Apache-2.0; paper CC-BY-4.0; the vendored Telperion engine in telperion/ is under the Business Source License 1.1 (free for research, teaching and peer review). See LICENSING.md.",
+  "description": "Lean 4 formalization, certificate generators and paper answering a question of Brualdi and Goldwasser (1984): for every n >= 4 the tree maximizing per L(T)/prod deg(v) is an explicit spider of cherry arms, and the maximum grows exactly like ((621/64)^(1/11))^n. Kernel-checked in Lean 4 with Mathlib; standard axioms only. The maximum and the maximizer were independently re-checked by a second kernel (nanoda, via the Lean FRO's Comparator). v1.3.0 adds: the maximizer is unique up to isomorphism for every n >= 4 except n = 21, where exactly T(3,3,3) and S(21,10) are maximal (formalization/BGUnique, checked by Lean's kernel; Comparator confirms the challenge statement); and, for the weighted family pi_lambda, part (B) of the uniform theorem with its equality clause for every 0 < lambda < 1+sqrt(5) (formalization/cherry). v1.4.2 archives every remaining check cited in the paper's Appendix C (ball-arithmetic breakpoints, all-k matching runs and brute force, rooted-tree and exchange tests, spider sweep, further controls). v1.4.1 completed computations/ with the second and third implementations and the negative controls cited in the paper's Appendix C. v1.4.0 added computations/: the programs behind every computer-verified step of the accompanying paper and its supplement, each with a README and expected output, second implementations where available, and negative controls. Not yet refereed. Licensing: mathematics, Lean code and certificates Apache-2.0; paper CC-BY-4.0; the vendored Telperion engine in telperion/ is under the Business Source License 1.1 (free for research, teaching and peer review). See LICENSING.md.",
   "license": "Apache-2.0",
   "upload_type": "software",
   "keywords": [
@@ -16,7 +16,7 @@
     "Lean 4",
     "formal verification"
   ],
-  "version": "v1.4.1",
+  "version": "v1.4.2",
   "related_identifiers": [
     {
       "identifier": "https://github.com/DrMurphyIsIn/brualdi-goldwasser",
