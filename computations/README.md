@@ -1,7 +1,7 @@
 # computations/
 
-The programs behind the computer-verified lemmas of the paper "Convex message potentials and the
-Brualdi-Goldwasser problem" and its supplement. Each subfolder has the program(s) for one paper item (or one
+The programs behind the computer-verified lemmas of the paper "The maximum Laplacian ratio of a tree" and
+its supplement. Each subfolder has the program(s) for one paper item (or one
 set of checks), a README.md (what is checked, which paper item, how to run it, expected output, runtime
 and memory) and the output of a reference run (`expected_output*.txt`).
 
@@ -9,8 +9,10 @@ Role: **proof** = part of a proof in the main paper; **supp-proof** = part of a 
 confirmation route); **confirm** = a numerical confirmation that no proof uses.
 
 Re-run status: each program was re-run from this directory, single-threaded
-(`OMP_NUM_THREADS=OPENBLAS_NUM_THREADS=MKL_NUM_THREADS=VECLIB_MAXIMUM_THREADS=1`), on 2026-10-04, and its
-output compared with the numbers stated in the paper. See each README for details.
+(`OMP_NUM_THREADS=OPENBLAS_NUM_THREADS=MKL_NUM_THREADS=VECLIB_MAXIMUM_THREADS=1`), and its output compared with
+the numbers stated in the paper: the folders of the two tables below on 2026-10-04 (the recovered checks of the
+additional table on 2026-10-06), and the checks added in October 2026 (last table) on 2026-10-07. See each
+README for details. Paper items are cited by label and, for the computations, as "Appendix C, item Ck".
 
 ## Main paper
 
@@ -73,7 +75,7 @@ are re-checked by `recheck_recorded.py` in under a minute.
 
 Apache License 2.0, like the rest of the mathematics in this repository (see `LICENSE` and `LICENSING.md`).
 
-## Additional checks (inputs of hand proofs and prefilter re-checks)
+## Additional checks (inputs of the proofs written out in the text, and prefilter re-checks)
 
 Several of these read files of existing folders through `../<folder>/`, so run them from inside `computations/`.
 
@@ -86,3 +88,20 @@ Several of these read files of existing folders through `../<folder>/`, so run t
 | Re-check of the floating-point prefilters of the two hull searches | `thm:bg-small`, `lem:nu-small-cv` | [hull_prefilter_check/](hull_prefilter_check/) | proof | PASS |
 | Constants of the anchor at 1 + sqrt 5 | `prop:lam-anchor` | [lam_anchor_enclosures/](lam_anchor_enclosures/) | proof | PASS |
 | Exact theta, rule enumeration and coverage, bounded degree | `lem:deg-cert34`, `lem:deg-cert567` | [deg_theta_exact/](deg_theta_exact/) | proof | PASS |
+
+## Checks added in October 2026
+
+These archive checks that the paper cites and that had been run earlier but not kept, or replace them; each
+README says whether the program was written in October 2026 or earlier. Run them from inside their folders.
+
+| paper item | label | folder | role | re-run |
+|---|---|---|---|---|
+| Lemma bg-constants (a)-(d) and the junction table, ball arithmetic (item C1) | `lem:bg-constants` | [bg_constants/second_check/](bg_constants/second_check/) | second check | PASS |
+| Telescoping identity and zero-slack branches on all rooted trees with <= 17 vertices (item C3) | `eq:bg-tele`, `prop:bg-zero` | [bg_rate/rooted_trees/](bg_rate/rooted_trees/) | confirm | PASS |
+| Part (ii) of the comparison lemma, from the printed table (item C5) | `lem:bg-compare` | [bg_spider_comparison/part_ii_check/](bg_spider_comparison/part_ii_check/) | second check | PASS |
+| The exchanges (M1)-(M7) on all trees with n <= 18 (item C7) | `lem:bg-moves` | [bg_M7_table/exchange_test/](bg_M7_table/exchange_test/) | confirm | PASS |
+| Direct sweep over spiders, 4 <= n <= 491 (item C8) | `thm:bg-small` | [bg_hull_dp/spider_sweep/](bg_hull_dp/spider_sweep/) | confirm | PASS |
+| Breakpoints lambda_3..lambda_30, ball arithmetic (item C11) | `lem:lam-bp` | [lam_breakpoints/ball_check/](lam_breakpoints/ball_check/) | second check | PASS |
+| Negative controls of the row check of part (B) (item C14) | `lem:lam-polycert` | [lam_partB_rows/negative_controls/](lam_partB_rows/negative_controls/) (`row_checker_controls.py`) | negative control | PASS |
+| Matching number: all k, n <= 120, and the second implementation for all k, n <= 60 (item C16) | `lem:nu-small-cv` | [nu_hull_search/all_k/](nu_hull_search/all_k/) | second check | PASS |
+| Matching number: brute force over all trees with n <= 20 (item C16) | `lem:nu-small-cv` | [nu_hull_search/brute_force/](nu_hull_search/brute_force/) | second check | PASS |

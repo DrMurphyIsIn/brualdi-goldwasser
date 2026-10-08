@@ -2,7 +2,7 @@
 
 **Paper item (proof):** Lemma `lem:nu-stab-cv` (computer-verified), used in the proof of
 `thm:nu-structure`(a), which gives the table of thresholds n_0(k), 2 <= k <= 10
-(n_0 = 4, 24, 32, 60, 99, 149, 211, 289, 380). See also Remark `rem:nu-dp`.
+(n_0 = 4, 24, 32, 60, 99, 149, 211, 289, 380). See also Appendix C, item C15.
 
 ## What is checked
 

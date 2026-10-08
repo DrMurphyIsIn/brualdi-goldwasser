@@ -1,7 +1,7 @@
 # lam_partB_rows: the low-degree certificates of part (B)
 
 **Paper item.** Lemma `lem:lam-polycert` (Appendix B, "Low-degree certificates", computer-verified),
-with Remark `rem:lam-polycert` (programs and independent check). **Role: proof.**
+with Appendix C, item C14 (programs and independent check). **Role: proof.**
 Part (B) of the uniform-ceiling theorem reduces, by hand, to the scalar conditions (U1)-(U8) and (S1)-(S6),
 and those not settled in the text to the certificates P1-P10. This folder certifies the rows of
 part (a) of the lemma and the Bernstein coefficients of part (b).
@@ -19,12 +19,13 @@ box that fails the 30% rule.
 |---|---|---|---|---|
 | P1 (S2) | `C1 (S2)` | [0, 0.6181] | 10 | 0.0134 |
 | P3 (S4) | `C3 (S4)` | [0, 0.6181] | 13 | 0.065 |
-| P7 (S6), lambda in [3/20, 0.954] | `C7 (S6), W*` | [3/43, 0.3229] | 17 | 0.000547 |
+| P7 (S6), lambda in [3/20, 0.9537] | `C7 (S6), W*` | [3/43, 0.3229] | 17 | 0.000547 |
 | P8 (S6), lambda >= 2 | `C8 (S6)` | [1/2, 0.6181] | 1 | 0.062 |
 | P10 (U1)...(U8b) | `C10 T1` ... `C10 T8b` | [0, 3/43] | 22 | 0.0088 (U4) |
 | total | | | 63 | 0.000547 |
 
-The program names T1, T2, T3a, T4, ..., T8, T8b correspond to the paper's (U1), (U2), (U3a), (U4), ..., (U8),
+(t = 0.3229 corresponds to lambda = 2t/(1-t) = 0.95377...; the program's label `lam in [3/20, 0.954]` is a
+rounding of this.) The program names T1, T2, T3a, T4, ..., T8, T8b correspond to the paper's (U1), (U2), (U3a), (U4), ..., (U8),
 (U8b). The witness called W_1 in the paper is printed as `W*` (older notation). The program also prints a 24-row
 table `C2 (S3)`: that is the alternative table for P2 mentioned in the remark; it is **not used** (the proof uses
 the polynomial of (b) instead).
@@ -69,4 +70,6 @@ Python 3.9+, mpmath (tested 1.3.0), sympy (tested 1.14.0); python-flint (tested 
 The rows are also proved in Lean 4 (kernel-checked exact-rational interval checks over proved monotone atom
 enclosures), so the correctness of these scripts is not needed for the formal proof.
 
-A second implementation of the 63 rows and the exact checks is in `second_implementation/`; negative controls are in `negative_controls/`.
+A second implementation of the 63 rows and the exact checks is in `second_implementation/`. Negative controls of the
+row check (the code of `lowdeg_tables.py` run on 39 deliberately wrong inputs, added in October 2026) and a separate
+floating-point sensitivity test are in `negative_controls/`.

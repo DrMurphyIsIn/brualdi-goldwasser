@@ -1,6 +1,6 @@
 # lam_breakpoints -- breakpoint enclosures lambda_3, ..., lambda_6 (and up to lambda_30)
 
-**Paper item:** Lemma `lem:lam-bp` (computer-verified) and Remark `rem:lam-bp`, in the section on the family
+**Paper item:** Lemma `lem:lam-bp` (computer-verified) and Appendix C, item C11, in the section on the family
 pi_lambda (the arm ladder). Role: part of a proof.
 
 ## What is checked
@@ -37,3 +37,9 @@ See `expected_output.txt`. `lemma_signs.py` prints `OK` for all eight endpoint s
 ## Dependencies
 
 Python 3.9+, `mpmath` (1.3.0 tested), `python-flint` (0.6.0 tested).
+
+## Second enclosure in ball arithmetic (added October 2026)
+
+`ball_check/ball_breakpoints.py` encloses lambda_3, ..., lambda_30 a second time, by bisection with exact
+rational endpoints and Arb sign tests (256 bits), checks that its brackets meet those of `breakpoints.py`, and
+that for j = 3, ..., 6 they lie inside the intervals of `lem:lam-bp`; see its README.

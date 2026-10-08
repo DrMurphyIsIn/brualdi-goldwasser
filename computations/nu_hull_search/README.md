@@ -1,6 +1,6 @@
 # nu_hull_search -- matching number: exhaustive hull search, k <= 8, n <= 215
 
-**Paper item (proof):** Lemma `lem:nu-small-cv` (computer-verified), with Remark `rem:nu-dp`. It gives
+**Paper item (proof):** Lemma `lem:nu-small-cv` (computer-verified), with Appendix C, item C16. It gives
 `thm:nu-structure`(b) for 3k-2 <= n <= n_0(k).
 
 ## What is checked
@@ -14,9 +14,12 @@ matching number k equals max_a F_k(n,a), the value of the best balanced connecto
 P = prod Z_c and Q = sum_c W_c prod_{c' != c} Z_{c'}; at an unplanted root with c children, pi = P + Q/c.
 These maps are multilinear with nonnegative coefficients, so within each class (size, matching number,
 whether the root is missed by some maximum matching) only the upper-right convex hull of the attainable
-(Z, W) is needed; points on hull edges are kept, so ties survive. A conservative floating-point filter
-(relative margin 1e-9) discards only points strictly inside the hull; the survivors are processed in
-exact rational arithmetic, and every reported maximizer is re-evaluated exactly from its tree.
+(Z, W) is needed; points on hull edges are kept, so ties survive. A floating-point filter
+(tolerance 1e-9) proposes points to discard and the survivors are processed in exact rational arithmetic;
+every reported maximizer is re-evaluated exactly from its tree. The filter's own tests use absolute
+tolerances and do not by themselves prove that only points strictly inside the hull are discarded (the
+docstring of `hulldp2.py` calls the filter conservative); every discard of the run below is certified
+separately by `../hull_prefilter_check/recheck_nu.py`.
 Classes with matching number above KMAX = 8 are discarded (the matching number is monotone under
 taking subtrees).
 
@@ -74,3 +77,11 @@ Python 3.9+, numpy (float prefilter in `hulldp2.py`). Tested with Python 3.9.6, 
 PASS: `hulldp2.py 215 8` re-run here; its output is byte-identical to the original run, and
 `check_lemma.py` confirms the lemma. The independent implementation was not re-run here (several hours);
 its stored output agrees with the re-run on all 1656 values.
+
+## Runs for all k, and brute force (added October 2026)
+
+`all_k/` holds the runs for all k quoted in the paper: `hulldp2.py 120` (all k, n <= 120) and the independent
+implementation `independent_dp.py 60` (all k, n <= 60), with a comparison of all values. `brute_force/` checks
+every M(n,k) and the number of extremal trees for 4 <= n <= 20 by enumerating all 1,346,021 trees. See their
+READMEs.
+

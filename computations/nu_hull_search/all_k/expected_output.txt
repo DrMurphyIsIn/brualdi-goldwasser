@@ -1,0 +1,9 @@
+dp120_allk.txt: 3600 pairs (n,k), n <= 120, k <= 60
+independent_dp_60.txt: 900 pairs
+values vs independent_dp_60.txt (all k, n<=60): 900 common pairs, mismatches 0 []
+values vs ../dpk215_8.txt (k<=8): 896 common pairs, mismatches 0 []
+values vs ../independent_dp_215_8.txt (k<=8): 896 common pairs, mismatches 0 []
+every (n,k), 2<=n<=60, 1<=k<=n/2, present in both all-k runs: True
+numbers of extremal trees vs ../dpk215_8.txt: 896 pairs, differences 0
+pairs with more than one extremal tree in dp120_allk.txt: 3 [(21, 10), (49, 22), (65, 16)]
+RESULT: PASS

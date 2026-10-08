@@ -1,0 +1,22 @@
+n=1: 1 rooted trees, cumulative 1, 1s
+n=2: 1 rooted trees, cumulative 2, 1s
+n=3: 2 rooted trees, cumulative 4, 1s
+n=4: 4 rooted trees, cumulative 8, 1s
+n=5: 9 rooted trees, cumulative 17, 1s
+n=6: 20 rooted trees, cumulative 37, 1s
+n=7: 48 rooted trees, cumulative 85, 1s
+n=8: 115 rooted trees, cumulative 200, 1s
+n=9: 286 rooted trees, cumulative 486, 1s
+n=10: 719 rooted trees, cumulative 1205, 1s
+n=11: 1842 rooted trees, cumulative 3047, 1s
+n=12: 4766 rooted trees, cumulative 7813, 1s
+n=13: 12486 rooted trees, cumulative 20299, 1s
+n=14: 32973 rooted trees, cumulative 53272, 2s
+n=15: 87811 rooted trees, cumulative 141083, 5s
+n=16: 235381 rooted trees, cumulative 376464, 13s
+n=17: 634847 rooted trees, cumulative 1011311, 34s
+max |g-h-sum sigma| = 2.1094237467877974e-15
+zero-slack branches: [(), ((),), (((),), ((),), ((),), ((),), ((),))]
+min over non-atoms of delta - 0.01426*#minimal non-atoms = 0.0021404527899015115
+min delta over non-atoms: (0.01640045278990151, (((),), ((),), ((),), ((),), (((),), ((),), ((),))))
+rate: min g-eta|R|-H(x) by cap: {1: -1.093e-16, 2: -1.093e-16, 3: -1.093e-16, 4: -1.093e-16, 5: -4.441e-16, 6: -4.441e-16, 7: -4.441e-16, 8: -4.441e-16, 9: -4.441e-16, 10: -4.441e-16, 11: -4.441e-16, 12: -4.441e-16, 13: -4.441e-16, 14: -4.441e-16, 15: -4.441e-16, 16: -4.441e-16, 17: -4.441e-16, 18: -4.441e-16, 19: -4.441e-16, 20: -4.441e-16, 21: -4.441e-16, 22: -4.441e-16}

@@ -2,7 +2,7 @@
 
 **Paper item:** Theorem `thm:bg-small` (for 4 <= n <= 491, M_n is the value of the spider of the appendix
 table, every maximizer is a spider, and the maximizer is unique up to isomorphism except at n = 21); the third
-program of Remark `rem:bgx-programs` and of item C8 of the appendix on computations. Role: third implementation.
+program of item C8 of the appendix on computations (Appendix C). Role: third implementation.
 Because it has no floating-point step, it also independently reproduces the conclusions that the certification
 of the floating-point prefilter of `../dp.py` (`../../hull_prefilter_check/`) protects.
 

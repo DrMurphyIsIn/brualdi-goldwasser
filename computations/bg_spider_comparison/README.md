@@ -64,3 +64,9 @@ PASS (2026-10-04): the `n0` column equals n-bar(k) of table `tab:bg-rate` for ev
 by `../bg_rate/certify.py`.
 
 A second program (ball arithmetic, 200 bits) for the rate gaps, Psi_k and the size-root bound is in `second_implementation/`.
+
+## Second check of part (ii) (added October 2026)
+
+`part_ii_check/` checks part (ii) of `lem:bg-compare` a second time, in ball arithmetic, from the printed
+values Psi_k, eta_{k-1} of table `tab:bg-rate` and the exact M_n of `../bg_hull_dp/results_dp_491.txt`
+(smallest margin 3.13e-4, at k = 23, n = 317); see its README.

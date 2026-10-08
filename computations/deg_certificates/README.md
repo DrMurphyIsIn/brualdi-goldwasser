@@ -3,7 +3,7 @@
 **Paper items (proof):**
 - Lemma `lem:deg-cert34` (computer-verified; Delta = 3, 4), and
 - Lemma `lem:deg-cert567` (computer-verified; Delta = 5, 6, 7),
-with Remark `rem:deg-programs`. Together they give the upper bound in the theorem on the exact growth
+with Appendix C, item C17. Together they give the upper bound in the theorem on the exact growth
 rate of trees with maximum degree at most Delta, for 3 <= Delta <= 7.
 
 ## What is checked

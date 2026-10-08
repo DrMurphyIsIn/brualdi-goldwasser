@@ -46,5 +46,6 @@ pairs of the table in the proof of `thm:bg-bestspider`, and the margins 2.0e-5 (
 (n = 2319) of `rem:bgx-race`; `identities_check.py` prints `int compare True True True` for the three
 integer comparisons of `cor:bgx-limits` and liminf = 1.1234943...
 
-See also the public script `certificates/checks/bg_spider_opt.py` of this repository, which performs the
-direct exact sweep over balanced spiders mentioned in Remark `rem:bgx-programs`.
+The direct sweep over balanced spiders mentioned in Appendix C, item C8, is archived, with its output, in
+`../bg_hull_dp/spider_sweep/` (it was adapted in October 2026, as a single-process program, from the script
+`certificates/checks/bg_spider_opt.py` of this repository).
