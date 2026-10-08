@@ -236,8 +236,9 @@ Lean kernel checked. It ends with `all certificate families reproduce exactly`.
   challenge/solution pair for the Lean FRO's [Comparator](https://github.com/leanprover/comparator), which
   replays the proof in Lean's kernel and in [nanoda](https://github.com/ammkrn/nanoda_lib), an independent
   implementation in Rust. Its README has the steps. It is slow: expect several hours. **It has passed:** on
-  27 September 2026 both kernels accepted the proof of the Mathlib-vocabulary statement (5.1 hours, 63 GB peak
-  memory, run on macOS with the sandbox replaced by a pass-through shim).
+  8 October 2026, at commit `a77678d`, both kernels accepted the proof of the Mathlib-vocabulary statement
+  (2.7 hours, 56 GB peak memory, run on macOS with the sandbox replaced by a pass-through shim); an earlier run
+  at commit `295d0ac` (the Lean sources of releases v1.2.0 through v1.4.2) passed on 27 September 2026.
 - **The paper:** [`paper/README.md`](paper/README.md). **The project page:** [`site/README.md`](site/README.md).
 
 ### Troubleshooting

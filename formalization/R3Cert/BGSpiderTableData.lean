@@ -45,5 +45,18 @@ theorem checkN_of_all {lo len : ℕ} (h : (List.range' lo len).all checkN = true
   rw [List.all_eq_true] at h
   exact h n (List.mem_range'_1.mpr ⟨h1, h2⟩)
 
+/-- `checkN n` from its kernel-cheap pieces (`BGSpiderTableChunk_*`): the table value `T` as a literal,
+    the balanced rows `balRow n T C` for all `C`, and the linear small check `checkSmallFast`. -/
+theorem checkN_of_parts {n : ℕ} {T : ℕ × ℕ} (hT : tabV n = T)
+    (hrow : (Nat.beq (1 + 2 * (row n).1 + (row n).2.2.1 * (2 * (row n).2.1 + 1) +
+      (row n).2.2.2 * (2 * (row n).2.1 + 3)) n && Nat.blt 0 ((row n).1 + (row n).2.2.1 + (row n).2.2.2)) = true)
+    {K : ℕ} (hK : (n - 1) / 2 + 1 = K) (hb : (List.range' 0 K).all (balRow n T) = true)
+    (hs : checkSmallFast n T = true) : checkN n = true := by
+  subst hK
+  have h1 : checkBal n T = true := (checkBal_eq_balRow n T).trans hb
+  have h2 : checkSmall n T = true := checkSmall_of_fast n T hs
+  unfold checkN
+  rw [hT, hrow, h1, h2]; rfl
+
 end BGSpiderTable
 end R3Cert
