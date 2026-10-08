@@ -39,3 +39,8 @@ PASS: every enclosure and inequality of the lemma and every interval of the junc
 reproduced (2026-10-04, Python 3.9.6, mpmath 1.3.0, sympy 1.14.0).
 
 An independent implementation of the same constants is in `../bg_nonatom_gap/gapcheck.py`.
+
+## Second check (added October 2026)
+
+`second_check/constants_ball.py` checks all of (a)-(d) of `lem:bg-constants`, including the junction table,
+in Arb ball arithmetic from the definitions in the text; see its README.

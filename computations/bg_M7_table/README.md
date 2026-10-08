@@ -47,3 +47,8 @@ PASS (Python 3.9.6, sympy 1.14.0). All 15 rows, all factors and all corner value
 ## Dependencies
 
 Python 3.9 or later, `sympy`.
+
+## Test on explicit trees (added October 2026)
+
+`exchange_test/` archives a test, written in September 2026, of every exchange of `lem:bg-moves` on every tree
+with n <= 18 vertices at every admissible vertex (929,524 instances, no failure); see its README.

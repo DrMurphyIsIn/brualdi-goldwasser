@@ -1,0 +1,143 @@
+n 4 trees 2
+    M1 instances 1 min rel gain 0.25
+n 5 trees 3
+    M1 instances 3 min rel gain 0.12500000000000006
+n 6 trees 6
+    M1 instances 8 min rel gain 0.09615384615384628
+    M2 instances 1 min rel gain 0.15151515151515146
+n 7 trees 11
+    M1 instances 18 min rel gain 0.0833333333333335
+    M2 instances 3 min rel gain 0.11111111111111119
+    M3 instances 1 min rel gain 0.07999999999999992
+    M5 instances 2 min rel gain 0.02857142857142857
+    M7(i) instances 2 min rel gain 0.0869565217391306
+n 8 trees 23
+    M1 instances 41 min rel gain 0.0760869565217393
+    M2 instances 8 min rel gain 0.06172839506172839
+    M3 instances 8 min rel gain 0.02387640449438198
+    M4 (balance) instances 2 min rel gain 0.025862068965517054
+    M5 instances 5 min rel gain 0.01775147928994083
+    M7(i) instances 3 min rel gain 0.06611570247933897
+    M7(ii) instances 1 min rel gain 0.004132231404958796
+n 9 trees 47
+    M1 instances 93 min rel gain 0.07142857142857147
+    M2 instances 19 min rel gain 0.05050505050505049
+    M3 instances 27 min rel gain 0.01886792452830182
+    M4 (balance) instances 6 min rel gain 0.01315789473684206
+    M5 instances 10 min rel gain 0.014925373134328306
+    M7(i) instances 8 min rel gain 0.055555555555555504
+    M7(ii) instances 3 min rel gain 0.004132231404958796
+    M7(v) instances 2 min rel gain 0.11764705882352948
+n 10 trees 106
+    M1 instances 220 min rel gain 0.06818181818181837
+    M2 instances 48 min rel gain 0.038759689922480536
+    M3 instances 92 min rel gain 0.013613861386138685
+    M4 (balance) instances 16 min rel gain 0.01016260162601616
+    M5 instances 20 min rel gain 0.013623978201634877
+    M7(i) instances 19 min rel gain 0.04697986577181216
+    M7(ii) instances 7 min rel gain 0.004132231404958796
+    M7(iii) and (vi), two stalks instances 2 min rel gain 0.022668579626972798
+    M7(v) instances 3 min rel gain 0.08938547486033524
+    M7(vi), stalk and cherry instances 1 min rel gain 0.01117318435754186
+n 11 trees 235
+    M1 instances 525 min rel gain 0.06578947368421073
+    M2 instances 116 min rel gain 0.03355704697986572
+    M3 instances 267 min rel gain 0.012218045112781942
+    M4 (balance) instances 37 min rel gain 0.008823529411764706
+    M5 instances 41 min rel gain 0.01287553648068657
+    M7(i) instances 47 min rel gain 0.04492512479201331
+    M7(ii) instances 17 min rel gain 0.004132231404958796
+    M7(iii) and (vi), two stalks instances 4 min rel gain 0.022668579626972798
+    M7(iv) instances 1 min rel gain 0.07746478873239436
+    M7(v) instances 9 min rel gain 0.0827586206896551
+    M7(vi), stalk and cherry instances 5 min rel gain 0.008658008658008719
+n 12 trees 551
+    M1 instances 1292 min rel gain 0.06395348837209304
+    M2 instances 291 min rel gain 0.02824858757062138
+    M3 instances 783 min rel gain 0.010804916732751598
+    M4 (balance) instances 86 min rel gain 0.005944215820758927
+    M5 instances 91 min rel gain 0.012389380530973352
+    M7(i) instances 109 min rel gain 0.042147293700088836
+    M7(ii) instances 38 min rel gain 0.004132231404958796
+    M7(iii) and (vi), two stalks instances 11 min rel gain 0.021338506304558795
+    M7(iv) instances 2 min rel gain 0.06482320942883041
+    M7(v) instances 19 min rel gain 0.07980049875311736
+    M7(vi), stalk and cherry instances 10 min rel gain 0.008053691275167498
+n 13 trees 1301
+    M1 instances 3230 min rel gain 0.06250000000000006
+    M2 instances 729 min rel gain 0.025252525252525297
+    M3 instances 2195 min rel gain 0.010150812064965152
+    M4 (balance) instances 196 min rel gain 0.00284900284900293
+    M5 instances 209 min rel gain 0.012048192771084144
+    M7(i) instances 259 min rel gain 0.04074889867841413
+    M7(ii) instances 88 min rel gain 0.004132231404958796
+    M7(iii) and (vi), two stalks instances 30 min rel gain 0.021338506304558795
+    M7(iv) instances 8 min rel gain 0.06179775280898895
+    M7(v) instances 46 min rel gain 0.07812500000000014
+    M7(vi), stalk and cherry instances 21 min rel gain 0.007782101167315232
+n 14 trees 3159
+    M1 instances 8232 min rel gain 0.06132075471698122
+    M2 instances 1867 min rel gain 0.022222222222222275
+    M3 instances 6195 min rel gain 0.009492999575731765
+    M4 (balance) instances 454 min rel gain 0.002100608070757413
+    M5 instances 502 min rel gain 0.011795543905635648
+    M6 instances 1 min rel gain 0.02588235294117631
+    M7(i) instances 631 min rel gain 0.040119760479041915
+    M7(ii) instances 208 min rel gain 0.004132231404958796
+    M7(iii) and (vi), two stalks instances 72 min rel gain 0.01726844583987454
+    M7(iv) instances 18 min rel gain 0.057998801677651056
+    M7(v) instances 107 min rel gain 0.07704654895666124
+    M7(vi), stalk and cherry instances 46 min rel gain 0.004708097928436911
+n 15 trees 7741
+    M1 instances 21233 min rel gain 0.060344827586206976
+    M2 instances 4814 min rel gain 0.020275750202757563
+    M3 instances 17226 min rel gain 0.009113712374581705
+    M4 (balance) instances 1067 min rel gain 0.001763668430335024
+    M5 instances 1234 min rel gain 0.011600928074245823
+    M6 instances 3 min rel gain 0.01229773462783165
+    M7(i) instances 1563 min rel gain 0.039012345679012614
+    M7(ii) instances 505 min rel gain 0.004132231404958796
+    M7(iii) and (vi), two stalks instances 165 min rel gain 0.01726844583987454
+    M7(iv) instances 45 min rel gain 0.05591078066914497
+    M7(v) instances 257 min rel gain 0.07629427792915545
+    M7(vi), stalk and cherry instances 109 min rel gain 0.004708097928436911
+n 16 trees 19320
+    M1 instances 55506 min rel gain 0.0595238095238096
+    M2 instances 12597 min rel gain 0.01831501831501833
+    M3 instances 48083 min rel gain 0.00873319272343812
+    M4 (balance) instances 2570 min rel gain 0.0015720304345092835
+    M5 instances 3108 min rel gain 0.011446409989594114
+    M6 instances 8 min rel gain 0.00876656472986739
+    M7(i) instances 3930 min rel gain 0.03849597135183527
+    M7(ii) instances 1248 min rel gain 0.004132231404958796
+    M7(iii) and (vi), two stalks instances 395 min rel gain 0.013095938787522132
+    M7(iv) instances 107 min rel gain 0.0549717057396928
+    M7(v) instances 623 min rel gain 0.07573964497041434
+    M7(vi), stalk and cherry instances 249 min rel gain 0.004708097928436911
+n 17 trees 48629
+    M1 instances 146407 min rel gain 0.05882352941176477
+    M2 instances 33198 min rel gain 0.01694915254237295
+    M3 instances 133714 min rel gain 0.008485639686683939
+    M4 (balance) instances 6321 min rel gain 0.001059322033898305
+    M5 instances 7941 min rel gain 0.011320754716981159
+    M6 instances 19 min rel gain 0.007142857142857113
+    M7(i) instances 10033 min rel gain 0.03810775295663621
+    M7(ii) instances 3144 min rel gain 0.004132231404958796
+    M7(iii) and (vi), two stalks instances 970 min rel gain 0.013095938787522132
+    M7(iv) instances 258 min rel gain 0.05333333333333347
+    M7(v) instances 1547 min rel gain 0.07531380753138067
+    M7(vi), stalk and cherry instances 594 min rel gain 0.004708097928436911
+n 18 trees 123867
+    M1 instances 389697 min rel gain 0.05821917808219185
+    M2 instances 88327 min rel gain 0.015576323987538904
+    M3 instances 372615 min rel gain 0.008237565092476359
+    M4 (balance) instances 15852 min rel gain 0.0007577754348971663
+    M5 instances 20590 min rel gain 0.011216566005176974
+    M6 instances 44 min rel gain 0.006209724663151408
+    M7(i) instances 25971 min rel gain 0.037645937574458145
+    M7(ii) instances 8040 min rel gain 0.004132231404958796
+    M7(iii) and (vi), two stalks instances 2407 min rel gain 0.0015064521630381127
+    M7(iv) instances 623 min rel gain 0.05256797583081571
+    M7(v) instances 3905 min rel gain 0.07497656982193059
+    M7(vi), stalk and cherry instances 1453 min rel gain 0.004708097928436911
+total instances 929524 failures 0

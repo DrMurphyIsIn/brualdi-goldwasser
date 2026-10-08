@@ -1,6 +1,6 @@
 # lam_plain_obstruction -- no plain witness for lambda in [79/20, 10^6]
 
-**Paper item:** Lemma `lem:lam-cover` (computer-verified) and Remark `rem:lam-cover`, used in Theorem
+**Paper item:** Lemma `lem:lam-cover` (computer-verified) and Appendix C, item C13, used in Theorem
 `thm:lam-plainfail` (plain witnesses fail beyond 79/20). Role: part of a proof.
 
 ## What is checked

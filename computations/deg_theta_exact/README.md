@@ -2,7 +2,7 @@
 
 **Paper items:** Lemma `lem:deg-cert34` (Delta = 3, 4: the printed theta values), Lemma
 `lem:deg-cert567` (Delta = 5, 6, 7: "the target intervals cover the parent ranges exactly" and the rule
-counts 1116, 4505, 12753), Remark `rem:deg-programs`. Role: a re-check of part of a proof (the
+counts 1116, 4505, 12753), Appendix C, item C17. Role: a re-check of part of a proof (the
 certificates themselves are verified in `../deg_certificates/`).
 
 ## What is checked

@@ -75,3 +75,9 @@ inside the minimum (the `A>30` candidate) and is not printed separately.
 `ratecheck.py`: 253 one-variable checks, 214,531 boxes, H convex for all caps, and `OK` for all 22 Psi_k
 values of table `tab:bg-rate`. (Its comparison table was updated to the paper's current Psi_k column;
 the computation is unchanged.)
+
+## Rooted trees with at most 17 vertices (added October 2026)
+
+`rooted_trees/` archives a floating-point confirmation, written in September 2026, of the telescoping identity
+`eq:bg-tele` and of the zero-slack branches of `prop:bg-zero` on all 1,011,311 rooted trees with at most 17
+vertices (Appendix C, item C3); see its README. No proof uses it.

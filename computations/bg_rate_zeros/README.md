@@ -1,7 +1,7 @@
 # bg_rate_zeros: the two exact zeros of the rate lemma
 
 **Paper item:** Lemma `lem:bg-rate` (rate potential), the paragraph on the two points (c, S) = (5, 5/3) and
-(1, 1) where Phi~_c vanishes, and Remark `rem:bg-rate-programs`. Role: part of the proof (it supplies, with
+(1, 1) where Phi~_c vanishes, and Appendix C, item C4. Role: part of the proof (it supplies, with
 exact endpoints, the local step of the branch-and-bound of `../bg_rate/certify.py`, and certifies the
 numbers quoted in the lemma).
 

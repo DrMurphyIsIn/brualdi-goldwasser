@@ -1,15 +1,52 @@
-# lam_partB_rows/negative_controls: W_1 must fail at A_2 below lambda_{A_2}
+# lam_partB_rows/negative_controls: negative controls of the row check, and a sensitivity test
+
+This folder has two programs.
+
+* `row_checker_controls.py` (written in October 2026 as an additional check): **negative controls of the row
+  check itself.** It runs the code of `../lowdeg_tables.py` on deliberately wrong inputs, each of which must be
+  rejected. Described in the first section below.
+* `sanity_and_controls.py`: a separate 30-digit floating-point program (a sensitivity test and a numerical
+  sanity test, not the row check). Described in the second section below.
+
+## row_checker_controls.py
+
+**Paper item:** Lemma `lem:lam-polycert`(a); Appendix C, item C14. Role: negative control.
+
+The program executes, unchanged, the definitions of `../lowdeg_tables.py` up to the point where that program
+starts writing its output (the row test `okrow`, the greedy table builder `greedy`, the conditions `S2`, `S4`,
+`S6`, `S6hi` and, through `../w2_table.py`, the nine conditions of P10), and the P10 halving loop of
+`../lowdeg_tables.py` as a function. It then runs:
+
+1. a positive control: the unchanged conditions give the 63 rows of the paper;
+2. 39 negative controls: each of the 13 conditions used in the proof (P1 (S2), P3 (S4), P7 (S6) for W_1,
+   P8 (S6) for lambda >= 2, and the nine conditions of P10) is lowered by a constant c slightly above its value at a
+   point t* of its range, so that the lowered condition is negative at t*; three points t* per condition (one
+   quarter, one half and three quarters of the range). Each lowered table must be rejected: the greedy builder
+   stops with `cannot start at ...`, and the P10 halving stops at the minimum box width 1e-6.
+
+Run (from this folder): `python3 row_checker_controls.py`. Expected output: `row_checker_controls_output.txt`,
+which begins `positive control: unchanged conditions give 63 rows (paper: 63)`, has one `rejected` line per
+control, and ends
+
+    39 negative controls run
+    ALL NEGATIVE CONTROLS REJECTED
+
+Runtime and memory (one core, measured here): 3.2 s, 17 MB. Dependencies: Python 3.9+, mpmath.
+
+## sanity_and_controls.py
+
 
 **Paper item:** Lemma `lem:lam-polycert` and Theorem `thm:lam-B-wstar` (the witness W_1, used from lambda = 3/20 on);
-item C14 of the appendix on computations. Role: negative control (a deliberately wrong input that the test must
-reject) plus a numerical sanity test; no proof uses this program.
+item C14 of the appendix on computations. Role: a sensitivity test (a deliberately wrong input that a separate
+floating-point test must reject; it does not run the row check) plus a numerical sanity test; no proof uses this
+program.
 
 `sanity_and_controls.py` was written from the definitions in the text, separately from the other programs of this
 folder, in `mpmath` at 30 digits (floating point, not interval arithmetic). The program calls W_1 `W*` and W_2 `W2`.
 
-## What is checked
+### What is checked
 
-1. **Negative controls (last three lines of the output).** The witness W_1 is built at lambda = 0.10, 0.12 and
+1. **Sensitivity test (last three lines of the output).** The witness W_1 is built at lambda = 0.10, 0.12 and
    0.128, all below lambda_{A_2} = 0.1281277..., where a linear ramp must fail at the arm A_2. The program evaluates
    condition (S6), g(A_2) - W_1(y_2), with g(A_2) = 5F - log T(A_2) from the cavity recursion, and finds it negative
    each time (-8.2e-5, -2.8e-5, -4.7e-7), as it must: the test is not blind to a failure of (S6).
@@ -20,14 +57,14 @@ folder, in `mpmath` at 30 digits (floating point, not interval arithmetic). The 
    log T_b <= |b| F, and g(b) >= h(y_b) with equality only where designed. Then the unscaled conditions (U1)-(U8)
    of W_2 (printed as T1-T8) and (S1), (S2) are evaluated on 60 values of lambda in (0, 3/20]; all are positive.
 
-## How to run
+### How to run
 
 ```sh
 export OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1 VECLIB_MAXIMUM_THREADS=1
 python3 sanity_and_controls.py
 ```
 
-## Expected output
+### Expected output
 
 `expected_output.txt`; it ends with
 
@@ -35,14 +72,14 @@ python3 sanity_and_controls.py
     sensitivity: W* at lam=0.12: g(A2)-h(y2) = -2.806e-5 (negative expected below 0.12813)
     sensitivity: W* at lam=0.128: g(A2)-h(y2) = -4.672e-7 (negative expected below 0.12813)
 
-## Runtime and memory (measured here, one core)
+### Runtime and memory (measured here, one core)
 
 165 s, 18 MB.
 
-## Re-run status
+### Re-run status
 
 PASS (2026-10-06, single-threaded; Python 3.9.6, mpmath 1.3.0). The output is identical to that of the original run.
 
-## Dependencies
+### Dependencies
 
 Python 3.9 or later, `mpmath`.

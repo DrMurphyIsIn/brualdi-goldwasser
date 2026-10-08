@@ -1,0 +1,492 @@
+n=4 spiders: D<=2 2, balanced D>=3 1; max pi = 2.5 maximizers: C A0 (up to isomorphism: 1) MATCH
+n=5 spiders: D<=2 2, balanced D>=3 2; max pi = 3 maximizers: C^2 (up to isomorphism: 1) MATCH
+n=6 spiders: D<=2 2, balanced D>=3 4; max pi = 3.625 maximizers: C A1 (up to isomorphism: 1) MATCH
+n=7 spiders: D<=2 2, balanced D>=3 6; max pi = 4.5 maximizers: C^3 (up to isomorphism: 1) MATCH
+n=8 spiders: D<=2 2, balanced D>=3 8; max pi = 5.375 maximizers: C^2 A1 (up to isomorphism: 1) MATCH
+n=9 spiders: D<=2 2, balanced D>=3 10; max pi = 6.75 maximizers: C^4 (up to isomorphism: 1) MATCH
+n=10 spiders: D<=2 2, balanced D>=3 13; max pi = 8.125 maximizers: C^2 A2 (up to isomorphism: 1) MATCH
+n=11 spiders: D<=2 3, balanced D>=3 15; max pi = 10.125 maximizers: C^5 (up to isomorphism: 1) MATCH
+n=12 spiders: D<=2 2, balanced D>=3 19; max pi = 12.234375 maximizers: C^3 A2 (up to isomorphism: 1) MATCH
+n=13 spiders: D<=2 3, balanced D>=3 21; max pi = 15.1875 maximizers: C^6 (up to isomorphism: 1) MATCH
+n=14 spiders: D<=2 2, balanced D>=3 26; max pi = 18.509765625 maximizers: C^3 A3 (up to isomorphism: 1) MATCH
+n=15 spiders: D<=2 4, balanced D>=3 28; max pi = 22.78125 maximizers: C^7 (up to isomorphism: 1) MATCH
+n=16 spiders: D<=2 2, balanced D>=3 34; max pi = 27.90703125 maximizers: C^4 A3 (up to isomorphism: 1) MATCH
+n=17 spiders: D<=2 4, balanced D>=3 36; max pi = 34.171875 maximizers: C^8 (up to isomorphism: 1) MATCH
+n=18 spiders: D<=2 2, balanced D>=3 43; max pi = 42.1453125 maximizers: C^4 A4 (up to isomorphism: 1) MATCH
+n=19 spiders: D<=2 5, balanced D>=3 45; max pi = 51.2578125 maximizers: C^9 (up to isomorphism: 1) MATCH
+n=20 spiders: D<=2 2, balanced D>=3 53; max pi = 63.502734375 maximizers: C^5 A4 (up to isomorphism: 1) MATCH
+n=21 spiders: D<=2 5, balanced D>=3 55; max pi = 76.88671875 maximizers: C^10 | C^3 A3^2 (up to isomorphism: 2) MATCH
+n=22 spiders: D<=2 2, balanced D>=3 64; max pi = 95.7524414062 maximizers: C^5 A5 (up to isomorphism: 1) MATCH
+n=23 spiders: D<=2 6, balanced D>=3 66; max pi = 116.130981445 maximizers: C^4 A3^2 (up to isomorphism: 1) MATCH
+n=24 spiders: D<=2 2, balanced D>=3 76; max pi = 144.162597656 maximizers: C^6 A5 (up to isomorphism: 1) MATCH
+n=25 spiders: D<=2 6, balanced D>=3 78; max pi = 175.558007812 maximizers: C^4 A4 A3 (up to isomorphism: 1) MATCH
+n=26 spiders: D<=2 2, balanced D>=3 89; max pi = 217.126524633 maximizers: C^6 A6 (up to isomorphism: 1) MATCH
+n=27 spiders: D<=2 7, balanced D>=3 91; max pi = 265.387324219 maximizers: C^4 A4^2 (up to isomorphism: 1) MATCH
+n=28 spiders: D<=2 2, balanced D>=3 103; max pi = 326.682743617 maximizers: C^7 A6 (up to isomorphism: 1) MATCH
+n=29 spiders: D<=2 7, balanced D>=3 105; max pi = 400.689642857 maximizers: C^5 A4^2 (up to isomorphism: 1) MATCH
+n=30 spiders: D<=2 2, balanced D>=3 118; max pi = 491.616983414 maximizers: C^7 A7 (up to isomorphism: 1) MATCH
+n=31 spiders: D<=2 8, balanced D>=3 120; max pi = 604.453177316 maximizers: C^5 A5 A4 (up to isomorphism: 1) MATCH
+n=32 spiders: D<=2 2, balanced D>=3 134; max pi = 739.283821106 maximizers: C^8 A7 (up to isomorphism: 1) MATCH
+n=33 spiders: D<=2 8, balanced D>=3 136; max pi = 911.828430176 maximizers: C^5 A5^2 (up to isomorphism: 1) MATCH
+n=34 spiders: D<=2 2, balanced D>=3 151; max pi = 1111.85403442 maximizers: C^8 A8 (up to isomorphism: 1) MATCH
+n=35 spiders: D<=2 9, balanced D>=3 153; max pi = 1375.51391029 maximizers: C^6 A5^2 (up to isomorphism: 1) MATCH
+n=36 spiders: D<=2 2, balanced D>=3 169; max pi = 1679.49220323 maximizers: C^4 A4^3 (up to isomorphism: 1) MATCH
+n=37 spiders: D<=2 9, balanced D>=3 171; max pi = 2072.33734131 maximizers: C^7 A5^2 (up to isomorphism: 1) MATCH
+n=38 spiders: D<=2 2, balanced D>=3 188; max pi = 2538.05731609 maximizers: C^5 A4^3 (up to isomorphism: 1) MATCH
+n=39 spiders: D<=2 10, balanced D>=3 190; max pi = 3122.60048022 maximizers: C^7 A6 A5 (up to isomorphism: 1) MATCH
+n=40 spiders: D<=2 2, balanced D>=3 208; max pi = 3830.08148523 maximizers: C^5 A5 A4^2 (up to isomorphism: 1) MATCH
+n=41 spiders: D<=2 10, balanced D>=3 210; max pi = 4705.12516909 maximizers: C^7 A6^2 (up to isomorphism: 1) MATCH
+n=42 spiders: D<=2 2, balanced D>=3 229; max pi = 5780.07771584 maximizers: C^6 A5 A4^2 (up to isomorphism: 1) MATCH
+n=43 spiders: D<=2 11, balanced D>=3 231; max pi = 7084.83270654 maximizers: C^8 A6^2 (up to isomorphism: 1) MATCH
+n=44 spiders: D<=2 2, balanced D>=3 251; max pi = 8725.18781233 maximizers: C^6 A5^2 A4 (up to isomorphism: 1) MATCH
+n=45 spiders: D<=2 11, balanced D>=3 253; max pi = 10664.57337 maximizers: C^8 A7 A6 (up to isomorphism: 1) MATCH
+n=46 spiders: D<=2 2, balanced D>=3 274; max pi = 13170.8371135 maximizers: C^6 A5^3 (up to isomorphism: 1) MATCH
+n=47 spiders: D<=2 12, balanced D>=3 276; max pi = 16118.8595085 maximizers: C^5 A4^4 (up to isomorphism: 1) MATCH
+n=48 spiders: D<=2 2, balanced D>=3 298; max pi = 19861.8234486 maximizers: C^7 A5^3 (up to isomorphism: 1) MATCH
+n=49 spiders: D<=2 12, balanced D>=3 300; max pi = 24331.099634 maximizers: C^5 A5 A4^3 (up to isomorphism: 1) MATCH
+n=50 spiders: D<=2 2, balanced D>=3 323; max pi = 29932.2588694 maximizers: C^7 A6 A5^2 (up to isomorphism: 1) MATCH
+n=51 spiders: D<=2 13, balanced D>=3 325; max pi = 36732.7809945 maximizers: C^6 A5 A4^3 (up to isomorphism: 1) MATCH
+n=52 spiders: D<=2 2, balanced D>=3 349; max pi = 45108.5496192 maximizers: C^7 A6^2 A5 (up to isomorphism: 1) MATCH
+n=53 spiders: D<=2 13, balanced D>=3 351; max pi = 55461.4027915 maximizers: C^6 A5^2 A4^2 (up to isomorphism: 1) MATCH
+n=54 spiders: D<=2 2, balanced D>=3 376; max pi = 67979.3842645 maximizers: C^7 A6^3 (up to isomorphism: 1) MATCH
+n=55 spiders: D<=2 14, balanced D>=3 378; max pi = 83738.6239861 maximizers: C^6 A5^3 A4 (up to isomorphism: 1) MATCH
+n=56 spiders: D<=2 2, balanced D>=3 404; max pi = 102559.685149 maximizers: C^5 A4^5 (up to isomorphism: 1) MATCH
+n=57 spiders: D<=2 14, balanced D>=3 406; max pi = 126432.495734 maximizers: C^6 A5^4 (up to isomorphism: 1) MATCH
+n=58 spiders: D<=2 2, balanced D>=3 433; max pi = 154846.878227 maximizers: C^5 A5 A4^4 (up to isomorphism: 1) MATCH
+n=59 spiders: D<=2 15, balanced D>=3 435; max pi = 190766.202528 maximizers: C^7 A5^4 (up to isomorphism: 1) MATCH
+n=60 spiders: D<=2 2, balanced D>=3 463; max pi = 233807.261203 maximizers: C^6 A5 A4^4 (up to isomorphism: 1) MATCH
+n=61 spiders: D<=2 15, balanced D>=3 465; max pi = 287546.127451 maximizers: C^8 A5^4 (up to isomorphism: 1) MATCH
+n=62 spiders: D<=2 2, balanced D>=3 494; max pi = 353081.375694 maximizers: C^6 A5^2 A4^3 (up to isomorphism: 1) MATCH
+n=63 spiders: D<=2 16, balanced D>=3 496; max pi = 433446.031813 maximizers: C^8 A6 A5^3 (up to isomorphism: 1) MATCH
+n=64 spiders: D<=2 2, balanced D>=3 526; max pi = 533199.691434 maximizers: C^6 A5^3 A4^2 (up to isomorphism: 1) MATCH
+n=65 spiders: D<=2 16, balanced D>=3 528; max pi = 653453.584214 maximizers: C^5 A4^6 (up to isomorphism: 1) MATCH
+n=66 spiders: D<=2 2, balanced D>=3 559; max pi = 805198.998045 maximizers: C^6 A5^4 A4 (up to isomorphism: 1) MATCH
+n=67 spiders: D<=2 17, balanced D>=3 561; max pi = 986784.051311 maximizers: C^5 A5 A4^5 (up to isomorphism: 1) MATCH
+n=68 spiders: D<=2 2, balanced D>=3 593; max pi = 1215947.46652 maximizers: C^6 A5^5 (up to isomorphism: 1) MATCH
+n=69 spiders: D<=2 17, balanced D>=3 595; max pi = 1490142.23783 maximizers: C^5 A5^2 A4^4 (up to isomorphism: 1) MATCH
+n=70 spiders: D<=2 2, balanced D>=3 628; max pi = 1835215.82858 maximizers: C^7 A5^5 (up to isomorphism: 1) MATCH
+n=71 spiders: D<=2 18, balanced D>=3 630; max pi = 2250428.29914 maximizers: C^6 A5^2 A4^4 (up to isomorphism: 1) MATCH
+n=72 spiders: D<=2 2, balanced D>=3 664; max pi = 2767159.23327 maximizers: C^8 A5^5 (up to isomorphism: 1) MATCH
+n=73 spiders: D<=2 18, balanced D>=3 666; max pi = 3398974.45369 maximizers: C^6 A5^3 A4^3 (up to isomorphism: 1) MATCH
+n=74 spiders: D<=2 2, balanced D>=3 701; max pi = 4171574.28317 maximizers: C^8 A6 A5^4 (up to isomorphism: 1) MATCH
+n=75 spiders: D<=2 19, balanced D>=3 703; max pi = 5133684.07105 maximizers: C^6 A5^4 A4^2 (up to isomorphism: 1) MATCH
+n=76 spiders: D<=2 2, balanced D>=3 739; max pi = 6294773.4803 maximizers: C^5 A5 A4^6 (up to isomorphism: 1) MATCH
+n=77 spiders: D<=2 19, balanced D>=3 741; max pi = 7753698.13224 maximizers: C^6 A5^5 A4 (up to isomorphism: 1) MATCH
+n=78 spiders: D<=2 2, balanced D>=3 778; max pi = 9507246.94763 maximizers: C^5 A5^2 A4^5 (up to isomorphism: 1) MATCH
+n=79 spiders: D<=2 20, balanced D>=3 780; max pi = 11710815.705 maximizers: C^6 A5^6 (up to isomorphism: 1) MATCH
+n=80 spiders: D<=2 2, balanced D>=3 818; max pi = 14359123.5055 maximizers: C^5 A5^3 A4^4 (up to isomorphism: 1) MATCH
+n=81 spiders: D<=2 20, balanced D>=3 820; max pi = 17677502.8017 maximizers: C^7 A5^6 (up to isomorphism: 1) MATCH
+n=82 spiders: D<=2 2, balanced D>=3 859; max pi = 21687004.5002 maximizers: C^5 A5^4 A4^3 (up to isomorphism: 1) MATCH
+n=83 spiders: D<=2 21, balanced D>=3 861; max pi = 26659327.5166 maximizers: C^8 A5^6 (up to isomorphism: 1) MATCH
+n=84 spiders: D<=2 2, balanced D>=3 901; max pi = 32758844.9079 maximizers: C^6 A5^4 A4^3 (up to isomorphism: 1) MATCH
+n=85 spiders: D<=2 21, balanced D>=3 903; max pi = 40192810.4459 maximizers: C^8 A6 A5^5 (up to isomorphism: 1) MATCH
+n=86 spiders: D<=2 2, balanced D>=3 944; max pi = 49484207.2759 maximizers: C^6 A5^5 A4^2 (up to isomorphism: 1) MATCH
+n=87 spiders: D<=2 22, balanced D>=3 946; max pi = 60703200.542 maximizers: C^5 A5^2 A4^6 (up to isomorphism: 1) MATCH
+n=88 spiders: D<=2 2, balanced D>=3 988; max pi = 74748652.9216 maximizers: C^6 A5^6 A4 (up to isomorphism: 1) MATCH
+n=89 spiders: D<=2 22, balanced D>=3 990; max pi = 91694641.5421 maximizers: C^5 A5^3 A4^5 (up to isomorphism: 1) MATCH
+n=90 spiders: D<=2 2, balanced D>=3 1033; max pi = 112911671.026 maximizers: C^6 A5^7 (up to isomorphism: 1) MATCH
+n=91 spiders: D<=2 23, balanced D>=3 1035; max pi = 138508051.764 maximizers: C^5 A5^4 A4^4 (up to isomorphism: 1) MATCH
+n=92 spiders: D<=2 2, balanced D>=3 1079; max pi = 170447262.956 maximizers: C^7 A5^7 (up to isomorphism: 1) MATCH
+n=93 spiders: D<=2 23, balanced D>=3 1081; max pi = 209220760.118 maximizers: C^5 A5^5 A4^3 (up to isomorphism: 1) MATCH
+n=94 spiders: D<=2 2, balanced D>=3 1126; max pi = 257074577.776 maximizers: C^8 A5^7 (up to isomorphism: 1) MATCH
+n=95 spiders: D<=2 24, balanced D>=3 1128; max pi = 316033570.339 maximizers: C^5 A5^6 A4^2 (up to isomorphism: 1) MATCH
+n=96 spiders: D<=2 2, balanced D>=3 1174; max pi = 387819096.459 maximizers: C^5 A5^2 A4^7 (up to isomorphism: 1) MATCH
+n=97 spiders: D<=2 24, balanced D>=3 1176; max pi = 477418735.651 maximizers: C^6 A5^6 A4^2 (up to isomorphism: 1) MATCH
+n=98 spiders: D<=2 2, balanced D>=3 1223; max pi = 585885448.944 maximizers: C^5 A5^3 A4^6 (up to isomorphism: 1) MATCH
+n=99 spiders: D<=2 25, balanced D>=3 1225; max pi = 721249741.694 maximizers: C^6 A5^7 A4 (up to isomorphism: 1) MATCH
+n=100 spiders: D<=2 2, balanced D>=3 1273; max pi = 885105626.188 maximizers: C^5 A5^4 A4^5 (up to isomorphism: 1) MATCH
+n=101 spiders: D<=2 25, balanced D>=3 1275; max pi = 1089609194.22 maximizers: C^6 A5^8 (up to isomorphism: 1) MATCH
+n=102 spiders: D<=2 2, balanced D>=3 1324; max pi = 1337138380.1 maximizers: C^5 A5^5 A4^4 (up to isomorphism: 1) MATCH
+n=103 spiders: D<=2 26, balanced D>=3 1326; max pi = 1644791021.75 maximizers: C^7 A5^8 (up to isomorphism: 1) MATCH
+n=104 spiders: D<=2 2, balanced D>=3 1376; max pi = 2020023715.01 maximizers: C^5 A5^6 A4^3 (up to isomorphism: 1) MATCH
+n=105 spiders: D<=2 26, balanced D>=3 1378; max pi = 2480806647.56 maximizers: C^8 A5^8 (up to isomorphism: 1) MATCH
+n=106 spiders: D<=2 2, balanced D>=3 1429; max pi = 3051655031.42 maximizers: C^5 A5^7 A4^2 (up to isomorphism: 1) MATCH
+n=107 spiders: D<=2 27, balanced D>=3 1431; max pi = 3745283901.36 maximizers: C^5 A5^3 A4^7 (up to isomorphism: 1) MATCH
+n=108 spiders: D<=2 2, balanced D>=3 1483; max pi = 4610130941.52 maximizers: C^5 A5^8 A4 (up to isomorphism: 1) MATCH
+n=109 spiders: D<=2 27, balanced D>=3 1485; max pi = 5658637979.1 maximizers: C^5 A5^4 A4^6 (up to isomorphism: 1) MATCH
+n=110 spiders: D<=2 2, balanced D>=3 1538; max pi = 6964499838.51 maximizers: C^5 A5^9 (up to isomorphism: 1) MATCH
+n=111 spiders: D<=2 28, balanced D>=3 1540; max pi = 8549448109.3 maximizers: C^5 A5^5 A4^5 (up to isomorphism: 1) MATCH
+n=112 spiders: D<=2 2, balanced D>=3 1594; max pi = 10522268430.7 maximizers: C^6 A5^9 (up to isomorphism: 1) MATCH
+n=113 spiders: D<=2 28, balanced D>=3 1596; max pi = 12917047381.7 maximizers: C^5 A5^6 A4^4 (up to isomorphism: 1) MATCH
+n=114 spiders: D<=2 2, balanced D>=3 1651; max pi = 15882520904.3 maximizers: C^7 A5^9 (up to isomorphism: 1) MATCH
+n=115 spiders: D<=2 29, balanced D>=3 1653; max pi = 19515847816.4 maximizers: C^5 A5^7 A4^3 (up to isomorphism: 1) MATCH
+n=116 spiders: D<=2 2, balanced D>=3 1709; max pi = 23956665929.3 maximizers: C^4 A5^4 A4^7 (up to isomorphism: 1) MATCH
+n=117 spiders: D<=2 29, balanced D>=3 1711; max pi = 29485642002.5 maximizers: C^5 A5^8 A4^2 (up to isomorphism: 1) MATCH
+n=118 spiders: D<=2 2, balanced D>=3 1768; max pi = 36194794422.4 maximizers: C^4 A5^5 A4^6 (up to isomorphism: 1) MATCH
+n=119 spiders: D<=2 30, balanced D>=3 1770; max pi = 44548465171.8 maximizers: C^5 A5^9 A4 (up to isomorphism: 1) MATCH
+n=120 spiders: D<=2 2, balanced D>=3 1828; max pi = 54684574028.5 maximizers: C^4 A5^6 A4^5 (up to isomorphism: 1) MATCH
+n=121 spiders: D<=2 30, balanced D>=3 1830; max pi = 67306017264.6 maximizers: C^5 A5^10 (up to isomorphism: 1) MATCH
+n=122 spiders: D<=2 2, balanced D>=3 1889; max pi = 82626582437.8 maximizers: C^5 A5^6 A4^5 (up to isomorphism: 1) MATCH
+n=123 spiders: D<=2 31, balanced D>=3 1891; max pi = 101671438378 maximizers: C^6 A5^10 (up to isomorphism: 1) MATCH
+n=124 spiders: D<=2 2, balanced D>=3 1951; max pi = 124848611231 maximizers: C^5 A5^7 A4^4 (up to isomorphism: 1) MATCH
+n=125 spiders: D<=2 31, balanced D>=3 1953; max pi = 153450056439 maximizers: C^7 A5^10 (up to isomorphism: 1) MATCH
+n=126 spiders: D<=2 2, balanced D>=3 2014; max pi = 188645632197 maximizers: C^5 A5^8 A4^3 (up to isomorphism: 1) MATCH
+n=127 spiders: D<=2 32, balanced D>=3 2016; max pi = 231642522710 maximizers: C^4 A5^5 A4^7 (up to isomorphism: 1) MATCH
+n=128 spiders: D<=2 2, balanced D>=3 2078; max pi = 285042030347 maximizers: C^5 A5^9 A4^2 (up to isomorphism: 1) MATCH
+n=129 spiders: D<=2 32, balanced D>=3 2080; max pi = 350007539803 maximizers: C^4 A5^6 A4^6 (up to isomorphism: 1) MATCH
+n=130 spiders: D<=2 2, balanced D>=3 2143; max pi = 430695326291 maximizers: C^5 A5^10 A4 (up to isomorphism: 1) MATCH
+n=131 spiders: D<=2 33, balanced D>=3 2145; max pi = 528853779937 maximizers: C^4 A5^7 A4^5 (up to isomorphism: 1) MATCH
+n=132 spiders: D<=2 2, balanced D>=3 2209; max pi = 650774489652 maximizers: C^5 A5^11 (up to isomorphism: 1) MATCH
+n=133 spiders: D<=2 33, balanced D>=3 2211; max pi = 799084896019 maximizers: C^4 A5^8 A4^4 (up to isomorphism: 1) MATCH
+n=134 spiders: D<=2 2, balanced D>=3 2276; max pi = 982871049265 maximizers: C^6 A5^11 (up to isomorphism: 1) MATCH
+n=135 spiders: D<=2 34, balanced D>=3 2278; max pi = 1.20739486543e+12 maximizers: C^4 A5^9 A4^3 (up to isomorphism: 1) MATCH
+n=136 spiders: D<=2 2, balanced D>=3 2344; max pi = 1.48325232695e+12 maximizers: C^7 A5^11 (up to isomorphism: 1) MATCH
+n=137 spiders: D<=2 34, balanced D>=3 2346; max pi = 1.82433595878e+12 maximizers: C^4 A5^10 A4^2 (up to isomorphism: 1) MATCH
+n=138 spiders: D<=2 2, balanced D>=3 2413; max pi = 2.24070433764e+12 maximizers: C^4 A5^6 A4^7 (up to isomorphism: 1) MATCH
+n=139 spiders: D<=2 35, balanced D>=3 2415; max pi = 2.75671598575e+12 maximizers: C^5 A5^10 A4^2 (up to isomorphism: 1) MATCH
+n=140 spiders: D<=2 2, balanced D>=3 2483; max pi = 3.38593517987e+12 maximizers: C^4 A5^7 A4^6 (up to isomorphism: 1) MATCH
+n=141 spiders: D<=2 35, balanced D>=3 2485; max pi = 4.16570027688e+12 maximizers: C^5 A5^11 A4 (up to isomorphism: 1) MATCH
+n=142 spiders: D<=2 2, balanced D>=3 2554; max pi = 5.11648754826e+12 maximizers: C^4 A5^8 A4^5 (up to isomorphism: 1) MATCH
+n=143 spiders: D<=2 36, balanced D>=3 2556; max pi = 6.29481854717e+12 maximizers: C^5 A5^12 (up to isomorphism: 1) MATCH
+n=144 spiders: D<=2 2, balanced D>=3 2626; max pi = 7.7315113556e+12 maximizers: C^4 A5^9 A4^4 (up to isomorphism: 1) MATCH
+n=145 spiders: D<=2 36, balanced D>=3 2628; max pi = 9.50535637351e+12 maximizers: C^6 A5^12 (up to isomorphism: 1) MATCH
+n=146 spiders: D<=2 2, balanced D>=3 2699; max pi = 1.16830454761e+13 maximizers: C^4 A5^10 A4^3 (up to isomorphism: 1) MATCH
+n=147 spiders: D<=2 37, balanced D>=3 2701; max pi = 1.434911854e+13 maximizers: C^3 A5^7 A4^7 (up to isomorphism: 1) MATCH
+n=148 spiders: D<=2 2, balanced D>=3 2773; max pi = 1.76541546476e+13 maximizers: C^4 A5^11 A4^2 (up to isomorphism: 1) MATCH
+n=149 spiders: D<=2 37, balanced D>=3 2775; max pi = 2.16826980754e+13 maximizers: C^3 A5^8 A4^6 (up to isomorphism: 1) MATCH
+n=150 spiders: D<=2 2, balanced D>=3 2848; max pi = 2.6676999103e+13 maximizers: C^4 A5^12 A4 (up to isomorphism: 1) MATCH
+n=151 spiders: D<=2 38, balanced D>=3 2850; max pi = 3.27659036227e+13 maximizers: C^4 A5^8 A4^6 (up to isomorphism: 1) MATCH
+n=152 spiders: D<=2 2, balanced D>=3 2924; max pi = 4.03112446513e+13 maximizers: C^4 A5^13 (up to isomorphism: 1) MATCH
+n=153 spiders: D<=2 38, balanced D>=3 2926; max pi = 4.95161397195e+13 maximizers: C^4 A5^9 A4^5 (up to isomorphism: 1) MATCH
+n=154 spiders: D<=2 2, balanced D>=3 3001; max pi = 6.09092600381e+13 maximizers: C^5 A5^13 (up to isomorphism: 1) MATCH
+n=155 spiders: D<=2 39, balanced D>=3 3003; max pi = 7.4829128616e+13 maximizers: C^4 A5^10 A4^4 (up to isomorphism: 1) MATCH
+n=156 spiders: D<=2 2, balanced D>=3 3079; max pi = 9.19576281129e+13 maximizers: C^6 A5^13 (up to isomorphism: 1) MATCH
+n=157 spiders: D<=2 39, balanced D>=3 3081; max pi = 1.13082101873e+14 maximizers: C^4 A5^11 A4^3 (up to isomorphism: 1) MATCH
+n=158 spiders: D<=2 2, balanced D>=3 3158; max pi = 1.38921817228e+14 maximizers: C^3 A5^8 A4^7 (up to isomorphism: 1) MATCH
+n=159 spiders: D<=2 40, balanced D>=3 3160; max pi = 1.70889874444e+14 maximizers: C^4 A5^12 A4^2 (up to isomorphism: 1) MATCH
+n=160 spiders: D<=2 2, balanced D>=3 3238; max pi = 2.09937702731e+14 maximizers: C^3 A5^9 A4^6 (up to isomorphism: 1) MATCH
+n=161 spiders: D<=2 40, balanced D>=3 3240; max pi = 2.58248650973e+14 maximizers: C^4 A5^13 A4 (up to isomorphism: 1) MATCH
+n=162 spiders: D<=2 2, balanced D>=3 3319; max pi = 3.17255888314e+14 maximizers: C^3 A5^10 A4^5 (up to isomorphism: 1) MATCH
+n=163 spiders: D<=2 41, balanced D>=3 3321; max pi = 3.90264513414e+14 maximizers: C^4 A5^14 (up to isomorphism: 1) MATCH
+n=164 spiders: D<=2 2, balanced D>=3 3401; max pi = 4.79433311826e+14 maximizers: C^3 A5^11 A4^4 (up to isomorphism: 1) MATCH
+n=165 spiders: D<=2 41, balanced D>=3 3403; max pi = 5.89532954942e+14 maximizers: C^5 A5^14 (up to isomorphism: 1) MATCH
+n=166 spiders: D<=2 2, balanced D>=3 3484; max pi = 7.24512667548e+14 maximizers: C^3 A5^12 A4^3 (up to isomorphism: 1) MATCH
+n=167 spiders: D<=2 42, balanced D>=3 3486; max pi = 8.90156349991e+14 maximizers: C^3 A5^8 A4^8 (up to isomorphism: 1) MATCH
+n=168 spiders: D<=2 2, balanced D>=3 3568; max pi = 1.09487117033e+15 maximizers: C^3 A5^13 A4^2 (up to isomorphism: 1) MATCH
+n=169 spiders: D<=2 42, balanced D>=3 3570; max pi = 1.34528898736e+15 maximizers: C^3 A5^9 A4^7 (up to isomorphism: 1) MATCH
+n=170 spiders: D<=2 2, balanced D>=3 3653; max pi = 1.65460113365e+15 maximizers: C^4 A5^13 A4^2 (up to isomorphism: 1) MATCH
+n=171 spiders: D<=2 43, balanced D>=3 3655; max pi = 2.03312565276e+15 maximizers: C^3 A5^10 A4^6 (up to isomorphism: 1) MATCH
+n=172 spiders: D<=2 2, balanced D>=3 3739; max pi = 2.50059595299e+15 maximizers: C^4 A5^14 A4 (up to isomorphism: 1) MATCH
+n=173 spiders: D<=2 43, balanced D>=3 3741; max pi = 3.07264362058e+15 maximizers: C^3 A5^11 A4^5 (up to isomorphism: 1) MATCH
+n=174 spiders: D<=2 2, balanced D>=3 3826; max pi = 3.77914080085e+15 maximizers: C^4 A5^15 (up to isomorphism: 1) MATCH
+n=175 spiders: D<=2 44, balanced D>=3 3828; max pi = 4.64365023025e+15 maximizers: C^3 A5^12 A4^4 (up to isomorphism: 1) MATCH
+n=176 spiders: D<=2 2, balanced D>=3 3914; max pi = 5.70741176539e+15 maximizers: C^5 A5^15 (up to isomorphism: 1) MATCH
+n=177 spiders: D<=2 44, balanced D>=3 3916; max pi = 7.01788333496e+15 maximizers: C^3 A5^13 A4^3 (up to isomorphism: 1) MATCH
+n=178 spiders: D<=2 2, balanced D>=3 4003; max pi = 8.62308512598e+15 maximizers: C^2 A5^10 A4^7 (up to isomorphism: 1) MATCH
+n=179 spiders: D<=2 45, balanced D>=3 4005; max pi = 1.06060121884e+16 maximizers: C^3 A5^14 A4^2 (up to isomorphism: 1) MATCH
+n=180 spiders: D<=2 2, balanced D>=3 4093; max pi = 1.30318592471e+16 maximizers: C^2 A5^11 A4^6 (up to isomorphism: 1) MATCH
+n=181 spiders: D<=2 45, balanced D>=3 4095; max pi = 1.60286679272e+16 maximizers: C^3 A5^15 A4 (up to isomorphism: 1) MATCH
+n=182 spiders: D<=2 2, balanced D>=3 4184; max pi = 1.96947020165e+16 maximizers: C^2 A5^12 A4^5 (up to isomorphism: 1) MATCH
+n=183 spiders: D<=2 46, balanced D>=3 4186; max pi = 2.42237888118e+16 maximizers: C^3 A5^16 (up to isomorphism: 1) MATCH
+n=184 spiders: D<=2 2, balanced D>=3 4276; max pi = 2.97642068076e+16 maximizers: C^3 A5^12 A4^5 (up to isomorphism: 1) MATCH
+n=185 spiders: D<=2 46, balanced D>=3 4278; max pi = 3.66027171101e+16 maximizers: C^4 A5^16 (up to isomorphism: 1) MATCH
+n=186 spiders: D<=2 2, balanced D>=3 4369; max pi = 4.49849898443e+16 maximizers: C^3 A5^13 A4^4 (up to isomorphism: 1) MATCH
+n=187 spiders: D<=2 47, balanced D>=3 4371; max pi = 5.52859805521e+16 maximizers: C^2 A5^10 A4^8 (up to isomorphism: 1) MATCH
+n=188 spiders: D<=2 2, balanced D>=3 4463; max pi = 6.79892637547e+16 maximizers: C^3 A5^14 A4^3 (up to isomorphism: 1) MATCH
+n=189 spiders: D<=2 47, balanced D>=3 4465; max pi = 8.35575462714e+16 maximizers: C^2 A5^11 A4^7 (up to isomorphism: 1) MATCH
+n=190 spiders: D<=2 2, balanced D>=3 4558; max pi = 1.02757243723e+17 maximizers: C^3 A5^15 A4^2 (up to isomorphism: 1) MATCH
+n=191 spiders: D<=2 48, balanced D>=3 4560; max pi = 1.26286152358e+17 maximizers: C^2 A5^12 A4^6 (up to isomorphism: 1) MATCH
+n=192 spiders: D<=2 2, balanced D>=3 4654; max pi = 1.55304467991e+17 maximizers: C^3 A5^16 A4 (up to isomorphism: 1) MATCH
+n=193 spiders: D<=2 48, balanced D>=3 4656; max pi = 1.90864507235e+17 maximizers: C^2 A5^13 A4^5 (up to isomorphism: 1) MATCH
+n=194 spiders: D<=2 2, balanced D>=3 4751; max pi = 2.3472256791e+17 maximizers: C^3 A5^17 (up to isomorphism: 1) MATCH
+n=195 spiders: D<=2 49, balanced D>=3 4753; max pi = 2.88465585443e+17 maximizers: C^2 A5^14 A4^4 (up to isomorphism: 1) MATCH
+n=196 spiders: D<=2 2, balanced D>=3 4849; max pi = 3.54574665631e+17 maximizers: C^4 A5^17 (up to isomorphism: 1) MATCH
+n=197 spiders: D<=2 49, balanced D>=3 4851; max pi = 4.35975644974e+17 maximizers: C^2 A5^15 A4^3 (up to isomorphism: 1) MATCH
+n=198 spiders: D<=2 2, balanced D>=3 4948; max pi = 5.35787120626e+17 maximizers: C A5^12 A4^7 (up to isomorphism: 1) MATCH
+n=199 spiders: D<=2 50, balanced D>=3 4950; max pi = 6.58915669435e+17 maximizers: C^2 A5^16 A4^2 (up to isomorphism: 1) MATCH
+n=200 spiders: D<=2 2, balanced D>=3 5048; max pi = 8.09774419992e+17 maximizers: C^2 A5^12 A4^7 (up to isomorphism: 1) MATCH
+n=201 spiders: D<=2 50, balanced D>=3 5050; max pi = 9.95856647671e+17 maximizers: C^2 A5^17 A4 (up to isomorphism: 1) MATCH
+n=202 spiders: D<=2 2, balanced D>=3 5149; max pi = 1.22393401422e+18 maximizers: C^2 A5^13 A4^6 (up to isomorphism: 1) MATCH
+n=203 spiders: D<=2 51, balanced D>=3 5151; max pi = 1.50509253342e+18 maximizers: C^2 A5^18 (up to isomorphism: 1) MATCH
+n=204 spiders: D<=2 2, balanced D>=3 5251; max pi = 1.8499134114e+18 maximizers: C^2 A5^14 A4^5 (up to isomorphism: 1) MATCH
+n=205 spiders: D<=2 51, balanced D>=3 5253; max pi = 2.27469904295e+18 maximizers: C^3 A5^18 (up to isomorphism: 1) MATCH
+n=206 spiders: D<=2 2, balanced D>=3 5354; max pi = 2.79604554936e+18 maximizers: C^2 A5^15 A4^4 (up to isomorphism: 1) MATCH
+n=207 spiders: D<=2 52, balanced D>=3 5356; max pi = 3.43683075615e+18 maximizers: C A5^12 A4^8 (up to isomorphism: 1) MATCH
+n=208 spiders: D<=2 2, balanced D>=3 5458; max pi = 4.22606844479e+18 maximizers: C^2 A5^16 A4^3 (up to isomorphism: 1) MATCH
+n=209 spiders: D<=2 52, balanced D>=3 5460; max pi = 5.19455722303e+18 maximizers: C A5^13 A4^7 (up to isomorphism: 1) MATCH
+n=210 spiders: D<=2 2, balanced D>=3 5563; max pi = 6.38746087683e+18 maximizers: C^2 A5^17 A4^2 (up to isomorphism: 1) MATCH
+n=211 spiders: D<=2 53, balanced D>=3 5565; max pi = 7.85124195089e+18 maximizers: C A5^14 A4^6 (up to isomorphism: 1) MATCH
+n=212 spiders: D<=2 2, balanced D>=3 5669; max pi = 9.65426955414e+18 maximizers: C^2 A5^18 A4 (up to isomorphism: 1) MATCH
+n=213 spiders: D<=2 53, balanced D>=3 5671; max pi = 1.1866636085e+19 maximizers: C A5^15 A4^5 (up to isomorphism: 1) MATCH
+n=214 spiders: D<=2 2, balanced D>=3 5776; max pi = 1.45918389388e+19 maximizers: C^2 A5^19 (up to isomorphism: 1) MATCH
+n=215 spiders: D<=2 54, balanced D>=3 5778; max pi = 1.79356170301e+19 maximizers: C A5^16 A4^4 (up to isomorphism: 1) MATCH
+n=216 spiders: D<=2 2, balanced D>=3 5884; max pi = 2.20466076861e+19 maximizers: C^3 A5^19 (up to isomorphism: 1) MATCH
+n=217 spiders: D<=2 54, balanced D>=3 5886; max pi = 2.71084355023e+19 maximizers: C A5^17 A4^3 (up to isomorphism: 1) MATCH
+n=218 spiders: D<=2 2, balanced D>=3 5993; max pi = 3.33214874056e+19 maximizers: C A5^13 A4^8 (up to isomorphism: 1) MATCH
+n=219 spiders: D<=2 55, balanced D>=3 5995; max pi = 4.09724579912e+19 maximizers: C A5^18 A4^2 (up to isomorphism: 1) MATCH
+n=220 spiders: D<=2 2, balanced D>=3 6103; max pi = 5.03659294624e+19 maximizers: C A5^14 A4^7 (up to isomorphism: 1) MATCH
+n=221 spiders: D<=2 55, balanced D>=3 6105; max pi = 6.1926853561e+19 maximizers: C A5^19 A4 (up to isomorphism: 1) MATCH
+n=222 spiders: D<=2 2, balanced D>=3 6214; max pi = 7.6128770094e+19 maximizers: C A5^15 A4^6 (up to isomorphism: 1) MATCH
+n=223 spiders: D<=2 56, balanced D>=3 6216; max pi = 9.36002649528e+19 maximizers: C^2 A5^19 A4 (up to isomorphism: 1) MATCH
+n=224 spiders: D<=2 2, balanced D>=3 6326; max pi = 1.15069509021e+20 maximizers: C A5^16 A4^5 (up to isomorphism: 1) MATCH
+n=225 spiders: D<=2 56, balanced D>=3 6328; max pi = 1.41478273385e+20 maximizers: C^2 A5^20 (up to isomorphism: 1) MATCH
+n=226 spiders: D<=2 2, balanced D>=3 6439; max pi = 1.73928676106e+20 maximizers: C A5^17 A4^4 (up to isomorphism: 1) MATCH
+n=227 spiders: D<=2 57, balanced D>=3 6441; max pi = 2.13819200208e+20 maximizers: A5^14 A4^8 (up to isomorphism: 1) MATCH
+n=228 spiders: D<=2 2, balanced D>=3 6553; max pi = 2.62894563978e+20 maximizers: C A5^18 A4^3 (up to isomorphism: 1) MATCH
+n=229 spiders: D<=2 57, balanced D>=3 6555; max pi = 3.23188096783e+20 maximizers: A5^15 A4^7 (up to isomorphism: 1) MATCH
+n=230 spiders: D<=2 2, balanced D>=3 6668; max pi = 3.97366730752e+20 maximizers: C A5^19 A4^2 (up to isomorphism: 1) MATCH
+n=231 spiders: D<=2 58, balanced D>=3 6670; max pi = 4.88498789649e+20 maximizers: A5^16 A4^6 (up to isomorphism: 1) MATCH
+n=232 spiders: D<=2 2, balanced D>=3 6784; max pi = 6.00621510552e+20 maximizers: C A5^20 A4 (up to isomorphism: 1) MATCH
+n=233 spiders: D<=2 58, balanced D>=3 6786; max pi = 7.38365004003e+20 maximizers: A5^17 A4^5 (up to isomorphism: 1) MATCH
+n=234 spiders: D<=2 2, balanced D>=3 6901; max pi = 9.07840891664e+20 maximizers: C A5^21 (up to isomorphism: 1) MATCH
+n=235 spiders: D<=2 59, balanced D>=3 6903; max pi = 1.11603597245e+21 maximizers: A5^18 A4^4 (up to isomorphism: 1) MATCH
+n=236 spiders: D<=2 2, balanced D>=3 7019; max pi = 1.37202907494e+21 maximizers: A5^14 A4^9 (up to isomorphism: 1) MATCH
+n=237 spiders: D<=2 59, balanced D>=3 7021; max pi = 1.68688220576e+21 maximizers: A5^19 A4^3 (up to isomorphism: 1) MATCH
+n=238 spiders: D<=2 2, balanced D>=3 7138; max pi = 2.0739245987e+21 maximizers: A5^15 A4^8 (up to isomorphism: 1) MATCH
+n=239 spiders: D<=2 60, balanced D>=3 7140; max pi = 2.54971004519e+21 maximizers: A5^20 A4^2 (up to isomorphism: 1) MATCH
+n=240 spiders: D<=2 2, balanced D>=3 7258; max pi = 3.13488875852e+21 maximizers: A5^16 A4^7 (up to isomorphism: 1) MATCH
+n=241 spiders: D<=2 60, balanced D>=3 7260; max pi = 3.85397900553e+21 maximizers: C A5^20 A4^2 (up to isomorphism: 1) MATCH
+n=242 spiders: D<=2 2, balanced D>=3 7379; max pi = 4.73860849741e+21 maximizers: A5^17 A4^6 (up to isomorphism: 1) MATCH
+n=243 spiders: D<=2 61, balanced D>=3 7381; max pi = 5.82558009362e+21 maximizers: C A5^21 A4 (up to isomorphism: 1) MATCH
+n=244 spiders: D<=2 2, balanced D>=3 7501; max pi = 7.16273765639e+21 maximizers: A5^18 A4^5 (up to isomorphism: 1) MATCH
+n=245 spiders: D<=2 61, balanced D>=3 7503; max pi = 8.80579426738e+21 maximizers: C A5^22 (up to isomorphism: 1) MATCH
+n=246 spiders: D<=2 2, balanced D>=3 7624; max pi = 1.08269662146e+22 maximizers: A5^19 A4^4 (up to isomorphism: 1) MATCH
+n=247 spiders: D<=2 62, balanced D>=3 7626; max pi = 1.33077465696e+22 maximizers: A5^15 A4^9 (up to isomorphism: 1) MATCH
+n=248 spiders: D<=2 2, balanced D>=3 7748; max pi = 1.63656793499e+22 maximizers: A5^20 A4^3 (up to isomorphism: 1) MATCH
+n=249 spiders: D<=2 62, balanced D>=3 7750; max pi = 2.01165244692e+22 maximizers: A5^16 A4^8 (up to isomorphism: 1) MATCH
+n=250 spiders: D<=2 2, balanced D>=3 7873; max pi = 2.47377851193e+22 maximizers: A5^21 A4^2 (up to isomorphism: 1) MATCH
+n=251 spiders: D<=2 63, balanced D>=3 7875; max pi = 3.04089160905e+22 maximizers: A5^17 A4^7 (up to isomorphism: 1) MATCH
+n=252 spiders: D<=2 2, balanced D>=3 7999; max pi = 3.7392724114e+22 maximizers: A5^22 A4 (up to isomorphism: 1) MATCH
+n=253 spiders: D<=2 63, balanced D>=3 8001; max pi = 4.59672467377e+22 maximizers: A5^18 A4^6 (up to isomorphism: 1) MATCH
+n=254 spiders: D<=2 2, balanced D>=3 8126; max pi = 5.65214005037e+22 maximizers: A5^23 (up to isomorphism: 1) MATCH
+n=255 spiders: D<=2 64, balanced D>=3 8128; max pi = 6.94857267448e+22 maximizers: A5^19 A4^5 (up to isomorphism: 1) MATCH
+n=256 spiders: D<=2 2, balanced D>=3 8254; max pi = 8.54161549279e+22 maximizers: C A5^23 (up to isomorphism: 1) MATCH
+n=257 spiders: D<=2 64, balanced D>=3 8256; max pi = 1.05036991931e+23 maximizers: A5^20 A4^4 (up to isomorphism: 1) MATCH
+n=258 spiders: D<=2 2, balanced D>=3 8383; max pi = 1.29080102934e+23 maximizers: A5^16 A4^9 (up to isomorphism: 1) MATCH
+n=259 spiders: D<=2 65, balanced D>=3 8385; max pi = 1.58777334272e+23 maximizers: A5^21 A4^3 (up to isomorphism: 1) MATCH
+n=260 spiders: D<=2 2, balanced D>=3 8513; max pi = 1.95130438831e+23 maximizers: A5^17 A4^8 (up to isomorphism: 1) MATCH
+n=261 spiders: D<=2 65, balanced D>=3 8515; max pi = 2.40012739748e+23 maximizers: A5^22 A4^2 (up to isomorphism: 1) MATCH
+n=262 spiders: D<=2 2, balanced D>=3 8644; max pi = 2.94978481555e+23 maximizers: A5^18 A4^7 (up to isomorphism: 1) MATCH
+n=263 spiders: D<=2 66, balanced D>=3 8646; max pi = 3.62810326359e+23 maximizers: A5^23 A4 (up to isomorphism: 1) MATCH
+n=264 spiders: D<=2 2, balanced D>=3 8776; max pi = 4.45918248622e+23 maximizers: A5^19 A4^6 (up to isomorphism: 1) MATCH
+n=265 spiders: D<=2 66, balanced D>=3 8778; max pi = 5.48434214263e+23 maximizers: A5^24 (up to isomorphism: 1) MATCH
+n=266 spiders: D<=2 2, balanced D>=3 8909; max pi = 6.74092896008e+23 maximizers: A5^20 A4^5 (up to isomorphism: 1) MATCH
+n=267 spiders: D<=2 67, balanced D>=3 8911; max pi = 8.28557536009e+23 maximizers: C A5^24 (up to isomorphism: 1) MATCH
+n=268 spiders: D<=2 2, balanced D>=3 9043; max pi = 1.01902267732e+24 maximizers: A5^21 A4^4 (up to isomorphism: 1) MATCH
+n=269 spiders: D<=2 67, balanced D>=3 9045; max pi = 1.25206276174e+24 maximizers: A5^17 A4^9 (up to isomorphism: 1) MATCH
+n=270 spiders: D<=2 2, balanced D>=3 9178; max pi = 1.54044976625e+24 maximizers: A5^22 A4^3 (up to isomorphism: 1) MATCH
+n=271 spiders: D<=2 68, balanced D>=3 9180; max pi = 1.89281333888e+24 maximizers: A5^18 A4^8 (up to isomorphism: 1) MATCH
+n=272 spiders: D<=2 2, balanced D>=3 9314; max pi = 2.32868542356e+24 maximizers: A5^23 A4^2 (up to isomorphism: 1) MATCH
+n=273 spiders: D<=2 68, balanced D>=3 9316; max pi = 2.86146938011e+24 maximizers: A5^19 A4^7 (up to isomorphism: 1) MATCH
+n=274 spiders: D<=2 2, balanced D>=3 9451; max pi = 3.52025156599e+24 maximizers: A5^24 A4 (up to isomorphism: 1) MATCH
+n=275 spiders: D<=2 69, balanced D>=3 9453; max pi = 4.3258359345e+24 maximizers: A5^20 A4^6 (up to isomorphism: 1) MATCH
+n=276 spiders: D<=2 2, balanced D>=3 9589; max pi = 5.32152573527e+24 maximizers: A5^25 (up to isomorphism: 1) MATCH
+n=277 spiders: D<=2 69, balanced D>=3 9591; max pi = 6.53959134057e+24 maximizers: A5^21 A4^5 (up to isomorphism: 1) MATCH
+n=278 spiders: D<=2 2, balanced D>=3 9728; max pi = 8.03739315933e+24 maximizers: C A5^25 (up to isomorphism: 1) MATCH
+n=279 spiders: D<=2 70, balanced D>=3 9730; max pi = 9.8862320636e+24 maximizers: A5^22 A4^4 (up to isomorphism: 1) MATCH
+n=280 spiders: D<=2 2, balanced D>=3 9868; max pi = 1.21451695019e+25 maximizers: A5^18 A4^9 (up to isomorphism: 1) MATCH
+n=281 spiders: D<=2 70, balanced D>=3 9870; max pi = 1.4945505712e+25 maximizers: A5^23 A4^3 (up to isomorphism: 1) MATCH
+n=282 spiders: D<=2 2, balanced D>=3 10009; max pi = 1.83611579017e+25 maximizers: A5^19 A4^8 (up to isomorphism: 1) MATCH
+n=283 spiders: D<=2 71, balanced D>=3 10011; max pi = 2.25938401671e+25 maximizers: A5^24 A4^2 (up to isomorphism: 1) MATCH
+n=284 spiders: D<=2 2, balanced D>=3 10151; max pi = 2.77585134107e+25 maximizers: A5^20 A4^7 (up to isomorphism: 1) MATCH
+n=285 spiders: D<=2 71, balanced D>=3 10153; max pi = 3.41561656994e+25 maximizers: A5^25 A4 (up to isomorphism: 1) MATCH
+n=286 spiders: D<=2 2, balanced D>=3 10294; max pi = 4.19654607285e+25 maximizers: A5^21 A4^6 (up to isomorphism: 1) MATCH
+n=287 spiders: D<=2 72, balanced D>=3 10296; max pi = 5.16354294e+25 maximizers: A5^26 (up to isomorphism: 1) MATCH
+n=288 spiders: D<=2 2, balanced D>=3 10438; max pi = 6.34435446119e+25 maximizers: A5^22 A4^5 (up to isomorphism: 1) MATCH
+n=289 spiders: D<=2 72, balanced D>=3 10440; max pi = 7.79680272992e+25 maximizers: C A5^26 (up to isomorphism: 1) MATCH
+n=290 spiders: D<=2 2, balanced D>=3 10583; max pi = 9.59141173271e+25 maximizers: A5^23 A4^4 (up to isomorphism: 1) MATCH
+n=291 spiders: D<=2 73, balanced D>=3 10585; max pi = 1.17812292287e+26 maximizers: A5^19 A4^9 (up to isomorphism: 1) MATCH
+n=292 spiders: D<=2 2, balanced D>=3 10729; max pi = 1.45003097885e+26 maximizers: A5^24 A4^3 (up to isomorphism: 1) MATCH
+n=293 spiders: D<=2 73, balanced D>=3 10731; max pi = 1.78115140831e+26 maximizers: A5^20 A4^8 (up to isomorphism: 1) MATCH
+n=294 spiders: D<=2 2, balanced D>=3 10876; max pi = 2.19215711459e+26 maximizers: A5^25 A4^2 (up to isomorphism: 1) MATCH
+n=295 spiders: D<=2 74, balanced D>=3 10878; max pi = 2.69284123309e+26 maximizers: A5^21 A4^7 (up to isomorphism: 1) MATCH
+n=296 spiders: D<=2 2, balanced D>=3 11024; max pi = 3.31410087736e+26 maximizers: A5^26 A4 (up to isomorphism: 1) MATCH
+n=297 spiders: D<=2 74, balanced D>=3 11026; max pi = 4.07118029423e+26 maximizers: A5^22 A4^6 (up to isomorphism: 1) MATCH
+n=298 spiders: D<=2 2, balanced D>=3 11173; max pi = 5.01025025897e+26 maximizers: A5^27 (up to isomorphism: 1) MATCH
+n=299 spiders: D<=2 75, balanced D>=3 11175; max pi = 6.15502185517e+26 maximizers: A5^23 A4^5 (up to isomorphism: 1) MATCH
+n=300 spiders: D<=2 2, balanced D>=3 11323; max pi = 7.56355087172e+26 maximizers: C A5^27 (up to isomorphism: 1) MATCH
+n=301 spiders: D<=2 75, balanced D>=3 11325; max pi = 9.30547483333e+26 maximizers: A5^24 A4^4 (up to isomorphism: 1) MATCH
+n=302 spiders: D<=2 2, balanced D>=3 11474; max pi = 1.14284200128e+27 maximizers: A5^20 A4^9 (up to isomorphism: 1) MATCH
+n=303 spiders: D<=2 76, balanced D>=3 11476; max pi = 1.40684792334e+27 maximizers: A5^25 A4^3 (up to isomorphism: 1) MATCH
+n=304 spiders: D<=2 2, balanced D>=3 11626; max pi = 1.72786270756e+27 maximizers: A5^21 A4^8 (up to isomorphism: 1) MATCH
+n=305 spiders: D<=2 76, balanced D>=3 11628; max pi = 2.12694100292e+27 maximizers: A5^26 A4^2 (up to isomorphism: 1) MATCH
+n=306 spiders: D<=2 2, balanced D>=3 11779; max pi = 2.61235364632e+27 maximizers: A5^22 A4^7 (up to isomorphism: 1) MATCH
+n=307 spiders: D<=2 77, balanced D>=3 11781; max pi = 3.21561027438e+27 maximizers: A5^27 A4 (up to isomorphism: 1) MATCH
+n=308 spiders: D<=2 2, balanced D>=3 11933; max pi = 3.94961174346e+27 maximizers: A5^23 A4^6 (up to isomorphism: 1) MATCH
+n=309 spiders: D<=2 77, balanced D>=3 11935; max pi = 4.86150845441e+27 maximizers: A5^28 (up to isomorphism: 1) MATCH
+n=310 spiders: D<=2 2, balanced D>=3 12088; max pi = 5.97140517713e+27 maximizers: A5^24 A4^5 (up to isomorphism: 1) MATCH
+n=311 spiders: D<=2 78, balanced D>=3 12090; max pi = 7.33739604923e+27 maximizers: C A5^28 (up to isomorphism: 1) MATCH
+n=312 spiders: D<=2 2, balanced D>=3 12244; max pi = 9.02814182634e+27 maximizers: A5^25 A4^4 (up to isomorphism: 1) MATCH
+n=313 spiders: D<=2 78, balanced D>=3 12246; max pi = 1.10863730393e+28 maximizers: A5^21 A4^9 (up to isomorphism: 1) MATCH
+n=314 spiders: D<=2 2, balanced D>=3 12401; max pi = 1.36495993173e+28 maximizers: A5^26 A4^3 (up to isomorphism: 1) MATCH
+n=315 spiders: D<=2 79, balanced D>=3 12403; max pi = 1.67619478137e+28 maximizers: A5^22 A4^8 (up to isomorphism: 1) MATCH
+n=316 spiders: D<=2 2, balanced D>=3 12559; max pi = 2.06367417614e+28 maximizers: A5^27 A4^2 (up to isomorphism: 1) MATCH
+n=317 spiders: D<=2 79, balanced D>=3 12561; max pi = 2.53430686182e+28 maximizers: A5^23 A4^7 (up to isomorphism: 1) MATCH
+n=318 spiders: D<=2 2, balanced D>=3 12718; max pi = 3.12005358409e+28 maximizers: A5^28 A4 (up to isomorphism: 1) MATCH
+n=319 spiders: D<=2 80, balanced D>=3 12720; max pi = 3.83171882983e+28 maximizers: A5^24 A4^6 (up to isomorphism: 1) MATCH
+n=320 spiders: D<=2 2, balanced D>=3 12878; max pi = 4.71718242217e+28 maximizers: A5^29 (up to isomorphism: 1) MATCH
+n=321 spiders: D<=2 80, balanced D>=3 12880; max pi = 5.79332356263e+28 maximizers: A5^25 A4^5 (up to isomorphism: 1) MATCH
+n=322 spiders: D<=2 2, balanced D>=3 13039; max pi = 7.11810732166e+28 maximizers: C A5^29 (up to isomorphism: 1) MATCH
+n=323 spiders: D<=2 81, balanced D>=3 13041; max pi = 8.75914375872e+28 maximizers: A5^26 A4^4 (up to isomorphism: 1) MATCH
+n=324 spiders: D<=2 2, balanced D>=3 13201; max pi = 1.0754735832e+29 maximizers: A5^22 A4^9 (up to isomorphism: 1) MATCH
+n=325 spiders: D<=2 81, balanced D>=3 13203; max pi = 1.32432702193e+29 maximizers: A5^27 A4^3 (up to isomorphism: 1) MATCH
+n=326 spiders: D<=2 2, balanced D>=3 13364; max pi = 1.62609507818e+29 maximizers: A5^23 A4^8 (up to isomorphism: 1) MATCH
+n=327 spiders: D<=2 82, balanced D>=3 13366; max pi = 2.00229721648e+29 maximizers: A5^28 A4^2 (up to isomorphism: 1) MATCH
+n=328 spiders: D<=2 2, balanced D>=3 13528; max pi = 2.45862254652e+29 maximizers: A5^24 A4^7 (up to isomorphism: 1) MATCH
+n=329 spiders: D<=2 82, balanced D>=3 13530; max pi = 3.02734253447e+29 maximizers: A5^29 A4 (up to isomorphism: 1) MATCH
+n=330 spiders: D<=2 2, balanced D>=3 13693; max pi = 3.71738481722e+29 maximizers: A5^25 A4^6 (up to isomorphism: 1) MATCH
+n=331 spiders: D<=2 83, balanced D>=3 13695; max pi = 4.57714106901e+29 maximizers: A5^30 (up to isomorphism: 1) MATCH
+n=332 spiders: D<=2 2, balanced D>=3 13859; max pi = 5.62060308645e+29 maximizers: A5^26 A4^5 (up to isomorphism: 1) MATCH
+n=333 spiders: D<=2 83, balanced D>=3 13861; max pi = 6.90546344903e+29 maximizers: C A5^30 (up to isomorphism: 1) MATCH
+n=334 spiders: D<=2 2, balanced D>=3 14026; max pi = 8.49822156222e+29 maximizers: A5^27 A4^4 (up to isomorphism: 1) MATCH
+n=335 spiders: D<=2 84, balanced D>=3 14028; max pi = 1.04331708836e+30 maximizers: A5^23 A4^9 (up to isomorphism: 1) MATCH
+n=336 spiders: D<=2 2, balanced D>=3 14194; max pi = 1.28491061443e+30 maximizers: A5^28 A4^3 (up to isomorphism: 1) MATCH
+n=337 spiders: D<=2 84, balanced D>=3 14196; max pi = 1.5775132124e+30 maximizers: A5^24 A4^8 (up to isomorphism: 1) MATCH
+n=338 spiders: D<=2 2, balanced D>=3 14363; max pi = 1.9427526877e+30 maximizers: A5^29 A4^2 (up to isomorphism: 1) MATCH
+n=339 spiders: D<=2 85, balanced D>=3 14365; max pi = 2.385225495e+30 maximizers: A5^25 A4^7 (up to isomorphism: 1) MATCH
+n=340 spiders: D<=2 2, balanced D>=3 14533; max pi = 2.93739163871e+30 maximizers: A5^30 A4 (up to isomorphism: 1) MATCH
+n=341 spiders: D<=2 85, balanced D>=3 14535; max pi = 3.60649747553e+30 maximizers: A5^26 A4^6 (up to isomorphism: 1) MATCH
+n=342 spiders: D<=2 2, balanced D>=3 14704; max pi = 4.44125719352e+30 maximizers: A5^31 (up to isomorphism: 1) MATCH
+n=343 spiders: D<=2 86, balanced D>=3 14706; max pi = 5.45307629864e+30 maximizers: A5^27 A4^5 (up to isomorphism: 1) MATCH
+n=344 spiders: D<=2 2, balanced D>=3 14876; max pi = 6.69956764971e+30 maximizers: A6 A5^30 (up to isomorphism: 1) MATCH
+n=345 spiders: D<=2 86, balanced D>=3 14878; max pi = 8.24512544777e+30 maximizers: A5^28 A4^4 (up to isomorphism: 1) MATCH
+n=346 spiders: D<=2 2, balanced D>=3 15049; max pi = 1.01213544916e+31 maximizers: A5^24 A4^9 (up to isomorphism: 1) MATCH
+n=347 spiders: D<=2 87, balanced D>=3 15051; max pi = 1.24667345529e+31 maximizers: A5^29 A4^3 (up to isomorphism: 1) MATCH
+n=348 spiders: D<=2 2, balanced D>=3 15223; max pi = 1.53040080339e+31 maximizers: A5^25 A4^8 (up to isomorphism: 1) MATCH
+n=349 spiders: D<=2 87, balanced D>=3 15225; max pi = 1.88498504047e+31 maximizers: A5^30 A4^2 (up to isomorphism: 1) MATCH
+n=350 spiders: D<=2 2, balanced D>=3 15398; max pi = 2.31404340862e+31 maximizers: A5^26 A4^7 (up to isomorphism: 1) MATCH
+n=351 spiders: D<=2 88, balanced D>=3 15400; max pi = 2.8501180854e+31 maximizers: A5^31 A4 (up to isomorphism: 1) MATCH
+n=352 spiders: D<=2 2, balanced D>=3 15574; max pi = 3.49894878078e+31 maximizers: A5^27 A4^6 (up to isomorphism: 1) MATCH
+n=353 spiders: D<=2 88, balanced D>=3 15576; max pi = 4.30940737059e+31 maximizers: A5^32 (up to isomorphism: 1) MATCH
+n=354 spiders: D<=2 2, balanced D>=3 15751; max pi = 5.2905818229e+31 maximizers: A5^28 A4^5 (up to isomorphism: 1) MATCH
+n=355 spiders: D<=2 89, balanced D>=3 15753; max pi = 6.5007863157e+31 maximizers: A6 A5^31 (up to isomorphism: 1) MATCH
+n=356 spiders: D<=2 2, balanced D>=3 15929; max pi = 7.99961437646e+31 maximizers: A5^29 A4^4 (up to isomorphism: 1) MATCH
+n=357 spiders: D<=2 89, balanced D>=3 15931; max pi = 9.81897576083e+31 maximizers: A5^25 A4^9 (up to isomorphism: 1) MATCH
+n=358 spiders: D<=2 2, balanced D>=3 16108; max pi = 1.209579548e+32 maximizers: A5^30 A4^3 (up to isomorphism: 1) MATCH
+n=359 spiders: D<=2 90, balanced D>=3 16110; max pi = 1.48471133689e+32 maximizers: A5^26 A4^8 (up to isomorphism: 1) MATCH
+n=360 spiders: D<=2 2, balanced D>=3 16288; max pi = 1.8289405274e+32 maximizers: A5^31 A4^2 (up to isomorphism: 1) MATCH
+n=361 spiders: D<=2 90, balanced D>=3 16290; max pi = 2.24500670449e+32 maximizers: A5^27 A4^7 (up to isomorphism: 1) MATCH
+n=362 spiders: D<=2 2, balanced D>=3 16469; max pi = 2.76544163721e+32 maximizers: A5^32 A4 (up to isomorphism: 1) MATCH
+n=363 spiders: D<=2 91, balanced D>=3 16471; max pi = 3.39463465445e+32 maximizers: A5^28 A4^6 (up to isomorphism: 1) MATCH
+n=364 spiders: D<=2 2, balanced D>=3 16651; max pi = 4.18147183928e+32 maximizers: A5^33 (up to isomorphism: 1) MATCH
+n=365 spiders: D<=2 91, balanced D>=3 16653; max pi = 5.13296400501e+32 maximizers: A5^29 A4^5 (up to isomorphism: 1) MATCH
+n=366 spiders: D<=2 2, balanced D>=3 16834; max pi = 6.30789638405e+32 maximizers: A6 A5^32 (up to isomorphism: 1) MATCH
+n=367 spiders: D<=2 92, balanced D>=3 16836; max pi = 7.76145559253e+32 maximizers: A5^30 A4^4 (up to isomorphism: 1) MATCH
+n=368 spiders: D<=2 2, balanced D>=3 17018; max pi = 9.5257357399e+32 maximizers: A5^26 A4^9 (up to isomorphism: 1) MATCH
+n=369 spiders: D<=2 92, balanced D>=3 17020; max pi = 1.17359409265e+33 maximizers: A5^31 A4^3 (up to isomorphism: 1) MATCH
+n=370 spiders: D<=2 2, balanced D>=3 17203; max pi = 1.44040004455e+33 maximizers: A5^27 A4^8 (up to isomorphism: 1) MATCH
+n=371 spiders: D<=2 93, balanced D>=3 17205; max pi = 1.77456712575e+33 maximizers: A5^32 A4^2 (up to isomorphism: 1) MATCH
+n=372 spiders: D<=2 2, balanced D>=3 17389; max pi = 2.17804834879e+33 maximizers: A5^28 A4^7 (up to isomorphism: 1) MATCH
+n=373 spiders: D<=2 93, balanced D>=3 17391; max pi = 2.6832845365e+33 maximizers: A5^33 A4 (up to isomorphism: 1) MATCH
+n=374 spiders: D<=2 2, balanced D>=3 17576; max pi = 3.29345473473e+33 maximizers: A5^29 A4^6 (up to isomorphism: 1) MATCH
+n=375 spiders: D<=2 94, balanced D>=3 17578; max pi = 4.05733439405e+33 maximizers: A5^34 (up to isomorphism: 1) MATCH
+n=376 spiders: D<=2 2, balanced D>=3 17764; max pi = 4.9800726022e+33 maximizers: A5^30 A4^5 (up to isomorphism: 1) MATCH
+n=377 spiders: D<=2 94, balanced D>=3 17766; max pi = 6.12072400818e+33 maximizers: A6 A5^33 (up to isomorphism: 1) MATCH
+n=378 spiders: D<=2 2, balanced D>=3 17953; max pi = 7.530424207e+33 maximizers: A5^31 A4^4 (up to isomorphism: 1) MATCH
+n=379 spiders: D<=2 95, balanced D>=3 17955; max pi = 9.2413466665e+33 maximizers: A5^27 A4^9 (up to isomorphism: 1) MATCH
+n=380 spiders: D<=2 2, balanced D>=3 18143; max pi = 1.13868343099e+34 maximizers: A5^32 A4^3 (up to isomorphism: 1) MATCH
+n=381 spiders: D<=2 95, balanced D>=3 18145; max pi = 1.39742379832e+34 maximizers: A5^28 A4^8 (up to isomorphism: 1) MATCH
+n=382 spiders: D<=2 2, balanced D>=3 18334; max pi = 1.72181446676e+34 maximizers: A5^33 A4^2 (up to isomorphism: 1) MATCH
+n=383 spiders: D<=2 96, balanced D>=3 18336; max pi = 2.11310370987e+34 maximizers: A5^29 A4^7 (up to isomorphism: 1) MATCH
+n=384 spiders: D<=2 2, balanced D>=3 18526; max pi = 2.60357141692e+34 maximizers: A5^34 A4 (up to isomorphism: 1) MATCH
+n=385 spiders: D<=2 96, balanced D>=3 18528; max pi = 3.19531217377e+34 maximizers: A5^30 A4^6 (up to isomorphism: 1) MATCH
+n=386 spiders: D<=2 2, balanced D>=3 18719; max pi = 3.93688227923e+34 maximizers: A5^35 (up to isomorphism: 1) MATCH
+n=387 spiders: D<=2 97, balanced D>=3 18721; max pi = 4.83176250598e+34 maximizers: A5^31 A4^5 (up to isomorphism: 1) MATCH
+n=388 spiders: D<=2 2, balanced D>=3 18913; max pi = 5.93910036939e+34 maximizers: A6 A5^34 (up to isomorphism: 1) MATCH
+n=389 spiders: D<=2 97, balanced D>=3 18915; max pi = 7.30630282312e+34 maximizers: A5^32 A4^4 (up to isomorphism: 1) MATCH
+n=390 spiders: D<=2 2, balanced D>=3 19108; max pi = 8.96553130287e+34 maximizers: A5^28 A4^9 (up to isomorphism: 1) MATCH
+n=391 spiders: D<=2 98, balanced D>=3 19110; max pi = 1.10481499665e+35 maximizers: A5^33 A4^3 (up to isomorphism: 1) MATCH
+n=392 spiders: D<=2 2, balanced D>=3 19304; max pi = 1.35574101707e+35 maximizers: A5^29 A4^8 (up to isomorphism: 1) MATCH
+n=393 spiders: D<=2 98, balanced D>=3 19306; max pi = 1.67063377041e+35 maximizers: A5^34 A4^2 (up to isomorphism: 1) MATCH
+n=394 spiders: D<=2 2, balanced D>=3 19501; max pi = 2.05011042769e+35 maximizers: A5^30 A4^7 (up to isomorphism: 1) MATCH
+n=395 spiders: D<=2 99, balanced D>=3 19503; max pi = 2.52622922023e+35 maximizers: A5^35 A4 (up to isomorphism: 1) MATCH
+n=396 spiders: D<=2 2, balanced D>=3 19699; max pi = 3.10011345659e+35 maximizers: A5^31 A4^6 (up to isomorphism: 1) MATCH
+n=397 spiders: D<=2 99, balanced D>=3 19701; max pi = 3.82000608656e+35 maximizers: A5^36 (up to isomorphism: 1) MATCH
+n=398 spiders: D<=2 2, balanced D>=3 19898; max pi = 4.6878934929e+35 maximizers: A5^32 A4^5 (up to isomorphism: 1) MATCH
+n=399 spiders: D<=2 100, balanced D>=3 19900; max pi = 5.76286154721e+35 maximizers: A6 A5^35 (up to isomorphism: 1) MATCH
+n=400 spiders: D<=2 2, balanced D>=3 20098; max pi = 7.08888119676e+35 maximizers: A5^33 A4^4 (up to isomorphism: 1) MATCH
+n=401 spiders: D<=2 100, balanced D>=3 20100; max pi = 8.69802234539e+35 maximizers: A5^29 A4^9 (up to isomorphism: 1) MATCH
+n=402 spiders: D<=2 2, balanced D>=3 20299; max pi = 1.07195726932e+36 maximizers: A5^34 A4^3 (up to isomorphism: 1) MATCH
+n=403 spiders: D<=2 101, balanced D>=3 20301; max pi = 1.31531158323e+36 maximizers: A5^30 A4^8 (up to isomorphism: 1) MATCH
+n=404 spiders: D<=2 2, balanced D>=3 20501; max pi = 1.62097778479e+36 maximizers: A5^35 A4^2 (up to isomorphism: 1) MATCH
+n=405 spiders: D<=2 101, balanced D>=3 20503; max pi = 1.98900829694e+36 maximizers: A5^31 A4^7 (up to isomorphism: 1) MATCH
+n=406 spiders: D<=2 2, balanced D>=3 20704; max pi = 2.45118711763e+36 maximizers: A5^36 A4 (up to isomorphism: 1) MATCH
+n=407 spiders: D<=2 102, balanced D>=3 20706; max pi = 3.00776823792e+36 maximizers: A5^32 A4^6 (up to isomorphism: 1) MATCH
+n=408 spiders: D<=2 2, balanced D>=3 20908; max pi = 3.70659965587e+36 maximizers: A5^37 (up to isomorphism: 1) MATCH
+n=409 spiders: D<=2 102, balanced D>=3 20910; max pi = 4.54832999859e+36 maximizers: A5^33 A4^5 (up to isomorphism: 1) MATCH
+n=410 spiders: D<=2 2, balanced D>=3 21113; max pi = 5.59184839033e+36 maximizers: A6 A5^36 (up to isomorphism: 1) MATCH
+n=411 spiders: D<=2 103, balanced D>=3 21115; max pi = 6.87795592605e+36 maximizers: A5^34 A4^4 (up to isomorphism: 1) MATCH
+n=412 spiders: D<=2 2, balanced D>=3 21319; max pi = 8.43856189635e+36 maximizers: A5^30 A4^9 (up to isomorphism: 1) MATCH
+n=413 spiders: D<=2 103, balanced D>=3 21321; max pi = 1.04007973262e+37 maximizers: A5^35 A4^3 (up to isomorphism: 1) MATCH
+n=414 spiders: D<=2 2, balanced D>=3 21526; max pi = 1.276096768e+37 maximizers: A5^31 A4^8 (up to isomorphism: 1) MATCH
+n=415 spiders: D<=2 104, balanced D>=3 21528; max pi = 1.57280072956e+37 maximizers: A5^36 A4^2 (up to isomorphism: 1) MATCH
+n=416 spiders: D<=2 2, balanced D>=3 21734; max pi = 1.92973916148e+37 maximizers: A5^32 A4^7 (up to isomorphism: 1) MATCH
+n=417 spiders: D<=2 104, balanced D>=3 21736; max pi = 2.37837643505e+37 maximizers: A5^37 A4 (up to isomorphism: 1) MATCH
+n=418 spiders: D<=2 2, balanced D>=3 21943; max pi = 2.91818919424e+37 maximizers: A5^33 A4^6 (up to isomorphism: 1) MATCH
+n=419 spiders: D<=2 105, balanced D>=3 21945; max pi = 3.59655997858e+37 maximizers: A5^38 (up to isomorphism: 1) MATCH
+n=420 spiders: D<=2 2, balanced D>=3 22153; max pi = 4.41294091148e+37 maximizers: A5^34 A4^5 (up to isomorphism: 1) MATCH
+n=421 spiders: D<=2 105, balanced D>=3 22155; max pi = 5.42590638859e+37 maximizers: A6 A5^37 (up to isomorphism: 1) MATCH
+n=422 spiders: D<=2 2, balanced D>=3 22364; max pi = 6.673330166e+37 maximizers: A5^35 A4^4 (up to isomorphism: 1) MATCH
+n=423 spiders: D<=2 106, balanced D>=3 22366; max pi = 8.18690098787e+37 maximizers: A5^31 A4^9 (up to isomorphism: 1) MATCH
+n=424 spiders: D<=2 2, balanced D>=3 22576; max pi = 1.00915283496e+38 maximizers: A5^36 A4^3 (up to isomorphism: 1) MATCH
+n=425 spiders: D<=2 106, balanced D>=3 22578; max pi = 1.23805916362e+38 maximizers: A5^32 A4^8 (up to isomorphism: 1) MATCH
+n=426 spiders: D<=2 2, balanced D>=3 22789; max pi = 1.52605824283e+38 maximizers: A5^37 A4^2 (up to isomorphism: 1) MATCH
+n=427 spiders: D<=2 107, balanced D>=3 22791; max pi = 1.8722468185e+38 maximizers: A5^33 A4^7 (up to isomorphism: 1) MATCH
+n=428 spiders: D<=2 2, balanced D>=3 23003; max pi = 2.30773058212e+38 maximizers: A5^38 A4 (up to isomorphism: 1) MATCH
+n=429 spiders: D<=2 107, balanced D>=3 23005; max pi = 2.83129188858e+38 maximizers: A5^34 A4^6 (up to isomorphism: 1) MATCH
+n=430 spiders: D<=2 2, balanced D>=3 23218; max pi = 3.48978710422e+38 maximizers: A5^39 (up to isomorphism: 1) MATCH
+n=431 spiders: D<=2 108, balanced D>=3 23220; max pi = 4.28159938326e+38 maximizers: A5^35 A4^5 (up to isomorphism: 1) MATCH
+n=432 spiders: D<=2 2, balanced D>=3 23434; max pi = 5.26488554673e+38 maximizers: A6 A5^38 (up to isomorphism: 1) MATCH
+n=433 spiders: D<=2 108, balanced D>=3 23436; max pi = 6.47481336444e+38 maximizers: A5^36 A4^4 (up to isomorphism: 1) MATCH
+n=434 spiders: D<=2 2, balanced D>=3 23651; max pi = 7.94289555853e+38 maximizers: A6^2 A5^37 (up to isomorphism: 1) MATCH
+n=435 spiders: D<=2 109, balanced D>=3 23653; max pi = 9.79147953026e+38 maximizers: A5^37 A4^3 (up to isomorphism: 1) MATCH
+n=436 spiders: D<=2 2, balanced D>=3 23869; max pi = 1.20116262174e+39 maximizers: A5^33 A4^8 (up to isomorphism: 1) MATCH
+n=437 spiders: D<=2 109, balanced D>=3 23871; max pi = 1.4807073311e+39 maximizers: A5^38 A4^2 (up to isomorphism: 1) MATCH
+n=438 spiders: D<=2 2, balanced D>=3 24088; max pi = 1.81647693076e+39 maximizers: A5^34 A4^7 (up to isomorphism: 1) MATCH
+n=439 spiders: D<=2 110, balanced D>=3 24090; max pi = 2.23918498421e+39 maximizers: A5^39 A4 (up to isomorphism: 1) MATCH
+n=440 spiders: D<=2 2, balanced D>=3 24308; max pi = 2.74699464633e+39 maximizers: A5^35 A4^6 (up to isomorphism: 1) MATCH
+n=441 spiders: D<=2 110, balanced D>=3 24310; max pi = 3.38618404956e+39 maximizers: A5^40 (up to isomorphism: 1) MATCH
+n=442 spiders: D<=2 2, balanced D>=3 24529; max pi = 4.15418265381e+39 maximizers: A5^36 A4^5 (up to isomorphism: 1) MATCH
+n=443 spiders: D<=2 111, balanced D>=3 24531; max pi = 5.10864025996e+39 maximizers: A6 A5^39 (up to isomorphism: 1) MATCH
+n=444 spiders: D<=2 2, balanced D>=3 24751; max pi = 6.28222101645e+39 maximizers: A5^37 A4^4 (up to isomorphism: 1) MATCH
+n=445 spiders: D<=2 111, balanced D>=3 24753; max pi = 7.70725989886e+39 maximizers: A6^2 A5^38 (up to isomorphism: 1) MATCH
+n=446 spiders: D<=2 2, balanced D>=3 24974; max pi = 9.50037357528e+39 maximizers: A5^38 A4^3 (up to isomorphism: 1) MATCH
+n=447 spiders: D<=2 112, balanced D>=3 24976; max pi = 1.16537219697e+40 maximizers: A5^34 A4^8 (up to isomorphism: 1) MATCH
+n=448 spiders: D<=2 2, balanced D>=3 25198; max pi = 1.43670632191e+40 maximizers: A5^39 A4^2 (up to isomorphism: 1) MATCH
+n=449 spiders: D<=2 112, balanced D>=3 25200; max pi = 1.76237694606e+40 maximizers: A5^35 A4^7 (up to isomorphism: 1) MATCH
+n=450 spiders: D<=2 2, balanced D>=3 25423; max pi = 2.1726770176e+40 maximizers: A5^40 A4 (up to isomorphism: 1) MATCH
+n=451 spiders: D<=2 113, balanced D>=3 25425; max pi = 2.66521844048e+40 maximizers: A5^36 A4^6 (up to isomorphism: 1) MATCH
+n=452 spiders: D<=2 2, balanced D>=3 25649; max pi = 3.28565671059e+40 maximizers: A5^41 (up to isomorphism: 1) MATCH
+n=453 spiders: D<=2 113, balanced D>=3 25651; max pi = 4.03057188848e+40 maximizers: A5^37 A4^5 (up to isomorphism: 1) MATCH
+n=454 spiders: D<=2 2, balanced D>=3 25876; max pi = 4.95702919181e+40 maximizers: A6 A5^40 (up to isomorphism: 1) MATCH
+n=455 spiders: D<=2 114, balanced D>=3 25878; max pi = 6.0953744348e+40 maximizers: A5^38 A4^4 (up to isomorphism: 1) MATCH
+n=456 spiders: D<=2 2, balanced D>=3 26104; max pi = 7.47860665246e+40 maximizers: A6^2 A5^39 (up to isomorphism: 1) MATCH
+n=457 spiders: D<=2 114, balanced D>=3 26106; max pi = 9.21794181009e+40 maximizers: A5^39 A4^3 (up to isomorphism: 1) MATCH
+n=458 spiders: D<=2 2, balanced D>=3 26333; max pi = 1.13065409486e+41 maximizers: A5^35 A4^8 (up to isomorphism: 1) MATCH
+n=459 spiders: D<=2 115, balanced D>=3 26335; max pi = 1.39401481891e+41 maximizers: A5^40 A4^2 (up to isomorphism: 1) MATCH
+n=460 spiders: D<=2 2, balanced D>=3 26563; max pi = 1.7098960226e+41 maximizers: A5^36 A4^7 (up to isomorphism: 1) MATCH
+n=461 spiders: D<=2 115, balanced D>=3 26565; max pi = 2.10814594714e+41 maximizers: A5^41 A4 (up to isomorphism: 1) MATCH
+n=462 spiders: D<=2 2, balanced D>=3 26794; max pi = 2.58588678507e+41 maximizers: A5^37 A4^6 (up to isomorphism: 1) MATCH
+n=463 spiders: D<=2 116, balanced D>=3 26796; max pi = 3.18811377699e+41 maximizers: A5^42 (up to isomorphism: 1) MATCH
+n=464 spiders: D<=2 2, balanced D>=3 27026; max pi = 3.91065202633e+41 maximizers: A5^38 A4^5 (up to isomorphism: 1) MATCH
+n=465 spiders: D<=2 116, balanced D>=3 27028; max pi = 4.80991515437e+41 maximizers: A6 A5^41 (up to isomorphism: 1) MATCH
+n=466 spiders: D<=2 2, balanced D>=3 27259; max pi = 5.91410053459e+41 maximizers: A5^39 A4^4 (up to isomorphism: 1) MATCH
+n=467 spiders: D<=2 117, balanced D>=3 27261; max pi = 7.25672970762e+41 maximizers: A6^2 A5^40 (up to isomorphism: 1) MATCH
+n=468 spiders: D<=2 2, balanced D>=3 27493; max pi = 8.94392387402e+41 maximizers: A5^40 A4^3 (up to isomorphism: 1) MATCH
+n=469 spiders: D<=2 117, balanced D>=3 27495; max pi = 1.09697562379e+42 maximizers: A5^36 A4^8 (up to isomorphism: 1) MATCH
+n=470 spiders: D<=2 2, balanced D>=3 27728; max pi = 1.35259365907e+42 maximizers: A5^41 A4^2 (up to isomorphism: 1) MATCH
+n=471 spiders: D<=2 118, balanced D>=3 27730; max pi = 1.65898495978e+42 maximizers: A5^37 A4^7 (up to isomorphism: 1) MATCH
+n=472 spiders: D<=2 2, balanced D>=3 27964; max pi = 2.04553286655e+42 maximizers: A5^42 A4 (up to isomorphism: 1) MATCH
+n=473 spiders: D<=2 118, balanced D>=3 27966; max pi = 2.50892563578e+42 maximizers: A5^38 A4^6 (up to isomorphism: 1) MATCH
+n=474 spiders: D<=2 2, balanced D>=3 28201; max pi = 3.09346664924e+42 maximizers: A5^43 (up to isomorphism: 1) MATCH
+n=475 spiders: D<=2 119, balanced D>=3 28203; max pi = 3.79431163788e+42 maximizers: A5^39 A4^5 (up to isomorphism: 1) MATCH
+n=476 spiders: D<=2 2, balanced D>=3 28439; max pi = 4.6671649911e+42 maximizers: A6 A5^42 (up to isomorphism: 1) MATCH
+n=477 spiders: D<=2 119, balanced D>=3 28441; max pi = 5.73823163035e+42 maximizers: A5^40 A4^4 (up to isomorphism: 1) MATCH
+n=478 spiders: D<=2 2, balanced D>=3 28678; max pi = 7.04142894651e+42 maximizers: A6^2 A5^41 (up to isomorphism: 1) MATCH
+n=479 spiders: D<=2 120, balanced D>=3 28680; max pi = 8.67806743206e+42 maximizers: A5^41 A4^3 (up to isomorphism: 1) MATCH
+n=480 spiders: D<=2 2, balanced D>=3 28918; max pi = 1.06430515027e+43 maximizers: A5^37 A4^8 (up to isomorphism: 1) MATCH
+n=481 spiders: D<=2 120, balanced D>=3 28920; max pi = 1.3124048719e+43 maximizers: A5^42 A4^2 (up to isomorphism: 1) MATCH
+n=482 spiders: D<=2 2, balanced D>=3 29159; max pi = 1.60959613359e+43 maximizers: A5^38 A4^7 (up to isomorphism: 1) MATCH
+n=483 spiders: D<=2 121, balanced D>=3 29161; max pi = 1.98478064092e+43 maximizers: A5^43 A4 (up to isomorphism: 1) MATCH
+n=484 spiders: D<=2 2, balanced D>=3 29401; max pi = 2.43426329688e+43 maximizers: A5^39 A4^6 (up to isomorphism: 1) MATCH
+n=485 spiders: D<=2 121, balanced D>=3 29403; max pi = 3.00162935809e+43 maximizers: A5^44 (up to isomorphism: 1) MATCH
+n=486 spiders: D<=2 2, balanced D>=3 29644; max pi = 3.68144279133e+43 maximizers: A5^40 A4^5 (up to isomorphism: 1) MATCH
+n=487 spiders: D<=2 122, balanced D>=3 29646; max pi = 4.52864946219e+43 maximizers: A6 A5^43 (up to isomorphism: 1) MATCH
+n=488 spiders: D<=2 2, balanced D>=3 29888; max pi = 5.56760524434e+43 maximizers: A5^41 A4^4 (up to isomorphism: 1) MATCH
+n=489 spiders: D<=2 122, balanced D>=3 29890; max pi = 6.83251008266e+43 maximizers: A6^2 A5^42 (up to isomorphism: 1) MATCH
+n=490 spiders: D<=2 2, balanced D>=3 30133; max pi = 8.4201279009e+43 maximizers: A5^42 A4^3 (up to isomorphism: 1) MATCH
+n=491 spiders: D<=2 123, balanced D>=3 30135; max pi = 1.03261205713e+44 maximizers: A5^38 A4^8 (up to isomorphism: 1) MATCH
+# balanced spiders with D>=3, 4<=n<=491: 4961739 (at most 30135 for one n, at n=491)
+# spiders with D<=2, 4<=n<=491: 15617
+# compared with ../results_dp_491.txt: 488 values of n, mismatches: 0
+# RESULT: PASS

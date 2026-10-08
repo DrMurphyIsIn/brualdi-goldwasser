@@ -1,7 +1,7 @@
 # hull_prefilter_check: re-check of the floating-point prefilters of the two hull searches
 
 **Paper items:** Theorem `thm:bg-small` (the paragraph "Exact arithmetic" in the section on the exact
-hull computation; program `../bg_hull_dp/dp.py`) and Lemma `lem:nu-small-cv` with Remark `rem:nu-dp`
+hull computation; program `../bg_hull_dp/dp.py`) and Lemma `lem:nu-small-cv` with Appendix C, item C16
 (program `../nu_hull_search/hulldp2.py`). Role: part of the proof (it certifies the one floating-point step
 of each search).
 
