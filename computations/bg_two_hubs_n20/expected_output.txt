@@ -1,0 +1,13 @@
+recursion = per L / prod deg on all 94 trees with 2..9 vertices
+pi(T0) = 124461/2048 = 60.7719726562
+trees on 20 vertices: 823065
+trees with pi > pi(T0): 3; trees with pi = pi(T0): 1 (T0 itself: True)
+  better: pi = 162567/2560 = 63.5027343750, degrees [6, 5, 2, 2, 2, 2]...
+  better: pi = 452709/7168 = 63.1569475446, degrees [7, 4, 2, 2, 2, 2]...
+  better: pi = 127575/2048 = 62.2924804688, degrees [8, 3, 2, 2, 2, 2]...
+exchange ball of radius 2 around T0: 3048 trees (T0 included)
+  better tree 0: radius-1 ball 28 trees; meets the radius-2 ball of T0: False
+  better tree 1: radius-1 ball 31 trees; meets the radius-2 ball of T0: False
+  better tree 2: radius-1 ball 28 trees; meets the radius-2 ball of T0: False
+every better tree is at exchange distance >= 4 from T0: True
+T0 beats every other tree within three edge exchanges: True

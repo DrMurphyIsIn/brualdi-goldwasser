@@ -1,6 +1,6 @@
 # lam_first_order -- sharpest first-order degree potential (Randic limit)
 
-**Paper item:** the remark after Theorem `thm:lam-randic` (the Randic limit), part (b): the sharpest
+**Paper item:** the paragraph after Theorem `thm:lam-randic` (the Randic limit), part (b): the sharpest
 first-order degree potential, recomputed by value iteration. Role: confirmation only; no proof uses it.
 
 ## What is checked

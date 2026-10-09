@@ -37,3 +37,10 @@ PASS (2026-10-04): both programs give the same per-c minima (0.037242, 0.031043,
 Q(13) >= 0.018608, all at least the values stated in the proposition. For `prop:bg-high` the interval
 value of delta_0 - mu_0^2/(4 kappa) is 0.0124458, so the constant 0.012445 used in the paper is a valid
 lower bound (the line printed by `certify.py`, `>= 0.012446`, is rounded to nearest).
+
+## Subfolder added in October 2026
+
+- [`tail_values/`](tail_values/): prints the tail values m_c + w_c(y(A_31)), 2 <= c <= 9, which both
+  `../bg_rate/certify.py` and `gapcheck.py` include in their per-c minimum without printing them. It runs the
+  definitions of both programs unchanged; the two agree, and every value is at least 0.028829 (smallest at
+  c = 7), as stated in the proposition (Appendix C, item C2).

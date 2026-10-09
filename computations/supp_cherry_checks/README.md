@@ -49,3 +49,11 @@ group inequality and of the lemma; all elasticities minus n/2 are <= 0.
 ## Dependencies
 
 Python 3.9 or later, `sympy` (1.14.0), `python-flint` (0.6.0).
+
+## Subfolder added in October 2026
+
+- [`lemma_exact/`](lemma_exact/): the unmatched-vertices lemma checked in exact rational arithmetic, by a program
+  written in October 2026 with its own enumeration of rooted trees: all 53,272 planted branches with at most
+  14 vertices at lambda in {2, 3, 10, 100, 10^6} (slack exactly 0 only at the cherry), and all 7,813 branches
+  with at most 12 vertices at lambda in {1/2, 7/10, 4/5, 1} (the lemma holds at 4/5 and 1 and fails at 7/10
+  and 1/2). Confirmation only.

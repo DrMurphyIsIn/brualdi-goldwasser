@@ -20,7 +20,7 @@ coefficients, of degree up to 77. The shared routine `cert.py`:
 | program | certificates | paper |
 |---|---|---|
 | `polychecks.py` | P1 (S2, degree 13), P2 (S3, degree 9; and 1 - kappa y4 > 0), P3 (S4 in s = sqrt(1-t), degree 51, with the auxiliary facts on rhohat and Theta'), P4-P6 (S5), P8 (S6, lambda >= 2, degree 6); also the exact identity e^{6 Dmax} = 32768/19683 < 1.291^2 | Table `tab:lam-polycert-hd` |
-| `s6_hand.py` | P7: (S6) at f* = f_3 on lambda in [0.1282, 0.9538], Taylor order 5, numerator degree 77; also D(3) > 0 and u_3^hi > 0 (degrees 7, 24) | |
+| `s6_hand.py` | P7: (S6) at f* = f_3 on lambda in [0.1282, 0.9537] (t <= 0.3229, that is lambda <= 0.95377), Taylor order 5, numerator degree 77; also D(3) > 0 and u_3^hi > 0 (degrees 7, 24) | |
 | `w2_poly.py` | P9: G_3(3/43) <= -0.0065183... < 0 by an exact rational upper bound; P10: the 28 statements (U1)-(U8), N^2_m and N^C_m for 5 <= m <= 13, on (0, 3/43] | |
 
 Program output labels: T1, T2, T4, T5, T6 are (U1), (U2), (U4), (U5), (U6); the four `aux:` lines are the facts
