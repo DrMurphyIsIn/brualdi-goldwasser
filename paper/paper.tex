@@ -62,7 +62,7 @@
 a complete answer to a question of Brualdi and Goldwasser,\\
 kernel-checked in Lean}
 \author{Peter W.\ Murphy, MD}
-\date{26 September 2026 \quad (preprint, not yet refereed)}
+\date{9 October 2026 \quad (preprint, not yet refereed)}
 
 \begin{document}
 \maketitle
@@ -1036,8 +1036,10 @@ $n=2319$.
 
 \begin{inlean}
 \lean{BGSpiderTable.lean} proves the soundness of the check (\lean{spider\_opt\_of\_check}); the table
-itself is \lean{BGSpiderTableData.tabData}, and the 89 generated files \lean{BGSpiderTableChunk\_*} run
-the check for between two and $28$ sizes each (the first covers $4\le n\le105$), assembled by \lean{BGSpiderTableAll.spider\_opt\_table}. The table
+itself is \lean{BGSpiderTableData.tabData}, and the 46 generated files \lean{BGSpiderTableChunk\_*} run
+the check for between three and $130$ sizes each (the first covers $4\le n\le133$), as small kernel
+declarations for each $n$ (the table value, blocks of rows, and the remaining cases) glued into the check
+for that $n$; \lean{BGSpiderTableAll.spider\_opt\_table} assembles them. The table
 rows are printed in \cref{app:table}, generated from the Lean file itself.
 \end{inlean}
 
@@ -1169,9 +1171,15 @@ modules: \lean{TreePaths} proves that every Mathlib tree is isomorphic to the pa
 \lean{TreeBridge} proves that this path graph is the realized graph; and \lean{BGStatement} proves that the
 Laplacian ratio is invariant under graph isomorphism and assembles the two theorems.
 
-\paragraph{What is not claimed in Lean.} The Lean theorem gives \emph{a} maximizer. That it is unique up
-to isomorphism (except at $n=21$) is established by exact computation for $n\le491$ (\cref{sec:indep})
-and for $n\ge2320$ by an exact rational certificate, but uniqueness is not formalized.
+\paragraph{Uniqueness.} The theorem above gives \emph{a} maximizer. That it is unique up to isomorphism
+(except at $n=21$, where exactly two non-isomorphic trees attain the maximum) was first established by
+exact computation for $n\le491$ (\cref{sec:indep}) and for $n\ge2320$ by an exact rational certificate. It
+is now also formalized, in the separate library \texttt{formalization/BGUnique}, and checked by Lean's
+kernel (\lean{bg\_maximizer\_unique\_mathlib} for $n\ne21$ and \lean{bg\_maximizers\_21\_mathlib} for
+$n=21$, stated with Mathlib's \lean{IsTree}, \lean{lapMatrix} and graph isomorphism). A Comparator
+challenge for it is in the repository: Comparator confirms that the solution proves exactly the
+challenge's statements with the standard axioms, but its kernel replays were not completed, so no
+second-kernel verdict is claimed for uniqueness.
 
 %=====================================================================================================
 \section{Certificates and Telperion}\label{sec:telperion}
@@ -1216,7 +1224,7 @@ formalization:
 \toprule
 family & Lean files & content \\
 \midrule
-\texttt{spider\_table} & 91 & table rows and the per-$n$ sweep, $n\le491$ \\
+\texttt{spider\_table} & 48 & table rows and the per-$n$ sweep, $n\le491$ \\
 \texttt{envcert\_g149} & 57 & envelope tables, tangents, spider bounds, $7\le n\le149$ \\
 \texttt{mid\_cells} & 45 & credited rate cells and root knapsacks, $150\le n\le491$ \\
 \texttt{cand\_certs} & 10 & the 223 polynomial certificates, $n\ge492$ \\
@@ -1263,9 +1271,13 @@ entirely different methods.
   \lean{brualdi\_goldwasser\_attained} with \lean{sorry} and imports only the definitions of the answer.
   Comparator checks that the solution proves exactly those statements, using only the three standard
   axioms, and replays the exported proof both in Lean's kernel and in nanoda~\cite{nanoda}, an
-  independent implementation of the Lean kernel in Rust. This check has passed: on 27 September 2026 both
-  kernels accepted the solution (5.1 hours, 63\,GB peak memory; run on macOS, where Comparator's Linux
-  sandbox was replaced by a pass-through shim).
+  independent implementation of the Lean kernel in Rust. This check has passed twice. On 27 September 2026,
+  at commit \texttt{295d0ac}, both kernels accepted the solution (5.1 hours, 63\,GB peak memory). On
+  8 October 2026 it was re-run at commit \texttt{a77678d}, after the spider-table checks were split into
+  small per-$n$ kernel declarations, and both kernels again accepted the solution (2.7 hours, 56\,GB peak
+  memory). Both runs were on macOS, where Comparator's Linux sandbox was replaced by a pass-through shim,
+  and Comparator has not yet been run in CI. These results refer to the proof terms of the two commits named; every
+  later commit is checked by Lean's kernel in the ordinary build.
 \item \emph{Spider optimization.} An exhaustive exact optimization over the spider family for
   $n\le2400$, together with an exact rational certificate for $n\ge2320$, agrees with the table and the
   rule; an exact Pareto dynamic programme over the family with no balance assumption agrees for
@@ -1473,8 +1485,6 @@ definitions and the statement mean what the paper says, is exactly the part that
   the method. A direct argument that every maximizer is a spider, for all $n$, would be more
   illuminating than the certificates, and would probably say something about when cavity-recursion
   optimizers are ``star-shaped''.
-\item \emph{Uniqueness in Lean.} Uniqueness (except at $n=21$) is known by computation and certificate
-  but not formalized.
 \item \emph{The interpolating family $\pi_\alpha$.} Which trees maximize $\pi_\alpha$, and where does the
   maximizer change shape?
 \item \emph{Constrained versions.} Trees of maximum degree at most $\Delta$ (the rate cells of
@@ -1493,7 +1503,8 @@ definitions and the statement mean what the paper says, is exactly the part that
   reviewer should check.
 \item The proof is long and mostly computational. We do not have a short conceptual proof that the
   maximizer is a spider, only per-vertex inequalities verified by certificate.
-\item Uniqueness is not formalized.
+\item Uniqueness is checked by Lean's kernel only; the second-kernel check covers the maximum and the
+  maximizer, not uniqueness.
 \item The trusted base is the Lean kernel, Mathlib's definitions of the permanent and of simple graphs,
   and our definitions listed in \cref{sec:lean}.
 \item The full build needs a machine with about $96$\,GB of memory (the heaviest certificate file alone
@@ -1505,13 +1516,15 @@ definitions and the statement mean what the paper says, is exactly the part that
 The repository \url{https://github.com/DrMurphyIsIn/brualdi-goldwasser} contains the Lean project
 (Lean \texttt{v4.32.0}, Mathlib), the certificate generators with their frozen outputs, the Telperion
 engine, the source of this paper and a project page with an interactive version of \cref{thm:main}
-(\url{https://drmurphyisin.github.io/brualdi-goldwasser/}). Releases are archived at Zenodo; this version
-of the paper accompanies release \texttt{v1.2.0}, DOI
-\href{https://doi.org/10.5281/zenodo.23046040}{10.5281/zenodo.23046040} (all versions:
-\href{https://doi.org/10.5281/zenodo.22983412}{10.5281/zenodo.22983412}).
+(\url{https://drmurphyisin.github.io/brualdi-goldwasser/}). Releases are archived at Zenodo under the
+concept DOI \href{https://doi.org/10.5281/zenodo.22983412}{10.5281/zenodo.22983412}, which always resolves
+to the latest release. The repository also contains a separate small Lean project,
+\texttt{formalization/cherry}, on a weighted family $\pi_\lambda$ (an extra weight $\lambda$ on every
+matched edge, $\lambda=1$ being $\pi$); it is not needed for, and does not change, the theorem of this paper.
 \begin{verbatim}
 cd formalization && lake exe cache get && ./build.sh
 lake env lean AxiomGuard.lean
+lake build BGUnique            # uniqueness (a separate library)
 certificates/verify.sh         # regenerate all certificates, compare
 certificates/verify.sh --full  # also the certified search, n <= 491
 \end{verbatim}
