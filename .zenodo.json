@@ -16,7 +16,7 @@
     "Lean 4",
     "formal verification"
   ],
-  "version": "v1.4.3",
+  "version": "v1.4.4",
   "related_identifiers": [
     {
       "identifier": "https://github.com/DrMurphyIsIn/brualdi-goldwasser",
