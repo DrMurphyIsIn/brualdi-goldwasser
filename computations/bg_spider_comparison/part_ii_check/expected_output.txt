@@ -22,4 +22,4 @@
 23   3.133626e-04    317   | 6.190000e-04
 smallest margin in (ii), 316 <= n <= 491: 3.1336e-04 at k=23, n=317
 (iii) min Lambda_sp(n), 25 <= n <= 315: [0.1206255240 +/- 3.07e-11] at n=313; >= 0.1206255: True
-Lemma bg-compare(ii): OK
+comparison with explicit spiders, part (ii): OK

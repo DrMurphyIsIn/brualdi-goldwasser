@@ -16,7 +16,8 @@ Recurrences:
     M_n     = max_k max_{(P,Q) in B[n-1][k]} P + Q/k
 where K(S) = the points of S that maximise some STRICTLY positive linear functional over S
 (upper-right hull vertices plus points on hull edges, identical values merged, all trees kept).
-Correctness: see the paper, Section 5 (prop:bgx-dp).  Every tree attaining M_n is recovered.
+Correctness: the recurrences are bilinear with positive coefficients, so a point maximising a strictly
+positive functional is built only from such points; pruning to K loses no maximiser.  Every tree attaining M_n is recovered.
 
 Arithmetic: a float prefilter discards a candidate only when a float convex combination of two
 other candidates certifiably dominates it by a relative margin 2*TAU in BOTH coordinates;

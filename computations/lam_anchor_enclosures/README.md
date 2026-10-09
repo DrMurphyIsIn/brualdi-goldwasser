@@ -1,14 +1,15 @@
 # lam_anchor_enclosures: the constants of the anchor at lambda_c = 1 + sqrt 5
 
-**Paper item:** Proposition `prop:lam-anchor` (the anchor; part (A) of `thm:lam-uniform`), the
-enclosures `eq:lam-anchor-num` and every decimal in its proof. Role: part of the proof (numerical inputs
+**What it checks:** for the weighted family pi_lambda at the anchor activity lambda_c = 1 + sqrt 5, the
+hand proof that the hinge h(y) = kappa (y - y_C)_+ is a witness at the cherry rate f* = log phi: its exact
+identities and every decimal constant it uses, enclosed rigorously. Role: part of a proof (numerical inputs
 of a hand proof).
 
 ## What is checked
 
 `anchor_enclosures.py`:
 
-- **[A] exact identities (sympy):** the identities `eq:lam-anchor-id` (lambda_c = 2 phi,
+- **[A] exact identities (sympy):** the exact identities of the anchor (lambda_c = 2 phi,
   1 + lambda_c/2 = phi^2, 1 + lambda_c = phi^3, y_C = 1/(2 phi^2), lambda_c y_C = 1/phi, ...),
   2 phi^-2 = 3 - sqrt5, h(1/2) = f*/2, y_v(y_C) = phi^-2 and y_v(1/2) = 1/(2+phi) for m = 1,
   1 + lambda_c m y_C/(m+1) = (m phi + 1)/(m+1), the kink positions (1 + lambda_c - m)/(lambda_c m), the
@@ -46,7 +47,7 @@ About 1 s, 60 MB.
 
 PASS (Python 3.9.6, sympy 1.14.0, mpmath 1.3.0, python-flint 0.6.0). All values agree with the text.
 See also `../supp_cherry_checks/lamc_hand_check.py`, which encloses a subset of these constants in Arb
-(a confirmation for the supplement).
+(a separate confirmation).
 
 ## Dependencies
 

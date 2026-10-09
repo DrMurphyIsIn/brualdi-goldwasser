@@ -1,7 +1,7 @@
 # bg_two_hubs_n20: the two-hub tree on 20 vertices
 
-**Paper item.** Section 4, the paragraph after Corollary `cor:bg-shape` (local exchanges alone do not exclude
-two hubs). **Role: confirmation only**; no proof uses it.
+**What it checks.** That local exchanges alone do not exclude a maximizer with two hubs: a two-hub tree on 20
+vertices is not a maximizer but beats every tree within three edge exchanges of it. **Role: confirmation only**; no proof uses it.
 
 **Provenance.** Written in October 2026.
 

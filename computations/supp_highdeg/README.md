@@ -1,7 +1,8 @@
 # supp_highdeg: the high-degree certificates of part (B)
 
-**Paper item.** Lemma `lem:lam-polycert-hd` ("High-degree certificates: an independent confirmation",
-computer-verified; in the supplement from v21) and Remark `rem:lam-polycert-hd`. **Role: supplement proof route, a confirmation** of `lem:lam-polycert`
+**What this is.** High-degree polynomial certificates (degree up to 77) for the scalar conditions of part (B),
+an independent confirmation. **Role: confirmation-route proof, a confirmation** of the low-degree row
+certificates in `../lam_partB_rows/`
 (the proof of part (B) does not use it); on [0.1282, 3/20] it also shows that W_1 is a witness there.
 
 ## What is checked
@@ -19,7 +20,7 @@ coefficients, of degree up to 77. The shared routine `cert.py`:
 
 | program | certificates | paper |
 |---|---|---|
-| `polychecks.py` | P1 (S2, degree 13), P2 (S3, degree 9; and 1 - kappa y4 > 0), P3 (S4 in s = sqrt(1-t), degree 51, with the auxiliary facts on rhohat and Theta'), P4-P6 (S5), P8 (S6, lambda >= 2, degree 6); also the exact identity e^{6 Dmax} = 32768/19683 < 1.291^2 | Table `tab:lam-polycert-hd` |
+| `polychecks.py` | P1 (S2, degree 13), P2 (S3, degree 9; and 1 - kappa y4 > 0), P3 (S4 in s = sqrt(1-t), degree 51, with the auxiliary facts on rhohat and Theta'), P4-P6 (S5), P8 (S6, lambda >= 2, degree 6); also the exact identity e^{6 Dmax} = 32768/19683 < 1.291^2 | as tabulated |
 | `s6_hand.py` | P7: (S6) at f* = f_3 on lambda in [0.1282, 0.9537] (t <= 0.3229, that is lambda <= 0.95377), Taylor order 5, numerator degree 77; also D(3) > 0 and u_3^hi > 0 (degrees 7, 24) | |
 | `w2_poly.py` | P9: G_3(3/43) <= -0.0065183... < 0 by an exact rational upper bound; P10: the 28 statements (U1)-(U8), N^2_m and N^C_m for 5 <= m <= 13, on (0, 3/43] | |
 

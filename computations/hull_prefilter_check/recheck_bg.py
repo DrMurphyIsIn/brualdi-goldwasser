@@ -1,4 +1,4 @@
-"""Re-check of the floating-point prefilter of ../bg_hull_dp/dp.py (thm:bg-small).
+"""Re-check of the floating-point prefilter of ../bg_hull_dp/dp.py (exact maxima M_n, n <= 491).
 
 Runs the recursion of dp.py (its own functions, imported unchanged: float_survivors, exact_K, Hull,
 intern) and, for every bundle class B[s][c], certifies with certify_drop.py that no candidate

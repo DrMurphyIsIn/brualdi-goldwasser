@@ -1,4 +1,4 @@
-"""Second implementation, exact checks for Lemma lem:lam-polycert. Program names: C2 = P2, C4-C6 = P4-P6, C9 = P9.
+"""Second implementation, exact checks for the low-degree certificates of part (B). Program names: C2 = P2, C4-C6 = P4-P6, C9 = P9.
  (1) C2 polynomial P: expansion, derivation, Bernstein coefficients on [0, 6181/10000];
 (2) C4-C6 Bernstein; (3) e^{6 Dmax} identity and the constant 1.291; (4) monotonicity of every atom and every
 endpoint-evaluated helper; (5) G2 series coefficients; (6) C9 = G3(3/43) < 0; (7) endpoint facts (1/phi, lambda_c,

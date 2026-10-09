@@ -1,4 +1,4 @@
-"""The two-hub tree on 20 vertices (Section 4, paragraph after Corollary cor:bg-shape).
+"""The two-hub tree on 20 vertices (local exchanges alone do not exclude two hubs).
 
 Written in October 2026.
 

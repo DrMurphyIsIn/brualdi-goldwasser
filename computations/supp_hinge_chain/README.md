@@ -1,11 +1,10 @@
 # supp_hinge_chain: the hinge on [1+sqrt5, 100] and the chain route on [100, 2000]
 
-**Paper items.** Supplement: the cells of the hinge witness on [1+sqrt5, 100] (paragraph "Cells" of
-`sec:lam-covers`, and `rem:lam-uniform`), and the remark "what the chain route certified"
-(`rem:lam-large-check`).
+**What this is.** The cells of the hinge witness for the sharp ceiling on [1+sqrt5, 100], and the chain
+route (induction with expanded chains) for the sharp ceiling on [100, 2000].
 
 **Role.** Confirmations. Part (A) of the uniform ceiling theorem is proved by hand (the anchor
-`prop:lam-anchor` at 1+sqrt5 and the monotonicity argument beyond); these computations enter no proof.
+at 1+sqrt5 and the monotonicity argument beyond); these computations enter no proof.
 
 ## What is checked
 
@@ -14,7 +13,7 @@
   Phi_m(lambda, ybar) <= 0 on ybar in [0, 1/2], with lambda an interval variable on
   [3.236067977, 100]; `mpmath.iv` with outward rounding, bisection of (lambda, ybar) boxes. The paper
   states 20 564 boxes.
-- `certify_large.py`: on [100, 2000], the induction with expanded chains (`prop:lam-large-ind`): for each
+- `certify_large.py`: on [100, 2000], the induction with expanded chains: for each
   lambda-box a witness U = min(0, l_1, ..., l_n) is read off an untrusted linear program (`scipy`), and the
   remaining instances of the checks (B), (R) and (T) are verified with lambda and the messages as interval
   variables (`mpmath.iv`, 30 digits). The paper states 57 lambda-boxes, 516 062 cells, every inequality

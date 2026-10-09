@@ -1,4 +1,4 @@
-[control 5] Lemma lem:bgx-counts: xi from the table (PASS expected) and xi = Xi + 1/1000 (FAIL expected)
+[control 5] count exchanges: xi from the table (PASS expected) and xi = Xi + 1/1000 (FAIL expected)
    exchange      Xi          xi (table)  xi<=Xi signs  row     | xi=Xi+1e-3  xi<=Xi signs  row
    11A1->3A5     1.937833    1937/1000 True   True   PASS    | 1.938833    False  True   FAIL
    11A2->5A5     1.264441      158/125 True   True   PASS    | 1.265441    False  True   FAIL

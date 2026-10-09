@@ -1,4 +1,4 @@
-positive control: unchanged conditions give 63 rows (paper: 63)
+positive control: unchanged conditions give 63 rows (expected: 63)
 Each condition minus c, with c just above its value at t* (t* = a + (b-a)/4, (a+b)/2, a + 3(b-a)/4 on its range [a, b]):
    P1 (S2)                t* =   6181/40000  c =  0.057541961  rejected (cannot start at 0)
    P1 (S2)                t* =   6181/20000  c =  0.069193668  rejected (cannot start at 0)

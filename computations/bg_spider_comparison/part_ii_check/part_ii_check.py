@@ -1,11 +1,11 @@
-"""Second check of Lemma bg-compare(ii), from the printed table tab:bg-rate (ball arithmetic, Arb 256 bits).
+"""Second check of part (ii) of the comparison with explicit spiders, from the printed rate table (ball arithmetic, Arb 256 bits).
 
-Lemma bg-compare(ii): for 3 <= k <= 23 and n >= 316,
+Part (ii): for 3 <= k <= 23 and n >= 316,
     Psi_k - eta_{k-1} (n-1) < Lambda_sp(n)   for n <= 491,   and   Psi_k - eta_{k-1} (n-1) < 0.11218  for n >= 347,
-where Lambda_sp(n) = log pi - (n-1) F*, F* = log(621/64)/11, for the spider listed for n in the appendix table
-(its pi is the exact maximum M_n).  Given the upper bounds Psi_k and the exact rates eta_{k-1} of table
-tab:bg-rate, part (ii) is a finite comparison; this program makes it with:
-  * Psi_k and eta_{k-1} as printed in tab:bg-rate (typed in below from the paper);
+where Lambda_sp(n) = log pi - (n-1) F*, F* = log(621/64)/11, for the spider listed for n in the table of maximizers
+(its pi is the exact maximum M_n).  Given the upper bounds Psi_k and the exact rates eta_{k-1} of the
+rate table, part (ii) is a finite comparison; this program makes it with:
+  * Psi_k and eta_{k-1} as printed in the rate table (typed in below);
   * M_n (n <= 491) read as exact rationals from ../bg_hull_dp/results_dp_491.txt;
   * every logarithm and comparison in Arb ball arithmetic (python-flint, 256 bits); a comparison whose ball
     contains 0 counts as a failure.
@@ -24,7 +24,7 @@ from flint import arb
 flint.ctx.prec = 256
 HERE = os.path.dirname(os.path.abspath(__file__))
 
-# table tab:bg-rate: k -> (eta_{k-1}, Psi_k upper bound), as printed
+# rate table: k -> (eta_{k-1}, Psi_k upper bound), as printed
 TABLE = {
     2: ("2791/2500000", "0.29989"), 3: ("2791/2500000", "0.27126"), 4: ("2791/2500000", "0.26579"),
     5: ("2791/2500000", "0.26031"), 6: ("2791/2500000", "0.25484"), 7: ("9387/10000000", "0.24772"),
@@ -75,7 +75,7 @@ def main():
     lmin = min(range(25, 316), key=lambda n: Lam[n].mid())
     print(f"(iii) min Lambda_sp(n), 25 <= n <= 315: {Lam[lmin].mid().str(10)} at n={lmin}; >= 0.1206255: {Lam[lmin] >= A('0.1206255')}")
     ok &= bool(Lam[lmin] >= A("0.1206255"))
-    print("Lemma bg-compare(ii):", "OK" if ok else "FAILED")
+    print("comparison with explicit spiders, part (ii):", "OK" if ok else "FAILED")
 
 
 if __name__ == "__main__":

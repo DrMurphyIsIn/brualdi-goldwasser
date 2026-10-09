@@ -1,11 +1,11 @@
 """RIGOROUS (mpmath.iv, outward rounding; exact rationals for Z, x): the comparison with explicit spiders
-(paper: lem:bg-Gamma, rate gaps Gamma_K; lem:bg-compare (i) and (iii)).
+(rate gaps Gamma_K; the comparison with explicit spiders, parts (i) and (iii)).
 
-Setting (paper, lem:bg-rate): for cap C = k-1 and H = h - eta_C w,
+Setting (the rate potential at lambda = 1): for cap C = k-1 and H = h - eta_C w,
   g(R) = eta|R| + H(x_R) + delta^H(R),  delta^H(R) = sum of per-vertex rate slacks >= 0.
 For a maximizer T (n >= 7) rooted at a vertex r of maximum degree k <= 23 that is not a spider centre:
   every minimal non-atom (w.r.t. r) is an end hub [C^c A_s^m1 A_{s+1}^m2] (c+m1+m2>=2, m1+m2>=1) or a stalk [A_j],
-  j<=4 (paper, the shapes of minimal non-atoms in Section 4); its branch B has delta^H(B) >= gamma_C := min over these shapes.
+  j<=4 (the possible shapes of minimal non-atoms); its branch B has delta^H(B) >= gamma_C := min over these shapes.
   Case A (>=2 non-atom branches at r):  Phi <= Psi_k - eta N - 2 gamma.
   Case B (exactly one, Q):  Phi <= Psi'_k - eta N - gamma,
      Psi'_k = max over the k-1 atoms at r (no leaves if k>=3; arms balanced) and x_Q in [0,1/2] of

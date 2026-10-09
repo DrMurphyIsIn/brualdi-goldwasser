@@ -1,8 +1,9 @@
 # supp_cherry_checks: checks of the anchor at 1+sqrt5 and of the unmatched-vertices lemma
 
-**Paper items.** Supplement, remarks "checks of the anchor" (`rem:lam-anchor-check`, for
-`prop:lam-anchor`) and "checks of the lemma" (`rem:lam-cherry-check`, for `lem:lam-monomer` and
-`cor:lam-monotone`).
+**What this is.** Checks of the hand proof of the sharp ceiling at the single activity lambda_c = 1+sqrt5
+(the anchor), and of the unmatched-vertices lemma (for lambda >= 2, the expected number of unmatched
+vertices of a planted branch on n vertices is at least 2n/(2+lambda)) and of the monotonicity in lambda
+that follows from it.
 
 **Role.** Confirmations of statements proved by hand; no proof uses them.
 
@@ -14,7 +15,7 @@
   m = 2 kink value, the placement of the m = 1 critical points and the m = 1 maximum, and f_j < log phi for
   j <= 2000; (3) g(b) >= h(y_b) on every non-leaf planted branch with at most 16 vertices (376 463
   branches), with equality only at the cherry.
-- `lemma_M_check.py`: the group identity and inequality of Case 2 of `lem:lam-monomer` on 200 000 random
+- `lemma_M_check.py`: the group identity and inequality of Case 2 of the proof of the unmatched-vertices lemma on 200 000 random
   parameter values (lambda >= 2), and the lemma on all planted branches with at most 12 vertices at
   lambda in {2, 3.236, 10, 1e3, 1e5}.
 - `monotone_ratio.py`: the monotonicity of T_b(lambda)/(2+lambda)^{n/2} (elasticity <= n/2) on all planted

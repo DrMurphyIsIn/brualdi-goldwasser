@@ -1,4 +1,4 @@
-"""Second implementation of the 63 rows of Lemma lem:lam-polycert(a) (low-degree certificates of part (B)).
+"""Second implementation of the 63 interval rows of the low-degree certificates of part (B).
 Written separately from handatoms.py, lowdeg_tables.py and the other programs of this folder; it reads only their
 output files ../lowdeg_tables.out (the claimed boxes and lower bounds) and ../lowdeg_atoms.out (the tabulated atom
 values) in order to compare.

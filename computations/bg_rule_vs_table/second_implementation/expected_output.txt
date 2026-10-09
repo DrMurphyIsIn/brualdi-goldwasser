@@ -18,7 +18,7 @@ rule != table for n >= 300:
   n = 412: rule A5^35 A6^2, table A4^9 A5^30
   n = 423: rule A5^36 A6^2, table A4^9 A5^31
 failures for n >= 300: 16 sizes [300, 302, 311, 313, 322, 324, 333, 335, 346, 357, 368, 379, 390, 401, 412, 423]
-matches the paper's list of 16 sizes: True
+matches the stated list of 16 sizes: True
 rule == table for every 424 <= n <= 456: True
 rule == table for every 424 <= n <= 491: True
 n = 423 is a failure: True

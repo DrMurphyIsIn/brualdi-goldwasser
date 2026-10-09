@@ -1,6 +1,6 @@
 # supp_partB_numerics: numerical confirmations of the witnesses W_1 and W_2
 
-**Paper item.** Remark `rem:lam-B-check` ("numerical confirmations"). **Role: confirmation only**; none of
+**What this is.** Numerical confirmations that W_1 and W_2 are witnesses for part (B). **Role: confirmation only**; none of
 this is used in any proof. These are floating-point scans and enumerations, not certificates.
 
 ## What is checked

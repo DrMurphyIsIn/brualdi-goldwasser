@@ -1,4 +1,4 @@
-"""Second check of Lemma bg-constants (a)-(d) and table tab:bg-junction, in Arb ball arithmetic
+"""Second check of the constants at lambda = 1, (a)-(d), and the junction table, in Arb ball arithmetic
 (python-flint, 256 bits), from the definitions in the text:
     F* = log(621/64)/11,  q = 3/23,  beta = 2F* - log(3/2),  kappa = beta/(1/3 - q)^2,
     gamma = (3/2)(F* - beta),  s = 2 kappa (1/3 - q),  r_c = 3/(4c+3),  p = 1 + q,
@@ -63,7 +63,7 @@ b2 = s - A(Fr(3, 7)) + gamma * A(Fr(9, 49)); show("s - 3/7 + gamma (3/7)^2", b2)
 b3 = 1 - 2 * kappa / 3 * (1 - 2 * q); show("1 - (2 kappa/3)(1-2q)", b3); lt(A("0.907"), b3, "> 0.907")
 b4 = gamma - A(Fr(3, 43)) - 2 * kappa * q * A(Fr(9, 1849)); show("gamma - 3/43 - 2 kappa q (3/43)^2", b4); lt(A("0.228"), b4, "> 0.228")
 lt(s, gamma, "gamma > s")
-lines.append("(c) table tab:bg-junction")
+lines.append("(c) junction table")
 TAB = {2: ("-0.1930", "-0.1925", "0.0293", "0.0298", "0.0173", "0.0178"),
        3: ("-0.1232", "-0.1228", "0.0991", "0.0997", "0.0054", "0.0059"),
        4: ("-0.0819", "-0.0814", "0.1404", "0.1410", "0.0007", "0.0011"),
@@ -92,4 +92,4 @@ show("Q(10)", Q)
 lt(A("0.0030"), Q, "0.0030 < Q(10)")
 lt(Q, A("0.0033"), "Q(10) < 0.0033")
 print("\n".join(lines))
-print("Lemma bg-constants (a)-(d):", "OK" if ok else "FAILED")
+print("constants at lambda = 1, (a)-(d):", "OK" if ok else "FAILED")

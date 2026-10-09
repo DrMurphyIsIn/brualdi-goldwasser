@@ -1,6 +1,6 @@
 # bg_best_spider/negative_controls: the count exchanges must reject xi = Xi + 10^-3
 
-**Paper item:** Lemma `lem:bgx-counts` (count exchanges; computer-verified), the table of twelve exchanges.
+**What it checks:** that the check of the twelve count exchanges (`../tab.py`) rejects a wrong input.
 Role: negative control (a deliberately wrong input that the check must reject); no proof uses it.
 
 ## What is checked

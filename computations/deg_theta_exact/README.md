@@ -1,8 +1,8 @@
 # deg_theta_exact: the exact constants of the bounded-degree certificates, and the rule lists
 
-**Paper items:** Lemma `lem:deg-cert34` (Delta = 3, 4: the printed theta values), Lemma
-`lem:deg-cert567` (Delta = 5, 6, 7: "the target intervals cover the parent ranges exactly" and the rule
-counts 1116, 4505, 12753), Appendix C, item C17. Role: a re-check of part of a proof (the
+**What this checks:** the typed-potential certificates for bounded maximum degree: for Delta = 3, 4 the
+printed theta values of the hand potentials; for Delta = 5, 6, 7 that the target intervals cover the parent
+ranges exactly, and the rule counts 1116, 4505, 12753. Role: a re-check of part of a proof (the
 certificates themselves are verified in `../deg_certificates/`).
 
 ## What is checked
@@ -11,7 +11,7 @@ certificates themselves are verified in `../deg_certificates/`).
 
 1. theta_L = F - log(1 + eta) and theta_C = 2F - log(3/2) - log(1 + eta/3) (and, for Delta = 6, 7,
    theta_{A5} = g(A_5) - log(1 + 3 eta/23)) are enclosed in Arb (300 bits) from their definitions. The
-   values printed in `lem:deg-cert34` (theta_L = -0.0476, theta_C = -0.1000 for Delta = 3; 0.0149, -0.0684
+   printed values for Delta = 3, 4 (theta_L = -0.0476, theta_C = -0.1000 for Delta = 3; 0.0149, -0.0684
    for Delta = 4) are their roundings to four decimals; they are used exactly (as enclosures) by the
    programs. For Delta = 6, 7 the definition of theta_{A5} makes the identity rule C^5 -> A_5 exact.
 2. theta_I: the printed -0.0813 (Delta = 3) and -0.0391 (Delta = 4) are exact decimals, used as the exact
@@ -25,7 +25,7 @@ certificates themselves are verified in `../deg_certificates/`).
    with every possible parent type: C for the single child L, A_5 for C^5, otherwise every interval type
    meeting the exact parent range [1/(m+1+Rmax), 1/(m+1+Rmin)]). In exact rational arithmetic: the
    partitions of I_Delta and J_Delta are contiguous with the exact window endpoints; every parent range lies
-   in its window of `lem:deg-windows` (I_Delta for one non-leaf child, J_Delta for two or more children);
+   in its message window (I_Delta for one non-leaf child, J_Delta for two or more children);
    every parent range is covered exactly by its targets; and the numbers of rules are 14, 34, 1116, 4505,
    12753, as stated. For Delta = 6, 7 the branch L L C C (message 3/23) gets an interval type, as stated.
 
@@ -70,7 +70,7 @@ all other theta are the exact dyadic rationals of the certificates.
 | 7 | A2 | [119/270, 83/180] | 29965309731/1099511627776 | 0.0272532904 |
 | 7 | A3 | [83/180, 13/27] | 3460677303/68719476736 | 0.0503594827 |
 
-For Delta = 3, 4 (`lem:deg-cert34`): theta_I = -813/10000 resp. -391/10000 (exact), theta_J = theta_C,
+For Delta = 3, 4 (hand potentials): theta_I = -813/10000 resp. -391/10000 (exact), theta_J = theta_C,
 theta_L = -0.0476181928 resp. 0.0149315677, theta_C = -0.1000106411 resp. -0.0683953681 (defined by
 logarithms; ten decimals shown).
 

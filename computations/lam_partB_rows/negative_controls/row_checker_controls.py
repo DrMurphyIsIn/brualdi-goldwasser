@@ -1,4 +1,4 @@
-"""Negative controls for the row checker of Lemma lam-polycert(a) (../lowdeg_tables.py).
+"""Negative controls for the row checker of the low-degree certificates of part (B) (../lowdeg_tables.py).
 
 The checker accepts a row (a box [t1, t2] for one condition) only if the interval lower bound of the condition
 on the box is positive and at least 30% of its value at the midpoint, and builds each table greedily (P10: by
@@ -10,7 +10,7 @@ every condition used in the proof (P1, P3, P7, P8 and the nine conditions of P10
 c slightly above its value at a point t* of its range (so the lowered condition is negative at t*), for three
 points t* per condition.  Each such table must be rejected ("cannot start" for the greedy tables; for P10 the
 halving reaches the minimum box width 1e-6 and stops).
-Positive control: the unchanged conditions are run through the same code and give the 63 rows of the paper.
+Positive control: the unchanged conditions are run through the same code and give the 63 stated rows.
 
 Written in October 2026 as an additional check.
 Usage: python3 row_checker_controls.py      (from this folder)
@@ -74,7 +74,7 @@ allok = True
 total = 0
 for name, f, a, b, kind in TABLES:
     total += len(build(kind, f, a, b))
-print(f"positive control: unchanged conditions give {total} rows (paper: 63)")
+print(f"positive control: unchanged conditions give {total} rows (expected: 63)")
 allok &= (total == 63)
 
 # B. each condition lowered below its value at one point

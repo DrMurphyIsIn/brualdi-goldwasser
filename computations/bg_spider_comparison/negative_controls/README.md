@@ -1,4 +1,4 @@
-# Negative control: spider comparison (lem:bg-compare(i))
+# Negative control: spider comparison, part (i)
 
 `nc_spider_comparison.py` reruns the comparison V_k(n) - eta_{k-1}(n-1) < Lambda_sp(n) of the
 spider-comparison lemma for k = 9 and 10 with the programs of the parent folder.

@@ -1,5 +1,5 @@
-"""Checks of the anchor (prop:lam-anchor; rem:lam-anchor-check): hand proof of the ceiling at the single point lam_c = 1+sqrt5) -- verification of every identity and constant.
-Proof (prop:lam-anchor): pooled hinge witness U(y) = -kap (y - y_ch)^+, kap = phi log phi, F* = L = log phi.
+"""Checks of the anchor (hand proof of the ceiling at the single point lam_c = 1+sqrt5) -- verification of every identity and constant.
+Proof (anchor): pooled hinge witness U(y) = -kap (y - y_ch)^+, kap = phi log phi, F* = L = log phi.
 This script checks:
  (1) exact identities (sympy):  1+lam/2 = phi^2, 1+lam = phi^3, 2+lam = 2 phi^2, y_ch = 1/(2 phi^2), 1 + lam y_ch = phi,
      1/2 - y_ch = 1/(2 phi), 2 phi + 1 = phi^3, 1 + lam m y_ch/(m+1) = (m phi + 1)/(m+1).

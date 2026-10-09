@@ -1,4 +1,4 @@
-"""Parse the maximizer table (table_maximizers.tex, the appendix table of the paper) and compute exact Phi*(n) = log pi(T_n) - (n-1) lambda
+"""Parse the maximizer table (table_maximizers.tex, the table of maximizers for 4 <= n <= 491) and compute exact Phi*(n) = log pi(T_n) - (n-1) lambda
 (a lower bound for the true Phi*(n) that does not depend on the table being optimal)."""
 import os, re, math
 from fractions import Fraction as Fr

@@ -1,14 +1,15 @@
 # nu_stability -- matching number: finite range of the stability comparison
 
-**Paper item (proof):** Lemma `lem:nu-stab-cv` (computer-verified), used in the proof of
-`thm:nu-structure`(a), which gives the table of thresholds n_0(k), 2 <= k <= 10
-(n_0 = 4, 24, 32, 60, 99, 149, 211, 289, 380). See also Appendix C, item C15.
+**What it checks (proof):** for trees with matching number k, 2 <= k <= 10, the finite range
+n_0(k) < n <= N_1(k)+1 of the stability comparison: there the best balanced connector-star beats the
+stability bound, which gives the thresholds n_0(k) = 4, 24, 32, 60, 99, 149, 211, 289, 380 above which the
+extremal tree is the connector-star.
 
 ## What is checked
 
 For 2 <= k <= 10, with N_1(k) = 10, 255, 322, 464, 655, 894, 1184, 1526, 1924:
 
-1. N_1(k) is at least the largest root of the quadratics in the proof of `thm:nu-structure`(a), in both
+1. N_1(k) is at least the largest root of the quadratics of the stability argument, in both
    cases (gamma, s) = ((m + sqrt(m+1))^2 / 4, m) and (sigma_k^2 / 2, 0), m = k-1, and at least
    max(4(m + sqrt m), sqrt m (m + sqrt m)). sigma_k is the smaller of its two closed forms, and which one
    is smaller is decided rigorously.

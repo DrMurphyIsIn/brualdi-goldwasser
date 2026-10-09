@@ -1,7 +1,7 @@
 # nu_hull_search/brute_force -- brute force over all trees with 4 <= n <= 20
 
-**Paper item:** Lemma `lem:nu-small-cv`; Appendix C, item C16 ("and by brute force over all non-isomorphic trees
-with n <= 20"). Role: a check of the values M(n,k) of the hull search, and of the number of extremal trees, by a
+**What it checks:** every M(n,k) (maximum of pi over trees with n vertices and matching number k) and the
+number of extremal trees for 4 <= n <= 20, by enumerating all non-isomorphic trees. Role: a check of the values M(n,k) of the hull search, and of the number of extremal trees, by a
 method that does not use the hull lemma.
 
 `brute_force.py` was written in October 2026 as an additional check (a brute force over the same range had been

@@ -176,7 +176,7 @@ if __name__ == "__main__":
     import os
     base = os.path.join(os.path.dirname(os.path.abspath(__file__)), "certificates") + os.sep
     total = 0
-    # hand potentials Delta = 3, 4 as stated in the paper (lem:deg-cert34)
+    # hand potentials Delta = 3, 4 as stated in the paper
     for D, Bt, At, kA in [(3, ("1/5", "5/17"), ("2/5", "5/11"), "-0.0813"),
                           (4, ("1/7", "7/23"), ("2/5", "7/15"), "-0.0391")]:
         lam, b, mu = exact_params(D)

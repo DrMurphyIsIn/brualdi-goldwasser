@@ -1,4 +1,4 @@
-[A] table tab:bg-M7 (15 rows)
+[A] exchange table (15 rows)
 PASS (ii)  {P4, C} -> {C^3}               E affine in R0 (deg 1), deg 2 in D0; factor c = 1/16; columns > 0 for D0 >= 1  col2(1+t) = 9*t**2 + 38*t + 8; real roots of col2: [-3.0, 0.7777777777777778]
 PASS (iii) {P4, P4} -> {C^4}              E affine in R0 (deg 1), deg 2 in D0; factor c = 1/64; columns > 0 for D0 >= 1  col2(1+t) = 105*t**2 + 545*t + 316; real roots of col2: [-3.5254549124509302, 0.3349787219747398]
 PASS {[A2], C} -> {A1, A2}                E affine in R0 (deg 1), deg 2 in D0; factor c = 1/8; columns > 0 for D0 >= 1  col2(1+t) = 3*t**2 + 13*t + 12; real roots of col2: [-2.0, -0.3333333333333333]
@@ -14,7 +14,7 @@ PASS {[A3], [A3]} -> N33 = {L, C, A6}     E affine in R0 (deg 1), deg 2 in D0; f
 PASS {[A4], [A2]} -> N42 = {L, C, A6}     E affine in R0 (deg 1), deg 2 in D0; factor c = 27/8960; columns > 0 for D0 >= 1  col2(1+t) = 345*t**2 + 3106*t + 424; real roots of col2: [-7.864253427672341, 0.8613548769477031]
 PASS {[A4], [A3]} -> N43 = {L, C, A7}     E affine in R0 (deg 1), deg 2 in D0; factor c = 729/10240; columns > 0 for D0 >= 1  col2(1+t) = 42*t**2 + 317*t + 196; real roots of col2: [-5.868154633090128, 0.320535585471081]
 PASS {[A4], [A4]} -> N44 = {L, C, A8}     E affine in R0 (deg 1), deg 2 in D0; factor c = 243/25600; columns > 0 for D0 >= 1  col2(1+t) = 621*t**2 + 4442*t + 3432; real roots of col2: [-5.271801635798259, 0.1188225697757147]
-[B] displayed polynomials and positive factors of the proof of lem:bg-moves
+[B] displayed polynomials and positive factors of the exchanges (M1)-(M7)
 PASS stalk values T(P4) = 17/8, y(P4) = 7/17, T(P5) = 41/16, y(P5) = 17/41
 PASS (M1) {L, L} -> {C}: E = (1/2)(D0^2 + D0 R0 + 4 R0)
 PASS (M2) {L, C} -> {A1}: E = (1/4)(D0(D0-2) + R0(D0+8))

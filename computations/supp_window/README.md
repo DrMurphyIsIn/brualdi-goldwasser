@@ -1,9 +1,9 @@
 # supp_window: interval confirmation of the window checks on [3.22, 1+sqrt5)
 
-**Paper item.** Supplement, remark "an interval confirmation of the window checks" (`rem:lam-window-cv`),
-confirming `lem:lam-window-cv` (window checks); see also `rem:lam-uniform`.
+**What this is.** An interval-arithmetic confirmation of the window checks: the sharp ceiling for lambda in
+[3.22, 1+sqrt5), uniformly as lambda -> 1+sqrt5.
 
-**Role.** Confirmation only. The checks (C2)-(C4) of `lem:lam-window-cv` are proved by hand, with the
+**Role.** Confirmation only. The window checks (C2)-(C4) are proved by hand, with the
 single numerical input e^0.4796 <= 1.6155; this program is not used in any proof.
 
 ## What is checked
@@ -18,8 +18,7 @@ omega_1, omega_2 on the hull [lambda_c - eta_1, lambda_c], cancels the powers of
 - (C3): single interval evaluations, with lambda*y_8 < kappa^- checked strictly (also y_8 <= ydag^-);
 - (C4): single interval evaluations.
 
-The program's docstring gives the enclosures and the checks in full. It prints `THEOREM C checks: ...`;
-"Theorem C" is the program's internal name for the window checks.
+The program's docstring gives the enclosures and the checks in full. It prints `window checks (C1)-(C4): ...`.
 
 ## How to run
 
@@ -32,8 +31,8 @@ The argument is the eta-box width (default 0.0005).
 ## Expected output
 
 The last line must read
-`THEOREM C checks: ALL PASSED on delta in [0, 0.016068] (lam in [3.22, lam_c]); C2 boxes 1584; ...`
-(see `expected_output.txt`). The paper states 1 584 cells for (C2) and a run time under a second.
+`window checks (C1)-(C4): ALL PASSED on delta in [0, 0.016068] (lam in [3.22, lam_c]); C2 boxes 1584; ...`
+(see `expected_output.txt`). The accompanying text states 1 584 cells for (C2) and a run time under a second.
 
 ## Runtime and memory (measured here)
 

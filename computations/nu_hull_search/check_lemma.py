@@ -1,4 +1,4 @@
-"""Check of lem:nu-small-cv from the output of the exact hull search.
+"""Check of the matching-number statement (k <= 8, n <= 215) from the output of the exact hull search.
 
 Reads dpk215_8.txt (written by `python3 hulldp2.py 215 8 > dpk215_8.txt`) and checks:
   [A] for 2 <= k <= 8 and 3k-2 <= n <= 215, the exact maximum M(n,k) equals the best
@@ -51,4 +51,4 @@ if os.path.exists(ind):
     mism = [key for key in common if mine[key] != ref[key]]
     assert not mism and len(common) == len(mine) == len(ref), (len(common), len(mine), len(ref), mism[:5])
     print(f"[C] all {len(common)} values M(n,k), k<=8, n<=215, agree with the independent implementation")
-print("LEMMA nu-small-cv: OK")
+print("matching-number search, k <= 8, n <= 215: OK")

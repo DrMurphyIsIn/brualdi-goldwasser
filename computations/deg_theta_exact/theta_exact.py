@@ -1,8 +1,8 @@
-"""The exact constants theta of the bounded-degree certificates (lem:deg-cert34, lem:deg-cert567), the
+"""The exact constants theta of the bounded-degree certificates (Delta = 3..7), the
 rounding of the values printed in the paper, and an independent enumeration of the rules with an
 exact check that the target intervals cover every parent range.
 
-Definitions (Section 9): for 3 <= Delta <= 7, t_Delta is the positive root of
+Definitions: for 3 <= Delta <= 7, t_Delta is the positive root of
 s^2 - (4 Delta - 2)/(3 Delta) s - 1/Delta^2, mu_Delta = (3/2)^(Delta-2) t_Delta, F = log(mu_Delta)/(2 Delta - 3),
 eta = 1/(Delta t_Delta), theta_L = F - log(1 + eta), theta_C = 2F - log(3/2) - log(1 + eta/3) and, for
 Delta >= 6, theta_{A5} = g(A5) - log(1 + 3 eta/23) with g(A5) = 11 F - log(621/64). Interval types:
@@ -12,8 +12,8 @@ certificate files ../deg_certificates/certificates/cert_D{5,6,7}_K4.json (there 
 A5 is called C5, the intervals of J_Delta are B0..B3 and those of I_Delta are A0..A3).
 
 Checks:
-  [1] theta_L, theta_C, theta_{A5} enclosed in Arb ball arithmetic (300 bits); the values printed in
-      lem:deg-cert34 are their roundings to four decimals; for Delta = 6, 7 the definition of theta_{A5}
+  [1] theta_L, theta_C, theta_{A5} enclosed in Arb ball arithmetic (300 bits); the printed values for
+      Delta = 3, 4 are their roundings to four decimals; for Delta = 6, 7 the definition of theta_{A5}
       makes the identity rule C^5 -> A5 an equality.
   [2] theta_I: the printed -0.0813 and -0.0391 are the exact rationals used by
       ../deg_certificates/explicit_small.py and indep_check.py (read from their source); cert34.py

@@ -1,8 +1,8 @@
-"""Test of the exchanges (M1)-(M7) of Lemma bg-moves on explicit trees: for every tree with
+"""Test of the exchanges (M1)-(M7) on explicit trees: for every tree with
 NMIN <= n <= NMAX vertices (networkx.nonisomorphic_trees) and every vertex p at which the hypotheses of an
 exchange hold, the exchange is carried out on the tree, the result is checked to be a tree on n vertices, and
 pi is compared before and after.  pi is computed by a matching DP on the tree (not by the cavity formula of
-the lemma); in floating point first, and in exact Fraction arithmetic whenever the relative gain is < 1e-9.
+the proof); in floating point first, and in exact Fraction arithmetic whenever the relative gain is < 1e-9.
 A FAIL line is printed for every exchange that does not strictly increase pi.
 Counts in the output are cumulative over n.
 Usage: python3 exchange_test.py NMAX [NMIN]"""

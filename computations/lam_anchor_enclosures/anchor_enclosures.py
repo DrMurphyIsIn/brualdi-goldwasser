@@ -1,19 +1,19 @@
-"""Every numerical constant in the proof of the anchor prop:lam-anchor (lambda_c = 1 + sqrt 5), enclosed
+"""Every numerical constant in the hand proof of the anchor (lambda_c = 1 + sqrt 5), enclosed
 rigorously, and the exact identities it uses.
 
-Setting (Section 7): lambda_c = 1 + sqrt5 = 2 phi, phi = (1 + sqrt5)/2, f* = log phi,
+Setting (the weighted family pi_lambda): lambda_c = 1 + sqrt5 = 2 phi, phi = (1 + sqrt5)/2, f* = log phi,
 y_C = 1/(2 + lambda_c) (the cherry message), kappa = phi log phi, the hinge h(y) = kappa (y - y_C)_+ on
 [0, 1/2], and for a vertex of type (0, m) with pooled child message ybar,
     B_{0,m}(ybar) = log phi + m kappa (ybar - y_C)_+ - log(1 + lambda_c m ybar/(m+1)) - kappa (y_v - y_C)_+,
     y_v = 1/(m + 1 + lambda_c m ybar).
 
 Checks:
-  [A] exact identities (sympy): the identities (eq:lam-anchor-id), 2 phi^-2 = 3 - sqrt5,
+  [A] exact identities (sympy): the identities of the anchor, 2 phi^-2 = 3 - sqrt5,
       h(1/2) = f*/2, y_v(y_C) = phi^-2 and y_v(1/2) = 1/(2+phi) for m = 1,
       1 + lambda_c m y_C/(m+1) = (m phi + 1)/(m+1), m phi + 1 > 2 phi^2 for m >= 3, the kink positions
       ybar_m = (1/y_C - (m+1))/(lambda_c m) of y_v = y_C, the form of B_{0,1} in D = 2 + lambda_c ybar and
       its second derivative (D - 2 kappa)/D^3.
-  [B] every decimal of (eq:lam-anchor-num) and of the proof, in mpmath.iv (256 bits) and python-flint
+  [B] every decimal enclosure of the anchor and of its proof, in mpmath.iv (256 bits) and python-flint
       arb (300 bits), decided on interval endpoints: the enclosures of log phi, kappa, 2 phi^-2;
       h(1) > 0.62 and f* < 0.49; the k = 2 bound; kappa < 2 and kappa - 2 phi^-2 > 0.0146; the kink
       placements for m = 1..4 and m >= 5; the m = 2 minimum and its two terms; the roots y_-, y_+, the

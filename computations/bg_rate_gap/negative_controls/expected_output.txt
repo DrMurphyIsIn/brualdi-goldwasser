@@ -1,4 +1,4 @@
-[control 3] Lemma lem:bg-Gamma: tabulated Gamma_K (PASS expected) and Gamma_K + 1e-5 (FAIL expected)
+[control 3] rate gaps: tabulated Gamma_K (PASS expected) and Gamma_K + 1e-5 (FAIL expected)
    k   K  shape      enclosure at the minimizing shape   table G    unpert.  G+1e-5 pert.  refuted
    2   1  A1         [0.039104007, 0.039104007]  0.039104   PASS     FAIL          True
    3   2  A1         [0.039104007, 0.039104007]  0.039104   PASS     FAIL          True

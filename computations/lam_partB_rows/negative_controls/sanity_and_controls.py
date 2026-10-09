@@ -1,11 +1,11 @@
 """Numerical sanity test and negative controls for part (B) (not a proof), written from the definitions in the text
-separately from the programs of this folder. W* is the witness W_1 of the paper, W2 is W_2.
+separately from the programs of this folder. W* is the witness W_1, W2 is W_2.
 For random lambda in (0, lambda_c):
   * F = f* = max_j f_j; witness W2 if lambda <= 3/20, W* if lambda >= 3/20 (both on [0.1282, 0.15]);
   * Bellman margins B_{k,m}(ybar) >= 0 on a grid (k<=6, m<=400 plus m in a sparse set up to 20000), all kinks and preimages;
   * random planted branches (cavity recursion R = sum y_c, y = 1/(d + lam R), log T = sum log T_c + log(1 + lam R/d)):
     log T_b <= |b| F, and g(b) >= h(y_b) for every non-leaf b; equality only at best arms (and the cherry g = h = eps);
-  * the unscaled W2 conditions (T1..T8, node conditions of lem:flat2 for 5<=m<=13) against the scaled atom forms;
+  * the unscaled W2 conditions (T1..T8, node conditions of the flat-message lemma for W_2, 5<=m<=13) against the scaled atom forms;
   * sensitivity: W* below lambda_A2 must FAIL at the arm A2 (else the test is blind).
 """
 import random
@@ -17,7 +17,7 @@ LC = 1 + mp.sqrt(5)
 def setup(lam, kind):
     lam = mp.mpf(lam); c = 1 + lam/2; t = lam/(2+lam); ell = mp.log(c)
     f = lambda j: (j*ell + mp.log(1 + t*j/(j+1)))/(2*j+1)
-    # f_j is unimodal in j (thm:lam-ladder); locate the maximizer by doubling + integer ternary search
+    # f_j is unimodal in j (the arm ladder); locate the maximizer by doubling + integer ternary search
     hi = 2
     while f(hi) <= f(2*hi) or f(hi) <= f(hi+1):
         hi *= 2

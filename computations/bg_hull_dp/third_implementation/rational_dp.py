@@ -1,4 +1,4 @@
-# Third implementation of the hull computation (Theorem thm:bg-small), written separately from dp.py and
+# Third implementation of the hull computation (M_n for 4 <= n <= 491, all maximizers), written separately from dp.py and
 # dp_check.py, from the statements alone: pure Fractions throughout (no floating-point step), its own hull
 # routine (exact strict-Pareto sweep + gift wrapping, all collinear points kept), its own interning of
 # rooted branches, its own centre/bicentre canonical form and its own matching recursion for pi.

@@ -5,7 +5,7 @@ cherries).  With C cherries and k_j arms A_j,
     n = 1 + 2C + sum_j k_j (2j+1),   D = C + sum_j k_j  (center degree),
     pi = (3/2)^C prod_j ((3/2)^j alpha_j)^{k_j} * (1 + R/D),
     alpha_j = (4j+3)/(3(j+1)),  R = C/3 + sum_j k_j * 3/(4j+3).
-By the balance exchange (Lemma bgx-balance), a best spider with D >= 3 has all arm sizes (leaves counted
+By the balance exchange (balance lemma), a best spider with D >= 3 has all arm sizes (leaves counted
 as A_0) in {s, s+1}; it is then determined by C and the number m of arms.  For every n the program
 enumerates (i) all configurations with D <= 2 and (ii) all balanced configurations with D >= 3, takes the
 maximum of pi, and compares it, and the set of maximizers, with the exact hull computation

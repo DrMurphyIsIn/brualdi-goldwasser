@@ -1,6 +1,6 @@
-"""Negative control for Lemma lem:bg-rate (rate potential) at the exact zero (c, S) = (1, 1).
+"""Negative control for the rate potential at lambda = 1 at the exact zero (c, S) = (1, 1).
 
-For the cap K = 1 the lemma needs Phi~_1(S) >= 0 on [0, 1], where Phi~_1(1) = 0 exactly for every eta.
+For the cap K = 1 the rate potential needs Phi~_1(S) >= 0 on [0, 1], where Phi~_1(1) = 0 exactly for every eta.
 The check (../certify.py, section D, with ../ivtools.py; and ../../bg_rate_zeros/rate_zeros.py, part [C])
 closes the box at S = 1 by a one-sided derivative: the enclosure of Phi~_1' on [S_-, 1] must be <= 0.
 This holds iff (10/9)(gamma + (3/2) eta) < 1/3, i.e. eta < (3/10 - gamma)/(3/2) = 0.00112107...; the table
@@ -13,7 +13,7 @@ Negative control: eta = 0.0011212.
 
 For each eta this script runs, with the routines of ../ivtools.py and ../../bg_rate_zeros/rate_zeros.py
 imported unchanged:
-  (a) the convexity condition of the lemma, eta (621/14 - 3/2) <= gamma - s (it does not depend on (1, 1)
+  (a) the convexity condition, eta (621/14 - 3/2) <= gamma - s (it does not depend on (1, 1)
       and passes for all these eta; listed so that the failure below is attributed to (1, 1));
   (b) the local step of ivtools.bb_min_ge0 on the box [1 - 2^-14, 1] that the branch-and-bound on [0, 1]
       reaches (the first box at S = 1 of width < 10^-4): derivative enclosure upper end <= 0;
@@ -106,7 +106,7 @@ if __name__ == "__main__":
     cap = (F(Fr(3, 10)) - GAM) / F(Fr(3, 2))
     print(f"cap (3/10 - gamma)/(3/2) in [{float(cap.a):.12f}, {float(cap.b):.12f}]")
     ok = True
-    print("\n[control 2] Lemma lem:bg-rate at (c, S) = (1, 1), cap K = 1")
+    print("\n[control 2] rate potential at (c, S) = (1, 1), cap K = 1")
     results = {}
     for label, eta in (("unperturbed", ETA_TABLE), ("near cap   ", ETA_BELOW), ("perturbed  ", ETA_PERT)):
         cv = convexity_ok(eta)

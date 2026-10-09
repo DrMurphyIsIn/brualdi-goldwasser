@@ -1,14 +1,14 @@
 # lam_first_order -- sharpest first-order degree potential (Randic limit)
 
-**Paper item:** the paragraph after Theorem `thm:lam-randic` (the Randic limit), part (b): the sharpest
-first-order degree potential, recomputed by value iteration. Role: confirmation only; no proof uses it.
+**What it checks:** in the Randic limit (lambda -> 0) of the weighted family pi_lambda, the sharpest
+first-order degree potential, recomputed by exact value iteration. Role: confirmation only; no proof uses it.
 
 ## What is checked
 
 Exact value iteration (Python `fractions`) of
 `V(d) = (d-1) max_{e>=1} ( V(e) + 1/(d e) ) - 15/56`, `V(1) = -15/56`, over degrees `d <= D` (default 40),
 where `V(d) = -phi(d)` is the first-order (lambda -> 0) deficit of a planted branch with root degree `d`.
-The script truncates the degrees at `D`; the tail is an identity treated in the paper.
+The script truncates the degrees at `D`; the tail is an identity handled by hand.
 
 ## How to run
 
@@ -19,7 +19,7 @@ The script truncates the degrees at `D`; the tail is an identity treated in the 
 
 See `expected_output.txt`: converges after 3 iterations, with `phi(2)=1/28`, `phi(3)=1/168`, `phi(4)=0`,
 `phi(5)=3/280`, `phi(6)=5/252`, `phi(7)=phi(8)=1/56` (printed as `V* = -phi`), and `sup_d V*(d) = 0` at `d = 4`.
-These are the values stated in the paper.
+These are the stated values.
 
 ## Runtime
 

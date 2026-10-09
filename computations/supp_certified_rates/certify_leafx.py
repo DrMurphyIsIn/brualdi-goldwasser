@@ -1,7 +1,7 @@
 """Rigorous certificate for the growth rate of pi_lam at rational lam by a convex message potential in the
 LEAF-EXEMPT form (leaves treated exactly, other children pooled by Jensen).
 
-Verified statement (the leaf-exempt-witness lemma of the paper; used for thm:lam-cert): h : [0,1/2] -> [0,inf) convex piecewise
+Verified statement (the leaf-exempt-witness lemma of the paper; used for the certified rates): h : [0,1/2] -> [0,inf) convex piecewise
 linear with rational nodes, h = 0 on [0, y0], and for all integers k, m >= 0 with (k,m) != (0,0) and all
 ybar in [0,1/2] (ybar absent when m = 0), with d = k+m+1:
    Phi_{k,m}(ybar) = (k+1)F + m h(ybar) - log(1 + lam (k + m ybar)/d) - h(1/(d + lam (k + m ybar))) >= 0.

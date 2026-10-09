@@ -1,5 +1,5 @@
-"""Core definitions for the potential h at lambda = 1 (Section "rate structure" of the paper).
-Notation: lambda = log rho (the paper's F*), beta=2 lambda - log(3/2), q=3/23,
+"""Core definitions for the potential h at lambda = 1 (the rate structure at lambda = 1).
+Notation: lambda = log rho (written F* elsewhere), beta=2 lambda - log(3/2), q=3/23,
 kappa=beta/(1/3-q)^2, gamma=(3/2)(lambda-beta), h(x)=kappa(x-q)^2 on [0,1/3], beta+gamma(x-1/3) on [1/3,1].
 """
 import os

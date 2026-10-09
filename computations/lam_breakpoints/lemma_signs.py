@@ -1,4 +1,4 @@
-"""Sign check of the breakpoint lemma (lem:lam-bp) at its exact rational endpoints, in Arb ball arithmetic.
+"""Sign check of the breakpoint lemma at its exact rational endpoints, in Arb ball arithmetic.
 
 For (j, p, q) in {(3, 0.43050, 0.43051), (4, 0.87247, 0.87248), (5, 1.19239, 1.19240), (6, 1.43559, 1.43560)}
 it checks f_{j+1}(p) < f_j(p) and f_{j+1}(q) > f_j(q), where

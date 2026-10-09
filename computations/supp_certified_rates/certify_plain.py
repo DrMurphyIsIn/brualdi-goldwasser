@@ -1,7 +1,7 @@
 """Rigorous certificate for the growth rate of pi_lam at a rational lam, by a convex piecewise-linear message
 potential in the PLAIN form, verified with exact rationals, formal logarithms and interval arithmetic.
 
-Statement verified (the plain-witness lemma of the paper; used for thm:lam-cert):
+Statement verified (the plain-witness lemma of the paper; used for the certified rates):
   h : [0,1] -> [0,inf) convex, piecewise linear with rational nodes, h = 0 on [0, y0], h(1) = F, and
   Phi_m(ybar) = F + m h(ybar) - log(1 + lam m ybar/(m+1)) - h(1/(m+1+lam m ybar)) >= 0
   for all integers m >= 1 and all ybar in [0,1].

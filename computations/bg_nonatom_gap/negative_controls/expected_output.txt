@@ -1,4 +1,4 @@
-prop:bg-gap, lower bounds by child count c (section B of bg_rate/certify.py):
+non-atom gap, lower bounds by child count c (section B of bg_rate/certify.py):
    c=2: in [0.0372421, 0.0372421]  (at L)
    c=3: in [0.0310433, 0.0310433]  (at A3)
    c=4: in [0.0207608, 0.0207608]  (at A3)
@@ -14,7 +14,7 @@ prop:bg-gap, lower bounds by child count c (section B of bg_rate/certify.py):
    c=>=13: in [0.0186081, 0.0186081]  (at any (Q(13)))
    minimum: c=6, a=A4, enclosure [0.014273396, 0.014273396]
 
-[control 1] Proposition prop:bg-gap: delta_0 accepted iff every lower bound >= delta_0
+[control 1] non-atom gap: delta_0 accepted iff every lower bound >= delta_0
    unperturbed delta_0 = 0.01426: PASS (expected PASS)
    perturbed   delta_0 = 0.01430: FAIL (expected FAIL)  failing rows: c=6 (A4): 0.014273 < 0.0143
    the enclosure at c=6, a=A4 lies below 0.0143: True

@@ -1,4 +1,4 @@
-"""Chain route (rem:lam-large-check; cherry regime, large lam): sharp ceiling log T_b <= |b| F*, F* = (1/2)log(1+lam/2), for lam in [LAM0, LAM1] (>= 1+sqrt5).
+"""Chain route (cherry regime, large lam): sharp ceiling log T_b <= |b| F*, F* = (1/2)log(1+lam/2), for lam in [LAM0, LAM1] (>= 1+sqrt5).
 Witness per lam-box: U(y) = min(0, l_1(y), ..., l_n(y)), l_i affine with negative slope (concave by construction, U <= 0), with
 U = 0 on [0, y_fr], y_fr = y_ch(lam_lo) >= y_ch(lam) on the box.  The lines come from an (untrusted) LP; everything is re-checked here.
 Induction (non-leaf branches b: l(b) <= U(y_b)); every non-leaf vertex v is exactly one of:

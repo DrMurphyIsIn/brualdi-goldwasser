@@ -1,10 +1,11 @@
 # supp_covers: witness covers of the activity range [0.1, 3.22]
 
-**Paper item.** Supplement, section "Witness covers on [0.1, 3.22]" (`sec:lam-covers`) and the remark
-"programs and independent check" (`rem:lam-uniform`).
+**What this is.** Witness covers of the activity range [0.1, 3.22]: for every lambda there, an explicit
+witness for the sharp ceiling, verified cell by cell in interval arithmetic, with the programs' independent
+check.
 
-**Role.** Confirmation route for part (B) of the uniform ceiling theorem (`thm:lam-uniform`). The proof of
-(B) in the main paper uses the two explicit witnesses W_1, W_2 (`sec:lam-partB`, certified in
+**Role.** Confirmation route for part (B) of the uniform ceiling theorem. The proof of
+(B) uses the two explicit witnesses W_1, W_2 (certified in
 `computations/lam_partB_rows/`) and none of these cells.
 
 ## What is checked

@@ -1,8 +1,8 @@
-"""Negative control for Lemma lem:bgx-counts (count exchanges): xi = Xi + 10^-3 must be rejected.
+"""Negative control for the count exchanges: xi = Xi + 10^-3 must be rejected.
 
 For each of the twelve exchanges of the table, the check of ../tab.py (function `row`, imported unchanged)
 computes the exact ratio Xi, asserts xi <= Xi in exact arithmetic, and expands the two quadratics
-Delta_xi(X, y_lo X) and Delta_xi(X, y_hi X). The lemma then needs their sign statements: positive for all
+Delta_xi(X, y_lo X) and Delta_xi(X, y_hi X). The statement then needs their sign statements: positive for all
 X >= 0 in the first ten rows, and for X >= 15 resp. X >= 16 in the last two (exchanges 11 A_4 -> 9 A_5 and
 9 P -> 2 A_4). The check of a row passes iff both hold.
 
@@ -76,7 +76,7 @@ def check_row(name, old, new, lo, hi, xi, X0):
 if __name__ == "__main__":
     t0 = time.time()
     ok = True
-    print("[control 5] Lemma lem:bgx-counts: xi from the table (PASS expected) and xi = Xi + 1/1000 (FAIL expected)")
+    print("[control 5] count exchanges: xi from the table (PASS expected) and xi = Xi + 1/1000 (FAIL expected)")
     print("   exchange      Xi          xi (table)  xi<=Xi signs  row     | xi=Xi+1e-3  xi<=Xi signs  row")
     for name, old, new, lo, hi, xi, X0 in ROWS:
         XI = Xi(old, new)

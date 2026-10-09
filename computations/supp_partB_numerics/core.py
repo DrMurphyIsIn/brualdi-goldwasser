@@ -1,12 +1,12 @@
 """Core quantities for the part (B) numerical checks (float64 and mpmath versions).
 
-Notation follows sec:lambda of the paper:
+Notation follows the paper (weighted family pi_lambda):
   c = 1 + lam/2, t = lam/(2+lam), yC = 1/(2+lam), f_j = (j log c + log(1 + t j/(j+1)))/(2j+1),
   F = f* = max_j f_j, eps = 2F - log c, ydag = (e^F - 1)/lam.
 Witness family W(theta, alpha):
   y0 = theta*ydag, s1 = eps/(yC - y0), kappa = alpha*F/t,
   h(y) = max(0, s1 (y - y0), eps + kappa (y - yC)).
-alpha = 1, theta = 1 is the window witness of sec:lam-window (kappa = (F/2)/(1/2 - yC) = F/t).
+alpha = 1, theta = 1 is the window witness on [3.22, 1+sqrt5) (kappa = (F/2)/(1/2 - yC) = F/t).
 Leaf-exempt Bellman margin:
   B_{k,m}(yb) = (k+1)F + m h(yb) - log(1 + lam (k + m yb)/(k+m+1)) - h(1/(k+m+1+lam(k+m yb))).
 """

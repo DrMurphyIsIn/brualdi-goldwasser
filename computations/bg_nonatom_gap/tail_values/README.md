@@ -1,7 +1,7 @@
 # bg_nonatom_gap/tail_values: the tail of the non-atom gap
 
-**Paper item.** Proposition `prop:bg-gap` (non-atom gap), the input m_c + w_c(y(A_31)) >= 0.028 for
-2 <= c <= 9, and Appendix C, item C2. **Role: prints a value that the certificates already use.**
+**What it checks.** The non-atom gap at lambda = 1, the input m_c + w_c(y(A_31)) >= 0.028 for
+2 <= c <= 9. **Role: prints a value that the certificates already use.**
 
 **Provenance.** Written in October 2026.
 

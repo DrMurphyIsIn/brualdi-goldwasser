@@ -1,4 +1,4 @@
-"""Second, independent implementation: non-atom gap (prop:bg-gap) and the degree>=24 constants (prop:bg-high)."""
+"""Second, independent implementation: non-atom gap at lambda = 1 and the degree>=24 constants."""
 from indep import *
 def xa(a):
     return Fr(1) if a=='L' else (Fr(1,3) if a=='C' else Fr(3,4*a+3))
@@ -45,7 +45,7 @@ for c in (10,11,12,13,14,20):
 p=1+Q
 def Qc(c): return LAM-KAP*Q**2-iv.log((1+p*c)/(c+1))-c/(4*KAP*(1+p*c)**2)
 print("Q(10)",fmt(Qc(10)),"Q(13)",fmt(Qc(13)))
-# prop:bg-high (root degree >= 24)
+# high-degree case (root degree >= 24)
 mu0=I(23)/624
 import math
 def gatom(a):
