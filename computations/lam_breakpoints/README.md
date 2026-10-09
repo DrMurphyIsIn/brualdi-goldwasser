@@ -1,7 +1,9 @@
 # lam_breakpoints -- breakpoint enclosures lambda_3, ..., lambda_6 (and up to lambda_30)
 
-**Paper item:** Lemma `lem:lam-bp` (computer-verified) and Appendix C, item C11, in the section on the family
-pi_lambda (the arm ladder). Role: part of a proof.
+**What it checks:** for the weighted family pi_lambda (the arm ladder), enclosures of the breakpoints
+`lambda_3 in (0.43050, 0.43051)`, `lambda_4 in (0.87247, 0.87248)`, `lambda_5 in (1.19239, 1.19240)`,
+`lambda_6 in (1.43559, 1.43560)` where consecutive cherry arms tie, and of `lambda_j` up to `j = 30`.
+Role: part of a proof.
 
 ## What is checked
 
@@ -11,7 +13,7 @@ per-vertex log-weight of the arm `A_j`; `lambda_j` is the activity where `A_j` a
 * `lemma_signs.py` -- the statement of the lemma: for
   `(j,p,q) = (3,0.43050,0.43051), (4,0.87247,0.87248), (5,1.19239,1.19240), (6,1.43559,1.43560)`
   it checks `f_{j+1}(p) < f_j(p)` and `f_{j+1}(q) > f_j(q)` in Arb ball arithmetic (python-flint, 256 bits) at
-  the exact rational endpoints, and prints the smallest modulus (paper: `6.8e-12`).
+  the exact rational endpoints, and prints the smallest modulus (stated value: `6.8e-12`).
   This short script was written for this release to check the lemma exactly as stated; the original Arb
   check of the endpoints was not preserved as a separate program.
 * `breakpoints.py` (with `rates.py`) -- the remark: for `3 <= j <= 30` it encloses `lambda_j` to width
@@ -42,4 +44,4 @@ Python 3.9+, `mpmath` (1.3.0 tested), `python-flint` (0.6.0 tested).
 
 `ball_check/ball_breakpoints.py` encloses lambda_3, ..., lambda_30 a second time, by bisection with exact
 rational endpoints and Arb sign tests (256 bits), checks that its brackets meet those of `breakpoints.py`, and
-that for j = 3, ..., 6 they lie inside the intervals of `lem:lam-bp`; see its README.
+that for j = 3, ..., 6 they lie inside the intervals of the breakpoint lemma; see its README.

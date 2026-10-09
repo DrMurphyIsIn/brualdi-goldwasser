@@ -1,4 +1,4 @@
-"""Re-verify the 28 RECORDED certificates of thm:lam-cert (the witnesses listed in tab:lam-cert).
+"""Re-verify the 28 RECORDED certificates of the certified rates (the witnesses listed in the table of certified rates).
 
 certify_plain.py and certify_leafx.py obtain their witness h from a floating-point linear program, which is
 untrusted input: a different LP solver or version can return a different h (sometimes one that just fails

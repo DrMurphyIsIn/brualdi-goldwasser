@@ -1,9 +1,9 @@
-# bg_rate_zeros: the two exact zeros of the rate lemma
+# bg_rate_zeros: the two exact zeros of the rate potential
 
-**Paper item:** Lemma `lem:bg-rate` (rate potential), the paragraph on the two points (c, S) = (5, 5/3) and
-(1, 1) where Phi~_c vanishes, and Appendix C, item C4. Role: part of the proof (it supplies, with
-exact endpoints, the local step of the branch-and-bound of `../bg_rate/certify.py`, and certifies the
-numbers quoted in the lemma).
+**What it checks:** the rate potential at lambda = 1 at the two points (c, S) = (5, 5/3) and (1, 1) where
+Phi~_c vanishes exactly: the one-sided derivatives there and the local argument near each zero. Role: part
+of the proof (it supplies, with exact endpoints, the local step of the branch-and-bound of
+`../bg_rate/certify.py`, and certifies the stated numerical ranges of those derivatives).
 
 ## What is checked
 
@@ -14,7 +14,7 @@ numbers quoted in the lemma).
   Phi~_5(5/3) = 0 and Phi~_1(1) = 0 exactly for every eta (from F* + 5 beta = log(23/18),
   2F* - log(3/2) = beta, 1 + z(1) = z(1/3) and 1 + 5 z(1/3) = z(q)); on [1/3, 1],
   Phi~_1'(S) = (gamma + 3/2 eta)(1 + r^2) - r with r = 1/(2+S).
-- **[B] the numbers quoted in the lemma**, for each of the 22 rates eta_K of table `tab:bg-rate` (which
+- **[B] the stated numerical ranges**, for each of the 22 certified rates eta_K (which
   are compared with `../bg_rate/certify_out.json`), in `mpmath.iv` (256 bits) and Arb (300 bits):
   -0.041 < D^- < -0.004 (range [-0.040636, -0.004100]); D^+ rounds to 0.17 (range [0.168575, 0.170401]);
   (10/9)(gamma + 3/2 eta_K) - 1/3 < 0 for every K, equal to -7.789e-6 for K <= 5; the cap

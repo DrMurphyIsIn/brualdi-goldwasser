@@ -1,4 +1,4 @@
-"""Negative control for Lemma lem:bg-Gamma (rate gaps): each tabulated Gamma_K + 10^-5 must be rejected.
+"""Negative control for the rate gaps at lambda = 1: each tabulated Gamma_K + 10^-5 must be rejected.
 
 The check is the function `gamma` of ../../bg_spider_comparison/conc.py, imported unchanged: for the cap
 K it encloses sigma~(B) for every stalk [A_j], j <= 4, and every end hub with arms of at most 18 cherries
@@ -6,7 +6,7 @@ K it encloses sigma~(B) for every stalk [A_j], j <= 4, and every end hub with ar
 shape together with that shape. A tabulated value G is accepted as a lower bound for Gamma_K iff the lower
 end of that enclosure is >= G.
 
-Positive control: G = the value of table tab:bg-rate (column Gamma_{k-1}, k = K + 1), for K = 1, ..., 22;
+Positive control: G = the stated value of Gamma_{k-1} (k = K + 1), for K = 1, ..., 22;
 the minimizing shape must be the one in the table.
 Negative control: G + 10^-5 must be rejected; moreover the upper end of the enclosure at the minimizing
 shape must lie below G + 10^-5, i.e. that single shape refutes the perturbed bound (it is false, not merely
@@ -27,7 +27,7 @@ from fractions import Fraction as Fr
 import conc                      # reads ../../bg_spider_comparison/certify_out.json (the certified rates)
 from ivtools import F
 
-# table tab:bg-rate, column Gamma_{k-1} >= and shape, indexed by k = K + 1 (k = 2..23)
+# stated lower bounds Gamma_{k-1} and shapes, indexed by k = K + 1 (k = 2..23)
 TABLE = {
     2: ("0.039104", "A1"), 3: ("0.039104", "A1"), 4: ("0.026563", "C2A3"), 5: ("0.015081", "C3A4"),
     6: ("0.008500", "C4A4"), 7: ("0.006729", "C5A4"), 8: ("0.006839", "C6A4"), 9: ("0.007662", "C6A4"),
@@ -56,7 +56,7 @@ def shape_name(arg):
 if __name__ == "__main__":
     t0 = time.time()
     ok = True
-    print("[control 3] Lemma lem:bg-Gamma: tabulated Gamma_K (PASS expected) and Gamma_K + 1e-5 (FAIL expected)")
+    print("[control 3] rate gaps: tabulated Gamma_K (PASS expected) and Gamma_K + 1e-5 (FAIL expected)")
     print("   k   K  shape      enclosure at the minimizing shape   table G    unpert.  G+1e-5 pert.  refuted")
     for k in range(2, 24):
         K = k - 1

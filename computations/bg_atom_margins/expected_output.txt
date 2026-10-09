@@ -5,14 +5,14 @@ backend: mpmath.iv (256 bits)
      kappa  in [1.872155221183268e-01, 1.872155221183268e-01]
      gamma  in [2.983183896294547e-01, 2.983183896294547e-01]
 PASS identities: sigma(leaf) = 0, sigma(cherry) = 0, g(A5) = h(q) = sigma(A5) = 0 (exact, by definition)
-PASS table tab:bg-atoms row leaf   y=1     h=0.2065862 sigma=0 g=0.2065862 are the rounded values  h in [2.065861817e-01, 2.065861817e-01], g in [2.065861817e-01, 2.065861817e-01]
-PASS table tab:bg-atoms row cherry y=1/3   h=0.0077073 sigma=0 g=0.0077073 are the rounded values  h in [7.707255269e-03, 7.707255269e-03], g in [7.707255269e-03, 7.707255269e-03]
-PASS table tab:bg-atoms row A1     y=3/7   h=0.0361185 sigma=0.0240242 g=0.0601428 are the rounded values  h in [3.611853047e-02, 3.611853047e-02], g in [6.014275713e-02, 6.014275713e-02]
-PASS table tab:bg-atoms row A2     y=3/11  h=0.0037906 sigma=0.0175394 g=0.0213300 are the rounded values  h in [3.790581272e-03, 3.790581272e-03], g in [2.132999676e-02, 2.132999676e-02]
-PASS table tab:bg-atoms row A3     y=1/5   h=0.0009060 sigma=0.0056584 g=0.0065644 are the rounded values  h in [9.059957214e-04, 9.059957214e-04], g in [6.564396181e-03, 6.564396181e-03]
-PASS table tab:bg-atoms row A4     y=3/19  h=0.0001412 sigma=0.0008853 g=0.0010264 are the rounded values  h in [1.411696934e-04, 1.411696934e-04], g in [1.026424700e-03, 1.026424700e-03]
-PASS table tab:bg-atoms row A6     y=1/9   h=0.0000699 sigma=0.0014454 g=0.0015153 are the rounded values  h in [6.990707727e-05, 6.990707727e-05], g in [1.515285021e-03, 1.515285021e-03]
-PASS table tab:bg-atoms row A7     y=3/31  h=0.0002121 sigma=0.0043915 g=0.0046036 are the rounded values  h in [2.121217870e-04, 2.121217870e-04], g in [4.603594434e-03, 4.603594434e-03]
+PASS atom table row leaf   y=1     h=0.2065862 sigma=0 g=0.2065862 are the rounded values  h in [2.065861817e-01, 2.065861817e-01], g in [2.065861817e-01, 2.065861817e-01]
+PASS atom table row cherry y=1/3   h=0.0077073 sigma=0 g=0.0077073 are the rounded values  h in [7.707255269e-03, 7.707255269e-03], g in [7.707255269e-03, 7.707255269e-03]
+PASS atom table row A1     y=3/7   h=0.0361185 sigma=0.0240242 g=0.0601428 are the rounded values  h in [3.611853047e-02, 3.611853047e-02], g in [6.014275713e-02, 6.014275713e-02]
+PASS atom table row A2     y=3/11  h=0.0037906 sigma=0.0175394 g=0.0213300 are the rounded values  h in [3.790581272e-03, 3.790581272e-03], g in [2.132999676e-02, 2.132999676e-02]
+PASS atom table row A3     y=1/5   h=0.0009060 sigma=0.0056584 g=0.0065644 are the rounded values  h in [9.059957214e-04, 9.059957214e-04], g in [6.564396181e-03, 6.564396181e-03]
+PASS atom table row A4     y=3/19  h=0.0001412 sigma=0.0008853 g=0.0010264 are the rounded values  h in [1.411696934e-04, 1.411696934e-04], g in [1.026424700e-03, 1.026424700e-03]
+PASS atom table row A6     y=1/9   h=0.0000699 sigma=0.0014454 g=0.0015153 are the rounded values  h in [6.990707727e-05, 6.990707727e-05], g in [1.515285021e-03, 1.515285021e-03]
+PASS atom table row A7     y=3/31  h=0.0002121 sigma=0.0043915 g=0.0046036 are the rounded values  h in [2.121217870e-04, 2.121217870e-04], g in [4.603594434e-03, 4.603594434e-03]
 PASS margin g - mu_0 (y - q) > 0 at leaf   (y - q = 20/23)  enclosure [1.745349e-01, 1.745349e-01]; printed 0.17453: rounds correctly
 PASS margin g - mu_0 (y - q) > 0 at cherry (y - q = 14/69)  enclosure [2.286228e-04, 2.286228e-04]; printed 0.000229: rounds correctly
 PASS margin g - mu_0 (y - q) > 0 at A1     (y - q = 48/161)  enclosure [4.915375e-02, 4.915375e-02]; printed 0.04915: rounds correctly
@@ -26,8 +26,8 @@ PASS gamma - mu_0 > 0 (slope on the linear piece)  [2.614594e-01, 2.614594e-01]
 PASS q + mu_0/(2 kappa) < 1/3 (printed ~0.229)  [2.288747e-01, 2.288747e-01]
 PASS delta_0 - mu_0^2/(4 kappa) > 0.012445  [1.244580215e-02, 1.244580215e-02]
 PASS g(A4) < 1/960  g(A4) in [1.026424700e-03, 1.026424700e-03], 1/960 = 0.0010416667
-PASS log(26/23) - 10/960 > 0.11218 (benchmark, lem:bg-sizeroot)  [1.121856554e-01, 1.121856554e-01]
-PASS log(26/23) - 0.012445 < 0.1101574 (lem:bg-compare (iii))  [1.101573221e-01, 1.101573221e-01]
+PASS log(26/23) - 10/960 > 0.11218 (benchmark floor)  [1.121856554e-01, 1.121856554e-01]
+PASS log(26/23) - 0.012445 < 0.1101574 (degree >= 24 ceiling)  [1.101573221e-01, 1.101573221e-01]
 PASS g(A4) ~ 0.0010264 (rounded) and = 0.0010264... (leading digits)  [1.0264246999e-03, 1.0264246999e-03]
 PASS g(A6) ~ 0.0015153 (rounded) and = 0.0015152... (leading digits)  [1.5152850210e-03, 1.5152850210e-03]
 ==============================================================================
@@ -37,14 +37,14 @@ backend: python-flint arb (300 bits)
      kappa  in [1.872155221183268e-01, 1.872155221183268e-01]
      gamma  in [2.983183896294547e-01, 2.983183896294547e-01]
 PASS identities: sigma(leaf) = 0, sigma(cherry) = 0, g(A5) = h(q) = sigma(A5) = 0 (exact, by definition)
-PASS table tab:bg-atoms row leaf   y=1     h=0.2065862 sigma=0 g=0.2065862 are the rounded values  h in [2.065861817e-01, 2.065861817e-01], g in [2.065861817e-01, 2.065861817e-01]
-PASS table tab:bg-atoms row cherry y=1/3   h=0.0077073 sigma=0 g=0.0077073 are the rounded values  h in [7.707255269e-03, 7.707255269e-03], g in [7.707255269e-03, 7.707255269e-03]
-PASS table tab:bg-atoms row A1     y=3/7   h=0.0361185 sigma=0.0240242 g=0.0601428 are the rounded values  h in [3.611853047e-02, 3.611853047e-02], g in [6.014275713e-02, 6.014275713e-02]
-PASS table tab:bg-atoms row A2     y=3/11  h=0.0037906 sigma=0.0175394 g=0.0213300 are the rounded values  h in [3.790581272e-03, 3.790581272e-03], g in [2.132999676e-02, 2.132999676e-02]
-PASS table tab:bg-atoms row A3     y=1/5   h=0.0009060 sigma=0.0056584 g=0.0065644 are the rounded values  h in [9.059957214e-04, 9.059957214e-04], g in [6.564396181e-03, 6.564396181e-03]
-PASS table tab:bg-atoms row A4     y=3/19  h=0.0001412 sigma=0.0008853 g=0.0010264 are the rounded values  h in [1.411696934e-04, 1.411696934e-04], g in [1.026424700e-03, 1.026424700e-03]
-PASS table tab:bg-atoms row A6     y=1/9   h=0.0000699 sigma=0.0014454 g=0.0015153 are the rounded values  h in [6.990707727e-05, 6.990707727e-05], g in [1.515285021e-03, 1.515285021e-03]
-PASS table tab:bg-atoms row A7     y=3/31  h=0.0002121 sigma=0.0043915 g=0.0046036 are the rounded values  h in [2.121217870e-04, 2.121217870e-04], g in [4.603594434e-03, 4.603594434e-03]
+PASS atom table row leaf   y=1     h=0.2065862 sigma=0 g=0.2065862 are the rounded values  h in [2.065861817e-01, 2.065861817e-01], g in [2.065861817e-01, 2.065861817e-01]
+PASS atom table row cherry y=1/3   h=0.0077073 sigma=0 g=0.0077073 are the rounded values  h in [7.707255269e-03, 7.707255269e-03], g in [7.707255269e-03, 7.707255269e-03]
+PASS atom table row A1     y=3/7   h=0.0361185 sigma=0.0240242 g=0.0601428 are the rounded values  h in [3.611853047e-02, 3.611853047e-02], g in [6.014275713e-02, 6.014275713e-02]
+PASS atom table row A2     y=3/11  h=0.0037906 sigma=0.0175394 g=0.0213300 are the rounded values  h in [3.790581272e-03, 3.790581272e-03], g in [2.132999676e-02, 2.132999676e-02]
+PASS atom table row A3     y=1/5   h=0.0009060 sigma=0.0056584 g=0.0065644 are the rounded values  h in [9.059957214e-04, 9.059957214e-04], g in [6.564396181e-03, 6.564396181e-03]
+PASS atom table row A4     y=3/19  h=0.0001412 sigma=0.0008853 g=0.0010264 are the rounded values  h in [1.411696934e-04, 1.411696934e-04], g in [1.026424700e-03, 1.026424700e-03]
+PASS atom table row A6     y=1/9   h=0.0000699 sigma=0.0014454 g=0.0015153 are the rounded values  h in [6.990707727e-05, 6.990707727e-05], g in [1.515285021e-03, 1.515285021e-03]
+PASS atom table row A7     y=3/31  h=0.0002121 sigma=0.0043915 g=0.0046036 are the rounded values  h in [2.121217870e-04, 2.121217870e-04], g in [4.603594434e-03, 4.603594434e-03]
 PASS margin g - mu_0 (y - q) > 0 at leaf   (y - q = 20/23)  enclosure [1.745349e-01, 1.745349e-01]; printed 0.17453: rounds correctly
 PASS margin g - mu_0 (y - q) > 0 at cherry (y - q = 14/69)  enclosure [2.286228e-04, 2.286228e-04]; printed 0.000229: rounds correctly
 PASS margin g - mu_0 (y - q) > 0 at A1     (y - q = 48/161)  enclosure [4.915375e-02, 4.915375e-02]; printed 0.04915: rounds correctly
@@ -58,8 +58,8 @@ PASS gamma - mu_0 > 0 (slope on the linear piece)  [2.614594e-01, 2.614594e-01]
 PASS q + mu_0/(2 kappa) < 1/3 (printed ~0.229)  [2.288747e-01, 2.288747e-01]
 PASS delta_0 - mu_0^2/(4 kappa) > 0.012445  [1.244580215e-02, 1.244580215e-02]
 PASS g(A4) < 1/960  g(A4) in [1.026424700e-03, 1.026424700e-03], 1/960 = 0.0010416667
-PASS log(26/23) - 10/960 > 0.11218 (benchmark, lem:bg-sizeroot)  [1.121856554e-01, 1.121856554e-01]
-PASS log(26/23) - 0.012445 < 0.1101574 (lem:bg-compare (iii))  [1.101573221e-01, 1.101573221e-01]
+PASS log(26/23) - 10/960 > 0.11218 (benchmark floor)  [1.121856554e-01, 1.121856554e-01]
+PASS log(26/23) - 0.012445 < 0.1101574 (degree >= 24 ceiling)  [1.101573221e-01, 1.101573221e-01]
 PASS g(A4) ~ 0.0010264 (rounded) and = 0.0010264... (leading digits)  [1.0264246999e-03, 1.0264246999e-03]
 PASS g(A6) ~ 0.0015153 (rounded) and = 0.0015152... (leading digits)  [1.5152850210e-03, 1.5152850210e-03]
 ==============================================================================

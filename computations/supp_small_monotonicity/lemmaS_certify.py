@@ -1,4 +1,4 @@
-"""RIGOROUS monotonicity certificate (rem:lam-smallmono, "Lemma S") on [S0, S1] (target (0, 0.198]):
+"""RIGOROUS monotonicity certificate ("Lemma S") on [S0, S1] (target (0, 0.198]):
    for every planted branch b and s in the box,  l'(b) := d/ds [log T_b(s) - |b| r_3(s)] <= 0,  equality only for A3.
 Notation: root degree d (= #children + 1), Q_b = s sum_c y_c, y_b = 1/(d + Q_b), z_b = d/ds (s y_b) = (d + Q_b - s Q_b')/(d + Q_b)^2,
  Q_b' = sum_c z_c.  Cavity: l'(b) = sum_c l'(c) + Q_b'/(d + Q_b) - r_3'.

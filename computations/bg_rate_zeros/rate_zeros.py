@@ -1,10 +1,10 @@
-"""The two exact zeros in the rate lemma lem:bg-rate: the one-sided derivatives at (c, S) = (5, 5/3) and
-(1, 1), their numerical ranges quoted in the lemma, and the local monotonicity argument near each zero.
+"""The two exact zeros of the rate potential at lambda = 1: the one-sided derivatives at (c, S) = (5, 5/3) and
+(1, 1), their stated numerical ranges, and the local monotonicity argument near each zero.
 
-Notation (lem:bg-rate): h is the potential of Section 4, z(y) = 11 - (621/14)(y - q) on [0, 1/3] and
+Notation: h is the potential at lambda = 1, z(y) = 11 - (621/14)(y - q) on [0, 1/3] and
 2 - (3/2)(y - 1/3) on [1/3, 1], h~ = h - eta z, and for c >= 1
     Phi~_c(S) = F* - eta + c h~(S/c) - log(1 + S/(c+1)) - h~(1/(c+1+S)).
-For each cap K, eta = eta_K is the rational number of table tab:bg-rate (column eta_{k-1}, k = K+1).
+For each cap K, eta = eta_K is the certified rational rate (eta_{k-1}, k = K+1).
 
 Checks:
   [A] symbolic (sympy): the one-sided derivatives of Phi~_5 at S = 5/3 are
@@ -14,7 +14,7 @@ Checks:
       Also the exact zeros Phi~_1(1) = 0 and Phi~_5(5/3) = 0, from the identities 1 + z(1) = z(1/3),
       1 + 5 z(1/3) = z(q), F* + 5 beta = log(23/18) and 2F* - log(3/2) = beta.
   [B] rigorous enclosures (mpmath.iv, 256 bits, and python-flint arb, 300 bits) of D^-, D^+ and
-      (10/9)(gamma + 3/2 eta) - 1/3 for all 22 rates; the ranges quoted in the lemma:
+      (10/9)(gamma + 3/2 eta) - 1/3 for all 22 rates; the stated ranges:
       -0.041 < D^- < -0.004 and D^+ = 0.17 (rounded to two decimals) for every eta_K, and
       (10/9)(gamma + 3/2 eta) - 1/3 < 0 for every eta_K, equal to -7.79e-6 (rounded) for K <= 5;
       the cap eta <= (3/10 - gamma)/(3/2) = 0.0011210...
@@ -43,7 +43,7 @@ iv.prec = 256
 flint.ctx.prec = 300
 HERE = os.path.dirname(os.path.abspath(__file__))
 
-# column eta_{k-1} of table tab:bg-rate, as printed there, indexed by the cap K = k - 1
+# the certified rates eta_{k-1}, as stated, indexed by the cap K = k - 1
 ETA = {1: "2791/2500000", 2: "2791/2500000", 3: "2791/2500000", 4: "2791/2500000", 5: "2791/2500000",
        6: "9387/10000000", 7: "4183/5000000", 8: "7507/10000000", 9: "1701/2500000", 10: "311/500000",
        11: "179/312500", 12: "5309/10000000", 13: "2473/5000000", 14: "463/1000000", 15: "34/78125",

@@ -1,15 +1,15 @@
 # bg_rate: the rate potential, the non-atom gap, Psi_k and the large-n thresholds
 
-**Paper items (all certified by one program, `certify.py`):**
-- Lemma `lem:bg-rate` (rate potential; computer-verified): for each cap 1 <= K <= 22 the rational eta_K of
-  table `tab:bg-rate`, convexity of H = h - eta_K w, and the 253 one-variable inequalities
+**What it checks (all certified by one program, `certify.py`):**
+- the rate potential at lambda = 1: for each cap 1 <= K <= 22 (at most K children per vertex) a rational
+  rate eta_K, convexity of H = h - eta_K w, and the 253 one-variable inequalities
   Phi^H_c >= 0 on [0, c], 1 <= c <= K <= 22 (section D of the output);
-- Proposition `prop:bg-gap` (non-atom gap; computer-verified), section B of the output; see also
-  `../bg_nonatom_gap/`;
-- the degree >= 24 constants of Proposition `prop:bg-high` (section C);
-- the upper bounds Psi_k, 2 <= k <= 23, of table `tab:bg-rate` (section E), used in Lemma `lem:bg-compare`;
-- Lemma `lem:bg-compare`(ii): the thresholds n0(k) <= 316 against the table spiders (n <= 491) and the
-  benchmark spider A_5^a A_4^b (n >= 492) (section G).
+- the non-atom gap delta_0 = 0.01426 at lambda = 1, section B of the output; see also `../bg_nonatom_gap/`;
+- the constants of the high-degree case, root degree >= 24 (section C);
+- the upper bounds Psi_k, 2 <= k <= 23, for trees of maximum degree k (section E), used in the comparison
+  with explicit spiders (`../bg_spider_comparison/`);
+- part (ii) of that comparison: the thresholds n0(k) <= 316 against the spiders of the maximizer table
+  (n <= 491) and the benchmark spider A_5^a A_4^b (n >= 492) (section G).
 
 Role: part of the proof.
 
@@ -36,17 +36,17 @@ reads a copy of it.
 
 `second_implementation/ratecheck.py` (with its own `indep.py`; it imports nothing from this folder) was
 written separately from the statements. It encloses 5/3 as an interval and uses one-sided derivatives on
-each piece over supersets, re-proves all 253 inequalities (214,531 boxes, the count quoted in the paper),
-checks convexity of H for all caps, and recomputes upper bounds for Psi_k, comparing each with the column
-of table `tab:bg-rate` (`OK` = the paper's value is a valid upper bound). It writes `psi_indep.json`.
+each piece over supersets, re-proves all 253 inequalities (214,531 boxes),
+checks convexity of H for all caps, and recomputes upper bounds for Psi_k, comparing each with the stated
+value (`OK` = the stated value is a valid upper bound). It writes `psi_indep.json`.
 
 ## How to run
 
     python3 certify.py                                   # writes certify_out.json
     cd second_implementation && python3 ratecheck.py     # writes psi_indep.json
 
-Requires Python 3 with `mpmath` and `numpy`. `table_maximizers.tex` is the appendix table of the paper
-(same file as `paper/table_maximizers.tex` of this repository).
+Requires Python 3 with `mpmath` and `numpy`. `table_maximizers.tex` is the table of maximizers, 4 <= n <= 491
+(same file as `paper/table_maximizers.tex`, the appendix table of the preprint in `paper/`).
 
 ## Expected output
 
@@ -63,21 +63,21 @@ Requires Python 3 with `mpmath` and `numpy`. `table_maximizers.tex` is the appen
 ## Re-run status
 
 PASS (2026-10-04). `certify.py`: output and `certify_out.json` identical to the earlier run; the 22 rates
-eta_K equal the column eta_{k-1} of table `tab:bg-rate` exactly (2791/2500000, ..., 613/2000000), all 22
-caps print `verified=True`; delta_0 = 0.014273 >= 0.01426 with the inputs of `prop:bg-gap`
+eta_K equal the stated rates exactly (2791/2500000, ..., 613/2000000), all 22
+caps print `verified=True`; delta_0 = 0.014273 >= 0.01426 with the inputs of the non-atom gap
 (Phi_1(3/7) >= 0.017444, min at c = 6, a = A_4: 0.014273, min Phi_c >= 0.017838 / 0.022008 / 0.025662 for
 c = 10, 11, 12, Q(13) >= 0.018608); the benchmark floor 0.112186 > 0.11218 and the degree >= 24 ceiling
-0.110157; the Psi_k bounds; thresholds n0(k) with maximum 316 at k = 23. The paper's Psi_k column is these
+0.110157; the Psi_k bounds; thresholds n0(k) with maximum 316 at k = 23. The stated Psi_k values are these
 bounds rounded up (the program prints them rounded to nearest; the second implementation confirms every
-paper value is a valid upper bound). The bound m_c + w_c(y(A_31)) >= 0.028 of `prop:bg-gap` is used only
+stated value is a valid upper bound). The bound m_c + w_c(y(A_31)) >= 0.028 of the non-atom gap is used only
 inside the minimum (the `A>30` candidate) and is not printed separately.
 
-`ratecheck.py`: 253 one-variable checks, 214,531 boxes, H convex for all caps, and `OK` for all 22 Psi_k
-values of table `tab:bg-rate`. (Its comparison table was updated to the paper's current Psi_k column;
+`ratecheck.py`: 253 one-variable checks, 214,531 boxes, H convex for all caps, and `OK` for all 22 stated Psi_k
+values. (Its comparison table was updated to the current stated Psi_k values;
 the computation is unchanged.)
 
 ## Rooted trees with at most 17 vertices (added October 2026)
 
 `rooted_trees/` archives a floating-point confirmation, written in September 2026, of the telescoping identity
-`eq:bg-tele` and of the zero-slack branches of `prop:bg-zero` on all 1,011,311 rooted trees with at most 17
-vertices (Appendix C, item C3); see its README. No proof uses it.
+g(b) = h(y_b) + sum_v sigma_v and of the zero-slack branches (exactly the leaf, the cherry and A_5) on all
+1,011,311 rooted trees with at most 17 vertices; see its README. No proof uses it.

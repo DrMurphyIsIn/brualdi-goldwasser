@@ -1,8 +1,8 @@
 # nu_hull_search/all_k -- the matching-number search for all k, n <= 120, and its second implementation for n <= 60
 
-**Paper item:** Lemma `lem:nu-small-cv`; Appendix C, item C16 ("The search was run for all k with n <= 120 ...
-and all k with n <= 60"). Role: the runs for all k quoted in the paper, archived; the lemma itself uses only
-k <= 8 (the run `../dpk215_8.txt`).
+**What it checks:** the matching-number hull search for every k with n <= 120, and its second
+implementation for every k with n <= 60, with a comparison of all values. Role: the runs for all k, archived;
+the statement checked in the parent folder uses only k <= 8 (the run `../dpk215_8.txt`).
 
 The programs are the archived ones of the parent folder, run here without the limit KMAX on the matching
 number. These runs had been made before, but their outputs were not in the archive; they were re-run here in

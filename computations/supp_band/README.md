@@ -1,7 +1,7 @@
 # supp_band: typed band certificate on [0.1, 2.85]
 
-**Paper item.** Supplement, remark "a second certificate for the middle range" (`rem:lam-band`); see also
-`rem:lam-uniform`.
+**What this is.** A second certificate for the middle activity range: the sharp ceiling
+log T_b(lambda) <= |b| F*(lambda) for every planted branch b, for lambda in [0.1, 2.85], by a typed induction.
 
 **Role.** Confirmation of part (B) of the uniform ceiling theorem on [0.1, 2.85]; not used in its proof.
 
@@ -20,7 +20,7 @@ stage runs in double precision with a cushion PAD = 1e-9.
 1.5 after a pass (capped at WMAX); it prints `PASS [a, b] ...` for every accepted box and ends
 `BAND [a, b]: CERTIFIED; N boxes; ...` only if the whole range is covered contiguously.
 
-Supporting checks (described in the same remark):
+Supporting checks:
 - `band_hyp_check.py a b DELTA [NMAX]`: the typed hypothesis on every planted branch with at most 13
   vertices (60 897 evaluations with NMAX = 13; the default NMAX is 14) on one box. Needs `small_lambda_monotone.py`, `monotone_ratio.py`,
   `exp1_ceiling.py` (rooted-tree enumeration and cavity values).

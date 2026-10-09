@@ -4,7 +4,7 @@ non-leaf children, messages in [0,1/2]).  Witness U = min(0, -s1 (y - y0), -eps 
   s1 = eps/(ych - y0), kap = KK F*/(1/2 - ych).
 Obligation: for every (k leaf children, m non-leaf children, mean ybar), other than the cherry (k=1, m=0; exact):
   Phi = -k F* + m U(ybar) + log(1 + lam R/d) - F* - U(1/(d + lam R)) <= 0,  d = k+m+1, R = k + m ybar.
-Pieces (see the witness covers of [0.1,3.22] in the supplement): exact lemmas for (a) arms satisfying the slope conditions on R1 = {y_v <= y0},
+Pieces (see the witness covers of [0.1,3.22]): exact lemmas for (a) arms satisfying the slope conditions on R1 = {y_v <= y0},
 (b) k = 0 tail m >= M_t, (c) k >= 1 tails; mpmath.iv boxes for everything else."""
 import sys, math, time
 from mpmath import iv, mpf

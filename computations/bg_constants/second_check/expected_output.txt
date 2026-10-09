@@ -22,7 +22,7 @@
   gamma - 3/43 - 2 kappa q (3/43)^2 = [0.228313224953 +/- 2.83e-14]
   > 0.228: OK
   gamma > s: OK
-(c) table tab:bg-junction
+(c) junction table
   c=2: D-=-0.192793 D+=0.0295540 m=0.0175394  OK
   c=3: D-=-0.122987 D+=0.0993603 m=0.00565840  OK
   c=4: D-=-0.0816669 D+=0.140680 m=0.000885255  OK
@@ -35,4 +35,4 @@
   Q(10) = [0.00314111910851 +/- 2.99e-15]
   0.0030 < Q(10): OK
   Q(10) < 0.0033: OK
-Lemma bg-constants (a)-(d): OK
+constants at lambda = 1, (a)-(d): OK

@@ -1,6 +1,6 @@
 cap (3/10 - gamma)/(3/2) in [0.001121073580, 0.001121073580]
 
-[control 2] Lemma lem:bg-rate at (c, S) = (1, 1), cap K = 1
+[control 2] rate potential at (c, S) = (1, 1), cap K = 1
    unperturbed eta = 2791/2500000 = 0.0011164:  Phi~_1'(1) in [-7.7893e-06, -7.7893e-06]
       (a) convexity condition: PASS
       (b) bb_min_ge0 local step on [1 - 2^-14, 1]: derivative <= -6.4330e-06: PASS

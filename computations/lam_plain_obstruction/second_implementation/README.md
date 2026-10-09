@@ -1,11 +1,11 @@
 # lam_plain_obstruction/second_implementation: a second cover of [79/20, 10^6] in ball arithmetic
 
-**Paper item:** Theorem `thm:lam-plainfail` (no plain witness for lambda >= 79/20 at the cherry rate), via the
-two-point margin mu of its proof; Lemma `lem:lam-cover` and item C13 of the appendix on computations. Role:
+**What it checks:** that there is no plain witness for lambda in [79/20, 10^6] at the cherry rate, via the
+two-point margin mu. Role:
 second implementation **of the conclusion only**. It confirms that for every lambda in [79/20, 10^6] some pair
-(a, b) with y_2(a) < a < b < 1 gives mu(lambda; a, b) > 0, which is what the proof of `thm:lam-plainfail`
-needs; it does **not** re-check `lem:lam-cover` as stated, because it chooses its own pair on each cell instead
-of using the ten pairs of the lemma (and its pairs need not have a > 1/2).
+(a, b) with y_2(a) < a < b < 1 gives mu(lambda; a, b) > 0, which is what the proof that plain witnesses fail
+needs; it does **not** re-check the ten-pair cover as stated, because it chooses its own pair on each cell instead
+of using the ten fixed pairs (and its pairs need not have a > 1/2).
 
 `cover_arb.py` was written separately from `../obstruction.py` and shares no code with it.
 
@@ -20,7 +20,7 @@ mu(lambda; a, b) = L_b + ((1 - b)/(a - y_2(a))) (L_a - F) - 2F.
   b maximizing mu) and rounded to rationals with denominators at most 10^6 and 10^7.
 - mu is evaluated in ball arithmetic on the whole cell (asserting y_2(a) < a < b < 1); the cell is accepted if
   the ball is positive, and otherwise bisected (cells narrower than 10^-15 would abort the run).
-- It also prints mu at lambda = 79/20 for the pair (161/200, 999/1000) of the lemma and for (4/5, 59/60).
+- It also prints mu at lambda = 79/20 for the fixed pair (161/200, 999/1000) and for (4/5, 59/60).
 
 ## How to run
 

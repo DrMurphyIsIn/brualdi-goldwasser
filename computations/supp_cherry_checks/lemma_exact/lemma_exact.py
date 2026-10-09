@@ -1,4 +1,4 @@
-"""Exact check of the unmatched-vertices lemma (lem:lam-monomer) on all small planted branches.
+"""Exact check of the unmatched-vertices lemma on all small planted branches.
 
 Written in October 2026 (from the statement of the lemma; it shares no code with ../lemma_M_check.py).
 

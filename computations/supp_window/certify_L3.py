@@ -1,7 +1,7 @@
-"""Interval confirmation of the window checks (lem:lam-window-cv; rem:lam-window-cv): sharp ceiling on lam in [3.22, lam_c], lam_c = 1+sqrt5, uniformly as delta = lam_c - lam -> 0.
+"""Interval confirmation of the window checks: sharp ceiling on lam in [3.22, lam_c], lam_c = 1+sqrt5, uniformly as delta = lam_c - lam -> 0.
 Witness (theta = 1): U = min(0, -s1 (y - ydag), -eps - kap (y - y_ch)), ydag = (e^{F*}-1)/lam, s1 = eps/(y_ch - ydag),
 kap = 0.5 F*/(1/2 - y_ch), eps = 2(F* - L), L = log(1+lam/2)/2, F* = sup_j r_j.
-Enclosures (proved by hand, lem:lam-window-enc; all in terms of g = log((2+2lam)/(2+lam)) - L >= 0, a = lam/(2+lam), b = a/(1+a)):
+Enclosures (proved by hand; all in terms of g = log((2+2lam)/(2+lam)) - L >= 0, a = lam/(2+lam), b = a/(1+a)):
   eps_lo = g^2 (1+a)/(4a + 3(1+a) g) <= eps <= eps_hi = g^2/(2b);  F* in [L + eps_lo/2, L + eps_hi/2];
   D := y_ch - ydag in [D_lo, D_up], D_up = y_ch - (sqrt(1+lam/2)-1)/lam, D_lo = D_up - e^{L}(e^{eps_hi/2}-1)/lam.
 g and D_up vanish at lam_c, so we write g = delta*q, D_up = delta*p with q = -g'(xi), p = -D_up'(xi) (mean value on [lam, lam_c]).
@@ -70,4 +70,4 @@ if __name__ == "__main__":
         e = min(d + W, DMAX); ok, nb = check_box(d, e); tot += nb
         if not all(ok.values()): bad = (float(d), float(e), ok); break
         d = e
-    print("THEOREM C checks:", "ALL PASSED" if bad is None else f"FAILED {bad}", f"on delta in [0, {float(DMAX):.6f}] (lam in [3.22, lam_c]); C2 boxes {tot}; {time.time()-t0:.0f}s")
+    print("window checks (C1)-(C4):", "ALL PASSED" if bad is None else f"FAILED {bad}", f"on delta in [0, {float(DMAX):.6f}] (lam in [3.22, lam_c]); C2 boxes {tot}; {time.time()-t0:.0f}s")

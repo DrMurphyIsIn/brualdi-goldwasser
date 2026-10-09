@@ -1,4 +1,4 @@
-"""Second, independent implementation of lem:bg-rate (all 253 one-variable inequalities Phi^H_c>=0 on [0,c]), H convexity, Psi_k."""
+"""Second, independent implementation of the rate potential at lambda = 1 (all 253 one-variable inequalities Phi^H_c>=0 on [0,c]), H convexity, Psi_k."""
 import sys, time
 from indep import *
 iv.prec=110
@@ -61,11 +61,11 @@ if __name__=="__main__":
     for C,e in ETAS.items():
         assert (I(e)*(AW-I(3)/2)).b<(GAM-SL).a
     print("H convex for all C")
-    # Psi_k column of the paper's table tab:bg-rate (upper bounds, rounded up)
+    # stated values of Psi_k (upper bounds, rounded up)
     claimed={2:0.29989,3:0.27126,4:0.26579,5:0.26031,6:0.25484,7:0.24772,8:0.24276,9:0.23873,10:0.23543,11:0.23269,12:0.23036,
              13:0.22838,14:0.22665,15:0.22514,16:0.22381,17:0.22263,18:0.22158,19:0.22062,20:0.21977,21:0.21898,22:0.21826,23:0.21761}
     import json; out={}
     for k in range(2,24):
         u=Psi(k,I(ETAS[k-1])); out[k]=u
-        print(f"Psi_{k} <= {u:.7f}   paper {claimed[k]}  {'OK' if u<=claimed[k] else 'PAPER VALUE TOO SMALL (rounded down)'}")
+        print(f"Psi_{k} <= {u:.7f}   stated {claimed[k]}  {'OK' if u<=claimed[k] else 'STATED VALUE TOO SMALL (rounded down)'}")
     json.dump(out,open('psi_indep.json','w'))

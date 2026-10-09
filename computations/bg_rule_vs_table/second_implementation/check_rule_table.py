@@ -1,8 +1,8 @@
 # SPDX-License-Identifier: Apache-2.0
 """Second, separate implementation of the rule-versus-table check.
 
-Applies the rule of Theorem thm:bg-bestspider, as stated, to every n of the
-appendix table (4 <= n <= 491) and compares the rule spider with the printed
+Applies the best-spider rule, as stated, to every n of the
+table of maximizers (4 <= n <= 491) and compares the rule spider with the printed
 maximizer as multisets of center branches.  Integers only.
 
 Usage: python3 check_rule_table.py [path/to/table_maximizers.tex]
@@ -88,7 +88,7 @@ def main():
     claimed = [300, 311, 322, 333] + list(range(302, 424, 11))
     late = [n for n in fails if n >= 300]
     print("failures for n >= 300: %d sizes %s" % (len(late), late))
-    print("matches the paper's list of 16 sizes: %s" % (late == sorted(claimed)))
+    print("matches the stated list of 16 sizes: %s" % (late == sorted(claimed)))
     ok &= late == sorted(claimed)
 
     for lo, hi in ((424, 456), (424, 491)):

@@ -1,12 +1,12 @@
 # bg_rate/negative_controls: the rate lemma at (1, 1) must reject a rate above the cap
 
-**Paper item:** Lemma `lem:bg-rate` (rate potential; computer-verified), the exact zero (c, S) = (1, 1)
-for the cap K = 1, and the remark after it: the rates are capped by eta <= 0.0011210...
+**What it checks:** the check of the rate potential at lambda = 1 at the exact zero (c, S) = (1, 1) for the
+cap K = 1, where every admissible rate satisfies eta <= 0.0011210...
 Role: negative control (a deliberately wrong input that the check must reject); no proof uses it.
 
 ## What is checked
 
-For K = 1 the lemma needs Phi~_1(S) >= 0 on [0, 1]. Since Phi~_1(1) = 0 for every eta, the check closes the
+For K = 1 the rate potential needs Phi~_1(S) >= 0 on [0, 1]. Since Phi~_1(1) = 0 for every eta, the check closes the
 box at S = 1 by a one-sided derivative, which must be <= 0 there; this holds iff
 (10/9)(gamma + (3/2) eta) < 1/3, i.e. eta < (3/10 - gamma)/(3/2) = 0.001121073580... The table uses
 eta_1 = 2791/2500000 = 0.0011164. The negative control uses eta = 0.0011212, slightly above 0.0011211.

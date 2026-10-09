@@ -1,10 +1,11 @@
 # lam_partB_rows: the low-degree certificates of part (B)
 
-**Paper item.** Lemma `lem:lam-polycert` (Appendix B, "Low-degree certificates", computer-verified),
-with Appendix C, item C14 (programs and independent check). **Role: proof.**
+**What it checks.** For the weighted family pi_lambda, the low-degree certificates of part (B) of the
+uniform-ceiling theorem: positivity of the 63 interval rows that cover the tabulated scalar conditions, and
+positive Bernstein coefficients for the polynomial conditions. **Role: proof.**
 Part (B) of the uniform-ceiling theorem reduces, by hand, to the scalar conditions (U1)-(U8) and (S1)-(S6),
 and those not settled in the text to the certificates P1-P10. This folder certifies the rows of
-part (a) of the lemma and the Bernstein coefficients of part (b).
+(a) below and the Bernstein coefficients of (b).
 
 ## What is checked
 
@@ -15,7 +16,7 @@ A row is accepted only if its lower bound is positive and at least 30% of the va
 Tables are built greedily on a mesh of 1/2000; for P10 from the two boxes [0, 3/86], [3/86, 3/43], halving any
 box that fails the 30% rule.
 
-| paper name | name in program output | t-range | rows | smallest lower bound |
+| certificate | name in program output | t-range | rows | smallest lower bound |
 |---|---|---|---|---|
 | P1 (S2) | `C1 (S2)` | [0, 0.6181] | 10 | 0.0134 |
 | P3 (S4) | `C3 (S4)` | [0, 0.6181] | 13 | 0.065 |
@@ -25,9 +26,9 @@ box that fails the 30% rule.
 | total | | | 63 | 0.000547 |
 
 (t = 0.3229 corresponds to lambda = 2t/(1-t) = 0.95377...; the program's label `lam in [3/20, 0.954]` is a
-rounding of this.) The program names T1, T2, T3a, T4, ..., T8, T8b correspond to the paper's (U1), (U2), (U3a), (U4), ..., (U8),
-(U8b). The witness called W_1 in the paper is printed as `W*` (older notation). The program also prints a 24-row
-table `C2 (S3)`: that is the alternative table for P2 mentioned in the remark; it is **not used** (the proof uses
+rounding of this.) The program names T1, T2, T3a, T4, ..., T8, T8b correspond to the conditions (U1), (U2), (U3a), (U4), ..., (U8),
+(U8b). The witness W_1 is printed as `W*` (older notation). The program also prints a 24-row
+table `C2 (S3)`: that is an alternative table for P2; it is **not used** (the proof uses
 the polynomial of (b) instead).
 
 Row endpoints. `lowdeg_tables.py` evaluates each row at 30-digit roundings of the printed rational endpoints
@@ -56,14 +57,14 @@ python3 w2_poly.py           # for (d) = P9 (first line of output)
 ## Expected output
 
 `expected_output.txt` (standard output of `lowdeg_tables.py`, `bernstein.py`, `polychecks.py` and `w2_poly.py`). `lowdeg_tables.out` lists every row (box and lower
-bound, 4 digits) and agrees with the rows printed in Appendix B; `lowdeg_atoms.out` tabulates the atom values at
+bound, 4 digits) and agrees with the stated row listing; `lowdeg_atoms.out` tabulates the atom values at
 every breakpoint (12 digits) for checking rows by hand; `lowdeg_summary.tex` is the summary table. The last
 lines of the standard output are `ALL ROWS CERTIFIED` and `wrote lowdeg_atoms.out with 67 breakpoints`.
 
 ## Re-run here
 
-PASS (2026-10-04): all 63 rows and their lower bounds agree with the paper's Table and row listing, and the
-Bernstein coefficients agree. Runtime: `lowdeg_tables.py` 1.2 s, 17 MB peak RSS; `bernstein.py` 0.5 s, 55 MB; `polychecks.py` 2.2 s; `w2_poly.py` 5.6 s. The exact identity (c) and G_3(3/43) <= -0.0065184 (d) agree with the paper.
+PASS (2026-10-04): all 63 rows and their lower bounds agree with the stated summary table and row listing, and the
+Bernstein coefficients agree. Runtime: `lowdeg_tables.py` 1.2 s, 17 MB peak RSS; `bernstein.py` 0.5 s, 55 MB; `polychecks.py` 2.2 s; `w2_poly.py` 5.6 s. The exact identity (c) and G_3(3/43) <= -0.0065184 (d) agree with the stated values.
 
 ## Dependencies
 

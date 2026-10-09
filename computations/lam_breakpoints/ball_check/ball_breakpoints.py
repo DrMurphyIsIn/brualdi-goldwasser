@@ -93,7 +93,7 @@ def main():
             allok = False
             print(f"j={j}: enclosure of breakpoints.py [{float(a)}, {float(b)}] does not meet this one")
     print(f"enclosures of breakpoints.py read: {len(ref)}; overlapping the ones found here: {over}")
-    # the intervals of Lemma lam-bp
+    # the intervals of the breakpoint lemma
     lemma = {3: ("0.43050", "0.43051"), 4: ("0.87247", "0.87248"), 5: ("1.19239", "1.19240"), 6: ("1.43559", "1.43560")}
     for j, (p, q) in lemma.items():
         inside = Fr(p) < enc[j][0] and enc[j][1] < Fr(q)

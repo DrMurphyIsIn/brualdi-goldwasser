@@ -1,6 +1,6 @@
-"""Rigorous enclosures of the atom values (table tab:bg-atoms) and of the six atom margins of
-prop:bg-high, together with g(A_4) < 1/960 (thm:bg-growth / lem:bg-sizeroot benchmark) and
-delta_0 - mu_0^2/(4 kappa) > 0.012445 (prop:bg-high).
+"""Rigorous enclosures of the atom values at lambda = 1 and of the six atom margins of the high-degree
+case (root degree >= 24), together with g(A_4) < 1/960 (benchmark spider) and
+delta_0 - mu_0^2/(4 kappa) > 0.012445 (high-degree case).
 
 Everything is computed from the exact definitions at lambda = 1:
     F* = log(621/64)/11,  q = 3/23,  beta = 2F* - log(3/2),  kappa = beta/(1/3 - q)^2,
@@ -13,7 +13,7 @@ Every quantity is a combination of logarithms of rational numbers; it is enclose
 ball/interval arithmetics: mpmath.iv (outward rounding, 256 bits) and python-flint arb (300 bits).
 Each claim is decided on the endpoints of the enclosure, in both arithmetics. For a printed decimal
 x with k digits after the point, "rounds to x" means the enclosure lies in [x - 5*10^-(k+1), x + 5*10^-(k+1)]
-(we print k as used in the paper).
+(we print k as in the stated value).
 
 Usage: python3 atom_margins.py
 """
@@ -120,7 +120,7 @@ def rounds_to(B, x, printed, k):
     return (p - half <= lo) and (hi <= p + half), lo, hi
 
 
-# values printed in table tab:bg-atoms (7 decimals); exact zeros are checked as identities
+# stated atom values (7 decimals); exact zeros are checked as identities
 TABLE3 = {
     "leaf":   ("0.2065862", "0", "0.2065862"),
     "cherry": ("0.0077073", "0", "0.0077073"),
@@ -131,7 +131,7 @@ TABLE3 = {
     "A6":     ("0.0000699", "0.0014454", "0.0015153"),
     "A7":     ("0.0002121", "0.0043915", "0.0046036"),
 }
-# margins g - mu_0 (y - q) in the proof of prop:bg-high, as printed (value, digits after the point)
+# margins g - mu_0 (y - q) in the high-degree case, as stated (value, digits after the point)
 MARGINS = [("leaf", "0.17453", 5), ("cherry", "0.000229", 6), ("A1", "0.04915", 5),
            ("A2", "0.01609", 5), ("A3", "0.00400", 5), ("A4", "0.0000143", 7)]
 
@@ -160,11 +160,11 @@ def run(B):
             oks, slo, shi = True, Fr(0), Fr(0)
         else:
             oks, slo, shi = rounds_to(B, a["sigma"], sp, 7)
-        check("table tab:bg-atoms row %-6s y=%-5s h=%s sigma=%s g=%s are the rounded values" % (name, a["y"], hp, sp, gp),
+        check("atom table row %-6s y=%-5s h=%s sigma=%s g=%s are the rounded values" % (name, a["y"], hp, sp, gp),
               okh and oks and okg,
               "h in %s, g in %s" % (fmt(hlo, hhi, 9), fmt(glo, ghi, 9)))
 
-    # the six margins of prop:bg-high
+    # the six margins of the high-degree case
     mu0 = Fr(23, 624)
     assert mu0 == 1 / (24 * (1 + q))
     worst = None
@@ -203,10 +203,10 @@ def run(B):
     check("g(A4) < 1/960", gA4hi < Fr(1, 960), "g(A4) in %s, 1/960 = %.10f" % (fmt(gA4lo, gA4hi, 9), 1 / 960))
     bench = B.log(B.q(Fr(26, 23))) - B.q(Fr(10, 960))
     lo, hi = B.lohi(bench)
-    check("log(26/23) - 10/960 > 0.11218 (benchmark, lem:bg-sizeroot)", lo > Fr("0.11218"), fmt(lo, hi, 9))
+    check("log(26/23) - 10/960 > 0.11218 (benchmark floor)", lo > Fr("0.11218"), fmt(lo, hi, 9))
     lo, hi = B.lohi(B.log(B.q(Fr(26, 23))) - B.q(Fr("0.012445")))
-    check("log(26/23) - 0.012445 < 0.1101574 (lem:bg-compare (iii))", hi < Fr("0.1101574"), fmt(lo, hi, 9))
-    # the deficits quoted in rem:bgx-race (rounded) and cor:bgx-limits (truncated, written with dots)
+    check("log(26/23) - 0.012445 < 0.1101574 (degree >= 24 ceiling)", hi < Fr("0.1101574"), fmt(lo, hi, 9))
+    # the deficits quoted for the best spider, rounded and truncated (written with dots)
     for name, rounded, truncated in (("A4", "0.0010264", "0.0010264"), ("A6", "0.0015153", "0.0015152")):
         lo, hi = B.lohi(A[name]["g"])
         okr, _, _ = rounds_to(B, A[name]["g"], rounded, 7)

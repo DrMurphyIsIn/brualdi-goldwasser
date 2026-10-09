@@ -1,4 +1,4 @@
-"""Verification of the constants of lem:bg-constants (and of the Bellman inequality h satisfies at lambda=1).
+"""Verification of the constants of the potential at lambda = 1 (and of the Bellman inequality h satisfies at lambda=1).
 (a) every numerical sign in the proof, in rational interval arithmetic (core.log_encl);
 (b) the exact polynomial identity used for Q'(c) > 0;
 (c) an independent rigorous branch-and-bound check that Phi_c(S) >= 0 on [0,c] for 1<=c<=CMAX,

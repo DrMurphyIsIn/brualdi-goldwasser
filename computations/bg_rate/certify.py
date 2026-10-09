@@ -1,5 +1,5 @@
 """Rigorous certification (interval arithmetic) of the results built on the potential h
- (paper: prop:bg-gap, prop:bg-high, lem:bg-rate, Psi_k of lem:bg-compare, and lem:bg-compare(ii)).
+ (non-atom gap, high-degree case, rate potential, the bounds Psi_k and the thresholds of the spider comparison).
  B. non-atom gap:   g(R) >= h(x(R)) + DELTA0 for every non-atom branch R
  C. high degree:    root degree k>=24 and a non-atom branch  =>  Phi(T) <= log(26/23) - (DELTA0 - mu0^2/(4 kappa))
  D. rate lemma:     for each cap C<=22 (<=C children per vertex): lam-eta+sum H(x_i)-log(1+S/(c+1)) >= H(r),

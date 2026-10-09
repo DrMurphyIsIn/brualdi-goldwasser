@@ -1,8 +1,8 @@
 # hull_prefilter_check: re-check of the floating-point prefilters of the two hull searches
 
-**Paper items:** Theorem `thm:bg-small` (the paragraph "Exact arithmetic" in the section on the exact
-hull computation; program `../bg_hull_dp/dp.py`) and Lemma `lem:nu-small-cv` with Appendix C, item C16
-(program `../nu_hull_search/hulldp2.py`). Role: part of the proof (it certifies the one floating-point step
+**What it checks:** that the floating-point prefilter of each exact hull search discards only points that
+are not hull (Ext) points: the search over all trees, n <= 491 (program `../bg_hull_dp/dp.py`), and the
+search with prescribed matching number k <= 8, n <= 215 (program `../nu_hull_search/hulldp2.py`). Role: part of the proof (it certifies the one floating-point step
 of each search).
 
 ## The point
@@ -10,7 +10,7 @@ of each search).
 Both hull searches generate, for each class, a set C of candidate points in exact rational arithmetic,
 discard some of them with a floating-point prefilter, and compute Ext of the survivors C' exactly. This is
 correct as soon as no discarded point lies in Ext(C), i.e. every discarded p satisfies
-a . p < max over C' of a . x for every a > 0. For `dp.py` the paper proves this from the test itself (an
+a . p < max over C' of a . x for every a > 0. For `dp.py` this also follows from the test itself (an
 explicit rounding-error bound). `hulldp2.py` uses a different filter (a Pareto test and a cross-product
 test with absolute tolerances) which is not by itself such a proof: a point whose first coordinate ties
 another one in floating point, but is truly larger, could in principle be an Ext point. This folder checks

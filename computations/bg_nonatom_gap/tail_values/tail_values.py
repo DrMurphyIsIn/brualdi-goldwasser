@@ -1,4 +1,4 @@
-"""Tail of the non-atom gap (Proposition prop:bg-gap, case 2 <= c <= 9): the values m_c + w_c(y(A_31)).
+"""Tail of the non-atom gap (case 2 <= c <= 9): the values m_c + w_c(y(A_31)).
 
 Written in October 2026. Both certifying programs include the tail in their per-c minimum without printing it:
 ../../bg_rate/certify.py (section B; candidate `A>30`, that is m_c + w_c(y(A_31))) and the second

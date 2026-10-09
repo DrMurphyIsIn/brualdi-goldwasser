@@ -1,4 +1,4 @@
-"""Two-point obstruction for the PLAIN form of the convex-potential method (paper: lem:lam-cover, thm:lam-plainfail).
+"""Two-point obstruction for the PLAIN form of the convex-potential method (no plain witness for lam in [79/20, 10^6]).
 
 If h is a plain witness then h >= 0, h(1) <= F, and Bellman at m = 1 gives, for 0 < x <= 1,
     h(x) - h(y2(x)) >= L_x - F,   y2(x) = 1/(2 + lam x),   L_x = log(1 + lam x/2).
@@ -11,7 +11,7 @@ In the cherry regime (lam >= 1+sqrt5) F = (1/2) log(1 + lam/2).
 Part 1: six sample activities and lam = 79/20, at fixed rational (a, b).
 Part 2: all lam in [79/20, 10^6] by adaptive bisection with lam an interval (mpmath.iv, outward rounding),
         (a, b) chosen per subinterval from a fixed menu of rationals, all with a > 1/2; all lam >= 10^6 analytically
-        (see the paper).
+        (by hand, not in this program).
 Usage: python3 obstruction.py"""
 from fractions import Fraction as Fr
 from mpmath import iv, mpf

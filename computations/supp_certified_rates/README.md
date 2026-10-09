@@ -1,8 +1,8 @@
 # supp_certified_rates -- certified rates at 26 activities (28 certificates)
 
-**Paper item:** Theorem `thm:lam-cert` (certified rates; computer-verified), Table `tab:lam-cert`, and Remark
-`rem:lam-cert` (programs and independent check). Role: part of a proof in the supplement (a confirmation
-route for the rate at isolated activities; the uniform theorem of the main paper contains every row).
+**What this is:** certified growth rates of the weighted family at 26 isolated rational activities
+(28 witness certificates), with their programs and an independent re-check. Role: part of a proof in a
+confirmation route (the rate at isolated activities; the uniform ceiling theorem contains every row).
 
 ## What is checked
 
@@ -10,7 +10,7 @@ At each rational activity `lambda` of the table, a convex piecewise-linear messa
 *witness*) is verified to satisfy the Bellman inequality of the plain form (19 activities, `certify_plain.py`)
 or of the leaf-exempt form (9 activities, `certify_leafx.py`), which proves that the rate is `rho = e^F` with
 `F` the log-weight per vertex of the best atom. The checks: nondecreasing slopes, the tail lemma
-(`lem:lam-tail`, which fixes `M`, resp. `N`), and the Bellman inequality on cells for every `m <= M` (resp.
+(which fixes `M`, resp. `N`), and the Bellman inequality on cells for every `m <= M` (resp.
 `k+m <= N`), each cell decided at its two endpoints after a tangent-line bound for the logarithm, bisecting
 on failure. Node values pinned by the theory are exact formal numbers `c + sum a_p log p` (`formal.py`); at
 the forced equality points the value must vanish *formally* (cancellation of logarithms after prime
@@ -24,7 +24,7 @@ The witness itself is untrusted input: it is produced by a floating-point linear
 * `certify_plain.py`, `certify_leafx.py` -- the certifiers (LP for the witness, then rigorous check).
 * `formal.py` -- exact formal logarithms with interval enclosures.
 * `potential_lp.py`, `potential_leafx_lp.py` -- the untrusted LPs.
-* `certificates/cert_*.json` -- the 28 recorded certificates of Table `tab:lam-cert` (witness nodes as exact
+* `certificates/cert_*.json` -- the 28 recorded certificates (one per row of the table of certified rates) (witness nodes as exact
   rationals, node values as formal numbers, and the counts).
 * `recheck_recorded.py` -- feeds each recorded witness to the unchanged `certify()` routine of the two
   certifiers (bypassing the LP) and compares the counts with the record. Written for this release; it adds
@@ -40,7 +40,7 @@ The witness itself is untrusted input: it is produced by a floating-point linear
 
 `expected_output.txt` (from `recheck_recorded.py`): all 28 lines `CERTIFIED ... matches record`, and
 `28 recorded certificates re-verified; 28 match the recorded counts`. The node counts, `M` (`N` for the
-leaf-exempt form) and cell counts are exactly those of Table `tab:lam-cert`, e.g. `lambda = 16/5`: 17 nodes,
+leaf-exempt form) and cell counts are exactly those of the table of certified rates, e.g. `lambda = 16/5`: 17 nodes,
 `M = 1264`, 24 643 cells; `lambda = 1` (plain): 16 nodes, `M = 31`, 513 cells; `lambda = 100`
 (leaf-exempt): 4 nodes, `N = 25`, 1 403 cells.
 

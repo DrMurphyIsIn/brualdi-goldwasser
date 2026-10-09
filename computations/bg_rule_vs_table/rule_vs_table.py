@@ -1,6 +1,6 @@
-"""Compare the best-spider rule of thm:bg-bestspider with the appendix table, in exact arithmetic.
+"""Compare the best-spider rule with the table of maximizers (4 <= n <= 491), in exact arithmetic.
 
-The rule (thm:bg-bestspider), applied verbatim to every n >= 4: with s = 6(n-1) mod 11 (so that
+The rule (the best spider for n >= 492), applied verbatim to every n >= 4: with s = 6(n-1) mod 11 (so that
 n-1 = 2s mod 11), the spider has only arms at its center, all A_5 except
     s = 0      : none,
     s in {1,2} : s arms A_6,
@@ -10,14 +10,14 @@ n-1 = 2s mod 11), the spider has only arms at its center, all A_5 except
 The number of A_5 is (n - 1 - 9 k_4 - 13 k_6)/11; when it is negative the rule names no spider.
 
 Checks:
-  [1] the rule computed in two ways (the case list above, and the candidates X_s, Y_s of the proof of
-      thm:bg-bestspider) agrees for every 4 <= n <= 5000;
-  [2] the appendix table (../bg_hull_dp/table_maximizers.tex, the same file as the paper's appendix)
+  [1] the rule computed in two ways (the case list above, and the two candidates X_s, Y_s of the
+      best-spider comparison) agrees for every 4 <= n <= 5000;
+  [2] the table of maximizers (../bg_hull_dp/table_maximizers.tex)
       is parsed; every entry has n - 1 vertices outside the center;
-  [3] the value of every table spider, computed exactly from (eq:bgx-closed), equals the exact maximum
+  [3] the value of every table spider, computed exactly from the closed formula for a spider, equals the exact maximum
       M_n printed by the hull computation (../bg_hull_dp/results_dp_491.txt);
   [4] rule = table (as multisets of center branches) exactly for 424 <= n <= 491, and not at n = 423;
-      the full list of failures for n >= 300, and the claims of rem:bgx-race about it;
+      the full list of failures for n >= 300, and the stated list of these sizes;
   [5] at every failure the exact value of the rule spider (if it exists) is strictly below M_n.
 All arithmetic is exact (integers and fractions.Fraction).
 
@@ -33,7 +33,7 @@ TABLE = os.path.join(HERE, "..", "bg_hull_dp", "table_maximizers.tex")
 DPOUT = os.path.join(HERE, "..", "bg_hull_dp", "results_dp_491.txt")
 
 
-# ------------------------------------------------------------------ atoms (lem:pre-atoms)
+# ------------------------------------------------------------------ atoms (cherry and arms A_j)
 def atom(x):
     """(T, y) of a center child: 'C' (cherry) or ('A', j) = arm A_j (A_0 = leaf)."""
     if x == "C":
@@ -48,7 +48,7 @@ def cost(x):
 
 
 def omega(spider):
-    """pi of the spider = (prod T)(1 + R/D), eq. (eq:bgx-closed); spider = dict child -> multiplicity."""
+    """pi of the spider = (prod T)(1 + R/D), the closed formula; spider = dict child -> multiplicity."""
     P = Fr(1)
     R = Fr(0)
     D = 0
@@ -195,7 +195,7 @@ def main():
     print("    last failure: n = %d" % max(fail))
     expected = sorted({300, 311, 322, 333} | {n for n in range(302, 424) if n % 11 == 5})
     claim = big == expected
-    print("    = {300, 311, 322, 333} u {n = 5 mod 11, 302 <= n <= 423} (rem:bgx-race): %s" % claim)
+    print("    = {300, 311, 322, 333} u {n = 5 mod 11, 302 <= n <= 423} (stated list): %s" % claim)
     ok &= claim
     small = [n for n in fail if n < 300]
     print("    failures for 4 <= n <= 299: %d of 296 sizes" % len(small))

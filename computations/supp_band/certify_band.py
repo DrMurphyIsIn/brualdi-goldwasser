@@ -1,4 +1,4 @@
-"""Band certificate (rem:lam-band; mid range): sharp ceiling log T_b(lam) <= |b| F*(lam) for lam in [LAM0, LAM1] (target [0.1, 2.85];
+"""Band certificate (second certificate for the middle range): sharp ceiling log T_b(lam) <= |b| F*(lam) for lam in [LAM0, LAM1] (target [0.1, 2.85];
 the window checks cover [2.84, lam_c]).  Degree x R-bin typed induction (same skeleton as the typed induction on (0, 0.1]).
 
 Notation: planted branch b, root degree d = #children + 1, R_b = sum of children's messages, y_b = 1/(d + lam R_b),

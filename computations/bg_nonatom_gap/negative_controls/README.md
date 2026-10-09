@@ -1,11 +1,11 @@
 # bg_nonatom_gap/negative_controls: the non-atom gap must reject delta_0 = 0.0143
 
-**Paper item:** Proposition `prop:bg-gap` (non-atom gap; computer-verified), with delta_0 = 0.01426.
+**What it checks:** the check of the non-atom gap at lambda = 1, with delta_0 = 0.01426.
 Role: negative control (a deliberately wrong input that the check must reject); no proof uses it.
 
 ## What is checked
 
-`nc_nonatom_gap.py` re-runs the check of the proposition, section B of `../../bg_rate/certify.py`, with
+`nc_nonatom_gap.py` re-runs the check of the gap, section B of `../../bg_rate/certify.py`, with
 the same routines (`ivtools.py` and `core.py` of `../../bg_rate/`, imported unchanged; `mpmath.iv`,
 120 bits, outward rounding): for each child count c of a minimal non-atom it computes the rigorous lower
 bound of sigma_v + sum sigma(children) (c = 1: Phi_1(3/7); 2 <= c <= 9: m_c + min_a (w_c(y_a) + sigma(a))
@@ -13,12 +13,12 @@ over a in {leaf, A_1, ..., A_30} and the tail A_{>30}; c = 10, 11, 12: branch-an
 [0, c]; c >= 13: Q(13)). A value delta_0 is accepted iff every one of these bounds is >= delta_0, decided
 on interval endpoints.
 
-- Positive control: delta_0 = 0.01426 (the value of the proposition) is accepted.
+- Positive control: delta_0 = 0.01426 (the stated value) is accepted.
 - Negative control: delta_0 = 0.0143 is rejected. The failing row is c = 6, a = A_4, whose enclosure
   [0.014273396, 0.014273396] lies entirely below 0.0143; no other row fails.
 
 The rejection is a rejection of the method, not of the statement: the true infimum over non-atoms is
-about 0.014465 (paper, after the proposition), so "sigma(b) >= 0.0143 per minimal non-atom" may well be
+about 0.014465, so "sigma(b) >= 0.0143 per minimal non-atom" may well be
 true; the per-child bound m_c + w_c(y) + sigma(a) used by the proof cannot certify it, and the control
 shows that the check notices.
 

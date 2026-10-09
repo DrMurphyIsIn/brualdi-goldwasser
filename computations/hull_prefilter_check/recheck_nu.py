@@ -1,4 +1,4 @@
-"""Re-check of the floating-point prefilter of ../nu_hull_search/hulldp2.py (lem:nu-small-cv).
+"""Re-check of the floating-point prefilter of ../nu_hull_search/hulldp2.py (maxima M(n,k) with matching number k).
 
 Runs the recursion of hulldp2.py (its own functions, imported unchanged: float_filter, exact_hull,
 Group, intern) and, for every bundle class, certifies with certify_drop.py that no candidate discarded

@@ -5,7 +5,7 @@
     rule != table at n = 423: True   (rule: A6^2 A5^36; table: A5^31 A4^9)
     failures for n >= 300 (16): [300, 302, 311, 313, 322, 324, 333, 335, 346, 357, 368, 379, 390, 401, 412, 423]
     last failure: n = 423
-    = {300, 311, 322, 333} u {n = 5 mod 11, 302 <= n <= 423} (rem:bgx-race): True
+    = {300, 311, 322, 333} u {n = 5 mod 11, 302 <= n <= 423} (stated list): True
     failures for 4 <= n <= 299: 240 of 296 sizes
     last table maximizer with a cherry at the center: n = 333 (C A5^30)
     table at n = 311: C A5^28

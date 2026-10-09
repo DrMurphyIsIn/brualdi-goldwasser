@@ -1,8 +1,8 @@
-# bg_M7_table: the exchange polynomials of the local-structure lemma
+# bg_M7_table: the exchange polynomials of the local exchanges (M1)-(M7)
 
-**Paper items:** Lemma `lem:bg-moves` (exchanges (M1)-(M7)) and table `tab:bg-M7` (exchanges (M7)(ii),
-(iii) and the 13 exchanges of (M7)(vi)), with the positive factors and the (M3) corner polynomials listed
-in its proof. Role: part of the proof (exact symbolic inputs of a hand proof).
+**What it checks:** that the local branch exchanges (M1)-(M7) at a vertex strictly increase pi, through
+their exchange polynomials: the 15-row table of exchanges (M7)(ii), (iii) and the 13 exchanges of (M7)(vi),
+the positive factors of the other exchanges, and the (M3) corner polynomials. Role: part of the proof (exact symbolic inputs of a hand proof).
 
 ## What is checked
 
@@ -11,12 +11,12 @@ computed from the cavity recursion (a root with c children has degree c+1, T = (
 y = 1/(c+1+R)), not from closed forms, and the exchange quantity is
 E(D_0, R_0) = P_N (m_N + D_0 + R_N + R_0)(m_O + D_0) - P_O (m_O + D_0 + R_O + R_0)(m_N + D_0).
 
-- **[A] table `tab:bg-M7`.** For each of the 15 rows: E is affine in R_0 and quadratic in D_0; one
+- **[A] the 15-row exchange table.** For each of the 15 rows: E is affine in R_0 and quadratic in D_0; one
   positive rational c gives E(D_0, 0) = c * (column 1) and 2 E(D_0, (D_0+1)/2) = c * (column 2) as
   polynomial identities; after D_0 = 1 + t both columns have nonnegative coefficients and a positive
   constant term, so they are positive for every integer D_0 >= 1 (the real roots of column 2 are printed;
   all lie below 1).
-- **[B] the proof of `lem:bg-moves`.** The stalk values T(P_4) = 17/8, y(P_4) = 7/17, T(P_5) = 41/16,
+- **[B] the factors of the other exchanges.** The stalk values T(P_4) = 17/8, y(P_4) = 7/17, T(P_5) = 41/16,
   y(P_5) = 17/41, and E = factor * (displayed polynomial) for (M1), (M2), (M5), (M6) (D_0 = 1,
   j = 5..12, with the value 2J^2 + (25/2)J + 15/2 at R_0 = 1/2), (M7)(i) (i = 0..10), (M7)(iv) (j = 2, 3, 4,
   symbolic i, via the closed forms of the arm values, themselves compared with the recursion), (M7)(v)
@@ -50,5 +50,5 @@ Python 3.9 or later, `sympy`.
 
 ## Test on explicit trees (added October 2026)
 
-`exchange_test/` archives a test, written in September 2026, of every exchange of `lem:bg-moves` on every tree
+`exchange_test/` archives a test, written in September 2026, of every exchange (M1)-(M7) on every tree
 with n <= 18 vertices at every admissible vertex (929,524 instances, no failure); see its README.

@@ -1,7 +1,7 @@
 # nu_hull_search -- matching number: exhaustive hull search, k <= 8, n <= 215
 
-**Paper item (proof):** Lemma `lem:nu-small-cv` (computer-verified), with Appendix C, item C16. It gives
-`thm:nu-structure`(b) for 3k-2 <= n <= n_0(k).
+**What it checks (proof):** the extremal trees with prescribed matching number k in the small range
+3k-2 <= n <= n_0(k) (below the thresholds of `../nu_stability/`), by an exhaustive exact hull search.
 
 ## What is checked
 
@@ -57,11 +57,11 @@ python3 independent_dp.py 215 8 > independent_dp_215_8.txt
   [A] connector-star formula = exact M(n,k) on 1421 pairs (2<=k<=8, 3k-2<=n<=215); exceptions [(7, 3), (10, 3)]
   [B] M(7,3) = 9/2 (connector-star 35/8), M(10,3) = 50/9 (connector-star 265/48)
   [C] all 1656 values M(n,k), k<=8, n<=215, agree with the independent implementation
-  LEMMA nu-small-cv: OK
+  matching-number search, k <= 8, n <= 215: OK
   ```
 
 The search also reports that the extremal tree is unique in this range (apart from the two
-exceptions); as the paper says, this structural output is evidence, not part of the lemma.
+exceptions); this structural output is evidence, not part of the statement checked.
 
 ## Runtime (one core, measured here)
 
@@ -80,7 +80,7 @@ its stored output agrees with the re-run on all 1656 values.
 
 ## Runs for all k, and brute force (added October 2026)
 
-`all_k/` holds the runs for all k quoted in the paper: `hulldp2.py 120` (all k, n <= 120) and the independent
+`all_k/` holds the runs for all k: `hulldp2.py 120` (all k, n <= 120) and the independent
 implementation `independent_dp.py 60` (all k, n <= 60), with a comparison of all values. `brute_force/` checks
 every M(n,k) and the number of extremal trees for 4 <= n <= 20 by enumerating all 1,346,021 trees. See their
 READMEs.

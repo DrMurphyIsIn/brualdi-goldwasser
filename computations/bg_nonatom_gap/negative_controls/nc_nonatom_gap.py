@@ -1,4 +1,4 @@
-"""Negative control for Proposition prop:bg-gap (non-atom gap): the check must reject delta_0 = 0.0143.
+"""Negative control for the non-atom gap at lambda = 1: the check must reject delta_0 = 0.0143.
 
 The check is section B of ../../bg_rate/certify.py, re-run here with the same routines (`ivtools`, `core`
 of ../../bg_rate, imported unchanged): for each child count c of a minimal non-atom a rigorous lower bound
@@ -6,7 +6,7 @@ of sigma_v + sum sigma(children) is computed (c = 1: Phi_1(3/7); 2 <= c <= 9: m_
 sigma(a)) over a in {leaf, A_1, ..., A_30} and the tail A_{>30}; c = 10, 11, 12: interval branch-and-bound
 of min Phi_c on [0, c]; c >= 13: Q(13)), and delta_0 is accepted only if every bound is >= delta_0.
 
-Positive control: delta_0 = 0.01426 (the value of the paper) must be accepted.
+Positive control: delta_0 = 0.01426 (the stated value) must be accepted.
 Negative control: delta_0 = 0.0143 must be rejected, since the per-child minimum (c = 6, a = A_4) is
 0.014273... < 0.0143.
 
@@ -84,7 +84,7 @@ def gap_rows(J=30):
 
 
 def check_delta0(rows, delta0):
-    """The acceptance test of prop:bg-gap: every lower bound is >= delta0 (decided on interval endpoints).
+    """The acceptance test of the non-atom gap: every lower bound is >= delta0 (decided on interval endpoints).
     Returns (accepted, list of failing rows)."""
     D = F(delta0)
     fails = [(c, arg, v) for c, arg, v in rows if not v.a >= D]
@@ -94,13 +94,13 @@ def check_delta0(rows, delta0):
 if __name__ == "__main__":
     t0 = time.time()
     rows = gap_rows()
-    print("prop:bg-gap, lower bounds by child count c (section B of bg_rate/certify.py):")
+    print("non-atom gap, lower bounds by child count c (section B of bg_rate/certify.py):")
     for c, arg, v in rows:
         print(f"   c={c}: in [{float(v.a):.7f}, {float(v.b):.7f}]  (at {arg})")
     cmin, argmin, vmin = min(rows, key=lambda t: t[2].a)
     print(f"   minimum: c={cmin}, a={argmin}, enclosure [{float(vmin.a):.9f}, {float(vmin.b):.9f}]")
     ok = True
-    print("\n[control 1] Proposition prop:bg-gap: delta_0 accepted iff every lower bound >= delta_0")
+    print("\n[control 1] non-atom gap: delta_0 accepted iff every lower bound >= delta_0")
     for label, d0, want in (("unperturbed", Fr(1426, 100000), True), ("perturbed  ", Fr(143, 10000), False)):
         acc, fails = check_delta0(rows, d0)
         verdict = "PASS" if acc else "FAIL"

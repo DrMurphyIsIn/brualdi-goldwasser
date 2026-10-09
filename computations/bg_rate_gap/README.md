@@ -1,13 +1,13 @@
 # bg_rate_gap: the rate gaps Gamma_K
 
-**Paper item:** Lemma `lem:bg-Gamma` (rate gap; computer-verified): for 1 <= K <= 22, Gamma_K, the minimum of
+**What it checks:** the rate gaps at lambda = 1: for 1 <= K <= 22, Gamma_K, the minimum of
 delta^H(B) over the stalks [A_j], 1 <= j <= 4, and all end hubs with at most K children per vertex, is at least
-the value in table `tab:bg-rate` (column Gamma_{k-1}, with its minimizing shape). Role: part of the proof.
+the stated value Gamma_{k-1} (k = K + 1), with its minimizing shape. Role: part of the proof.
 
 ## Where the certificate is
 
 The rate gaps are computed by `../bg_spider_comparison/conc.py` (function `gamma`), in the same run that
-certifies Lemma `lem:bg-compare`; run it there. For each maximum degree k = K + 1 its output line reads
+certifies the comparison with explicit spiders; run it there. For each maximum degree k = K + 1 its output line reads
 
     k eta=... gamma>=G (shape) Psi<=... Vmax<=... n0=...
 
@@ -26,9 +26,9 @@ minimum found.
 
 ## Re-run status
 
-PASS (2026-10-04); see `../bg_spider_comparison/README.md`. The certified bounds agree with the column
-Gamma_{k-1} of table `tab:bg-rate` and its shapes ([A_1] for k = 2, 3; [C^2 A_3], [C^3 A_4], [C^4 A_4],
-[C^5 A_4] for k = 4..7; [C^6 A_4] for k >= 8); the paper rounds the printed values down in the last digit
+PASS (2026-10-04); see `../bg_spider_comparison/README.md`. The certified bounds agree with the stated
+values Gamma_{k-1} and their shapes ([A_1] for k = 2, 3; [C^2 A_3], [C^3 A_4], [C^4 A_4],
+[C^5 A_4] for k = 4..7; [C^6 A_4] for k >= 8); the stated values are the printed values rounded down in the last digit
 where needed (for example 0.0150816 -> 0.015081).
 
 The second program (ball arithmetic, 200 bits) is in `../bg_spider_comparison/second_implementation/`; see `second_implementation/README.md`.

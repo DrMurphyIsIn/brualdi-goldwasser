@@ -1,20 +1,20 @@
-"""Exact check of the exchange polynomials of lem:bg-moves: table tab:bg-M7 (exchanges (M7)(ii), (iii)
+"""Exact check of the exchange polynomials of the local exchanges (M1)-(M7): the 15-row table (exchanges (M7)(ii), (iii)
 and the 13 exchanges of (M7)(vi)), the positive factors listed in the proof, and the corner
 polynomials of (M3).
 
-Exchange criterion (lem:bg-exchange): replacing the old branches O by new branches N at a vertex whose
+Exchange criterion: replacing the old branches O by new branches N at a vertex whose
 other D_0 branches have message sum R_0 changes pi by a positive multiple of
     E(D_0, R_0) = P_N (m_N + D_0 + R_N + R_0)(m_O + D_0) - P_O (m_O + D_0 + R_O + R_0)(m_N + D_0).
-The weights T and messages y of all branches are computed here from the recursion of lem:pre-cavity
+The weights T and messages y of all branches are computed here from the cavity recursion
 (a root with children b_1..b_c has degree d = c + 1, T = (prod T_i)(d + R)/d, y = 1/(d + R),
 R = sum y_i), not from closed forms, so the check is independent of the formulas in the text.
 
-[A] table tab:bg-M7: for each of the 15 rows, E is affine in R_0 and of degree 2 in D_0; there is one
+[A] the 15-row exchange table: for each of the 15 rows, E is affine in R_0 and of degree 2 in D_0; there is one
     positive rational c with E(D_0, 0) = c * (column 1) and 2 E(D_0, (D_0+1)/2) = c * (column 2) as
     polynomials; and both columns are positive for every integer D_0 >= 1 (after D_0 = 1 + t all
     coefficients are >= 0 and the constant term is > 0). Since E is affine in R_0, this gives E > 0 on
     0 <= R_0 <= (D_0+1)/2, which contains the admissible range when the rest has at most one leaf.
-[B] the factors in the proof of lem:bg-moves: E = factor * (displayed polynomial) for (M1), (M2), (M5),
+[B] the factors of the other exchanges: E = factor * (displayed polynomial) for (M1), (M2), (M5),
     (M6) (D_0 = 1, j = 5..12), (M7)(i) (i = 0..10), (M7)(iv) (j = 2, 3, 4, symbolic i), (M7)(v)
     (j = 1..4), and (M4) (balance; several i, j); the stalk values T(P_4) = 17/8, y(P_4) = 7/17,
     T(P_5) = 41/16, y(P_5) = 17/41.
@@ -97,7 +97,7 @@ def nonneg_shift(poly):
     return all(c >= 0 for c in co) and p.eval(0) > 0, sp.expand(poly.subs(D, 1 + t))
 
 
-# ------------------------------------------------------------------ [A] table tab:bg-M7
+# ------------------------------------------------------------------ [A] the 15-row exchange table
 TABLE = [
     ("(ii)  {P4, C} -> {C^3}", [P4, C], [C, C, C], 3 * D**2 + 31 * D + 12, (D + 3) * (9 * D - 7)),
     ("(iii) {P4, P4} -> {C^4}", [P4, P4], [C] * 4, 35 * D**2 + 404 * D + 192, 105 * D**2 + 335 * D - 124),
@@ -129,7 +129,7 @@ TABLE = [
 
 
 def part_A():
-    print("[A] table tab:bg-M7 (15 rows)")
+    print("[A] exchange table (15 rows)")
     for name, O, N, col1, col2 in TABLE:
         e = E(O, N)
         degR = sp.Poly(e, R).degree()
@@ -153,7 +153,7 @@ def ratio_is(e, disp, factor):
 
 
 def part_B():
-    print("[B] displayed polynomials and positive factors of the proof of lem:bg-moves")
+    print("[B] displayed polynomials and positive factors of the exchanges (M1)-(M7)")
     check("stalk values T(P4) = 17/8, y(P4) = 7/17, T(P5) = 41/16, y(P5) = 17/41",
           Ty(P4) == (sp.Rational(17, 8), sp.Rational(7, 17)) and Ty(P5) == (sp.Rational(41, 16), sp.Rational(17, 41)))
     check("(M1) {L, L} -> {C}: E = (1/2)(D0^2 + D0 R0 + 4 R0)",
@@ -183,7 +183,7 @@ def part_B():
         ok &= ratio_is(E([stalk(Arm(j)), LEAF], [C, Arm(j)]), (D + 2) * (D + R),
                        sp.Rational(3, 2) ** (j - 1) * sp.Rational(j, j + 1))
     check("(M7)(v) {[A_j], L} -> {C, A_j}, j = 1..4: E = (3/2)^(j-1) j/(j+1) * (D0+2)(D0+R0)", ok)
-    # (M7)(iv) with symbolic i: closed forms of the arm values (lem:pre-atoms) are needed for symbolic i
+    # (M7)(iv) with symbolic i: closed forms of the arm values are needed for symbolic i
     ok = True
     for j in (2, 3, 4):
         def arm(k):

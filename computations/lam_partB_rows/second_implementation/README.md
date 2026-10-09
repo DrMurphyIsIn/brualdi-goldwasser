@@ -1,7 +1,8 @@
 # lam_partB_rows/second_implementation: the 63 rows, P2 and P9 recomputed separately
 
-**Paper item:** Lemma `lem:lam-polycert` (scalar conditions of part (B), computer-verified), parts (a)-(c), and
-the monotonicity facts of table `tab:lam-atoms`; item C14 of the appendix on computations. Role: second
+**What it checks:** the low-degree certificates of part (B) (the 63 interval rows, the Bernstein
+positivity of P2 and P4-P6, the identity for e^{6 Dmax}, and P9), and the monotonicity of every atom used
+in the rows. Role: second
 implementation of the checks done by `../lowdeg_tables.py`, `../bernstein.py`, `../polychecks.py` and
 `../w2_poly.py`.
 
@@ -33,7 +34,7 @@ are exact Arb points and whose operations take min/max over the rigorous endpoin
   exact rationals (own routine) and are positive (15, 9.5916, 4.6767, 1.4264, 0.8118, 2.3839, 1.5207);
 - P4-P6 Bernstein coefficients; the identity e^{6 Dmax} = (4/3)^6 (2/3)^3 = 32768/19683 < 1.291^2;
 - P9: G_3(3/43) = -0.0065184030... < 0 (Arb), and f_2, f_3, f_4, f_5 at lambda = 3/20;
-- the monotonicity of every atom and helper of table `tab:lam-atoms`: exact derivative identities
+- the monotonicity of every atom and helper used in the rows: exact derivative identities
   (kappa/t, delta_kappa/t, r-hat, Theta, kappa y_4, varkappa), the G_2 series coefficients c_k (exactly positive
   for k <= 400, with the bounds 7(2/3)^5 < 0.93 and 5(3/4)^6 < 0.9 used for larger k), and a floating-point
   derivative scan of each atom. For xi(s) = (e^s - 1)/s the scan reports `False`: near s = 1e-9 the derivative

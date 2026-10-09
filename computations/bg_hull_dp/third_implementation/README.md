@@ -1,8 +1,8 @@
 # bg_hull_dp/third_implementation: the hull computation in pure rational arithmetic
 
-**Paper item:** Theorem `thm:bg-small` (for 4 <= n <= 491, M_n is the value of the spider of the appendix
-table, every maximizer is a spider, and the maximizer is unique up to isomorphism except at n = 21); the third
-program of item C8 of the appendix on computations (Appendix C). Role: third implementation.
+**What it checks:** the same statement as `../dp.py` (for 4 <= n <= 491, M_n is the value of the spider of
+the table of maximizers, every maximizer is a spider, and the maximizer is unique up to isomorphism except at
+n = 21), by a third program. Role: third implementation.
 Because it has no floating-point step, it also independently reproduces the conclusions that the certification
 of the floating-point prefilter of `../dp.py` (`../../hull_prefilter_check/`) protects.
 
@@ -14,15 +14,15 @@ shares no code with them:
   the current vertex, all collinear points kept, so ties survive); for every class with s <= NB it is also
   compared with `K_brute`, a direct test of the definition of Ext (p is kept iff some a = (1, t), t > 0, is
   maximized at p);
-- the same planted-branch / bundle recursion as the paper (Z = P + Q/d, W = P/d, root value P + Q/k), with
+- the same planted-branch / bundle recursion as `../dp.py` (Z = P + Q/d, W = P/d, root value P + Q/k), with
   bundles B[s][c] built one child at a time and payloads that carry every multiset of children with a hull value;
 - its own interning of rooted branches, its own centre/bicentre canonical form (AHU encoding) for counting
   maximizers up to isomorphism, and its own matching recursion `pi_tree` for pi, which is asserted to equal M_n
   for every maximizer;
-- its own spider test and its own parser of the appendix table `../table_maximizers.tex` (every entry is asserted
+- its own spider test and its own parser of the table of maximizers `../table_maximizers.tex` (every entry is asserted
   to have n vertices); for every n in the table the table spider is compared with the maximizers up to isomorphism.
 
-`brute_matchings.py` is the second exhaustive search of item C8 (the first is `../brute.py`): for every tree on
+`brute_matchings.py` is a second exhaustive search over all trees (the first is `../brute.py`): for every tree on
 n vertices (`networkx.nonisomorphic_trees`) it computes pi by enumerating all matchings directly, in exact
 rationals, and reports the maximum, the number of maximizing trees and whether the table spider is one of them.
 

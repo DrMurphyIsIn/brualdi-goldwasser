@@ -1,7 +1,7 @@
 # supp_cherry_checks/lemma_exact: the unmatched-vertices lemma in exact arithmetic
 
-**Paper items.** Lemma `lem:lam-monomer` (Section 7; the sentences after the proof of part (A) that report
-checks), and the supplement remark `rem:lam-cherry-check`. **Role: confirmation only**; the lemma is proved by
+**What this checks.** The unmatched-vertices lemma (for lambda >= 2, sum over v of P(v unmatched) >= 2n/(2+lambda)
+for every planted branch on n vertices), in exact arithmetic on all small planted branches. **Role: confirmation only**; the lemma is proved by
 hand and no proof uses this.
 
 **Provenance.** Written in October 2026, from the statement of the lemma. It shares no code with

@@ -1,10 +1,10 @@
 # deg_certificates -- typed-potential certificates for bounded maximum degree
 
-**Paper items (proof):**
-- Lemma `lem:deg-cert34` (computer-verified; Delta = 3, 4), and
-- Lemma `lem:deg-cert567` (computer-verified; Delta = 5, 6, 7),
-with Appendix C, item C17. Together they give the upper bound in the theorem on the exact growth
-rate of trees with maximum degree at most Delta, for 3 <= Delta <= 7.
+**What this is (proof):** typed-potential certificates for trees of bounded maximum degree:
+- hand potentials for Delta = 3, 4, checked by computer, and
+- linear-programming certificates for Delta = 5, 6, 7, checked in interval arithmetic.
+Together they give the upper bound on the exact growth rate of trees with maximum degree at most Delta,
+for 3 <= Delta <= 7.
 
 ## What is checked
 
@@ -34,8 +34,8 @@ Smallest nonzero slack overall: 1.0e-7 (a spine comparison).
 
 | file | role |
 |---|---|
-| `explicit_small.py` | Delta = 3, 4: the hand potentials of `lem:deg-cert34` (theta_I = -0.0813, -0.0391; theta_J = theta_C), all rules, mpmath interval arithmetic at 256 bits. Imports `verify.py`. |
-| `cert34.py` | Delta = 3, 4: second interval check (mpmath `iv`, 60 digits) that prints every rule with its kind (identity / spine / generic) and slack, in the paper's labels `L, C, I, J`. This is the table printed in `lem:deg-cert34`. |
+| `explicit_small.py` | Delta = 3, 4: the hand potentials for Delta = 3, 4 (theta_I = -0.0813, -0.0391; theta_J = theta_C), all rules, mpmath interval arithmetic at 256 bits. Imports `verify.py`. |
+| `cert34.py` | Delta = 3, 4: second interval check (mpmath `iv`, 60 digits) that prints every rule with its kind (identity / spine / generic) and slack, with the type labels `L, C, I, J`. This is the slack table of the Delta = 3, 4 certificates. |
 | `verify.py`, `potential.py` | Delta = 5, 6, 7: builds the types (four intervals per window), solves the linear program for theta (untrusted, scipy), rationalizes, re-imposes the spine comparisons exactly, and verifies every rule in mpmath interval arithmetic at 256 bits. With `--save` it writes `out/cert_D<Delta>_K4.json`. |
 | `certificates/cert_D{5,6,7}_K4.json` | the certificates (types with rational endpoints, rational theta). Re-running `verify.py D 4 --save` reproduces them exactly (checked here). |
 | `indep_check.py` | independent checker, written from the mathematical statement only (does not import `verify.py`/`potential.py`): Arb ball arithmetic (python-flint) at 300 bits, its own rule enumeration under the typing stated in the paper, exact check that the target intervals cover the parent ranges, all box corners. Checks the Delta = 3, 4 hand potentials and reads the three JSON certificates. |
@@ -44,11 +44,11 @@ Smallest nonzero slack overall: 1.0e-7 (a spine comparison).
 targets `C`/`A5` whenever a parent range contains 1/3 or 3/23, and it types every branch with message
 3/23 as `A5`. The paper types only the branch `C^5` itself as `A5`, so a branch such as `L L C C`
 (message 3/23 as well) gets an interval type and the rule `LLCC -> tau` is needed. `indep_check.py`
-uses exactly the paper's typing and finds 1116, 4505 and 12753 rules, the numbers stated in
-`lem:deg-cert567`, all of which hold. For Delta = 5 both counts are 1116.
+uses exactly the paper's typing and finds 1116, 4505 and 12753 rules, the numbers stated for the
+Delta = 5, 6, 7 certificates, all of which hold. For Delta = 5 both counts are 1116.
 
 The optional mode `python3 indep_check.py upper` also checks the upper-bound certificates for
-Delta = 8..12 (the brackets of `rem:deg-brackets`, not used in any proof); those certificate files are
+Delta = 8..12 (two-sided brackets for the growth rate, not used in any proof); those certificate files are
 not included here.
 
 ## How to run
@@ -81,4 +81,4 @@ python-flint 0.6.0.
 
 PASS: all rule counts, slacks and the Delta = 3 slack table match the paper.
 
-Note on rule counts: the counts 1116, 4505, 12753 stated in the paper (lem:deg-cert567) are those reported by indep_check.py, which also checks the rule LLCC->tau. verify.py enumerates rules with a different convention (4843 and 13115 for Delta=6,7) and does not check LLCC->tau.
+Note on rule counts: the counts 1116, 4505, 12753 stated in the paper for Delta = 5, 6, 7 are those reported by indep_check.py, which also checks the rule LLCC->tau. verify.py enumerates rules with a different convention (4843 and 13115 for Delta=6,7) and does not check LLCC->tau.

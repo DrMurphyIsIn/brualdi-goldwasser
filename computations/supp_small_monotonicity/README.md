@@ -1,7 +1,7 @@
 # supp_small_monotonicity: monotonicity certificate on (0, 0.198]
 
-**Paper item.** Supplement, remark "a second certificate for small activities: monotonicity"
-(`rem:lam-smallmono`); see also `rem:lam-uniform`.
+**What this is.** A second certificate for small activities: a rigorous monotonicity certificate on
+(0, 0.198], by interval arithmetic on 114 contiguous boxes.
 
 **Role.** Confirmation of part (B) of the uniform ceiling theorem for small activities; not used in its
 proof.
@@ -21,7 +21,7 @@ cushion of 1e-9. The docstring of `lemmaS_certify.py` states it in full.
 The paper states 114 contiguous boxes covering [0, 0.198], of width 0.001 on [0, 0.03] and 0.002
 beyond.
 
-Supporting checks (same remark):
+Supporting checks:
 - `lemmaS_hyp_check.py`: the induction hypothesis on all 53 272 planted branches with at most 14 vertices,
   with exact cavity values at several activities.
 - `lemmaS_negctl.py`: negative controls (f_3' lowered by 1e-3, slack 0, a box beyond the threshold, A_3's

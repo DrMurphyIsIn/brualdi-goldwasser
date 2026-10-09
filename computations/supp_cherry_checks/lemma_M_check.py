@@ -1,4 +1,4 @@
-"""Lemma M = lem:lam-monomer (unmatched vertices; rem:lam-cherry-check): for every planted branch b and lam >= 2, sum_v P(v unmatched) >= 2n/(2+lam) in the monomer-dimer model with
+"""Lemma M = the unmatched-vertices lemma: for every planted branch b and lam >= 2, sum_v P(v unmatched) >= 2n/(2+lam) in the monomer-dimer model with
 activities lam/(d_u d_v) (planted degrees). Checks: (1) the group identity tau_v + sum_leaves tau_l = k + (1-kc)/B and inequality;
 (2) the vertex-level bounds on real trees (interior >= 2/(2+lam); groups >= 2(k+1)/(2+lam)).
 The ratio-monotonicity / elasticity check lives in monotone_ratio.py."""

@@ -1,4 +1,4 @@
-"""Negative control for Lemma lem:bg-compare(i): the comparison must fail at n = n-bar(k) - 1 for k = 9, 10.
+"""Negative control for part (i) of the comparison with explicit spiders: the comparison must fail at n = n-bar(k) - 1 for k = 9, 10.
 
 The check is the per-k loop of ../conc.py (its __main__ block, repeated here verbatim as a function, with
 `gamma`, `Psi`, `PsiB`, `tail_lb`, `phistar_lo` imported unchanged from ../conc.py): it builds the list of
@@ -24,7 +24,7 @@ from mpmath import iv
 import conc                      # reads ../certify_out.json (the certified rates)
 from conc import gamma, Psi, PsiB, tail_lb, phistar_lo, ETA, F
 
-NBAR = {9: 108, 10: 108}         # table tab:bg-rate
+NBAR = {9: 108, 10: 108}         # thresholds n-bar(k) of the rate table
 
 
 def comparison(k):
@@ -62,7 +62,7 @@ if __name__ == "__main__":
         return float(x.mid) if hasattr(x, "mid") else float(x)
 
     ok = True
-    print("[control 4] Lemma lem:bg-compare(i): V_k(n) - eta_{k-1}(n-1) < Lambda_sp(n)")
+    print("[control 4] comparison with explicit spiders, part (i): V_k(n) - eta_{k-1}(n-1) < Lambda_sp(n)")
     for k in (9, 10):
         t1 = time.time()
         res, arg = comparison(k)

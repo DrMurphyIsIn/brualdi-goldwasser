@@ -1,4 +1,4 @@
-"""Independent interval-arithmetic check of the Delta=3,4 hand certificates of lem:deg-cert34."""
+"""Independent interval-arithmetic check of the Delta=3,4 hand certificates (typed potentials for maximum degree 3 and 4)."""
 import os, itertools
 os.environ["OMP_NUM_THREADS"] = "1"
 from mpmath import iv, mpf

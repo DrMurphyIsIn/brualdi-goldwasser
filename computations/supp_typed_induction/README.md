@@ -1,8 +1,9 @@
 # supp_typed_induction -- typed induction on (0, 0.1]
 
-**Paper item:** Lemma `lem:lam-small-cv` (computer-verified) and Remark `rem:lam-small-cv` (program,
-independent check and controls). Role: part of a proof in the supplement (the typed-induction route to part
-(B) on `(0, 0.1]`, a confirmation of part (B), which the main paper proves by the witnesses).
+**What this is:** the typed induction for the sharp ceiling at small activities, lambda in `(0, 0.1]`,
+with its program, independent check and controls. Role: part of a proof in a confirmation route (the
+typed-induction route to part (B) on `(0, 0.1]`, a confirmation of part (B), which is proved by the
+witnesses W_1, W_2).
 
 ## What is checked
 
@@ -10,13 +11,13 @@ independent check and controls). Role: part of a proof in the supplement (the ty
 `delta = 6/1000` and `gamma_2, ..., gamma_240` from the first-order value iteration, on 200 contiguous
 `lambda`-boxes of width 1/2000 covering `[0, 0.1]`, in five chunks of 40 boxes. All quantities are scaled by
 `1/lambda`, so the first box contains `lambda = 0`. Every `lambda`-dependent quantity is enclosed outward in
-`mpmath.iv` (30 digits); the arithmetic is described exactly in the remark.
+`mpmath.iv` (30 digits); the arithmetic is described exactly in the accompanying paper.
 
 * (T1) parents of degree `d = 2..5`: enumeration over the Pareto front of child types;
 * (T2) `6 <= d <= 240`: tangent of the concave `log(1 + lambda S/d)/lambda` (separable);
 * (T3) `d > 240`: analytic tail.
 
-Two companion checks from the remark:
+Two companion checks:
 
 * `small_spider_strict.py`: on every box, the unclipped enclosure of `g(A_j)/lambda` is positive (exceeds
   `0.0057`) for every arm except `A_3`, so the clip at 0 is active only at `A_3`.
@@ -39,7 +40,7 @@ See `expected_output.txt`:
 * `max over boxes and spiders e != 4 of the unclipped l(S_e)/lam upper bound: -0.0057263...` at `(3, 0.0)`,
   i.e. at `A_2` on the first box (the spider with root degree `e` is the arm `A_{e-1}`);
 * `53272 branches` at each of the four activities, with `max over GEN of (l/lam - g_e)` between `-0.00600`
-  and `-0.00612` (margin about `delta = 0.006`), as stated in the remark.
+  and `-0.00612` (margin about `delta = 0.006`), as stated in the accompanying paper.
 
 ## Runtime (single thread, one core)
 

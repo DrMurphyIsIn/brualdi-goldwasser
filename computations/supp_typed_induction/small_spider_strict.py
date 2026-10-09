@@ -1,4 +1,4 @@
-"""Strictness inventory for the typed induction (lem:lam-small-cv): on every certified box of (0, 0.1], the UNCLIPPED upper bound of l(S_e)/lam is < 0 for every
+"""Strictness inventory for the typed induction on (0, 0.1]: on every certified box of (0, 0.1], the UNCLIPPED upper bound of l(S_e)/lam is < 0 for every
 spider e != 4 (3 <= e <= 240, plus the e > 240 tail bound), so the definitional clip l(S_e) <= 0 is needed only at e = 4 (A3)."""
 import sys
 sys.argv = ['x', '0.1', '0.0005', '0.006']

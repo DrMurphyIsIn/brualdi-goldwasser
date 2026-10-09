@@ -3,4 +3,4 @@
 # Each block: command, wall time and peak memory (from /usr/bin/time -l), then the program's output.
 
 ===== python3 certify_L3.py 0.0005   [0.34 s, 15 MB]
-THEOREM C checks: ALL PASSED on delta in [0, 0.016068] (lam in [3.22, lam_c]); C2 boxes 1584; 0s
+window checks (C1)-(C4): ALL PASSED on delta in [0, 0.016068] (lam in [3.22, lam_c]); C2 boxes 1584; 0s

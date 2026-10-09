@@ -1525,6 +1525,7 @@ matched edge, $\lambda=1$ being $\pi$); it is not needed for, and does not chang
 cd formalization && lake exe cache get && ./build.sh
 lake env lean AxiomGuard.lean
 lake build BGUnique            # uniqueness (a separate library)
+cd ..                          # back to the repository root
 certificates/verify.sh         # regenerate all certificates, compare
 certificates/verify.sh --full  # also the certified search, n <= 491
 \end{verbatim}
