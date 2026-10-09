@@ -73,7 +73,7 @@ ok = True
 ok &= pos(D3_lo, "D(3) > 0 (lower bound positive)")
 ok &= pos(u3_hi, "u_3 upper bound > 0")
 target = 3 * L32_lo + 2 * D3_lo * delta / u3_hi - 4 * D2_hi
-ok &= pos(target, f"(S6) on lam in [{lam_a}, 0.9538]")
+ok &= pos(target, f"(S6) on lam in [{lam_a}, 0.9537]")
 # report the margin profile
 for tv in [t_a, (t_a + t_b) / 2, t_b]:
     print(f"   t={float(tv):.4f}: lower bound {float(target.subs(t, tv)):+.3e}")

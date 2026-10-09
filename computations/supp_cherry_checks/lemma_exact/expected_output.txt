@@ -1,0 +1,11 @@
+Part 1: 53272 planted branches with at most 14 vertices
+  lam =        2: violations      0; min slack over the other branches +0.181818 (n = 4); slack exactly 0 for 1 branch(es): the cherry
+  lam =        3: violations      0; min slack over the other branches +0.218182 (n = 4); slack exactly 0 for 1 branch(es): the cherry
+  lam =       10: violations      0; min slack over the other branches +0.200803 (n = 4); slack exactly 0 for 1 branch(es): the cherry
+  lam =      100: violations      0; min slack over the other branches +0.036975 (n = 4); slack exactly 0 for 1 branch(es): the cherry
+  lam =  1000000: violations      0; min slack over the other branches +0.000004 (n = 4); slack exactly 0 for 1 branch(es): the cherry
+Part 2: 7813 planted branches with at most 12 vertices
+  lam =      1/2: violations      4; min slack over the other branches -0.028571 (n = 11); slack exactly 0 for 1 branch(es): the cherry
+  lam =     7/10: violations      1; min slack over the other branches -0.003948 (n = 11); slack exactly 0 for 1 branch(es): the cherry
+  lam =      4/5: violations      0; min slack over the other branches +0.010989 (n = 11); slack exactly 0 for 1 branch(es): the cherry
+  lam =        1: violations      0; min slack over the other branches +0.043478 (n = 11); slack exactly 0 for 1 branch(es): the cherry

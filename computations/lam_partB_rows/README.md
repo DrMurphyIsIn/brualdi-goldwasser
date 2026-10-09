@@ -30,6 +30,10 @@ rounding of this.) The program names T1, T2, T3a, T4, ..., T8, T8b correspond to
 table `C2 (S3)`: that is the alternative table for P2 mentioned in the remark; it is **not used** (the proof uses
 the polynomial of (b) instead).
 
+Row endpoints. `lowdeg_tables.py` evaluates each row at 30-digit roundings of the printed rational endpoints
+(`M(x)` in the program). Adjacent rows share an endpoint, so they use the same rounding and the cover has no
+gaps. `second_implementation/rows_arb.py` rechecks every row from the exact rational endpoints (Arb balls).
+
 (b) **Bernstein coefficients** (`bernstein.py`, exact rationals via sympy): P2, the degree-6 polynomial on
 [0, 0.6181], has Bernstein coefficients 15, 9.59, 4.68, 1.43, 0.81, 2.38, 1.52 (all positive, no subdivision);
 P4-P6 (`C4`, `C5 cubic`, `C6 cubic` in the output) are positive on [0, 3.2361] resp. [0, 0.6181].

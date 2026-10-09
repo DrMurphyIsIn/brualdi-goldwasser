@@ -11,7 +11,7 @@ confirmation route); **confirm** = a numerical confirmation that no proof uses.
 Re-run status: each program was re-run from this directory, single-threaded
 (`OMP_NUM_THREADS=OPENBLAS_NUM_THREADS=MKL_NUM_THREADS=VECLIB_MAXIMUM_THREADS=1`), and its output compared with
 the numbers stated in the paper: the folders of the two tables below on 2026-10-04 (the recovered checks of the
-additional table on 2026-10-06), and the checks added in October 2026 (last table) on 2026-10-07. See each
+additional table on 2026-10-06), and the checks added in October 2026 (last table) on 2026-10-07 (the last three rows on 2026-10-09). See each
 README for details. Paper items are cited by label and, for the computations, as "Appendix C, item Ck".
 
 ## Main paper
@@ -26,7 +26,7 @@ README for details. Paper items are cited by label and, for the computations, as
 | Exact hull computation, n <= 491 (and the table of the appendix) | `thm:bg-small` | [bg_hull_dp/](bg_hull_dp/) | proof | PASS |
 | Count exchanges; exact comparisons in `thm:bg-bestspider`, `cor:bgx-limits` | `lem:bgx-counts` | [bg_best_spider/](bg_best_spider/) | proof | PASS |
 | Breakpoint enclosures | `lem:lam-bp` | [lam_breakpoints/](lam_breakpoints/) | proof | PASS |
-| Sharpest first-order degree potential | remark after `thm:lam-randic` | [lam_first_order/](lam_first_order/) | confirm | PASS |
+| Sharpest first-order degree potential | paragraph after `thm:lam-randic` | [lam_first_order/](lam_first_order/) | confirm | PASS |
 | Plain-form obstruction cover of [79/20, 10^6] | `lem:lam-cover` | [lam_plain_obstruction/](lam_plain_obstruction/) | proof | PASS |
 | 63 low-degree rows, Bernstein coefficients, P9 | `lem:lam-polycert` | [lam_partB_rows/](lam_partB_rows/) | proof | PASS |
 | Matching number: finite range of the stability comparison | `lem:nu-stab-cv` | [nu_stability/](nu_stability/) | proof | PASS |
@@ -34,6 +34,9 @@ README for details. Paper items are cited by label and, for the computations, as
 | Bounded degree certificates, Delta = 3, 4 and Delta = 5, 6, 7 | `lem:deg-cert34`, `lem:deg-cert567` | [deg_certificates/](deg_certificates/) | proof | PASS |
 
 ## Supplement
+
+The folders below hold the first implementations of the supplement's programs. The second implementations
+that the supplement describes were not archived; the supplement marks each of them "(not archived)".
 
 | supplement item | label | folder | role | re-run |
 |---|---|---|---|---|
@@ -105,3 +108,6 @@ README says whether the program was written in October 2026 or earlier. Run them
 | Negative controls of the row check of part (B) (item C14) | `lem:lam-polycert` | [lam_partB_rows/negative_controls/](lam_partB_rows/negative_controls/) (`row_checker_controls.py`) | negative control | PASS |
 | Matching number: all k, n <= 120, and the second implementation for all k, n <= 60 (item C16) | `lem:nu-small-cv` | [nu_hull_search/all_k/](nu_hull_search/all_k/) | second check | PASS |
 | Matching number: brute force over all trees with n <= 20 (item C16) | `lem:nu-small-cv` | [nu_hull_search/brute_force/](nu_hull_search/brute_force/) | second check | PASS |
+| Tail values m_c + w_c(y(A_31)) of the non-atom gap, from the definitions of both programs (item C2) | `prop:bg-gap` | [bg_nonatom_gap/tail_values/](bg_nonatom_gap/tail_values/) | second check | PASS |
+| The two-hub tree on 20 vertices beats every tree within three edge exchanges (Section 4, after `cor:bg-shape`) | `cor:bg-shape` | [bg_two_hubs_n20/](bg_two_hubs_n20/) | confirm | PASS |
+| Unmatched-vertices lemma in exact arithmetic: <= 14 vertices at lambda >= 2; <= 12 vertices at lambda = 1/2, 7/10, 4/5, 1 | `lem:lam-monomer`, `rem:lam-cherry-check` | [supp_cherry_checks/lemma_exact/](supp_cherry_checks/lemma_exact/) | confirm | PASS |
