@@ -400,8 +400,8 @@ It is a selection from the development repository, not a mirror.
 - The development repository's missions registry and its research, scratch and explorer areas are not included.
 - This README is written for this copy.
 
-Within the files it does include, it differs from the development version only in comments, docstrings and a few string
-literals that pointed at private working directories or named a reviewer. These were reworded, and no code or mathematics was
+Within the files it does include, it differs from the development version only in comments, docstrings, Markdown wording and a few
+string literals that pointed at private working directories or named a reviewer. These were reworded, and no code or mathematics was
 changed. Apart from those string constants, every changed module's syntax tree matches the development version node for node. The same literal edits were proposed upstream
 in Arda [#761](https://github.com/DrMurphyIsIn/Arda/pull/761).
 
