@@ -401,8 +401,8 @@ Alongside the source it carries most of the development repository's supporting 
 
 - `tests/`: the test suite, about 3,700 tests. Run it with `pip install -e ".[dev,sdp,rh_jensen]"` and then
   `python -m pytest` from this directory. Some tests need files that live only in the development repository (its missions
-  registry, repository scripts and Lean projects). Thirteen modules that cannot load without them are left out, and about 140
-  individual tests are skipped with a stated reason; `tests/conftest.py` lists them all. On the snapshot as vendored, the suite
+  registry, repository scripts and Lean projects). Thirteen modules that cannot load without them are left out, and the tests that need
+  such files are skipped with a stated reason (about 140 entries, all listed in `tests/conftest.py`). On the snapshot as vendored, the suite
   gives 3,356 passed and 348 skipped.
 - `examples/`: small worked examples, one or a few per certificate shape, each small enough to read in a sitting.
 - `docs/`: design notes and references: architecture, the trust boundary (`TRUSTED_FLOOR.md`), the tactic
